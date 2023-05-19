@@ -170,3 +170,6 @@ dist/
 nbdist/
 .nb-gradle/
 
+### Custom template
+data/
+
