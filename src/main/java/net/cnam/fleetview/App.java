@@ -11,7 +11,8 @@ import java.io.IOException;
 public class App {
     public final static String APP_NAME = "FleetView";
     public final static String APP_VERSION = "1.0.0";
-    public final static BufferedImage APP_LOGO;
+    public final static BufferedImage LOGO_NORMAL;
+    public final static BufferedImage LOGO_SIMPLIFIED;
     public final static Font TEXT_FONT;
     public final static Font FONTAWESOME_BRANDS_FONT;
     public final static Font FONTAWESOME_REGULAR_FONT;
@@ -19,7 +20,8 @@ public class App {
 
     static {
         try {
-            APP_LOGO = ImageIO.read(App.class.getResourceAsStream("/assets/img/logo.png"));
+            LOGO_NORMAL = ImageIO.read(App.class.getResourceAsStream("/assets/img/DistriCycle-Logo normal.png"));
+            LOGO_SIMPLIFIED = ImageIO.read(App.class.getResourceAsStream("/assets/img/DistriCycle-Logo simplifié.png"));
             TEXT_FONT = Font.createFont(Font.TRUETYPE_FONT, App.class.getResourceAsStream("/assets/font/Quicksand-VariableFont_wght.ttf"));
             FONTAWESOME_BRANDS_FONT = Font.createFont(Font.TRUETYPE_FONT, App.class.getResourceAsStream("/assets/fontawesome/otfs/Font Awesome 6 Brands-Regular-400.otf"));
             FONTAWESOME_REGULAR_FONT = Font.createFont(Font.TRUETYPE_FONT, App.class.getResourceAsStream("/assets/fontawesome/otfs/Font Awesome 6 Free-Regular-400.otf"));

@@ -15,7 +15,7 @@ public class RootFrameView extends JFrame {
 
         this.panel = new RootPanelView();
 
-        this.setIconImage(App.APP_LOGO);
+        this.setIconImage(App.LOGO_SIMPLIFIED);
         this.setContentPane(panel);
         this.setUndecorated(true);
 

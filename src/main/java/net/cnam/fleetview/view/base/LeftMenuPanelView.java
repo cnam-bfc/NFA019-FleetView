@@ -24,7 +24,7 @@ public class LeftMenuPanelView extends JPanel {
 
         // Logo
         // Charger l'image
-        BufferedImage image = App.APP_LOGO;
+        BufferedImage image = App.LOGO_NORMAL;
 
         // Définir une largeur maximale de 125 pixels
         int maxWidth = 125;
