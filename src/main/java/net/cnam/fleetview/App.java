@@ -20,8 +20,8 @@ public class App {
 
     static {
         try {
-            LOGO_NORMAL = ImageIO.read(App.class.getResourceAsStream("/assets/img/DistriCycle-Logo normal.png"));
-            LOGO_SIMPLIFIED = ImageIO.read(App.class.getResourceAsStream("/assets/img/DistriCycle-Logo simplifié.png"));
+            LOGO_NORMAL = ImageIO.read(App.class.getResourceAsStream("/assets/img/logo/DistriCycle-Logo normal.png"));
+            LOGO_SIMPLIFIED = ImageIO.read(App.class.getResourceAsStream("/assets/img/logo/DistriCycle-Logo simplifié.png"));
             TEXT_FONT = Font.createFont(Font.TRUETYPE_FONT, App.class.getResourceAsStream("/assets/font/Quicksand-VariableFont_wght.ttf"));
             FONTAWESOME_BRANDS_FONT = Font.createFont(Font.TRUETYPE_FONT, App.class.getResourceAsStream("/assets/fontawesome/otfs/Font Awesome 6 Brands-Regular-400.otf"));
             FONTAWESOME_REGULAR_FONT = Font.createFont(Font.TRUETYPE_FONT, App.class.getResourceAsStream("/assets/fontawesome/otfs/Font Awesome 6 Free-Regular-400.otf"));
