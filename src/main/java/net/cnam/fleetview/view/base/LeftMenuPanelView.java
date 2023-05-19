@@ -49,8 +49,8 @@ public class LeftMenuPanelView extends JPanel {
         // Titre
         // Font Quicksand, Bold, 24px
         this.title.setText("FleetView");
-        this.title.setFont(App.TEXT_FONT.deriveFont(Font.BOLD, 24));
-        this.title.setForeground(Color.WHITE);
+        this.title.setFont(App.LOGO_FONT);
+        this.title.setForeground(App.PRIMARY_COLOR);
         this.title.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Ajout du titre au menu
