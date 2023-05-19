@@ -1,5 +1,7 @@
 package net.cnam.fleetview;
 
+import net.cnam.fleetview.view.base.RootFrameView;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +29,7 @@ public class App {
         }
     }
 
-    public static RootFrame INSTANCE;
+    public static RootFrameView INSTANCE;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -40,7 +42,7 @@ public class App {
                 }
 
                 if (INSTANCE == null) {
-                    INSTANCE = new RootFrame();
+                    INSTANCE = new RootFrameView();
                 }
 
                 INSTANCE.setVisible(true);

@@ -1,4 +1,4 @@
-package net.cnam.fleetview.utils;
+package net.cnam.fleetview.view.utils;
 
 import javax.swing.*;
 import java.awt.*;

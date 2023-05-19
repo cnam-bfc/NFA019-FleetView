@@ -1,18 +1,19 @@
-package net.cnam.fleetview;
+package net.cnam.fleetview.view.base;
 
-import net.cnam.fleetview.utils.ComponentMover;
-import net.cnam.fleetview.utils.ComponentResizer;
+import net.cnam.fleetview.App;
+import net.cnam.fleetview.view.utils.ComponentMover;
+import net.cnam.fleetview.view.utils.ComponentResizer;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class RootFrame extends JFrame {
-    private final RootPanel panel;
+public class RootFrameView extends JFrame {
+    private final RootPanelView panel;
 
-    public RootFrame() {
+    public RootFrameView() {
         super("FleetView");
 
-        this.panel = new RootPanel();
+        this.panel = new RootPanelView();
 
         this.setIconImage(App.APP_LOGO);
         this.setContentPane(panel);
@@ -40,7 +41,7 @@ public class RootFrame extends JFrame {
         ComponentMover mover = new ComponentMover(this, panel.getRightMenuPanel(), panel.getMainPanel().getTopMenuPanel());
     }
 
-    public RootPanel getPanel() {
+    public RootPanelView getPanel() {
         return panel;
     }
 }

@@ -1,10 +1,12 @@
-package net.cnam.fleetview;
+package net.cnam.fleetview.view.base;
+
+import net.cnam.fleetview.App;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class LeftMenuPanel extends JPanel {
+public class LeftMenuPanelView extends JPanel {
     // Composants graphiques
     // Logo
     private final JLabel logo = new JLabel();
@@ -12,7 +14,7 @@ public class LeftMenuPanel extends JPanel {
     // Titre
     private final JLabel title = new JLabel();
 
-    public LeftMenuPanel() {
+    public LeftMenuPanelView() {
         super();
 
         // Largeur maximale du menu
