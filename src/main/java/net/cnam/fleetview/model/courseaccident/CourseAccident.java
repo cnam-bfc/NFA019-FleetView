@@ -1,5 +1,7 @@
 package net.cnam.fleetview.model.courseaccident;
 
+import java.time.LocalDateTime;
+
 /**
  * Classe CourseAccident
  * <p>
@@ -15,12 +17,12 @@ public class CourseAccident {
     /**
      * Date de l'accident
      */
-    private String dateAccident;
+    private LocalDateTime dateAccident;
 
     /**
      * Date d'archivage
      */
-    private String dateArchive;
+    private LocalDateTime dateArchive;
 
     /**
      * Identifiant de l'adresse de l'accident
@@ -63,7 +65,7 @@ public class CourseAccident {
      *
      * @return dateAccident
      */
-    public String getDateAccident() {
+    public LocalDateTime getDateAccident() {
         return dateAccident;
     }
 
@@ -72,7 +74,7 @@ public class CourseAccident {
      *
      * @param dateAccident dateAccident
      */
-    public void setDateAccident(String dateAccident) {
+    public void setDateAccident(LocalDateTime dateAccident) {
         this.dateAccident = dateAccident;
     }
 
@@ -81,7 +83,7 @@ public class CourseAccident {
      *
      * @return dateArchive
      */
-    public String getDateArchive() {
+    public LocalDateTime getDateArchive() {
         return dateArchive;
     }
 
@@ -90,7 +92,7 @@ public class CourseAccident {
      *
      * @param dateArchive dateArchive
      */
-    public void setDateArchive(String dateArchive) {
+    public void setDateArchive(LocalDateTime dateArchive) {
         this.dateArchive = dateArchive;
     }
 
