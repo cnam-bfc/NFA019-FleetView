@@ -73,4 +73,12 @@ public abstract class DAO<T> {
      * @return T
      */
     public abstract T getById(int id);
+
+    /**
+     * Méthode de remplissage d'un objet à partir d'un ResultSet
+     * @param obj T
+     * @param resultSet java.sql.ResultSet
+     * @return T
+     */
+    protected abstract T fillObject(T obj,java.sql.ResultSet resultSet) ;
 }

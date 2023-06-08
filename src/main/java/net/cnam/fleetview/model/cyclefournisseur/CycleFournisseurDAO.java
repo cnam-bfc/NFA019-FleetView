@@ -44,7 +44,8 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             int result = statement.executeUpdate();
             // Vérification du nombre de lignes affectées par la requête d'insertion
             if (result == 0) {
-                throw new SQLException("Echec de la création du cycle fournisseur, aucune ligne ajoutée dans la table.");
+                logger.error("Echec de la création du cycle fournisseur, aucune ligne ajoutée dans la table.");
+                return false;
             }
             // on récupère l'id auto-généré par la requête d'insertion
             int id = statement.getGeneratedKeys().getInt(1);
@@ -82,7 +83,8 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             int result = statement.executeUpdate();
             // Vérification du nombre de lignes affectées par la requête de suppression
             if (result == 0) {
-                throw new SQLException("Echec de la suppression du cycle fournisseur, aucune ligne supprimée de la table.");
+                logger.error("Echec de la suppression du cycle fournisseur, aucune ligne supprimée dans la table.");
+                return false;
             }
             statement.close();
             return true;
@@ -120,7 +122,8 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             int result = statement.executeUpdate();
             // Vérification du nombre de lignes affectées par la requête de mise à jour
             if (result == 0) {
-                throw new SQLException("Echec de la mise à jour du cycle fournisseur, aucune ligne modifiée dans la table.");
+                logger.error("Echec de la mise à jour du cycle fournisseur, aucune ligne modifiée dans la table.");
+                return false;
             }
             return true;
         } catch (SQLException ex) {
@@ -148,6 +151,8 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
                 if (cycleFournisseurs == null) {
                     cycleFournisseurs = new ArrayList<>();
                 }
+                CycleFournisseur cycleFournisseur = new CycleFournisseur();
+                fillObject(cycleFournisseur, resultSet);
                 cycleFournisseurs.add(fillObject(new CycleFournisseur(), resultSet));
             }
             return cycleFournisseurs;
@@ -166,19 +171,21 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
     @Override
     public CycleFournisseur getById(int id) {
         try {
-            // on prépare la requête de sélection
+            // On prépare la requête de sélection
             String query = "SELECT * FROM fleetview_cycle_fournisseur WHERE id = ?";
             PreparedStatement statement = this.connection.prepareStatement(query);
-            // on attribue les valeurs aux paramètres
+            // On attribue les valeurs aux paramètres
             statement.setInt(1, id);
-            // on exécute la requête et on récupère le résultat
+            // On exécute la requête et on récupère le résultat
             ResultSet resultSet = statement.executeQuery();
-            // on vérifie que le résultat n'est pas vide, si oui on retourne null
+            // On vérifie que le résultat n'est pas vide, si oui on retourne null
             if (!resultSet.next()) {
                 return null;
             }
-            // on crée l'objet CycleFournisseur correspondant à la première ligne du résultat
-            return fillObject(new CycleFournisseur(), resultSet);
+            // On crée l'objet CycleFournisseur correspondant à la première ligne du résultat
+            CycleFournisseur cycleFournisseur = new CycleFournisseur();
+            fillObject(new CycleFournisseur(), resultSet);
+            return cycleFournisseur;
         } catch (SQLException ex) {
             logger.error("Impossible de récupérer le Cycle Fournisseur", ex);
             return null;
@@ -192,7 +199,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
      * @param resultSet        le résultat de la requête de sélection
      * @return un objet CycleFournisseur rempli
      */
-    private CycleFournisseur fillObject(CycleFournisseur cycleFournisseur, ResultSet resultSet) {
+     protected CycleFournisseur fillObject(CycleFournisseur cycleFournisseur, ResultSet resultSet) {
         try {
             cycleFournisseur.setId(resultSet.getInt("id"));
             cycleFournisseur.setNom(resultSet.getString("nom"));
