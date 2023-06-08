@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
-
     /**
      * Constructeur d'un objet d'accès à la base
      *
@@ -29,7 +28,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
     public boolean create(CycleFournisseur obj) {
         // On vérifie que l'objet n'a pas d'ID
         if (obj.getId() != 0) {
-            System.out.println("Objet possédant déjà un ID enregistré");
+            logger.error("Objet possédant déjà un ID enregistré");
             return false;
         }
         try {
@@ -54,7 +53,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             statement.close();
             return true;
         } catch (SQLException ex) {
-            System.out.println(ex);
+            logger.error("Impossible d'insérer le Cycle Fournisseur en base de donnée", ex);
             return false;
         }
     }
@@ -70,7 +69,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
     public boolean delete(CycleFournisseur obj) {
         // On vérifie que l'objet possède un ID
         if (obj.getId() == 0) {
-            System.out.println("Objet ne possédant pas d'ID enregistré");
+            logger.error("Objet ne possédant pas d'ID enregistré");
             return false;
         }
         try {
@@ -88,7 +87,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             statement.close();
             return true;
         } catch (SQLException ex) {
-            System.out.println(ex);
+            logger.error("Impossible de supprimer le Cycle Fournisseur", ex);
             return false;
         }
     }
@@ -104,7 +103,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
     public boolean update(CycleFournisseur obj) {
         // On vérifie que l'objet possède un ID
         if (obj.getId() == 0) {
-            System.out.println("Objet ne possédant pas d'ID enregistré");
+            logger.error("Objet ne possédant pas d'ID enregistré");
             return false;
         }
         try {
@@ -125,7 +124,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             }
             return true;
         } catch (SQLException ex) {
-            System.out.println(ex);
+            logger.error("Impossible de mettre à jour le Cycle Fournisseur", ex);
             return false;
         }
     }
@@ -153,7 +152,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             }
             return cycleFournisseurs;
         } catch (SQLException ex) {
-            System.out.println(ex);
+            logger.error("Impossible de récupérer les Cycle Fournisseur", ex);
             return null;
         }
     }
@@ -181,7 +180,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             // on crée l'objet CycleFournisseur correspondant à la première ligne du résultat
             return fillObject(new CycleFournisseur(), resultSet);
         } catch (SQLException ex) {
-            System.out.println(ex);
+            logger.error("Impossible de récupérer le Cycle Fournisseur", ex);
             return null;
         }
     }
@@ -202,7 +201,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             cycleFournisseur.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
             return cycleFournisseur;
         } catch (SQLException ex) {
-            System.out.println(ex);
+            logger.error("Impossible de remplir l'objet CycleFournisseur", ex);
             return null; // lever exception ?
         }
     }
