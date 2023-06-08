@@ -9,15 +9,33 @@ import java.time.LocalDateTime;
  * table concernée : fleetview_colis_course
  */
 public class ColisCourse {
+    /**
+     * Identifiant du colis course
+     */
     private int idColisCourse;
+    /**
+     * Ordre du colis course
+     */
     private int ordre;
+    /**
+     * Date de livraison
+     */
     private LocalDateTime dateLivraison;
+    /**
+     * Date d'archivage
+     */
     private LocalDateTime dateArchive;
+    /**
+     * Identifiant du colis
+     */
     private int idColis;
+    /**
+     * Identifiant de la course
+     */
     private int idCourse;
 
     /**
-     * Constructeur
+     * Constructeur par défaut
      */
     public ColisCourse() {
     }
@@ -25,7 +43,7 @@ public class ColisCourse {
     // GETTERS & SETTERS
 
     /**
-     * Getter sur l'id
+     * Réupère l'identifiant du colis
      *
      * @return idColisCourse
      */
@@ -34,7 +52,7 @@ public class ColisCourse {
     }
 
     /**
-     * Setter sur l'id
+     * Définit l'identifiant du colis
      *
      * @param idColisCourse idColisCourse
      */
@@ -43,7 +61,7 @@ public class ColisCourse {
     }
 
     /**
-     * Getter sur l'ordre
+     * Récupère l'identifiant du colis
      *
      * @return ordre
      */
@@ -52,7 +70,7 @@ public class ColisCourse {
     }
 
     /**
-     * Setter sur l'ordre
+     * Définit l'identifiant du colis
      *
      * @param ordre ordre
      */
@@ -61,7 +79,7 @@ public class ColisCourse {
     }
 
     /**
-     * Getter sur la date de livraison
+     * Récupère la date de livraison
      *
      * @return dateLivraison
      */
@@ -70,7 +88,7 @@ public class ColisCourse {
     }
 
     /**
-     * Setter sur la date de livraison
+     * Définit la date de livraison
      *
      * @param dateLivraison dateLivraison
      */
@@ -79,7 +97,7 @@ public class ColisCourse {
     }
 
     /**
-     * Getter sur la date d'archivage
+     * Récupère la date d'archivage
      *
      * @return dateArchive
      */
@@ -88,7 +106,7 @@ public class ColisCourse {
     }
 
     /**
-     * Setter sur la date d'archivage
+     * Définit la date d'archivage
      *
      * @param dateArchive dateArchive
      */
@@ -97,7 +115,7 @@ public class ColisCourse {
     }
 
     /**
-     * Getter sur l'id du colis
+     * Récupère l'identifiant du colis
      *
      * @return idColis
      */
@@ -106,7 +124,7 @@ public class ColisCourse {
     }
 
     /**
-     * Setter sur l'id du colis
+     * Définit l'identifiant du colis
      *
      * @param idColis idColis
      */
@@ -115,7 +133,7 @@ public class ColisCourse {
     }
 
     /**
-     * Getter sur l'id de la course
+     * Récupère l'identifiant de la course
      *
      * @return idCourse
      */
@@ -124,7 +142,7 @@ public class ColisCourse {
     }
 
     /**
-     * Setter sur l'id de la course
+     * Définit l'identifiant de la course
      *
      * @param idCourse idCourse
      */

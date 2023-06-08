@@ -9,13 +9,25 @@ import java.time.LocalDateTime;
  * table concernée : fleetview_colis_destinataire
  */
 public class ColisDestinataire {
+    /**
+     * Identifiant du colis destinataire
+     */
     private int idColisDestinataire;
+    /**
+     * Prénom du destinataire
+     */
     private String prenom;
+    /**
+     * Nom du destinataire
+     */
     private String nom;
+    /**
+     * Date d'archivage
+     */
     private LocalDateTime dateArchive;
 
     /**
-     * Constructeur
+     * Constructeur par défaut
      */
     public ColisDestinataire() {
     }
@@ -23,7 +35,7 @@ public class ColisDestinataire {
     // GETTERS & SETTERS
 
     /**
-     * Getter sur l'id
+     * Récupère l'identifiant du colis destinataire
      *
      * @return idColisDestinataire
      */
@@ -32,7 +44,7 @@ public class ColisDestinataire {
     }
 
     /**
-     * Setter sur l'id
+     * Définit l'identifiant du colis destinataire
      *
      * @param idColisDestinataire idColisDestinataire
      */
@@ -41,7 +53,7 @@ public class ColisDestinataire {
     }
 
     /**
-     * Getter sur le prénom
+     * Récupère le prénom du destinataire
      *
      * @return prenom
      */
@@ -50,7 +62,7 @@ public class ColisDestinataire {
     }
 
     /**
-     * Setter sur le prénom
+     * Définit le prénom du destinataire
      *
      * @param prenom prenom
      */
@@ -59,7 +71,7 @@ public class ColisDestinataire {
     }
 
     /**
-     * Getter sur le nom
+     * Récupère le nom du destinataire
      *
      * @return nom
      */
@@ -68,7 +80,7 @@ public class ColisDestinataire {
     }
 
     /**
-     * Setter sur le nom
+     * Définit le nom du destinataire
      *
      * @param nom nom
      */
@@ -77,7 +89,7 @@ public class ColisDestinataire {
     }
 
     /**
-     * Getter sur la date d'archivage
+     * Récupère la date d'archivage
      *
      * @return dateArchive
      */
@@ -86,7 +98,7 @@ public class ColisDestinataire {
     }
 
     /**
-     * Setter sur la date d'archivage
+     * Définit la date d'archivage
      *
      * @param dateArchive dateArchive
      */

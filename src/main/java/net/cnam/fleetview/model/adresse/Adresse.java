@@ -9,20 +9,53 @@ import java.time.LocalDateTime;
  * table concernée : fleetview_adresse
  */
 public class Adresse {
+    /**
+     * Identifiant de l'adresse
+     */
     private int idAdresse;
+    /**
+     * Type OSM
+     */
     private String osmType;
+    /**
+     * Identifiant OSM
+     */
     private int osmId;
+    /**
+     * Pays
+     */
     private String pays;
+    /**
+     * Code postal
+     */
     private String codePostal;
+    /**
+     * Commune
+     */
     private String commune;
+    /**
+     * Rue
+     */
     private String rue;
+    /**
+     * Numéro de rue
+     */
     private String numeroDeRue;
+    /**
+     * Complément
+     */
     private String complement;
+    /**
+     * Date d'archivage
+     */
     private LocalDateTime dateArchive;
+    /**
+     * Identifiant du secteur
+     */
     private int idSecteur;
 
     /**
-     * Constructeur
+     * Constructeur par défaut
      */
     public Adresse() {
     }
@@ -30,7 +63,7 @@ public class Adresse {
     // GETTERS & SETTERS
 
     /**
-     * Getter sur l'id
+     * Récupère l'identifiant de l'adresse
      * @return idAdresse
      */
     public int getIdAdresse() {
@@ -38,7 +71,7 @@ public class Adresse {
     }
 
     /**
-     * Setter sur l'id
+     * Définit l'identifiant de l'adresse
      * @param idAdresse idAdresse
      */
     public void setIdAdresse(int idAdresse) {
@@ -46,7 +79,7 @@ public class Adresse {
     }
 
     /**
-     * Getter sur le type OSM
+     * Récupère le type OSM
      * @return osmType
      */
     public String getOsmType() {
@@ -55,7 +88,7 @@ public class Adresse {
 
 
     /**
-     * Setter sur le type OSM
+     * Définit le type OSM
      * @param osmType osmType
      */
     public void setOsmType(String osmType) {
@@ -64,7 +97,7 @@ public class Adresse {
 
 
     /**
-     * Getter sur l'identifiant OSM
+     * Récupère l'identifiant OSM
      * @return osmId
      */
     public int getOsmId() {
@@ -72,7 +105,7 @@ public class Adresse {
     }
 
     /**
-     * Setter sur l'identifiant OSM
+     * Définit l'identifiant OSM
      * @param osmId osmId
      */
     public void setOsmId(int osmId) {
@@ -80,7 +113,7 @@ public class Adresse {
     }
 
     /**
-     * Getter sur le pays
+     * Récupère le pays
      * @return
      */
     public String getPays() {
@@ -88,7 +121,7 @@ public class Adresse {
     }
 
     /**
-     * Setter sur le pays
+     * Définit le pays
      * @param pays
      */
     public void setPays(String pays) {
@@ -96,15 +129,15 @@ public class Adresse {
     }
 
     /**
-     * Getter sur le code postal
-     * @return
+     * Récupère le code postal
+     * @return codePostal
      */
     public String getCodePostal() {
         return codePostal;
     }
 
     /**
-     * Setter sur le code postal
+     * Définit le code postal
      * @param codePostal
      */
     public void setCodePostal(String codePostal) {
@@ -112,7 +145,7 @@ public class Adresse {
     }
 
     /**
-     * Getter sur la commune
+     * Récupère la commune
      * @return
      */
     public String getCommune() {
@@ -120,7 +153,7 @@ public class Adresse {
     }
 
     /**
-     * Setter sur la commune
+     * Définit la commune
      * @param commune
      */
     public void setCommune(String commune) {
@@ -128,7 +161,7 @@ public class Adresse {
     }
 
     /**
-     * Getter sur la rue
+     * Récupère la rue
      * @return rue
      */
     public String getRue() {
@@ -136,7 +169,7 @@ public class Adresse {
     }
 
     /**
-     * Setter sur la rue
+     * Définit la rue
      * @param rue
      */
     public void setRue(String rue) {
@@ -144,7 +177,7 @@ public class Adresse {
     }
 
     /**
-     * Getter sur le numéro de rue
+     * Récupère le numéro de rue
      * @return numeroDeRue
      */
     public String getNumeroDeRue() {
@@ -152,7 +185,7 @@ public class Adresse {
     }
 
     /**
-     * Setter sur le numéro de rue
+     * Définit le numéro de rue
      * @param numeroDeRue
      */
     public void setNumeroDeRue(String numeroDeRue) {
@@ -160,7 +193,7 @@ public class Adresse {
     }
 
     /**
-     * Getter sur le complément
+     * Récupère le complément
      * @return complement
      */
     public String getComplement() {
@@ -168,7 +201,7 @@ public class Adresse {
     }
 
     /**
-     * Setter sur le complément
+     * Définit le complément
      * @param complement
      */
     public void setComplement(String complement) {
@@ -176,7 +209,7 @@ public class Adresse {
     }
 
     /**
-     * Getter sur la date d'archivage
+     * Récupère la date d'archivage
      * @return dateArchive
      */
     public LocalDateTime getDateArchive() {
@@ -184,7 +217,7 @@ public class Adresse {
     }
 
     /**
-     * Setter sur la date d'archivage
+     * Définit la date d'archivage
      * @param dateArchive
      */
     public void setDateArchive(LocalDateTime dateArchive) {
@@ -192,7 +225,7 @@ public class Adresse {
     }
 
     /**
-     * Getter sur l'id du secteur
+     * Récupère l'identifiant du secteur
      * @return idSecteur
      */
     public int getIdSecteur() {
@@ -200,7 +233,7 @@ public class Adresse {
     }
 
     /**
-     * Setter sur l'id du secteur
+     * Définit l'identifiant du secteur
      * @param idSecteur
      */
     public void setIdSecteur(int idSecteur) {

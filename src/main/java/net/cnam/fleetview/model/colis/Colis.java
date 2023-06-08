@@ -9,15 +9,33 @@ import java.time.LocalDateTime;
  * table concernée : fleetview_colis
  */
 public class Colis {
+    /**
+     * Identifiant du colis
+     */
     private int idColis;
+    /**
+     * Numéro du colis
+     */
     private String numero;
+    /**
+     * Poids du colis
+     */
     private double poids;
+    /**
+     * Date d'archivage
+     */
     private LocalDateTime dateArchive;
+    /**
+     * Identifiant de l'adresse
+     */
     private int idAdresse;
+    /**
+     * Identifiant du colis destinataire
+     */
     private int idColisDestinataire;
 
     /**
-     * Constructeur
+     * Constructeur par défaut
      */
     public Colis() {
     }
@@ -25,7 +43,7 @@ public class Colis {
     // GETTERS & SETTERS
 
     /**
-     * Getter sur l'id
+     * Récupère l'identifiant du colis
      *
      * @return idColis
      */
@@ -34,7 +52,7 @@ public class Colis {
     }
 
     /**
-     * Setter sur l'id
+     * Définit l'identifiant du colis
      *
      * @param idColis idColis
      */
@@ -43,7 +61,7 @@ public class Colis {
     }
 
     /**
-     * Getter sur le numéro
+     * Récupère le numéro du colis
      *
      * @return numero
      */
@@ -52,7 +70,7 @@ public class Colis {
     }
 
     /**
-     * Setter sur le numéro
+     * Définit le numéro du colis
      *
      * @param numero numero
      */
@@ -61,7 +79,7 @@ public class Colis {
     }
 
     /**
-     * Getter sur le poids
+     * Récupère le poids du colis
      *
      * @return poids
      */
@@ -70,7 +88,7 @@ public class Colis {
     }
 
     /**
-     * Setter sur le poids
+     * Définit le poids du colis
      *
      * @param poids poids
      */
@@ -79,7 +97,7 @@ public class Colis {
     }
 
     /**
-     * Getter sur la date d'archivage
+     * Récupère la date d'archivage du colis
      *
      * @return dateArchive
      */
@@ -88,7 +106,7 @@ public class Colis {
     }
 
     /**
-     * Setter sur la date d'archivage
+     * Définit la date d'archivage du colis
      *
      * @param dateArchive dateArchive
      */
@@ -97,7 +115,7 @@ public class Colis {
     }
 
     /**
-     * Getter sur l'id de l'adresse
+     * Récupère l'identifiant de l'adresse
      *
      * @return idAdresse
      */
@@ -106,7 +124,7 @@ public class Colis {
     }
 
     /**
-     * Setter sur l'id de l'adresse
+     * Définit l'identifiant de l'adresse
      *
      * @param idAdresse idAdresse
      */
@@ -115,7 +133,7 @@ public class Colis {
     }
 
     /**
-     * Getter sur l'id du colis destinataire
+     * Récupère l'identifiant du colis destinataire
      *
      * @return idColisDestinataire
      */
@@ -124,7 +142,7 @@ public class Colis {
     }
 
     /**
-     * Setter sur l'id du colis destinataire
+     * Définit l'identifiant du colis destinataire
      *
      * @param idColisDestinataire idColisDestinataire
      */
