@@ -5,7 +5,6 @@ import net.cnam.fleetview.model.DAO;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
@@ -187,6 +186,13 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
         }
     }
 
+    /**
+     * Méthode permettant de remplir un objet CycleFournisseur avec les valeurs d'un enregistrement de la table fleetview_cycle_fournisseur
+     *
+     * @param cycleFournisseur l'objet CycleFournisseur à remplir
+     * @param resultSet        le résultat de la requête de sélection
+     * @return un objet CycleFournisseur rempli
+     */
     private CycleFournisseur fillObject(CycleFournisseur cycleFournisseur, ResultSet resultSet) {
         try {
             cycleFournisseur.setId(resultSet.getInt("id"));
