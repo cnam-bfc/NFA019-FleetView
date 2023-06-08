@@ -2,6 +2,12 @@ package net.cnam.fleetview.model.adresse;
 
 import java.time.LocalDateTime;
 
+/**
+ * Classe Adresse
+ *
+ * Cette classe permet de créer des objets Adresse.
+ * table concernée : fleetview_adresse
+ */
 public class Adresse {
     private int idAdresse;
     private String osmType;

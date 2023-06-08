@@ -2,6 +2,12 @@ package net.cnam.fleetview.model.colis;
 
 import java.time.LocalDateTime;
 
+/**
+ * Classe Colis
+ *
+ * Cette classe permet de créer des objets Colis.
+ * table concernée : fleetview_colis
+ */
 public class Colis {
     private int idColis;
     private String numero;
