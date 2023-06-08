@@ -1,5 +1,8 @@
 package net.cnam.fleetview.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.util.List;
 
@@ -9,6 +12,11 @@ import java.util.List;
  * @param <T> Représente la classe des objets Java à manipuler
  */
 public abstract class DAO<T> {
+
+    /**
+     * Logger
+     */
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     /**
      * Attribut connection
@@ -64,5 +72,5 @@ public abstract class DAO<T> {
      * @param id l'identificateur à rechercher
      * @return T
      */
-    public abstract T selectById(int id);
+    public abstract T getById(int id);
 }

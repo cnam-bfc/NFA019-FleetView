@@ -165,7 +165,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
      * @return un objet CycleFournisseur
      */
     @Override
-    public CycleFournisseur selectById(int id) {
+    public CycleFournisseur getById(int id) {
         try {
             // on prépare la requête de sélection
             String query = "SELECT * FROM fleetview_cycle_fournisseur WHERE id = ?";
