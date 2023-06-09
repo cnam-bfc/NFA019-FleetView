@@ -60,7 +60,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             }
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible d'insérer le Cycle Fournisseur en base de donnée", ex);
+            logger.error("Impossible d'insérer le Cycle Fournisseur", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(statement);
