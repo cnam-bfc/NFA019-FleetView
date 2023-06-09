@@ -1,4 +1,4 @@
-package net.cnam.fleetview.model;
+package net.cnam.fleetview.model.cyclemarque;
 
 import java.time.LocalDateTime;
 
@@ -25,11 +25,10 @@ public class CycleMarque {
     /**
      * Constructeur par défaut
      */
-
     public CycleMarque() {
-
     }
-// GETTERS & SETTERS
+
+    // GETTERS & SETTERS
 
     /**
      * Récupère l'identifiant du cycle marque
