@@ -2,6 +2,7 @@ package net.cnam.fleetview.view.base;
 
 import javax.swing.*;
 import java.awt.*;
+import net.cnam.fleetview.view.paramettre.ParametrageBddView;
 
 public class MainPanelView extends JPanel {
     private final TopMenuPanelView topMenuPanelView = new TopMenuPanelView();
@@ -14,7 +15,8 @@ public class MainPanelView extends JPanel {
         this.setLayout(layout);
 
         this.add(topMenuPanelView, BorderLayout.NORTH);
-        this.add(contentPanelView, BorderLayout.CENTER);
+        /*this.add(contentPanelView, BorderLayout.CENTER);*/
+        this.add(new ParametrageBddView() , BorderLayout.CENTER);
     }
 
     public TopMenuPanelView getTopMenuPanel() {
