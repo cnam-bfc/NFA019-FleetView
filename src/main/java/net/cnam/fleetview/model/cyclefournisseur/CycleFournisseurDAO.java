@@ -54,6 +54,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             if (result != 0) {
                 // On récupère l'id auto-généré par la requête d'insertion
                 int id = statement.getGeneratedKeys().getInt(1);
+
                 // On met à jour l'objet pour lui attribuer l'id récupéré
                 obj.setId(id);
             }
