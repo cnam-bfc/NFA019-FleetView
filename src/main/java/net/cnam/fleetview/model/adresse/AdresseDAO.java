@@ -37,7 +37,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
     public boolean create(Adresse obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
         if (obj.getIdAdresse() != 0) {
-            logger.error("L'objet CycleFournisseur a déjà un ID");
+            logger.error("L'objet Adresse a déjà un ID");
             return false;
         }
 
