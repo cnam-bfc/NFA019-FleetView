@@ -58,6 +58,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
                 obj.setId(id);
             }
         } catch (SQLException ex) {
+            // On log l'erreur
             logger.error("Impossible d'insérer le Cycle Fournisseur en base de donnée", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
@@ -103,6 +104,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             // On exécute la requête
             result = statement.executeUpdate();
         } catch (SQLException ex) {
+            // On log l'erreur
             logger.error("Impossible de supprimer le Cycle Fournisseur", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
@@ -152,6 +154,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             // On exécute la requête
             result = statement.executeUpdate();
         } catch (SQLException ex) {
+            // On log l'erreur
             logger.error("Impossible de mettre à jour le Cycle Fournisseur", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
@@ -201,6 +204,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
                 result.add(cycleFournisseur);
             }
         } catch (SQLException ex) {
+            // On log l'erreur
             logger.error("Impossible de récupérer les Cycle Fournisseur", ex);
 
             // Si une erreur s'est produite, on renvoie la liste vide
@@ -248,6 +252,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
                 this.fillObject(result, resultSet);
             }
         } catch (SQLException ex) {
+            // On log l'erreur
             logger.error("Impossible de récupérer le Cycle Fournisseur", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
@@ -273,6 +278,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             cycleFournisseur.setTelephone(resultSet.getString("telephone"));
             cycleFournisseur.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
         } catch (SQLException ex) {
+            // On log l'erreur
             logger.error("Impossible de remplir l'objet CycleFournisseur", ex);
         }
     }
