@@ -228,7 +228,7 @@ public class HistoriqueTypeDAO extends DAO<HistoriqueType> {
     @Override
     public HistoriqueType getById(int id) {
         // Requête de sélection
-        String query = "SELECT * FROM fleetview_historique_type WHERE id = ?";
+        String query = "SELECT * FROM fleetview_historique_type WHERE id_historique_type = ?";
 
         // Résultat de la requête
         HistoriqueType result = null;

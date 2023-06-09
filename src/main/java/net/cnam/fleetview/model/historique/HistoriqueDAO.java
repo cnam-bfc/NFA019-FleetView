@@ -98,7 +98,7 @@ public class HistoriqueDAO extends DAO<Historique> {
         }
 
         // Requête de suppression
-        String query = "DELETE FROM fleetview_historique WHERE id = ?";
+        String query = "DELETE FROM fleetview_historique WHERE id_historique = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -144,7 +144,7 @@ public class HistoriqueDAO extends DAO<Historique> {
         }
 
         // Requête de mise à jour
-        String query = "UPDATE fleetview_historique SET table_tuple = ?, identifiant_tuple = ?, date_changement_tuple = ?, id_historique_type = ?, id_utilisateur = ? WHERE id = ?";
+        String query = "UPDATE fleetview_historique SET table_tuple = ?, identifiant_tuple = ?, date_changement_tuple = ?, id_historique_type = ?, id_utilisateur = ? WHERE id_historique = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -237,7 +237,7 @@ public class HistoriqueDAO extends DAO<Historique> {
     @Override
     public Historique getById(int id) {
         // Requête de sélection
-        String query = "SELECT * FROM fleetview_historique WHERE id = ?";
+        String query = "SELECT * FROM fleetview_historique WHERE id_historique = ?";
 
         // Résultat de la requête
         Historique result = null;
