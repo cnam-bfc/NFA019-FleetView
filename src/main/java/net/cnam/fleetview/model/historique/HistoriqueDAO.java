@@ -7,6 +7,13 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Classe HistoriqueDAO
+ *
+ * Cette classe permet de créer des objets d'accès à la base de données pour les objets Historique.
+ * Fais la jonction entre les objets Historique et la base de données.
+ * table concernée : fleetview_historique
+ */
 public class HistoriqueDAO extends DAO<Historique> {
     /**
      * Constructeur d'un objet d'accès à la base
