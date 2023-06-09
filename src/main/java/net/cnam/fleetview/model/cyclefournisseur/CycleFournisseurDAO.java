@@ -1,5 +1,6 @@
 package net.cnam.fleetview.model.cyclefournisseur;
 
+import net.cnam.fleetview.model.Archivable;
 import net.cnam.fleetview.model.DAO;
 import net.cnam.fleetview.model.TypeHistorique;
 import net.cnam.fleetview.model.historiquedata.HistoriqueData;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
+public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archivable<CycleFournisseur> {
     /**
      * Constructeur d'un objet d'accès à la base
      *
