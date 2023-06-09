@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Classe DAO pour les adresses
- * <p>
+ *
  * Concerne la table : fleetview_adresse
  */
 public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {

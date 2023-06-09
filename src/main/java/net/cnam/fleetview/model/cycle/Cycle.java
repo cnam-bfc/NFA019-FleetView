@@ -17,7 +17,7 @@ public class Cycle {
     /**
      * Identifiant spécifique du cycle
      */
-    private String idCycleSpecifique;
+    private String identifiant;
 
     /**
      * Numéro de série du cycle
@@ -57,7 +57,7 @@ public class Cycle {
     /**
      * Identifiant du type de cycle
      */
-    private int idTypeCycle;
+    private int idCycleType;
 
     /**
      * Constructeur par défaut
@@ -90,17 +90,17 @@ public class Cycle {
      *
      * @return idCycleSpecifique
      */
-    public String getIdCycleSpecifique() {
-        return idCycleSpecifique;
+    public String getIdentifiant() {
+        return identifiant;
     }
 
     /**
      * Définit l'identifiant spécifique du cycle
      *
-     * @param idCycleSpecifique idCycleSpecifique
+     * @param identifiant idCycleSpecifique
      */
-    public void setIdCycleSpecifique(String idCycleSpecifique) {
-        this.idCycleSpecifique = idCycleSpecifique;
+    public void setIdentifiant(String identifiant) {
+        this.identifiant = identifiant;
     }
 
     /**
@@ -234,16 +234,16 @@ public class Cycle {
      *
      * @return idTypeCycle
      */
-    public int getIdTypeCycle() {
-        return idTypeCycle;
+    public int getIdCycleType() {
+        return idCycleType;
     }
 
     /**
      * Définit l'identifiant du type de cycle
      *
-     * @param idTypeCycle idTypeCycle
+     * @param idCycleType idTypeCycle
      */
-    public void setIdTypeCycle(int idTypeCycle) {
-        this.idTypeCycle = idTypeCycle;
+    public void setIdCycleType(int idCycleType) {
+        this.idCycleType = idCycleType;
     }
 }
