@@ -1,6 +1,9 @@
 package net.cnam.fleetview.view.base;
 
 import net.cnam.fleetview.App;
+import net.cnam.fleetview.view.MenuButton;
+import net.cnam.fleetview.view.course.ListeCoursesPanelView;
+import net.cnam.fleetview.view.paramettre.ParametrageBddView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,13 +12,31 @@ import java.awt.image.BufferedImage;
 public class LeftMenuPanelView extends JPanel {
     // Composants graphiques
     // Logo
-    private final JLabel logo = new JLabel();
+    private final JLabel logo;
 
     // Titre
-    private final JLabel title = new JLabel();
+    private final JLabel title;
+
+    // Boutons
+    private final MenuButton coursesButton;
+    private final MenuButton parametresButton;
 
     public LeftMenuPanelView() {
         super();
+
+        // Création des éléments de l'interface
+        // Logo
+        this.logo = new JLabel();
+
+        // Titre
+        this.title = new JLabel();
+
+        // Boutons
+        // Courses
+        this.coursesButton = new MenuButton("\uF0D1", "Courses");
+        // Paramètres
+        this.parametresButton = new MenuButton("\uF013", "Paramètres");
+
 
         // Largeur maximale du menu
         this.setPreferredSize(new Dimension(200, Integer.MAX_VALUE));
@@ -55,5 +76,30 @@ public class LeftMenuPanelView extends JPanel {
 
         // Ajout du titre au menu
         this.add(this.title);
+
+        // Boutons
+        // Bouton de liste des courses
+        this.coursesButton.addActionListener(e -> {
+            // Création de la vue de la liste des courses
+            ListeCoursesPanelView listeCoursesPanelView = new ListeCoursesPanelView();
+
+            // Affichage de la vue de la liste des courses
+            App.INSTANCE.getPanel().getMainPanel().setContentPanelView(listeCoursesPanelView);
+        });
+
+        // Ajout du bouton de liste des courses au menu
+        this.add(this.coursesButton);
+
+        // Bouton de paramètres
+        this.parametresButton.addActionListener(e -> {
+            // Création de la vue des paramètres
+            ParametrageBddView parametrageBddView = new ParametrageBddView();
+
+            // Affichage de la vue des paramètres
+            App.INSTANCE.getPanel().getMainPanel().setContentPanelView(parametrageBddView);
+        });
+
+        // Ajout du bouton de paramètres au menu
+        this.add(this.parametresButton);
     }
 }

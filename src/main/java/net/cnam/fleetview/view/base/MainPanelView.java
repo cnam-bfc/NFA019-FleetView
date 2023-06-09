@@ -2,11 +2,10 @@ package net.cnam.fleetview.view.base;
 
 import javax.swing.*;
 import java.awt.*;
-import net.cnam.fleetview.view.paramettre.ParametrageBddView;
 
 public class MainPanelView extends JPanel {
     private final TopMenuPanelView topMenuPanelView = new TopMenuPanelView();
-    private final ContentPanelView contentPanelView = new ContentPanelView();
+    private JPanel contentPanelView;
 
     public MainPanelView() {
         super();
@@ -15,15 +14,27 @@ public class MainPanelView extends JPanel {
         this.setLayout(layout);
 
         this.add(topMenuPanelView, BorderLayout.NORTH);
-        /*this.add(contentPanelView, BorderLayout.CENTER);*/
-        this.add(new ParametrageBddView() , BorderLayout.CENTER);
     }
 
     public TopMenuPanelView getTopMenuPanel() {
         return topMenuPanelView;
     }
 
-    public ContentPanelView getContentPanel() {
+    public JPanel getContentPanelView() {
         return contentPanelView;
+    }
+
+    public synchronized void setContentPanelView(JPanel contentPanelView) {
+        // Suppression du panel actuel
+        if (this.contentPanelView != null) {
+            this.remove(this.contentPanelView);
+        }
+
+        // Ajout du nouveau panel
+        this.contentPanelView = contentPanelView;
+        this.add(contentPanelView, BorderLayout.CENTER);
+
+        // Mise à jour de l'interface
+        this.revalidate();
     }
 }

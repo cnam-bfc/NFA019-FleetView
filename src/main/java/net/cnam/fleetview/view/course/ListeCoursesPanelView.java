@@ -16,10 +16,5 @@ public class ListeCoursesPanelView extends JPanel {
 
         // Ajout des éléments de l'interface
         this.add(this.titrePanel);
-        this.add(new TitrePanel("\uF08C", "Linkedin"));
-        this.add(new TitrePanel("\uF09A", "Facebook"));
-        this.add(new TitrePanel("\uF099", "Twitter"));
-        this.add(new TitrePanel("\uF0E1", "Google"));
-        this.add(new TitrePanel("\uF0D6", "Github"));
     }
 }
