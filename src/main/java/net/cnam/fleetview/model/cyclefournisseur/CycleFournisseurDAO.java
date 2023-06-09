@@ -4,7 +4,7 @@ import net.cnam.fleetview.model.DAO;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
@@ -21,175 +21,238 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
      * Méthode de création d'un enregistrement de cycle fournisseur
      *
      * @param obj un objet CycleFournisseur à écrire dans la base
-     * @return boolean qui vaut true si la création a réussi, false dans le cas
-     * contraire
+     * @return boolean qui vaut true si la création a réussi, false dans le cas contraire
      */
     @Override
     public boolean create(CycleFournisseur obj) {
         // On vérifie que l'objet n'a pas d'ID
         if (obj.getId() != 0) {
-            logger.error("Objet possédant déjà un ID enregistré");
+            logger.error("L'objet CycleFournisseur a déjà un ID");
             return false;
         }
+
+        // Requête d'insertion
+        String query = "INSERT INTO fleetview_cycle_fournisseur (nom, mail, telephone, date_archive) VALUES (?, ?, ?, ?)";
+
+        // Résultat de la requête
+        int result = 0;
+        PreparedStatement statement = null;
+
         try {
-            // on prépare la requête d'insertion
-            String query = "INSERT INTO fleetview_cycle_fournisseur (nom, mail, telephone, date_archive) VALUES (?, ?, ?, ?)";
-            PreparedStatement statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            // on attribue les valeurs aux paramètres
+            // On prépare la requête d'insertion
+            statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
             statement.setString(2, obj.getMail());
             statement.setString(3, obj.getTelephone());
             statement.setObject(4, obj.getDateArchive());
-            // on exécute la requête
-            int result = statement.executeUpdate();
-            // Vérification du nombre de lignes affectées par la requête d'insertion
-            if (result == 0) {
-                logger.error("Echec de la création du cycle fournisseur, aucune ligne ajoutée dans la table.");
-                return false;
+
+            // On exécute la requête
+            result = statement.executeUpdate();
+
+            // Si la requête a réussi
+            if (result != 0) {
+                // On récupère l'id auto-généré par la requête d'insertion
+                int id = statement.getGeneratedKeys().getInt(1);
+                // On met à jour l'objet pour lui attribuer l'id récupéré
+                obj.setId(id);
             }
-            // on récupère l'id auto-généré par la requête d'insertion
-            int id = statement.getGeneratedKeys().getInt(1);
-            // on met à jour l'objet pour lui attribuer l'id récupéré
-            obj.setId(id);
-            statement.close();
-            return true;
         } catch (SQLException ex) {
             logger.error("Impossible d'insérer le Cycle Fournisseur en base de donnée", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(statement);
+        }
+
+        // Si la requête a échoué
+        if (result == 0) {
+            logger.error("Échec de la création du cycle fournisseur, aucune ligne ajoutée dans la table.");
             return false;
         }
+
+        return true;
     }
 
     /**
      * Méthode de suppression d'un enregistrement de cycle fournisseur
      *
      * @param obj un objet CycleFournisseur à supprimer dans la base
-     * @return boolean qui vaut true si la suppression a réussi, false dans le
-     * cas contraire
+     * @return boolean qui vaut true si la suppression a réussi, false dans le cas contraire
      */
     @Override
     public boolean delete(CycleFournisseur obj) {
         // On vérifie que l'objet possède un ID
         if (obj.getId() == 0) {
-            logger.error("Objet ne possédant pas d'ID enregistré");
+            logger.error("L'objet CycleFournisseur n'a pas d'ID");
             return false;
         }
+
+        // Requête de suppression
+        String query = "DELETE FROM fleetview_cycle_fournisseur WHERE id = ?";
+
+        // Résultat de la requête
+        int result = 0;
+        PreparedStatement statement = null;
+
         try {
-            // on prépare la requête de suppression
-            String query = "DELETE FROM fleetview_cycle_fournisseur WHERE id = ?";
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            // on attribue les valeurs aux paramètres
+            // On prépare la requête de suppression
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
             statement.setInt(1, obj.getId());
-            // on exécute la requête
-            int result = statement.executeUpdate();
-            // Vérification du nombre de lignes affectées par la requête de suppression
-            if (result == 0) {
-                logger.error("Echec de la suppression du cycle fournisseur, aucune ligne supprimée dans la table.");
-                return false;
-            }
-            statement.close();
-            return true;
+
+            // On exécute la requête
+            result = statement.executeUpdate();
         } catch (SQLException ex) {
             logger.error("Impossible de supprimer le Cycle Fournisseur", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(statement);
+        }
+
+        // Si la requête a échoué
+        if (result == 0) {
+            logger.error("Échec de la suppression du cycle fournisseur, aucune ligne supprimée dans la table.");
             return false;
         }
+
+        return true;
     }
 
     /**
      * Méthode de mise à jour d'un enregistrement de cycle fournisseur
      *
      * @param obj un objet CycleFournisseur à mettre à jour dans la base
-     * @return boolean qui vaut true si la mise à jour a réussi, false dans le
-     * cas contraire
+     * @return boolean qui vaut true si la mise à jour a réussi, false dans le cas contraire
      */
     @Override
     public boolean update(CycleFournisseur obj) {
         // On vérifie que l'objet possède un ID
         if (obj.getId() == 0) {
-            logger.error("Objet ne possédant pas d'ID enregistré");
+            logger.error("L'objet CycleFournisseur n'a pas d'ID");
             return false;
         }
+
+        // Requête de mise à jour
+        String query = "UPDATE fleetview_cycle_fournisseur SET nom = ?, mail = ?, telephone = ?, date_archive = ? WHERE id = ?";
+
+        // Résultat de la requête
+        int result = 0;
+        PreparedStatement statement = null;
+
         try {
-            // on prépare la requête de mise à jour
-            String query = "UPDATE fleetview_cycle_fournisseur SET nom = ?, mail = ?, telephone = ?, date_archive = ? WHERE id = ?";
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            // on attribue les valeurs aux paramètres
+            // On prépare la requête de mise à jour
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
             statement.setString(2, obj.getMail());
             statement.setString(3, obj.getTelephone());
             statement.setObject(4, obj.getDateArchive());
             statement.setInt(5, obj.getId());
-            // on exécute la requête
-            int result = statement.executeUpdate();
-            // Vérification du nombre de lignes affectées par la requête de mise à jour
-            if (result == 0) {
-                logger.error("Echec de la mise à jour du cycle fournisseur, aucune ligne modifiée dans la table.");
-                return false;
-            }
-            return true;
+
+            // On exécute la requête
+            result = statement.executeUpdate();
         } catch (SQLException ex) {
             logger.error("Impossible de mettre à jour le Cycle Fournisseur", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(statement);
+        }
+
+        // Si la requête a échoué
+        if (result == 0) {
+            logger.error("Échec de la mise à jour du cycle fournisseur, aucune ligne modifiée dans la table.");
             return false;
         }
+
+        return true;
     }
 
     /**
      * Méthode de récupération de tous les enregistrements de cycle fournisseur
      *
-     * @return une List d'objets CycleFournisseur
+     * @return une List d'objets CycleFournisseur, vide en cas d'erreur ou si la table est vide
      */
     @Override
     public List<CycleFournisseur> getAll() {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_cycle_fournisseur";
+
+        // Résultat de la requête
+        List<CycleFournisseur> result = new LinkedList<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
         try {
-            // on prépare la requête de sélection
-            String query = "SELECT * FROM fleetview_cycle_fournisseur";
-            PreparedStatement statement = this.connection.prepareStatement(query);
-            // on exécute la requête et on récupère le résultat
-            ResultSet resultSet = statement.executeQuery();
-            // on parcourt le résultat pour créer les objets CycleFournisseur correspondants
-            List<CycleFournisseur> cycleFournisseurs = null;
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On parcourt le résultat pour créer les objets CycleFournisseur correspondants
             while (resultSet.next()) {
-                if (cycleFournisseurs == null) {
-                    cycleFournisseurs = new ArrayList<>();
-                }
+                // Création d'un objet CycleFournisseur
                 CycleFournisseur cycleFournisseur = new CycleFournisseur();
-                fillObject(cycleFournisseur, resultSet);
-                cycleFournisseurs.add(fillObject(new CycleFournisseur(), resultSet));
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(cycleFournisseur, resultSet);
+
+                // On ajoute l'objet au résultat final
+                result.add(cycleFournisseur);
             }
-            return cycleFournisseurs;
         } catch (SQLException ex) {
             logger.error("Impossible de récupérer les Cycle Fournisseur", ex);
-            return null;
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
         }
+
+        return result;
     }
 
     /**
      * Méthode de récupération d'un enregistrement de cycle fournisseur par son identifiant.
      *
      * @param id l'identificateur à rechercher
-     * @return un objet CycleFournisseur
+     * @return un objet CycleFournisseur correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
      */
     @Override
     public CycleFournisseur getById(int id) {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_cycle_fournisseur WHERE id = ?";
+
+        // Résultat de la requête
+        CycleFournisseur result = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
         try {
             // On prépare la requête de sélection
-            String query = "SELECT * FROM fleetview_cycle_fournisseur WHERE id = ?";
-            PreparedStatement statement = this.connection.prepareStatement(query);
+            statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setInt(1, id);
+
             // On exécute la requête et on récupère le résultat
-            ResultSet resultSet = statement.executeQuery();
-            // On vérifie que le résultat n'est pas vide, si oui on retourne null
-            if (!resultSet.next()) {
-                return null;
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                // Création d'un objet CycleFournisseur
+                result = new CycleFournisseur();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(result, resultSet);
             }
-            // On crée l'objet CycleFournisseur correspondant à la première ligne du résultat
-            CycleFournisseur cycleFournisseur = new CycleFournisseur();
-            fillObject(new CycleFournisseur(), resultSet);
-            return cycleFournisseur;
         } catch (SQLException ex) {
             logger.error("Impossible de récupérer le Cycle Fournisseur", ex);
-            return null;
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
         }
+
+        return result;
     }
 
     /**
@@ -197,19 +260,17 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
      *
      * @param cycleFournisseur l'objet CycleFournisseur à remplir
      * @param resultSet        le résultat de la requête de sélection
-     * @return un objet CycleFournisseur rempli
      */
-     protected CycleFournisseur fillObject(CycleFournisseur cycleFournisseur, ResultSet resultSet) {
+    protected void fillObject(CycleFournisseur cycleFournisseur, ResultSet resultSet) {
         try {
+            // Remplissage de l'objet CycleFournisseur
             cycleFournisseur.setId(resultSet.getInt("id"));
             cycleFournisseur.setNom(resultSet.getString("nom"));
             cycleFournisseur.setMail(resultSet.getString("mail"));
             cycleFournisseur.setTelephone(resultSet.getString("telephone"));
             cycleFournisseur.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
-            return cycleFournisseur;
         } catch (SQLException ex) {
             logger.error("Impossible de remplir l'objet CycleFournisseur", ex);
-            return null; // lever exception ?
         }
     }
 }

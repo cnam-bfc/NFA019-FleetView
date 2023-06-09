@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -76,9 +77,27 @@ public abstract class DAO<T> {
 
     /**
      * Méthode de remplissage d'un objet à partir d'un ResultSet
-     * @param obj T
+     *
+     * @param obj       T
      * @param resultSet java.sql.ResultSet
-     * @return T
      */
-    protected abstract T fillObject(T obj,java.sql.ResultSet resultSet) ;
+    protected abstract void fillObject(T obj, ResultSet resultSet);
+
+    /**
+     * Méthode de fermeture d'une ressource fermable
+     *
+     * @param resource
+     * @return boolean qui vaut true si la fermeture a réussi, false dans le cas
+     */
+    protected boolean closeResource(AutoCloseable resource) {
+        try {
+            if (resource != null) {
+                resource.close();
+            }
+            return true;
+        } catch (Exception e) {
+            logger.error("Erreur lors de la fermeture de la ressource", e);
+            return false;
+        }
+    }
 }
