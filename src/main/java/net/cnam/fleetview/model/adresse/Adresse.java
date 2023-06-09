@@ -20,7 +20,7 @@ public class Adresse {
     /**
      * Identifiant OSM
      */
-    private int osmId;
+    private long osmId;
     /**
      * Pays
      */
@@ -100,7 +100,7 @@ public class Adresse {
      * Récupère l'identifiant OSM
      * @return osmId
      */
-    public int getOsmId() {
+    public long getOsmId() {
         return osmId;
     }
 
@@ -108,7 +108,7 @@ public class Adresse {
      * Définit l'identifiant OSM
      * @param osmId osmId
      */
-    public void setOsmId(int osmId) {
+    public void setOsmId(long osmId) {
         this.osmId = osmId;
     }
 
