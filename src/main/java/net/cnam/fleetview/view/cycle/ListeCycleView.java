@@ -13,6 +13,8 @@ public class ListeCycleView extends JPanel {
     public ListeCycleView() {
 
         //JLabel LabelTitrePage = new JLabel("Cycles");
+        JPanel panelTable = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel panelBouton =  new JPanel();
         TitrePanel titrepanel = new TitrePanel("\uF84A", "Cycles");
         JButton BoutonAjoutCycle = new JButton("Ajouter un Cycle");
         DefaultTableModel model = new DefaultTableModel();
@@ -39,56 +41,20 @@ public class ListeCycleView extends JPanel {
         cellRenderer.setBackground(Color.lightGray);
         cellRenderer.setForeground(Color.black);
         table.setDefaultRenderer(Object.class, cellRenderer);
-        table.setMaximumSize(new Dimension(10, 10));
+        scrollPane.setPreferredSize(new Dimension(1000, 100));
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.gray);
         header.setForeground(Color.white);
         header.setFont(font);
-        BoutonAjoutCycle.setMaximumSize(new Dimension(10, 5));
+        BoutonAjoutCycle.setPreferredSize(new Dimension(10, 5));
 
 
         this.add(titrepanel, BorderLayout.NORTH);
-        this.add(scrollPane, BorderLayout.CENTER);
-        this.add(BoutonAjoutCycle, BorderLayout.SOUTH);
+        panelTable.add(scrollPane);
+        this.add(panelTable, BorderLayout.CENTER);
+        panelBouton.add(BoutonAjoutCycle);
+        this.add(panelBouton, BorderLayout.SOUTH);
 
-        // Création du modèle de tableau avec des données vides
-        /*DefaultTableModel model = new DefaultTableModel();
-
-        // Ajout des colonnes
-        model.addColumn("Nom");
-        model.addColumn("Âge");
-        model.addColumn("Pays");
-
-        // Ajout des données
-        model.addRow(new Object[]{"John Doe", 28, "USA"});
-        model.addRow(new Object[]{"Jane Smith", 32, "UK"});
-        model.addRow(new Object[]{"Bob Johnson", 45, "Canada"});
-        model.addRow(new Object[]{"Alice Williams", 19, "Australia"});
-
-        // Création du tableau avec le modèle personnalisé
-        JTable table = new JTable(model);
-
-        // Définition du style de la police
-        Font font = new Font("Arial", Font.BOLD, 12);
-        table.setFont(font);
-
-        // Définition du style des cellules
-        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
-        cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        cellRenderer.setBackground(Color.lightGray);
-        cellRenderer.setForeground(Color.black);
-        table.setDefaultRenderer(Object.class, cellRenderer);
-
-        // Définition du style de l'en-tête du tableau
-        JTableHeader header = table.getTableHeader();
-        header.setBackground(Color.gray);
-        header.setForeground(Color.white);
-        header.setFont(font);
-
-        // Création d'un JScrollPane pour afficher le tableau avec une barre de défilement
-        JScrollPane scrollPane = new JScrollPane(table);
-
-        this.add(scrollPane);*/
     }
 }
 
