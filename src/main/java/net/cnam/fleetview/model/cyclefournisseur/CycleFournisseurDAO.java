@@ -202,6 +202,9 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             }
         } catch (SQLException ex) {
             logger.error("Impossible de récupérer les Cycle Fournisseur", ex);
+
+            // Si une erreur s'est produite, on renvoie la liste vide
+            result = null;
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(resultSet);
