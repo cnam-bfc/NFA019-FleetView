@@ -20,7 +20,7 @@ public class Historique {
     /**
      * Identifiant du tuple concerné par l'historique
      */
-    private String idTuple;
+    private String identifiantTuple;
     /**
      * Date de l'historique du tuple
      */
@@ -83,17 +83,17 @@ public class Historique {
      *
      * @return l'identifiant du tuple concerné par l'historique
      */
-    public String getIdTuple() {
-        return idTuple;
+    public String getIdentifiantTuple() {
+        return identifiantTuple;
     }
 
     /**
      * Définit l'identifiant du tuple concerné par l'historique
      *
-     * @param idTuple le nouvel identifiant du tuple concerné par l'historique
+     * @param identifiantTuple le nouvel identifiant du tuple concerné par l'historique
      */
-    public void setIdTuple(String idTuple) {
-        this.idTuple = idTuple;
+    public void setIdentifiantTuple(String identifiantTuple) {
+        this.identifiantTuple = identifiantTuple;
     }
 
     /**

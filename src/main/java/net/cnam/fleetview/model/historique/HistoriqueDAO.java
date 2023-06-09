@@ -50,7 +50,7 @@ public class HistoriqueDAO extends DAO<Historique> {
             statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getTableTuple());
-            statement.setString(2, obj.getIdTuple());
+            statement.setString(2, obj.getIdentifiantTuple());
             statement.setObject(3, obj.getDateChangementTuple());
             statement.setInt(4, obj.getIdHistoriqueType());
             statement.setInt(5, obj.getIdUtilisateur());
@@ -155,7 +155,7 @@ public class HistoriqueDAO extends DAO<Historique> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getTableTuple());
-            statement.setString(2, obj.getIdTuple());
+            statement.setString(2, obj.getIdentifiantTuple());
             statement.setObject(3, obj.getDateChangementTuple());
             statement.setInt(4, obj.getIdHistoriqueType());
             statement.setInt(5, obj.getIdUtilisateur());
@@ -284,7 +284,7 @@ public class HistoriqueDAO extends DAO<Historique> {
             // Remplissage de l'objet CycleFournisseur
             historique.setIdHistorique(resultSet.getInt("id_historique"));
             historique.setTableTuple(resultSet.getString("table_tuple"));
-            historique.setIdTuple(resultSet.getString("identifiant_tuple"));
+            historique.setIdentifiantTuple(resultSet.getString("identifiant_tuple"));
             historique.setDateChangementTuple(resultSet.getObject("date_changement_tuple", LocalDateTime.class));
             historique.setIdHistoriqueType(resultSet.getInt("id_historique_type"));
             historique.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
