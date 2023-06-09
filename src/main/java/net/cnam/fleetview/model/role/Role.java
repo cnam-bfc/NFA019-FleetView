@@ -1,4 +1,4 @@
-package net.cnam.fleetview.role;
+package net.cnam.fleetview.model.role;
 
 /**
  * Classe Role
