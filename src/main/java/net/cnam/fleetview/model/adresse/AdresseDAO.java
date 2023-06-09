@@ -3,7 +3,6 @@ package net.cnam.fleetview.model.adresse;
 import net.cnam.fleetview.model.Archivable;
 import net.cnam.fleetview.model.DAO;
 import net.cnam.fleetview.model.TypeHistorique;
-import net.cnam.fleetview.model.cyclefournisseur.CycleFournisseur;
 import net.cnam.fleetview.model.historiquedata.HistoriqueData;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 
@@ -14,7 +13,7 @@ import java.util.List;
 
 /**
  * Classe DAO pour les adresses
- *
+ * <p>
  * Concerne la table : fleetview_adresse
  */
 public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
@@ -358,8 +357,8 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
     /**
      * Méthode permettant de remplir un objet Adresse avec les valeurs d'un enregistrement de la table fleetview_adresse
      *
-     * @param adresse L'objet Adresse à remplir
-     * @param resultSet        Le résultat de la requête de sélection
+     * @param adresse   L'objet Adresse à remplir
+     * @param resultSet Le résultat de la requête de sélection
      */
     protected void fillObject(Adresse adresse, ResultSet resultSet) {
         try {
@@ -383,21 +382,27 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
     @Override
     protected void handleHistorique(TypeHistorique type, Utilisateur user, Adresse before, Adresse after) {
         // Récupération de l'identifiant unique de l'objet
-        int id = before != null ? before.getIdCycleFournisseur() : after != null ? after.getIdCycleFournisseur() : -1;
+        int id = before != null ? before.getIdAdresse() : after != null ? after.getIdAdresse() : -1;
 
-        if (before != null && after != null && before.getIdCycleFournisseur() != after.getIdCycleFournisseur()) {
-            logger.error("Impossible de créer l'historique, les deux objets CycleFournisseur ont des identifiants différents");
+        if (before != null && after != null && before.getIdAdresse() != after.getIdAdresse()) {
+            logger.error("Impossible de créer l'historique, les deux objets Adresse ont des identifiants différents");
         } else if (id == -1) {
-            logger.error("Impossible de créer l'historique, les deux objets CycleFournisseur sont null");
+            logger.error("Impossible de créer l'historique, les deux objets Adresse sont null");
         }
 
         // Construction des changements
-        HistoriqueData nom = this.checkChanges("nom", before != null ? before.getNom() : null, after != null ? after.getNom() : null);
-        HistoriqueData mail = this.checkChanges("mail", before != null ? before.getMail() : null, after != null ? after.getMail() : null);
-        HistoriqueData telephone = this.checkChanges("telephone", before != null ? before.getTelephone() : null, after != null ? after.getTelephone() : null);
+        HistoriqueData osmType = this.checkChanges("osm_type", before != null ? before.getOsmType() : null, after != null ? after.getOsmType() : null);
+        HistoriqueData osmId = this.checkChanges("osm_id", before != null ? before.getOsmId() : null, after != null ? after.getOsmId() : null);
+        HistoriqueData pays = this.checkChanges("pays", before != null ? before.getPays() : null, after != null ? after.getPays() : null);
+        HistoriqueData codePostal = this.checkChanges("code_postal", before != null ? before.getCodePostal() : null, after != null ? after.getCodePostal() : null);
+        HistoriqueData commune = this.checkChanges("commune", before != null ? before.getCommune() : null, after != null ? after.getCommune() : null);
+        HistoriqueData rue = this.checkChanges("rue", before != null ? before.getRue() : null, after != null ? after.getRue() : null);
+        HistoriqueData numeroDeRue = this.checkChanges("numero_rue", before != null ? before.getNumeroDeRue() : null, after != null ? after.getNumeroDeRue() : null);
+        HistoriqueData complement = this.checkChanges("complement", before != null ? before.getComplement() : null, after != null ? after.getComplement() : null);
         HistoriqueData dateArchive = this.checkChanges("date_archive", before != null ? before.getDateArchive() : null, after != null ? after.getDateArchive() : null);
+        HistoriqueData idSecteur = this.checkChanges("id_secteur", before != null ? before.getIdSecteur() : null, after != null ? after.getIdSecteur() : null);
 
         // Création de l'historique
-        this.historique.addHistorique(type, user, "fleetview_adresse", id, nom, mail, telephone, dateArchive);
+        this.historique.addHistorique(type, user, "fleetview_adresse", id, osmType, osmId, pays, codePostal, commune, rue, numeroDeRue, complement, dateArchive, idSecteur);
     }
 }
