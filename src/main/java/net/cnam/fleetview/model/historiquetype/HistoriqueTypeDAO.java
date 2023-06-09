@@ -93,7 +93,7 @@ public class HistoriqueTypeDAO extends DAO<HistoriqueType> {
         }
 
         // Requête de suppression
-        String query = "DELETE FROM fleetview_historique_type WHERE id = ?";
+        String query = "DELETE FROM fleetview_historique_type WHERE id_historique_type = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -139,7 +139,7 @@ public class HistoriqueTypeDAO extends DAO<HistoriqueType> {
         }
 
         // Requête de mise à jour
-        String query = "UPDATE fleetview_historique_type SET nom = ? WHERE id = ?";
+        String query = "UPDATE fleetview_historique_type SET nom = ? WHERE id_historique_type = ?";
 
         // Résultat de la requête
         int result = 0;
