@@ -1,6 +1,8 @@
 package net.cnam.fleetview.model.historiquedata;
 
 import net.cnam.fleetview.model.DAO;
+import net.cnam.fleetview.model.TypeHistorique;
+import net.cnam.fleetview.model.utilisateur.Utilisateur;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -22,11 +24,12 @@ public class HistoriqueDataDAO extends DAO<HistoriqueData> {
     /**
      * Méthode de création d'un enregistrement d'HistoriqueData
      *
-     * @param obj un objet HistoriqueData à écrire dans la base
+     * @param obj  Un objet HistoriqueData à écrire dans la base
+     * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la création a réussi, false dans le cas contraire
      */
     @Override
-    public boolean create(HistoriqueData obj) {
+    public boolean create(HistoriqueData obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
         if (obj.getIdHistoriqueData() != 0) {
             logger.error("L'objet HistoriqueData a déjà un ID");
@@ -79,11 +82,12 @@ public class HistoriqueDataDAO extends DAO<HistoriqueData> {
     /**
      * Méthode de suppression d'un enregistrement d'HistoriqueData
      *
-     * @param obj un objet HistoriqueData à supprimer dans la base
+     * @param obj  Un objet HistoriqueData à supprimer dans la base
+     * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la suppression a réussi, false dans le cas contraire
      */
     @Override
-    public boolean delete(HistoriqueData obj) {
+    public boolean delete(HistoriqueData obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
         if (obj.getIdHistoriqueData() == 0) {
             logger.error("L'objet Historique n'a pas d'ID");
@@ -125,11 +129,12 @@ public class HistoriqueDataDAO extends DAO<HistoriqueData> {
     /**
      * Méthode de mise à jour d'un enregistrement d'HistoriqueData
      *
-     * @param obj un objet HistoriqueData à mettre à jour dans la base
+     * @param obj  Un objet HistoriqueData à mettre à jour dans la base
+     * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la mise à jour a réussi, false dans le cas contraire
      */
     @Override
-    public boolean update(HistoriqueData obj) {
+    public boolean update(HistoriqueData obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
         if (obj.getIdHistorique() == 0) {
             logger.error("L'objet HistoriqueData n'a pas d'ID");
@@ -174,7 +179,7 @@ public class HistoriqueDataDAO extends DAO<HistoriqueData> {
     /**
      * Méthode de récupération de tous les enregistrements d'HistoriqueData
      *
-     * @return une List d'objets HistoriqueData, vide en cas d'erreur ou si la table est vide
+     * @return Une List d'objets HistoriqueData, vide en cas d'erreur ou si la table est vide
      */
     @Override
     public List<HistoriqueData> getAll() {
@@ -222,8 +227,8 @@ public class HistoriqueDataDAO extends DAO<HistoriqueData> {
     /**
      * Méthode de récupération d'un enregistrement d'HistoriqueData par son identifiant.
      *
-     * @param id l'identificateur à rechercher
-     * @return un objet HistoriqueData correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
+     * @param id L'identificateur à rechercher
+     * @return Un objet HistoriqueData correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
      */
     @Override
     public HistoriqueData getById(int id) {
@@ -267,8 +272,8 @@ public class HistoriqueDataDAO extends DAO<HistoriqueData> {
     /**
      * Méthode permettant de remplir un objet HistoriqueData avec les valeurs d'un enregistrement de la table fleetview_historique_data
      *
-     * @param historiqueData l'objet HistoriqueData à remplir
-     * @param resultSet      le résultat de la requête de sélection
+     * @param historiqueData L'objet HistoriqueData à remplir
+     * @param resultSet      Le résultat de la requête de sélection
      */
     protected void fillObject(HistoriqueData historiqueData, ResultSet resultSet) {
         try {
@@ -281,5 +286,10 @@ public class HistoriqueDataDAO extends DAO<HistoriqueData> {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet historiqueData", ex);
         }
+    }
+
+    @Override
+    protected void handleHistorique(TypeHistorique type, Utilisateur user, HistoriqueData before, HistoriqueData after) {
+        // Ne rien faire puisque l'historique n'est pas géré pour cette table
     }
 }

@@ -1,6 +1,8 @@
 package net.cnam.fleetview.model.historique;
 
 import net.cnam.fleetview.model.DAO;
+import net.cnam.fleetview.model.TypeHistorique;
+import net.cnam.fleetview.model.utilisateur.Utilisateur;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -9,7 +11,7 @@ import java.util.List;
 
 /**
  * Classe HistoriqueDAO
- *
+ * <p>
  * Cette classe permet de créer des objets d'accès à la base de données pour les objets Historique.
  * Fais la jonction entre les objets Historique et la base de données.
  * table concernée : fleetview_historique
@@ -27,11 +29,12 @@ public class HistoriqueDAO extends DAO<Historique> {
     /**
      * Méthode de création d'un enregistrement d'Historique
      *
-     * @param obj un objet Historique à écrire dans la base
+     * @param obj  Un objet Historique à écrire dans la base
+     * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la création a réussi, false dans le cas contraire
      */
     @Override
-    public boolean create(Historique obj) {
+    public boolean create(Historique obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
         if (obj.getIdHistorique() != 0) {
             logger.error("L'objet Historique a déjà un ID");
@@ -86,11 +89,12 @@ public class HistoriqueDAO extends DAO<Historique> {
     /**
      * Méthode de suppression d'un enregistrement d'Historique
      *
-     * @param obj un objet Historique à supprimer dans la base
+     * @param obj  Un objet Historique à supprimer dans la base
+     * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la suppression a réussi, false dans le cas contraire
      */
     @Override
-    public boolean delete(Historique obj) {
+    public boolean delete(Historique obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
         if (obj.getIdHistorique() == 0) {
             logger.error("L'objet Historique n'a pas d'ID");
@@ -132,11 +136,12 @@ public class HistoriqueDAO extends DAO<Historique> {
     /**
      * Méthode de mise à jour d'un enregistrement d'Historique
      *
-     * @param obj un objet Historique à mettre à jour dans la base
+     * @param obj  Un objet Historique à mettre à jour dans la base
+     * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la mise à jour a réussi, false dans le cas contraire
      */
     @Override
-    public boolean update(Historique obj) {
+    public boolean update(Historique obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
         if (obj.getIdHistorique() == 0) {
             logger.error("L'objet Historique n'a pas d'ID");
@@ -183,7 +188,7 @@ public class HistoriqueDAO extends DAO<Historique> {
     /**
      * Méthode de récupération de tous les enregistrements d'Historique
      *
-     * @return une List d'objets Historique, vide en cas d'erreur ou si la table est vide
+     * @return Une List d'objets Historique, vide en cas d'erreur ou si la table est vide
      */
     @Override
     public List<Historique> getAll() {
@@ -231,8 +236,8 @@ public class HistoriqueDAO extends DAO<Historique> {
     /**
      * Méthode de récupération d'un enregistrement d'Historique par son identifiant.
      *
-     * @param id l'identificateur à rechercher
-     * @return un objet Historique correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
+     * @param id L'identificateur à rechercher
+     * @return Un objet Historique correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
      */
     @Override
     public Historique getById(int id) {
@@ -276,8 +281,8 @@ public class HistoriqueDAO extends DAO<Historique> {
     /**
      * Méthode permettant de remplir un objet Historique avec les valeurs d'un enregistrement de la table fleetview_historique
      *
-     * @param historique l'objet Historique à remplir
-     * @param resultSet  le résultat de la requête de sélection
+     * @param historique L'objet Historique à remplir
+     * @param resultSet  Le résultat de la requête de sélection
      */
     protected void fillObject(Historique historique, ResultSet resultSet) {
         try {
@@ -292,5 +297,10 @@ public class HistoriqueDAO extends DAO<Historique> {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet Historique", ex);
         }
+    }
+
+    @Override
+    protected void handleHistorique(TypeHistorique type, Utilisateur user, Historique before, Historique after) {
+        // Ne rien faire puisque l'historique n'est pas géré pour cette table
     }
 }
