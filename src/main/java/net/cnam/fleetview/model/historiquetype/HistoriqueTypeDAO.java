@@ -273,7 +273,7 @@ public class HistoriqueTypeDAO extends DAO<HistoriqueType> {
     protected void fillObject(HistoriqueType historiqueType, ResultSet resultSet) {
         try {
             // Remplissage de l'objet CycleFournisseur
-            historiqueType.setIdHistoriqueType(resultSet.getInt("id"));
+            historiqueType.setIdHistoriqueType(resultSet.getInt("id_historique_type"));
             historiqueType.setNom(resultSet.getString("nom"));
         } catch (SQLException ex) {
             // On log l'erreur
