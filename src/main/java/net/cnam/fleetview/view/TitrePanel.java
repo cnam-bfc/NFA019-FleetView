@@ -3,6 +3,7 @@ package net.cnam.fleetview.view;
 import net.cnam.fleetview.App;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class TitrePanel extends JPanel {
     // CONSTANTES
@@ -14,7 +15,7 @@ public class TitrePanel extends JPanel {
     private final JLabel titreLabel;
 
     public TitrePanel(String logo, String titre) {
-        super();
+        super(new FlowLayout(FlowLayout.LEFT));
 
         this.logo = logo;
         this.titre = titre;
