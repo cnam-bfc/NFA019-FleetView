@@ -375,7 +375,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             adresse.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible de remplir l'objet CycleFournisseur", ex);
+            logger.error("Impossible de remplir l'objet Adresse", ex);
         }
     }
 
