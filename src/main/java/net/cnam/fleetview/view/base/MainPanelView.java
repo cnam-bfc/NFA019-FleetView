@@ -1,11 +1,13 @@
 package net.cnam.fleetview.view.base;
 
+import net.cnam.fleetview.view.cycle.ListeCycleView;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MainPanelView extends JPanel {
     private final TopMenuPanelView topMenuPanelView = new TopMenuPanelView();
-    private final ContentPanelView contentPanelView = new ContentPanelView();
+    private final ListeCycleView contentPanelView = new ListeCycleView();
 
     public MainPanelView() {
         super();
@@ -21,7 +23,7 @@ public class MainPanelView extends JPanel {
         return topMenuPanelView;
     }
 
-    public ContentPanelView getContentPanel() {
+    public ListeCycleView getContentPanel() {
         return contentPanelView;
     }
 }
