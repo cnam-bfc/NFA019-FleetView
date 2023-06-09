@@ -30,7 +30,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
     @Override
     public boolean create(CycleFournisseur obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getId() != 0) {
+        if (obj.getIdCycleFournisseur() != 0) {
             logger.error("L'objet CycleFournisseur a déjà un ID");
             return false;
         }
@@ -92,7 +92,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
     @Override
     public boolean delete(CycleFournisseur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getId() == 0) {
+        if (obj.getIdCycleFournisseur() == 0) {
             logger.error("L'objet CycleFournisseur n'a pas d'ID");
             return false;
         }
@@ -108,10 +108,10 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getId());
+            statement.setInt(1, obj.getIdCycleFournisseur());
 
             // Récupération de l'objet avant suppression
-            CycleFournisseur objAvantSuppression = this.getById(obj.getId());
+            CycleFournisseur objAvantSuppression = this.getById(obj.getIdCycleFournisseur());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -136,6 +136,57 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
     }
 
     /**
+     * Méthode d'archivage d'un enregistrement de cycle fournisseur
+     *
+     * @return boolean qui vaut true si la mise à jour a réussi, false dans le cas contraire
+     */
+    public boolean archive(CycleFournisseur obj, Utilisateur user) {
+        // On vérifie que l'objet possède un ID
+        if (obj.getIdCycleFournisseur() == 0) {
+            logger.error("L'objet CycleFournisseur n'a pas d'ID");
+            return false;
+        }
+
+        // Requête de mise à jour
+        String query = "UPDATE fleetview_cycle_fournisseur SET date_archive = ? WHERE id = ?";
+
+        // Résultat de la requête
+        int result = 0;
+        PreparedStatement statement = null;
+
+        try {
+            // On prépare la requête de mise à jour
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, obj.getDateArchive());
+            statement.setInt(2, obj.getIdCycleFournisseur());
+
+            // Récupération de l'objet avant mise à jour
+            CycleFournisseur objAvantMAJ = this.getById(obj.getIdCycleFournisseur());
+
+            // On exécute la requête
+            result = statement.executeUpdate();
+
+            // On ajoute l'historique
+            this.handleHistorique(TypeHistorique.ARCHIVE, user, objAvantMAJ, obj);
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible d'archiver le Cycle Fournisseur", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(statement);
+        }
+
+        // Si la requête a échoué
+        if (result == 0) {
+            logger.error("Échec de l'archivage du cycle fournisseur, aucune ligne mise à jour dans la table.");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Méthode de mise à jour d'un enregistrement de cycle fournisseur
      *
      * @param obj  Un objet CycleFournisseur à mettre à jour dans la base
@@ -145,7 +196,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
     @Override
     public boolean update(CycleFournisseur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getId() == 0) {
+        if (obj.getIdCycleFournisseur() == 0) {
             logger.error("L'objet CycleFournisseur n'a pas d'ID");
             return false;
         }
@@ -165,10 +216,10 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
             statement.setString(2, obj.getMail());
             statement.setString(3, obj.getTelephone());
             statement.setObject(4, obj.getDateArchive());
-            statement.setInt(5, obj.getId());
+            statement.setInt(5, obj.getIdCycleFournisseur());
 
             // Récupération de l'objet avant modification
-            CycleFournisseur objAvantModification = this.getById(obj.getId());
+            CycleFournisseur objAvantModification = this.getById(obj.getIdCycleFournisseur());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -308,9 +359,9 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> {
     @Override
     protected void handleHistorique(TypeHistorique type, Utilisateur user, CycleFournisseur before, CycleFournisseur after) {
         // Récupération de l'identifiant unique de l'objet
-        int id = before != null ? before.getId() : after != null ? after.getId() : -1;
+        int id = before != null ? before.getIdCycleFournisseur() : after != null ? after.getIdCycleFournisseur() : -1;
 
-        if (before != null && after != null && before.getId() != after.getId()) {
+        if (before != null && after != null && before.getIdCycleFournisseur() != after.getIdCycleFournisseur()) {
             logger.error("Impossible de créer l'historique, les deux objets CycleFournisseur ont des identifiants différents");
         } else if (id == -1) {
             logger.error("Impossible de créer l'historique, les deux objets CycleFournisseur sont null");
