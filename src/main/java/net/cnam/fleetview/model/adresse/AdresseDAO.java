@@ -283,9 +283,9 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
 
-            // On parcourt le résultat pour créer les objets CycleFournisseur correspondants
+            // On parcourt le résultat pour créer les objets Adresse correspondants
             while (resultSet.next()) {
-                // Création d'un objet CycleFournisseur
+                // Création d'un objet Adresse
                 Adresse adresse = new Adresse();
 
                 // On remplit l'objet avec les informations issues de la requête
@@ -336,7 +336,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
 
             // On vérifie que le résultat n'est pas vide
             if (resultSet.next()) {
-                // Création d'un objet CycleFournisseur
+                // Création d'un objet Adresse
                 result = new Adresse();
 
                 // On remplit l'objet avec les informations issues de la requête
@@ -362,7 +362,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
      */
     protected void fillObject(Adresse adresse, ResultSet resultSet) {
         try {
-            // Remplissage de l'objet CycleFournisseur
+            // Remplissage de l'objet Adresse
             adresse.setIdAdresse(resultSet.getInt("id_adresse"));
             adresse.setOsmType(resultSet.getString("osm_type"));
             adresse.setOsmId(resultSet.getLong("osm_id"));
