@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Classe DAO pour les DroitsRole
- *
+ * <p>
  * Permet de créer des objets DroitsRole
  * Concerne la table : fleetview_droits_role
  */
@@ -36,6 +36,11 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
      */
     @Override
     public boolean create(DroitsRole obj, Utilisateur user) {
+        // On vérifie que l'objet a les id d'ID
+        if (obj.getIdRole() == 0 || obj.getIdDroits() == 0) {
+            logger.error("L'objet DroitsRole manque d'ID");
+            return false;
+        }
 
         // Requête d'insertion
         String query = "INSERT INTO fleetview_droits_role (id_role, id_droits, autorise) VALUES (?, ?, ?)";
