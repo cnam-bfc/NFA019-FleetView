@@ -1,4 +1,4 @@
-package net.cnam.fleetview.model.cyclefournisseur;
+package net.cnam.fleetview.model.secteur;
 
 import net.cnam.fleetview.model.Archivable;
 import net.cnam.fleetview.model.DAO;
@@ -11,33 +11,38 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archivable<CycleFournisseur> {
+/**
+ * Classe DAO pour les objets Secteur
+ * <p>
+ * Concerne la table : fleetview_secteur
+ */
+public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
     /**
      * Constructeur d'un objet d'accès à la base
      *
      * @param connection un objet connection de java.sql
      */
-    public CycleFournisseurDAO(Connection connection) {
+    public SecteurDAO(Connection connection) {
         super(connection);
     }
 
     /**
-     * Méthode de création d'un enregistrement de cycle fournisseur
+     * Méthode de création d'un enregistrement d'une Secteur
      *
-     * @param obj  Un objet CycleFournisseur à écrire dans la base
+     * @param obj  Un objet Secteur à écrire dans la base
      * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la création a réussi, false dans le cas contraire
      */
     @Override
-    public boolean create(CycleFournisseur obj, Utilisateur user) {
+    public boolean create(Secteur obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdCycleFournisseur() != 0) {
-            logger.error("L'objet CycleFournisseur a déjà un ID");
+        if (obj.getIdSecteur() != 0) {
+            logger.error("L'objet Secteur a déjà un ID");
             return false;
         }
 
         // Requête d'insertion
-        String query = "INSERT INTO fleetview_cycle_fournisseur (nom, mail, telephone, date_archive) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO fleetview_secteur (nom, date_archive) VALUES (?, ?)";
 
         // Résultat de la requête
         int result = 0;
@@ -48,9 +53,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
-            statement.setString(2, obj.getMail());
-            statement.setString(3, obj.getTelephone());
-            statement.setObject(4, obj.getDateArchive());
+            statement.setObject(2, obj.getDateArchive());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -61,14 +64,14 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
                 int id = statement.getGeneratedKeys().getInt(1);
 
                 // On met à jour l'objet pour lui attribuer l'id récupéré
-                obj.setId(id);
+                obj.setIdSecteur(id);
             }
 
             // On ajoute l'historique
             this.handleHistorique(TypeHistorique.ADD, user, null, obj);
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible d'insérer le Cycle Fournisseur", ex);
+            logger.error("Impossible d'insérer le Secteur", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(statement);
@@ -76,7 +79,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
 
         // Si la requête a échoué
         if (result == 0) {
-            logger.error("Échec de la création du cycle fournisseur, aucune ligne ajoutée dans la table.");
+            logger.error("Échec de la création du Secteur, aucune ligne ajoutée dans la table.");
             return false;
         }
 
@@ -84,22 +87,22 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode de suppression d'un enregistrement de cycle fournisseur
+     * Méthode de suppression d'un enregistrement d'une Secteur
      *
-     * @param obj  Un objet CycleFournisseur à supprimer dans la base
+     * @param obj  Un objet Secteur à supprimer dans la base
      * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la suppression a réussi, false dans le cas contraire
      */
     @Override
-    public boolean delete(CycleFournisseur obj, Utilisateur user) {
+    public boolean delete(Secteur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleFournisseur() == 0) {
-            logger.error("L'objet CycleFournisseur n'a pas d'ID");
+        if (obj.getIdSecteur() == 0) {
+            logger.error("L'objet Secteur n'a pas d'ID");
             return false;
         }
 
         // Requête de suppression
-        String query = "DELETE FROM fleetview_cycle_fournisseur WHERE id = ?";
+        String query = "DELETE FROM fleetview_secteur WHERE id_secteur = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -109,10 +112,10 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdCycleFournisseur());
+            statement.setInt(1, obj.getIdSecteur());
 
             // Récupération de l'objet avant suppression
-            CycleFournisseur objAvantSuppression = this.getById(obj.getIdCycleFournisseur());
+            Secteur objAvantSuppression = this.getById(obj.getIdSecteur());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -121,7 +124,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             this.handleHistorique(TypeHistorique.DELETE, user, objAvantSuppression, null);
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible de supprimer le Cycle Fournisseur", ex);
+            logger.error("Impossible de supprimer le Secteur", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(statement);
@@ -129,7 +132,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
 
         // Si la requête a échoué
         if (result == 0) {
-            logger.error("Échec de la suppression du cycle fournisseur, aucune ligne supprimée dans la table.");
+            logger.error("Échec de la suppression du Secteur, aucune ligne supprimée dans la table.");
             return false;
         }
 
@@ -137,19 +140,19 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode d'archivage d'un enregistrement de cycle fournisseur
+     * Méthode d'archivage d'un enregistrement du Secteur
      *
      * @return boolean qui vaut true si la mise à jour a réussi, false dans le cas contraire
      */
-    public boolean archive(CycleFournisseur obj, Utilisateur user) {
+    public boolean archive(Secteur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleFournisseur() == 0) {
-            logger.error("L'objet CycleFournisseur n'a pas d'ID");
+        if (obj.getIdSecteur() == 0) {
+            logger.error("L'objet Secteur n'a pas d'ID");
             return false;
         }
 
         // Requête de mise à jour
-        String query = "UPDATE fleetview_cycle_fournisseur SET date_archive = ? WHERE id = ?";
+        String query = "UPDATE fleetview_secteur SET date_archive = ? WHERE id_secteur = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -160,10 +163,10 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdCycleFournisseur());
+            statement.setInt(2, obj.getIdSecteur());
 
             // Récupération de l'objet avant mise à jour
-            CycleFournisseur objAvantMAJ = this.getById(obj.getIdCycleFournisseur());
+            Secteur objAvantMAJ = this.getById(obj.getIdSecteur());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -172,7 +175,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             this.handleHistorique(TypeHistorique.ARCHIVE, user, objAvantMAJ, obj);
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible d'archiver le Cycle Fournisseur", ex);
+            logger.error("Impossible d'archiver le Secteur", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(statement);
@@ -180,7 +183,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
 
         // Si la requête a échoué
         if (result == 0) {
-            logger.error("Échec de l'archivage du cycle fournisseur, aucune ligne mise à jour dans la table.");
+            logger.error("Échec de l'archivage du Secteur, aucune ligne mise à jour dans la table.");
             return false;
         }
 
@@ -188,22 +191,22 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode de mise à jour d'un enregistrement de cycle fournisseur
+     * Méthode de mise à jour d'un enregistrement du Secteur
      *
-     * @param obj  Un objet CycleFournisseur à mettre à jour dans la base
+     * @param obj  Un objet Secteur à mettre à jour dans la base
      * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la mise à jour a réussi, false dans le cas contraire
      */
     @Override
-    public boolean update(CycleFournisseur obj, Utilisateur user) {
+    public boolean update(Secteur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleFournisseur() == 0) {
-            logger.error("L'objet CycleFournisseur n'a pas d'ID");
+        if (obj.getIdSecteur() == 0) {
+            logger.error("L'objet Secteur n'a pas d'ID");
             return false;
         }
 
         // Requête de mise à jour
-        String query = "UPDATE fleetview_cycle_fournisseur SET nom = ?, mail = ?, telephone = ?, date_archive = ? WHERE id = ?";
+        String query = "UPDATE fleetview_secteur SET nom = ?, date_archive = ? WHERE id_secteur = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -214,13 +217,10 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
-            statement.setString(2, obj.getMail());
-            statement.setString(3, obj.getTelephone());
-            statement.setObject(4, obj.getDateArchive());
-            statement.setInt(5, obj.getIdCycleFournisseur());
+            statement.setObject(2, obj.getDateArchive());
 
             // Récupération de l'objet avant modification
-            CycleFournisseur objAvantModification = this.getById(obj.getIdCycleFournisseur());
+            Secteur objAvantModification = this.getById(obj.getIdSecteur());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -229,7 +229,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             this.handleHistorique(TypeHistorique.UPDATE, user, objAvantModification, obj);
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible de mettre à jour le Cycle Fournisseur", ex);
+            logger.error("Impossible de mettre à jour le Secteur", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(statement);
@@ -237,7 +237,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
 
         // Si la requête a échoué
         if (result == 0) {
-            logger.error("Échec de la mise à jour du cycle fournisseur, aucune ligne modifiée dans la table.");
+            logger.error("Échec de la mise à jour du Secteur, aucune ligne modifiée dans la table.");
             return false;
         }
 
@@ -245,17 +245,17 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode de récupération de tous les enregistrements de cycle fournisseur
+     * Méthode de récupération de tous les enregistrements des Secteur
      *
-     * @return Une List d'objets CycleFournisseur, vide en cas d'erreur ou si la table est vide
+     * @return Une List d'objets Secteur, vide en cas d'erreur ou si la table est vide
      */
     @Override
-    public List<CycleFournisseur> getAll() {
+    public List<Secteur> getAll() {
         // Requête de sélection
-        String query = "SELECT * FROM fleetview_cycle_fournisseur";
+        String query = "SELECT * FROM fleetview_secteur";
 
         // Résultat de la requête
-        List<CycleFournisseur> result = new LinkedList<>();
+        List<Secteur> result = new LinkedList<>();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -266,20 +266,20 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
 
-            // On parcourt le résultat pour créer les objets CycleFournisseur correspondants
+            // On parcourt le résultat pour créer les objets Secteur correspondants
             while (resultSet.next()) {
-                // Création d'un objet CycleFournisseur
-                CycleFournisseur cycleFournisseur = new CycleFournisseur();
+                // Création d'un objet Secteur
+                Secteur secteur = new Secteur();
 
                 // On remplit l'objet avec les informations issues de la requête
-                this.fillObject(cycleFournisseur, resultSet);
+                this.fillObject(secteur, resultSet);
 
                 // On ajoute l'objet au résultat final
-                result.add(cycleFournisseur);
+                result.add(secteur);
             }
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible de récupérer les Cycle Fournisseur", ex);
+            logger.error("Impossible de récupérer les Secteur", ex);
 
             // Si une erreur s'est produite, on renvoie la liste vide
             result = null;
@@ -293,18 +293,18 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode de récupération d'un enregistrement de cycle fournisseur par son identifiant.
+     * Méthode de récupération d'un enregistrement d'un Secteur par son identifiant.
      *
      * @param id L'identificateur à rechercher
-     * @return Un objet CycleFournisseur correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
+     * @return Un objet Secteur correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
      */
     @Override
-    public CycleFournisseur getById(int id) {
+    public Secteur getById(int id) {
         // Requête de sélection
-        String query = "SELECT * FROM fleetview_cycle_fournisseur WHERE id = ?";
+        String query = "SELECT * FROM fleetview_secteur WHERE id_secteur = ?";
 
         // Résultat de la requête
-        CycleFournisseur result = null;
+        Secteur result = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -319,15 +319,15 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
 
             // On vérifie que le résultat n'est pas vide
             if (resultSet.next()) {
-                // Création d'un objet CycleFournisseur
-                result = new CycleFournisseur();
+                // Création d'un objet Secteur
+                result = new Secteur();
 
                 // On remplit l'objet avec les informations issues de la requête
                 this.fillObject(result, resultSet);
             }
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible de récupérer le Cycle Fournisseur", ex);
+            logger.error("Impossible de récupérer un Secteur", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(resultSet);
@@ -338,43 +338,39 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode permettant de remplir un objet CycleFournisseur avec les valeurs d'un enregistrement de la table fleetview_cycle_fournisseur
+     * Méthode permettant de remplir un objet Secteur avec les valeurs d'un enregistrement de la table fleetview_secteur
      *
-     * @param cycleFournisseur L'objet CycleFournisseur à remplir
-     * @param resultSet        Le résultat de la requête de sélection
+     * @param secteur   L'objet Secteur à remplir
+     * @param resultSet Le résultat de la requête de sélection
      */
-    protected void fillObject(CycleFournisseur cycleFournisseur, ResultSet resultSet) {
+    protected void fillObject(Secteur secteur, ResultSet resultSet) {
         try {
-            // Remplissage de l'objet CycleFournisseur
-            cycleFournisseur.setId(resultSet.getInt("id"));
-            cycleFournisseur.setNom(resultSet.getString("nom"));
-            cycleFournisseur.setMail(resultSet.getString("mail"));
-            cycleFournisseur.setTelephone(resultSet.getString("telephone"));
-            cycleFournisseur.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
+            // Remplissage de l'objet Secteur
+            secteur.setIdSecteur(resultSet.getInt("id_secteur"));
+            secteur.setNom(resultSet.getString("nom"));
+            secteur.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible de remplir l'objet CycleFournisseur", ex);
+            logger.error("Impossible de remplir l'objet Secteur", ex);
         }
     }
 
     @Override
-    protected void handleHistorique(TypeHistorique type, Utilisateur user, CycleFournisseur before, CycleFournisseur after) {
+    protected void handleHistorique(TypeHistorique type, Utilisateur user, Secteur before, Secteur after) {
         // Récupération de l'identifiant unique de l'objet
-        int id = before != null ? before.getIdCycleFournisseur() : after != null ? after.getIdCycleFournisseur() : -1;
+        int id = before != null ? before.getIdSecteur() : after != null ? after.getIdSecteur() : -1;
 
-        if (before != null && after != null && before.getIdCycleFournisseur() != after.getIdCycleFournisseur()) {
-            logger.error("Impossible de créer l'historique, les deux objets CycleFournisseur ont des identifiants différents");
+        if (before != null && after != null && before.getIdSecteur() != after.getIdSecteur()) {
+            logger.error("Impossible de créer l'historique, les deux objets Secteur ont des identifiants différents");
         } else if (id == -1) {
-            logger.error("Impossible de créer l'historique, les deux objets CycleFournisseur sont null");
+            logger.error("Impossible de créer l'historique, les deux objets Secteur sont null");
         }
 
         // Construction des changements
         HistoriqueData nom = this.checkChanges("nom", before != null ? before.getNom() : null, after != null ? after.getNom() : null);
-        HistoriqueData mail = this.checkChanges("mail", before != null ? before.getMail() : null, after != null ? after.getMail() : null);
-        HistoriqueData telephone = this.checkChanges("telephone", before != null ? before.getTelephone() : null, after != null ? after.getTelephone() : null);
         HistoriqueData dateArchive = this.checkChanges("date_archive", before != null ? before.getDateArchive() : null, after != null ? after.getDateArchive() : null);
 
         // Création de l'historique
-        this.historique.addHistorique(type, user, "fleetview_cycle_fournisseur", id, nom, mail, telephone, dateArchive);
+        this.historique.addHistorique(type, user, "fleetview_secteur", id, nom, dateArchive);
     }
 }

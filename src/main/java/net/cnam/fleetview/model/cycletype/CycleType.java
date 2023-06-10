@@ -16,7 +16,7 @@ public class CycleType {
     /**
      * Nom du cycle type
      */
-    private String nomCycleType;
+    private String nom;
     /**
      * Date d'archivage du cycle type
      */
@@ -53,17 +53,17 @@ public class CycleType {
      *
      * @return le nom du cycle type
      */
-    public String getNomCycleType() {
-        return nomCycleType;
+    public String getNom() {
+        return nom;
     }
 
     /**
      * Définit le nom du cycle type
      *
-     * @param nomCycleType le nouveau nom du cycle type
+     * @param nom le nouveau nom du cycle type
      */
-    public void setNomCycleType(String nomCycleType) {
-        this.nomCycleType = nomCycleType;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     /**

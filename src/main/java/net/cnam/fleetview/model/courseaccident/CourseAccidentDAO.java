@@ -1,4 +1,4 @@
-package net.cnam.fleetview.model.cyclefournisseur;
+package net.cnam.fleetview.model.courseaccident;
 
 import net.cnam.fleetview.model.Archivable;
 import net.cnam.fleetview.model.DAO;
@@ -11,33 +11,39 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archivable<CycleFournisseur> {
+/**
+ * Classe CourseAccidentDAO
+ * <p>
+ * Cette classe permet de créer des objets CourseAccident.
+ * table concernée : fleetview_course_accident
+ */
+public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable<CourseAccident> {
     /**
      * Constructeur d'un objet d'accès à la base
      *
      * @param connection un objet connection de java.sql
      */
-    public CycleFournisseurDAO(Connection connection) {
+    public CourseAccidentDAO(Connection connection) {
         super(connection);
     }
 
     /**
-     * Méthode de création d'un enregistrement de cycle fournisseur
+     * Méthode de création d'un enregistrement d'une CourseAccident
      *
-     * @param obj  Un objet CycleFournisseur à écrire dans la base
+     * @param obj  Un objet CourseAccident à écrire dans la base
      * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la création a réussi, false dans le cas contraire
      */
     @Override
-    public boolean create(CycleFournisseur obj, Utilisateur user) {
+    public boolean create(CourseAccident obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdCycleFournisseur() != 0) {
-            logger.error("L'objet CycleFournisseur a déjà un ID");
+        if (obj.getIdCourseAccident() != 0) {
+            logger.error("L'objet CourseAccident a déjà un ID");
             return false;
         }
 
         // Requête d'insertion
-        String query = "INSERT INTO fleetview_cycle_fournisseur (nom, mail, telephone, date_archive) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO fleetview_course_accident (date_accident, date_archive, id_adresse, id_course) VALUES (?, ?, ?, ?)";
 
         // Résultat de la requête
         int result = 0;
@@ -47,10 +53,10 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             // On prépare la requête d'insertion
             statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // On attribue les valeurs aux paramètres
-            statement.setString(1, obj.getNom());
-            statement.setString(2, obj.getMail());
-            statement.setString(3, obj.getTelephone());
-            statement.setObject(4, obj.getDateArchive());
+            statement.setObject(1, obj.getDateAccident());
+            statement.setObject(2, obj.getDateArchive());
+            statement.setInt(3, obj.getIdAdresse());
+            statement.setInt(4, obj.getIdCourse());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -61,14 +67,14 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
                 int id = statement.getGeneratedKeys().getInt(1);
 
                 // On met à jour l'objet pour lui attribuer l'id récupéré
-                obj.setId(id);
+                obj.setIdCourseAccident(id);
             }
 
             // On ajoute l'historique
             this.handleHistorique(TypeHistorique.ADD, user, null, obj);
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible d'insérer le Cycle Fournisseur", ex);
+            logger.error("Impossible d'insérer la CourseAccident", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(statement);
@@ -76,7 +82,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
 
         // Si la requête a échoué
         if (result == 0) {
-            logger.error("Échec de la création du cycle fournisseur, aucune ligne ajoutée dans la table.");
+            logger.error("Échec de la création de la CourseAccident, aucune ligne ajoutée dans la table.");
             return false;
         }
 
@@ -84,22 +90,22 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode de suppression d'un enregistrement de cycle fournisseur
+     * Méthode de suppression d'un enregistrement d'une CourseAccident
      *
-     * @param obj  Un objet CycleFournisseur à supprimer dans la base
+     * @param obj  Un objet CourseAccident à supprimer dans la base
      * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la suppression a réussi, false dans le cas contraire
      */
     @Override
-    public boolean delete(CycleFournisseur obj, Utilisateur user) {
+    public boolean delete(CourseAccident obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleFournisseur() == 0) {
-            logger.error("L'objet CycleFournisseur n'a pas d'ID");
+        if (obj.getIdCourseAccident() == 0) {
+            logger.error("L'objet CourseAccident n'a pas d'ID");
             return false;
         }
 
         // Requête de suppression
-        String query = "DELETE FROM fleetview_cycle_fournisseur WHERE id = ?";
+        String query = "DELETE FROM fleetview_course_accident WHERE id_course_accident = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -109,10 +115,10 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdCycleFournisseur());
+            statement.setInt(1, obj.getIdCourseAccident());
 
             // Récupération de l'objet avant suppression
-            CycleFournisseur objAvantSuppression = this.getById(obj.getIdCycleFournisseur());
+            CourseAccident objAvantSuppression = this.getById(obj.getIdCourseAccident());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -121,7 +127,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             this.handleHistorique(TypeHistorique.DELETE, user, objAvantSuppression, null);
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible de supprimer le Cycle Fournisseur", ex);
+            logger.error("Impossible de supprimer la CourseAccident", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(statement);
@@ -129,7 +135,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
 
         // Si la requête a échoué
         if (result == 0) {
-            logger.error("Échec de la suppression du cycle fournisseur, aucune ligne supprimée dans la table.");
+            logger.error("Échec de la suppression de la CourseAccident, aucune ligne supprimée dans la table.");
             return false;
         }
 
@@ -137,19 +143,19 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode d'archivage d'un enregistrement de cycle fournisseur
+     * Méthode d'archivage d'un enregistrement de la CourseAccident
      *
      * @return boolean qui vaut true si la mise à jour a réussi, false dans le cas contraire
      */
-    public boolean archive(CycleFournisseur obj, Utilisateur user) {
+    public boolean archive(CourseAccident obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleFournisseur() == 0) {
-            logger.error("L'objet CycleFournisseur n'a pas d'ID");
+        if (obj.getIdCourseAccident() == 0) {
+            logger.error("L'objet CourseAccident n'a pas d'ID");
             return false;
         }
 
         // Requête de mise à jour
-        String query = "UPDATE fleetview_cycle_fournisseur SET date_archive = ? WHERE id = ?";
+        String query = "UPDATE fleetview_course_accident SET date_archive = ? WHERE id_course_accident = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -160,10 +166,10 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdCycleFournisseur());
+            statement.setInt(2, obj.getIdCourseAccident());
 
             // Récupération de l'objet avant mise à jour
-            CycleFournisseur objAvantMAJ = this.getById(obj.getIdCycleFournisseur());
+            CourseAccident objAvantMAJ = this.getById(obj.getIdCourseAccident());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -172,7 +178,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             this.handleHistorique(TypeHistorique.ARCHIVE, user, objAvantMAJ, obj);
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible d'archiver le Cycle Fournisseur", ex);
+            logger.error("Impossible d'archiver la CourseAccident", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(statement);
@@ -180,7 +186,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
 
         // Si la requête a échoué
         if (result == 0) {
-            logger.error("Échec de l'archivage du cycle fournisseur, aucune ligne mise à jour dans la table.");
+            logger.error("Échec de l'archivage de la CourseAccident, aucune ligne mise à jour dans la table.");
             return false;
         }
 
@@ -188,22 +194,22 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode de mise à jour d'un enregistrement de cycle fournisseur
+     * Méthode de mise à jour d'un enregistrement de la CourseAccident
      *
-     * @param obj  Un objet CycleFournisseur à mettre à jour dans la base
+     * @param obj  Un objet CourseAccident à mettre à jour dans la base
      * @param user Utilisateur originaire de la modification
      * @return boolean qui vaut true si la mise à jour a réussi, false dans le cas contraire
      */
     @Override
-    public boolean update(CycleFournisseur obj, Utilisateur user) {
+    public boolean update(CourseAccident obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleFournisseur() == 0) {
-            logger.error("L'objet CycleFournisseur n'a pas d'ID");
+        if (obj.getIdCourseAccident() == 0) {
+            logger.error("L'objet CourseAccident n'a pas d'ID");
             return false;
         }
 
         // Requête de mise à jour
-        String query = "UPDATE fleetview_cycle_fournisseur SET nom = ?, mail = ?, telephone = ?, date_archive = ? WHERE id = ?";
+        String query = "UPDATE fleetview_course_accident SET date_accident = ?, date_archive = ?, id_adresse = ?, id_course = ? WHERE id_course_accident = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -213,14 +219,13 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             // On prépare la requête de mise à jour
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setString(1, obj.getNom());
-            statement.setString(2, obj.getMail());
-            statement.setString(3, obj.getTelephone());
-            statement.setObject(4, obj.getDateArchive());
-            statement.setInt(5, obj.getIdCycleFournisseur());
+            statement.setObject(1, obj.getDateAccident());
+            statement.setObject(2, obj.getDateArchive());
+            statement.setInt(3, obj.getIdAdresse());
+            statement.setInt(4, obj.getIdCourse());
 
             // Récupération de l'objet avant modification
-            CycleFournisseur objAvantModification = this.getById(obj.getIdCycleFournisseur());
+            CourseAccident objAvantModification = this.getById(obj.getIdCourseAccident());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -229,7 +234,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             this.handleHistorique(TypeHistorique.UPDATE, user, objAvantModification, obj);
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible de mettre à jour le Cycle Fournisseur", ex);
+            logger.error("Impossible de mettre à jour la CourseAccident", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(statement);
@@ -237,7 +242,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
 
         // Si la requête a échoué
         if (result == 0) {
-            logger.error("Échec de la mise à jour du cycle fournisseur, aucune ligne modifiée dans la table.");
+            logger.error("Échec de la mise à jour de la CourseAccident, aucune ligne modifiée dans la table.");
             return false;
         }
 
@@ -245,17 +250,17 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode de récupération de tous les enregistrements de cycle fournisseur
+     * Méthode de récupération de tous les enregistrements des CourseAccident
      *
-     * @return Une List d'objets CycleFournisseur, vide en cas d'erreur ou si la table est vide
+     * @return Une List d'objets CourseAccident, vide en cas d'erreur ou si la table est vide
      */
     @Override
-    public List<CycleFournisseur> getAll() {
+    public List<CourseAccident> getAll() {
         // Requête de sélection
-        String query = "SELECT * FROM fleetview_cycle_fournisseur";
+        String query = "SELECT * FROM fleetview_course_accident";
 
         // Résultat de la requête
-        List<CycleFournisseur> result = new LinkedList<>();
+        List<CourseAccident> result = new LinkedList<>();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -269,17 +274,17 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             // On parcourt le résultat pour créer les objets CycleFournisseur correspondants
             while (resultSet.next()) {
                 // Création d'un objet CycleFournisseur
-                CycleFournisseur cycleFournisseur = new CycleFournisseur();
+                CourseAccident courseAccident = new CourseAccident();
 
                 // On remplit l'objet avec les informations issues de la requête
-                this.fillObject(cycleFournisseur, resultSet);
+                this.fillObject(courseAccident, resultSet);
 
                 // On ajoute l'objet au résultat final
-                result.add(cycleFournisseur);
+                result.add(courseAccident);
             }
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible de récupérer les Cycle Fournisseur", ex);
+            logger.error("Impossible de récupérer les CourseAccident", ex);
 
             // Si une erreur s'est produite, on renvoie la liste vide
             result = null;
@@ -293,18 +298,18 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode de récupération d'un enregistrement de cycle fournisseur par son identifiant.
+     * Méthode de récupération d'un enregistrement d'une CourseAccident par son identifiant.
      *
      * @param id L'identificateur à rechercher
-     * @return Un objet CycleFournisseur correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
+     * @return Un objet CourseAccident correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
      */
     @Override
-    public CycleFournisseur getById(int id) {
+    public CourseAccident getById(int id) {
         // Requête de sélection
-        String query = "SELECT * FROM fleetview_cycle_fournisseur WHERE id = ?";
+        String query = "SELECT * FROM fleetview_course_accident WHERE id_course_accident = ?";
 
         // Résultat de la requête
-        CycleFournisseur result = null;
+        CourseAccident result = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -320,14 +325,14 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             // On vérifie que le résultat n'est pas vide
             if (resultSet.next()) {
                 // Création d'un objet CycleFournisseur
-                result = new CycleFournisseur();
+                result = new CourseAccident();
 
                 // On remplit l'objet avec les informations issues de la requête
                 this.fillObject(result, resultSet);
             }
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible de récupérer le Cycle Fournisseur", ex);
+            logger.error("Impossible de récupérer une CourseAccident", ex);
         } finally {
             // On ferme les ressources ouvertes par la requête
             this.closeResource(resultSet);
@@ -338,43 +343,44 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     }
 
     /**
-     * Méthode permettant de remplir un objet CycleFournisseur avec les valeurs d'un enregistrement de la table fleetview_cycle_fournisseur
+     * Méthode permettant de remplir un objet CourseAccident avec les valeurs d'un enregistrement de la table fleetview_course_accident
      *
-     * @param cycleFournisseur L'objet CycleFournisseur à remplir
-     * @param resultSet        Le résultat de la requête de sélection
+     * @param courseAccident L'objet CourseAccident à remplir
+     * @param resultSet      Le résultat de la requête de sélection
      */
-    protected void fillObject(CycleFournisseur cycleFournisseur, ResultSet resultSet) {
+    protected void fillObject(CourseAccident courseAccident, ResultSet resultSet) {
         try {
             // Remplissage de l'objet CycleFournisseur
-            cycleFournisseur.setId(resultSet.getInt("id"));
-            cycleFournisseur.setNom(resultSet.getString("nom"));
-            cycleFournisseur.setMail(resultSet.getString("mail"));
-            cycleFournisseur.setTelephone(resultSet.getString("telephone"));
-            cycleFournisseur.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
+            courseAccident.setIdCourseAccident(resultSet.getInt("id_course_accident"));
+            courseAccident.setIdCourse(resultSet.getInt("id_course"));
+            courseAccident.setIdAdresse(resultSet.getInt("id_adresse"));
+            courseAccident.setDateAccident(resultSet.getObject("date_accident", LocalDateTime.class));
+            courseAccident.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
+
         } catch (SQLException ex) {
             // On log l'erreur
-            logger.error("Impossible de remplir l'objet CycleFournisseur", ex);
+            logger.error("Impossible de remplir l'objet CourseAccident", ex);
         }
     }
 
     @Override
-    protected void handleHistorique(TypeHistorique type, Utilisateur user, CycleFournisseur before, CycleFournisseur after) {
+    protected void handleHistorique(TypeHistorique type, Utilisateur user, CourseAccident before, CourseAccident after) {
         // Récupération de l'identifiant unique de l'objet
-        int id = before != null ? before.getIdCycleFournisseur() : after != null ? after.getIdCycleFournisseur() : -1;
+        int id = before != null ? before.getIdCourseAccident() : after != null ? after.getIdCourseAccident() : -1;
 
-        if (before != null && after != null && before.getIdCycleFournisseur() != after.getIdCycleFournisseur()) {
-            logger.error("Impossible de créer l'historique, les deux objets CycleFournisseur ont des identifiants différents");
+        if (before != null && after != null && before.getIdCourseAccident() != after.getIdCourseAccident()) {
+            logger.error("Impossible de créer l'historique, les deux objets CourseAccident ont des identifiants différents");
         } else if (id == -1) {
-            logger.error("Impossible de créer l'historique, les deux objets CycleFournisseur sont null");
+            logger.error("Impossible de créer l'historique, les deux objets CourseAccident sont null");
         }
 
         // Construction des changements
-        HistoriqueData nom = this.checkChanges("nom", before != null ? before.getNom() : null, after != null ? after.getNom() : null);
-        HistoriqueData mail = this.checkChanges("mail", before != null ? before.getMail() : null, after != null ? after.getMail() : null);
-        HistoriqueData telephone = this.checkChanges("telephone", before != null ? before.getTelephone() : null, after != null ? after.getTelephone() : null);
+        HistoriqueData idCourse = this.checkChanges("id_course", before != null ? before.getIdCourse() : null, after != null ? after.getIdCourse() : null);
+        HistoriqueData idAdresse = this.checkChanges("id_adresse", before != null ? before.getIdAdresse() : null, after != null ? after.getIdAdresse() : null);
+        HistoriqueData dateAccident = this.checkChanges("date_accident", before != null ? before.getDateAccident() : null, after != null ? after.getDateAccident() : null);
         HistoriqueData dateArchive = this.checkChanges("date_archive", before != null ? before.getDateArchive() : null, after != null ? after.getDateArchive() : null);
 
         // Création de l'historique
-        this.historique.addHistorique(type, user, "fleetview_cycle_fournisseur", id, nom, mail, telephone, dateArchive);
+        this.historique.addHistorique(type, user, "fleetview_course_accident", id, idCourse, idAdresse, dateAccident, dateArchive);
     }
 }
