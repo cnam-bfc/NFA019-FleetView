@@ -5,9 +5,9 @@ import java.awt.*;
 public class AdminMainView extends JPanel {
 
     //private final JFrame test = new JFrame();
-    private final JButton ViewUsers = new JButton();
+    private final JButton viewUsers = new JButton();
 
-    private final JButton DBConnection = new JButton();
+    private final JButton dbConnection = new JButton();
 
     public AdminMainView(){
         this.setPreferredSize(new Dimension(800,100));
@@ -15,9 +15,9 @@ public class AdminMainView extends JPanel {
         this.setBackground(new Color(24, 123, 89));
         //this.add(new JButton("ok"));
         //this.add(new JButton("Visualisation de tous les utilisateurs"));
-        //this.ViewUsers
-        this.add(this.ViewUsers);
-        this.add(this.DBConnection);
+        //this.viewUsers.setMargin(new Insets(10,10,10,10));
+        this.add(this.viewUsers);
+        this.add(this.dbConnection);
     }
 
 
