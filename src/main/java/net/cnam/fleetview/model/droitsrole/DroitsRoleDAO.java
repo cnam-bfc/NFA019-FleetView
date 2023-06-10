@@ -149,7 +149,7 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
         }
 
         // Requête de mise à jour
-        String query = "UPDATE fleetview_droits_role SET autorise WHERE id_role = ? AND id_droits = ?";
+        String query = "UPDATE fleetview_droits_role SET id_role = ?, id_droit = ?, autorise = ? WHERE id_role = ? AND id_droits = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -159,9 +159,11 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
             // On prépare la requête de mise à jour
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setBoolean(1, obj.isAutorise());
-            statement.setInt(2, obj.getIdRole());
-            statement.setInt(3, obj.getIdDroits());
+            statement.setInt(1, obj.getIdRole());
+            statement.setInt(2, obj.getIdDroits());
+            statement.setBoolean(3, obj.isAutorise());
+            statement.setInt(4, obj.getIdRole());
+            statement.setInt(5, obj.getIdDroits());
 
 
             // Récupération de l'objet avant modification
