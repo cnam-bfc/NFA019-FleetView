@@ -2,7 +2,7 @@ package net.cnam.fleetview.view.base.menu.content;
 
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.CarteView;
-import net.cnam.fleetview.view.CoursesView;
+import net.cnam.fleetview.view.course.list.CoursesView;
 import net.cnam.fleetview.view.CoursiersView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 

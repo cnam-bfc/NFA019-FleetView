@@ -1,5 +1,6 @@
 package net.cnam.fleetview.view.base.main;
 
+import net.cnam.fleetview.view.AccueilView;
 import net.cnam.fleetview.view.base.main.head.TopMenuPanelView;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class MainPanelView extends JPanel {
 
         // Création des éléments de l'interface
         this.topMenuPanelView = new TopMenuPanelView();
+        this.contentPanelView = new AccueilView();
 
 
         // Configuration des éléments de l'interface
@@ -28,6 +30,7 @@ public class MainPanelView extends JPanel {
 
         // Ajout des éléments de l'interface
         this.add(topMenuPanelView, BorderLayout.NORTH);
+        this.add(contentPanelView, BorderLayout.CENTER);
     }
 
     public TopMenuPanelView getTopMenuPanel() {

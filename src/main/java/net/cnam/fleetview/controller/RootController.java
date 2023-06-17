@@ -1,9 +1,9 @@
 package net.cnam.fleetview.controller;
 
+import net.cnam.fleetview.view.AccueilView;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.base.RootFrameView;
 
-import javax.swing.*;
 import java.util.LinkedList;
 
 public class RootController extends Controller {
@@ -50,10 +50,9 @@ public class RootController extends Controller {
             // On affiche la vue précédente
             this.view.getPanel().getMainPanel().setContentPanelView(this.views.getLast());
         }
-        // Sinon, on affiche rien
+        // Sinon, on affiche accueil
         else {
-            // On affiche une vue vide
-            this.view.getPanel().getMainPanel().setContentPanelView(new JPanel());
+            this.view.getPanel().getMainPanel().setContentPanelView(new AccueilView());
 
             // On cache le bouton de retour
             this.view.getPanel().getMainPanel().getTopMenuPanel().getTopLeftMenuPanelView().setBackButtonVisible(false);
