@@ -1,6 +1,5 @@
 package net.cnam.fleetview.view.base.main.head;
 
-import net.cnam.fleetview.App;
 import net.cnam.fleetview.view.components.button.IconButton;
 
 import javax.swing.*;
@@ -9,11 +8,11 @@ import java.awt.*;
 public class TopMenuPanelView extends JPanel {
     // Composants graphiques
     // Logo minimisation de l'application
-    private final JButton minimizeButton;
+    private final IconButton minimizeButton;
     // Logo redimensionnement de l'application
-    private final JButton resizeButton;
+    private final IconButton resizeButton;
     // Logo fermeture de l'application
-    private final JButton closeButton;
+    private final IconButton closeButton;
 
     public TopMenuPanelView() {
         super();

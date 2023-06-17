@@ -10,4 +10,10 @@ public class LabelButton extends JButton {
         this.setFocusPainted(false);
         this.setVerticalAlignment(SwingConstants.CENTER);
     }
+
+    public LabelButton(String texte) {
+        this();
+
+        this.setText(texte);
+    }
 }

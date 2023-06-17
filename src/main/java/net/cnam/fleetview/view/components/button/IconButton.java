@@ -13,4 +13,10 @@ public class IconButton extends JButton {
         this.setVerticalAlignment(SwingConstants.CENTER);
         this.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(32f));
     }
+
+    public IconButton(String icon) {
+        this();
+
+        this.setText(icon);
+    }
 }
