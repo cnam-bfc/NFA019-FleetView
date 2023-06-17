@@ -264,19 +264,23 @@ public class ComponentMover extends MouseAdapter {
         //  is moved. Adjust the location to make sure we are still on a
         //  snap value.
 
+        /* Comment to move windows outside of screen
         while (locationX < edgeInsets.left)
             locationX += snapSize.width;
 
         while (locationY < edgeInsets.top)
             locationY += snapSize.height;
+        */
 
         Dimension d = getBoundingSize(destination);
 
+        /* Comment to move windows outside of screen
         while (locationX + destination.getSize().width + edgeInsets.right > d.width)
             locationX -= snapSize.width;
 
         while (locationY + destination.getSize().height + edgeInsets.bottom > d.height)
             locationY -= snapSize.height;
+        */
 
         //  Adjustments are finished, move the component
 
