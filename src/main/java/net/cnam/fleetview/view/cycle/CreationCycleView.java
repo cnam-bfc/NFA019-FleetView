@@ -1,6 +1,6 @@
 package net.cnam.fleetview.view.cycle;
 
-import net.cnam.fleetview.view.TitrePanel;
+import net.cnam.fleetview.view.components.label.IconLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,18 +10,18 @@ public class CreationCycleView extends JPanel {
     public CreationCycleView() {
         //JPanel PanelFlow1 = new JPanel(new)
         JPanel Panel0 = new JPanel(new BorderLayout());
-        JPanel Panel1 = new JPanel(new GridLayout(4,1));
-        JPanel Panel2 = new JPanel(new GridLayout(4,1));
+        JPanel Panel1 = new JPanel(new GridLayout(4, 1));
+        JPanel Panel2 = new JPanel(new GridLayout(4, 1));
         JPanel PanelBouton = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        TitrePanel titrepanel = new TitrePanel("\uF84A", "Cycles");
+        IconLabel titre = new IconLabel("\uF84A", "Cycles");
 
         this.setLayout(new BorderLayout());
 
-        titrepanel.setForeground(Color.BLACK);
-        titrepanel.setFont(new Font("Arial", Font.BOLD, 30));
+        titre.setForeground(Color.BLACK);
+        titre.setFont(new Font("Arial", Font.BOLD, 30));
 
-        titrepanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 1100));
-        this.add(titrepanel, BorderLayout.NORTH);
+        titre.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 1100));
+        this.add(titre, BorderLayout.NORTH);
 
         JLabel LabelModel = new JLabel("Model");
         JLabel LabelNS = new JLabel("Numéro de Série");

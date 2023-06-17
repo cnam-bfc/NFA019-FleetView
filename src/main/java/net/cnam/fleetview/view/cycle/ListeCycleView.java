@@ -1,6 +1,6 @@
 package net.cnam.fleetview.view.cycle;
 
-import net.cnam.fleetview.view.TitrePanel;
+import net.cnam.fleetview.view.components.label.IconLabel;
 import net.cnam.fleetview.view.utils.ButtonColumn;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ public class ListeCycleView extends JPanel {
         //JLabel LabelTitrePage = new JLabel("Cycles");
         JPanel panelTable = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel panelBouton = new JPanel();
-        TitrePanel titrepanel = new TitrePanel("\uF84A", "Cycles");
+        IconLabel titrepanel = new IconLabel("\uF84A", "Cycles");
         JButton BoutonAjoutCycle = new JButton("Ajouter un Cycle");
         DefaultTableModel model = new DefaultTableModel();
         JTable table = new JTable(model);
