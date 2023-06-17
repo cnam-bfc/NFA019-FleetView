@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 
 public class ListeCycleView extends JPanel {
-    public ListeCycleView() {
+   /* public ListeCycleView() {
 
         //JLabel LabelTitrePage = new JLabel("Cycles");
         JPanel panelTable = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -173,6 +173,6 @@ public class ListeCycleView extends JPanel {
         panelBouton.add(BoutonAjoutCycle);
         this.add(panelBouton, BorderLayout.SOUTH);
 
-    }
+    }*/
 }
 
