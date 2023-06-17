@@ -1,27 +1,28 @@
-package net.cnam.fleetview.view.paramettre;
+package net.cnam.fleetview.view;
 
-import net.cnam.fleetview.view.TitrePanel;
+import net.cnam.fleetview.view.components.button.LabelButton;
+import net.cnam.fleetview.view.components.label.IconLabel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ParametrageBddView extends JPanel {
 
-    private final TitrePanel titrePanel;
+    private final IconLabel iconLabel;
 
     public ParametrageBddView() {
         super();
         this.setLayout(new BorderLayout());
 
         // Création des éléments de l'interface
-        this.titrePanel = new TitrePanel("\uF013", "BASE DE DONNEE");
+        this.iconLabel = new IconLabel("\uF013", "BASE DE DONNEE");
         JPanel jpPrincipale = new JPanel(new BorderLayout());
 
         JPanel jpBdInfo = new JPanel();
         jpBdInfo.setLayout(new BoxLayout(jpBdInfo, BoxLayout.PAGE_AXIS));
 
         //ligne 1
-        JPanel jpLigneTop = new JPanel(new GridLayout(1,2));
+        JPanel jpLigneTop = new JPanel(new GridLayout(1, 2));
         JPanel jpLigneTopIp = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel jpLigneTopPort = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel jpIP = new JPanel(new BorderLayout());
@@ -33,7 +34,7 @@ public class ParametrageBddView extends JPanel {
         JPanel jpNomDB = new JPanel(new BorderLayout());
         jpNomDB.setLayout(new BoxLayout(jpNomDB, BoxLayout.PAGE_AXIS));
         //ligne 3
-        JPanel jpLigneBott = new JPanel(new GridLayout(1,2));
+        JPanel jpLigneBott = new JPanel(new GridLayout(1, 2));
         JPanel jpLigneBottUtilisateur = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel jpLigneBottPasse = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel jpNomUtilisateur = new JPanel(new BorderLayout());
@@ -56,25 +57,25 @@ public class ParametrageBddView extends JPanel {
 
         //champ texte
         JTextField champIP = new JTextField();
-        champIP.setPreferredSize( new Dimension( 200, 24 ) );
+        champIP.setPreferredSize(new Dimension(200, 24));
 
         JTextField champPort = new JTextField();
-        champPort.setPreferredSize( new Dimension( 200, 24 ) );
+        champPort.setPreferredSize(new Dimension(200, 24));
 
         JTextField champNomBD = new JTextField();
-        champNomBD.setPreferredSize( new Dimension( 500, 24 ) );
+        champNomBD.setPreferredSize(new Dimension(500, 24));
 
         JTextField champNomUtilisateur = new JTextField();
-        champNomUtilisateur.setPreferredSize( new Dimension( 200, 24 ) );
+        champNomUtilisateur.setPreferredSize(new Dimension(200, 24));
 
         JTextField champMotDePasse = new JTextField();
-        champMotDePasse.setPreferredSize( new Dimension( 200, 24 ) );
+        champMotDePasse.setPreferredSize(new Dimension(200, 24));
 
 
         //--- Contenu ---
 
         // Ajout des éléments de l'interface
-        jpPrincipale.add(this.titrePanel, BorderLayout.NORTH);
+        jpPrincipale.add(this.iconLabel, BorderLayout.NORTH);
 
         //ligne 1
         jpIP.add(texteIP);
@@ -113,8 +114,8 @@ public class ParametrageBddView extends JPanel {
         jpPrincipale.setBackground(Color.BLACK);
 
         // JPanel Validation/retour
-        JButton btnValider = new JButton("Valider");
-        JButton btnQuitter = new JButton("Quitter");
+        LabelButton btnValider = new LabelButton("Valider");
+        LabelButton btnQuitter = new LabelButton("Quitter");
 
         jpActionHolder.add(btnValider);
         jpActionHolder.add(btnQuitter);
@@ -126,8 +127,6 @@ public class ParametrageBddView extends JPanel {
         jpPrincipale.add(jpMargeDroite, BorderLayout.LINE_END);
 
         this.add(jpPrincipale);
-
-
 
 
     }

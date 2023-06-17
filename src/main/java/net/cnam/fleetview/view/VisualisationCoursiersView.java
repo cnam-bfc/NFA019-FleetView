@@ -1,4 +1,4 @@
-package net.cnam.fleetview.view.coursier;
+package net.cnam.fleetview.view;
 
 public class VisualisationCoursiersView {
 }
