@@ -24,6 +24,7 @@ public class IconLabelButton extends JButton {
         BoxLayout layout = new BoxLayout(this, BoxLayout.X_AXIS);
         this.setLayout(layout);
 
+        this.setOpaque(false);
 
         // Création des éléments de l'interface
         this.logoLabel = new JLabel();
