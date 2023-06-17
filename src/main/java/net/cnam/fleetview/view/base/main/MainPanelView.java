@@ -50,5 +50,6 @@ public class MainPanelView extends JPanel {
 
         // Mise à jour de l'interface
         this.revalidate();
+        this.repaint();
     }
 }

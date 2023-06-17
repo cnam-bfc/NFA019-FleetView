@@ -20,6 +20,8 @@ public class LeftMenuHeadPanelView extends JPanel {
         BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
 
+        this.setOpaque(false);
+
         // Création des éléments de l'interface
         this.logo = new JLabel();
         this.title = new JLabel();
