@@ -49,7 +49,7 @@ public class LeftMenuHeadPanelView extends JPanel {
 
         // Titre
         // Font Quicksand, Bold, 24px
-        this.title.setText("FleetView");
+        this.title.setText(App.APP_NAME);
         this.title.setFont(App.LOGO_FONT);
         this.title.setForeground(App.PRIMARY_COLOR);
         this.title.setHorizontalAlignment(SwingConstants.CENTER);

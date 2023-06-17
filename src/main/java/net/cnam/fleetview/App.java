@@ -7,11 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Properties;
 
 public class App {
     // Textes
-    public final static String APP_NAME = "FleetView";
-    public final static String APP_VERSION = "1.0.0";
+    public final static String APP_NAME;
+    public final static String APP_VERSION;
 
     // Images
     public final static BufferedImage LOGO_NORMAL;
@@ -39,6 +40,13 @@ public class App {
 
     static {
         try {
+            // Chargement des propriétés
+            Properties properties = new Properties();
+            properties.load(App.class.getClassLoader().getResourceAsStream("project.properties"));
+
+            APP_NAME = properties.getProperty("name");
+            APP_VERSION = properties.getProperty("version");
+
             // Chargement des images
             LOGO_NORMAL = ImageIO.read(App.class.getResourceAsStream("/assets/img/logo/DistriCycle-Logo normal.png"));
             LOGO_SIMPLIFIED = ImageIO.read(App.class.getResourceAsStream("/assets/img/logo/DistriCycle-Logo simplifié.png"));
