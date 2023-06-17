@@ -30,7 +30,11 @@ public class TopMenuPanelView extends JPanel {
 
 
         // Configuration des éléments de l'interface
-
+        /*JScrollPane scrollPane = new JScrollPane(this.topLeftMenuPanelView);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.getViewport().setOpaque(false);*/
 
         // Ajout des éléments de l'interface
         this.add(this.topLeftMenuPanelView, BorderLayout.CENTER);

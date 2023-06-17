@@ -20,4 +20,13 @@ public abstract class View extends JPanel {
     public boolean canCloseCurrentView() {
         return true;
     }
+
+    /**
+     * Méthode appelée lorsque l'on veut switcher vers une autre vue
+     *
+     * @return true si la vue peut switcher, false sinon
+     */
+    public boolean canSwitchView() {
+        return true;
+    }
 }

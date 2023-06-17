@@ -6,7 +6,7 @@ import net.cnam.fleetview.view.base.RootFrameView;
 import javax.swing.*;
 import java.util.LinkedList;
 
-public class RootController {
+public class RootController extends Controller {
     private static RootController INSTANCE = null;
 
     // Vue
