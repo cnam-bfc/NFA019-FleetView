@@ -19,6 +19,9 @@ public class RootFrameView extends JFrame {
     public RootFrameView() {
         super("FleetView");
 
+        // Initialisation du controller
+        this.controller = new RootController(this);
+
         this.panel = new RootPanelView();
 
         this.setIconImage(App.LOGO_SIMPLIFIED);
@@ -45,9 +48,6 @@ public class RootFrameView extends JFrame {
 
         // Permet de déplacer la fenêtre (menu de gauche et menu du haut)
         ComponentMover mover = new ComponentMover(this, panel.getRightMenuPanel(), panel.getMainPanel().getTopMenuPanel());
-
-        // Initialisation du controller
-        this.controller = new RootController(this);
     }
 
     public RootPanelView getPanel() {
