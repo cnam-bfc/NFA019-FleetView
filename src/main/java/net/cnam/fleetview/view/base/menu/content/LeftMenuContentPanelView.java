@@ -62,6 +62,9 @@ public class LeftMenuContentPanelView extends JPanel {
             super.add(Box.createRigidArea(new Dimension(0, 10)));
         }
 
+        // 100% de la largeur
+        comp.setMaximumSize(new Dimension(Integer.MAX_VALUE, comp.getMaximumSize().height));
+
         return super.add(comp);
     }
 }
