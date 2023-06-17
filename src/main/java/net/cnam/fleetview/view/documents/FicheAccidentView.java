@@ -1,12 +1,12 @@
 package net.cnam.fleetview.view.documents;
 
-import net.cnam.fleetview.view.TitrePanel;
+import net.cnam.fleetview.view.components.label.IconLabel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class FicheAccidentView extends JPanel  {
-    private final TitrePanel titrePanel;
+    private final IconLabel iconLabel;
 
     public FicheAccidentView() {
         super();
@@ -16,7 +16,7 @@ public class FicheAccidentView extends JPanel  {
         //*********************************************
 
         //--- Titre ---
-        this.titrePanel = new TitrePanel("\uF56C", "DOCUMENTS");
+        this.iconLabel = new IconLabel("\uF56C", "DOCUMENTS");
         JPanel jpEntete = new JPanel(new BorderLayout());
 
         JPanel jpEnteteMargeLaterale = new JPanel();
@@ -132,7 +132,7 @@ public class FicheAccidentView extends JPanel  {
         //********************************
 
         //--- Entete ---
-        jpEntete.add(this.titrePanel, BorderLayout.CENTER);
+        jpEntete.add(this.iconLabel, BorderLayout.CENTER);
         jpEntete.add(jpEnteteMargeLaterale, BorderLayout.LINE_START);
         jpEntete.add(jpEnteteMargeHorizontale, BorderLayout.NORTH);
         jpPrincipale.add(jpEntete, BorderLayout.NORTH);

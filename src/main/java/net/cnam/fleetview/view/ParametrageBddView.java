@@ -1,6 +1,6 @@
-package net.cnam.fleetview.view.paramettre;
+package net.cnam.fleetview.view;
 
-import net.cnam.fleetview.view.TitrePanel;
+import net.cnam.fleetview.view.components.label.IconLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +13,9 @@ A faire :
 
  */
 
-public class ParametrageBddView extends JPanel {
+public class ParametrageBddView extends View {
 
-    private final TitrePanel titrePanel;
+    private final IconLabel iconLabel;
 
     public ParametrageBddView() {
         super();
@@ -25,7 +25,7 @@ public class ParametrageBddView extends JPanel {
         //*********************************************
 
         //--- Titre ---
-        this.titrePanel = new TitrePanel("\uF013", "BASE DE DONNEE");
+        this.iconLabel = new IconLabel("\uF013", "BASE DE DONNEE");
         JPanel jpEntete = new JPanel(new BorderLayout());
 
         JPanel jpEnteteMargeLaterale = new JPanel();
@@ -108,7 +108,7 @@ public class ParametrageBddView extends JPanel {
         //********************************
 
         //--- Entete ---
-        jpEntete.add(this.titrePanel, BorderLayout.CENTER);
+        jpEntete.add(this.iconLabel, BorderLayout.CENTER);
         jpEntete.add(jpEnteteMargeLaterale, BorderLayout.LINE_START);
         jpEntete.add(jpEnteteMargeHorizontale, BorderLayout.NORTH);
         jpPrincipale.add(jpEntete, BorderLayout.NORTH);
