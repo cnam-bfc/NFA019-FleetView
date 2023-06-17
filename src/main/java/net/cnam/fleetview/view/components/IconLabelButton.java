@@ -21,8 +21,7 @@ public class IconLabelButton extends JButton {
         this.texte = texte;
 
         // Layout
-        BorderLayout layout = new BorderLayout();
-        layout.setHgap(10);
+        BoxLayout layout = new BoxLayout(this, BoxLayout.X_AXIS);
         this.setLayout(layout);
 
 
@@ -35,13 +34,20 @@ public class IconLabelButton extends JButton {
         // Logo label
         this.logoLabel.setText(this.logo);
         this.logoLabel.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(32f));
+        // Définir la taille souhaitée pour l'icône
+        Dimension logoSize = new Dimension(40, 40);
+        this.logoLabel.setPreferredSize(logoSize);
+        this.logoLabel.setMaximumSize(logoSize);
+        this.logoLabel.setMinimumSize(logoSize);
+        this.logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Texte label
         this.texteLabel.setText(this.texte);
 
 
         // Ajout des éléments de l'interface
-        this.add(this.logoLabel, BorderLayout.WEST);
-        this.add(this.texteLabel, BorderLayout.CENTER);
+        this.add(this.logoLabel);
+        this.add(Box.createRigidArea(new Dimension(10, 0)));
+        this.add(this.texteLabel);
     }
 }
