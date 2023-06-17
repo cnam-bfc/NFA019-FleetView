@@ -1,18 +1,19 @@
 package net.cnam.fleetview.view.base.menu.content;
 
 import net.cnam.fleetview.App;
-import net.cnam.fleetview.view.components.MenuButton;
 import net.cnam.fleetview.view.ListeCoursesPanelView;
 import net.cnam.fleetview.view.ParametrageBddView;
+import net.cnam.fleetview.view.components.IconLabelButton;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class LeftMenuContentPanelView extends JPanel {
     // Composants graphiques
     // Courses
-    private final MenuButton coursesButton;
+    private final IconLabelButton coursesButton;
     // Paramètres
-    private final MenuButton parametresButton;
+    private final IconLabelButton parametresButton;
 
     public LeftMenuContentPanelView() {
         super();
@@ -21,9 +22,12 @@ public class LeftMenuContentPanelView extends JPanel {
         BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
         this.setLayout(layout);
 
+        // Bordure
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         // Création des éléments de l'interface
-        this.coursesButton = new MenuButton("\uF0D1", "Courses");
-        this.parametresButton = new MenuButton("\uF013", "Paramètres");
+        this.coursesButton = new IconLabelButton("\uF0D1", "Courses");
+        this.parametresButton = new IconLabelButton("\uF013", "Paramètres");
 
 
         // Configuration des éléments de l'interface
@@ -49,5 +53,15 @@ public class LeftMenuContentPanelView extends JPanel {
         // Ajout des éléments de l'interface
         this.add(this.coursesButton);
         this.add(this.parametresButton);
+    }
+
+    @Override
+    public Component add(Component comp) {
+        // Ajout d'une bordure entre chaque composant
+        if (this.getComponentCount() > 0) {
+            super.add(Box.createRigidArea(new Dimension(0, 10)));
+        }
+
+        return super.add(comp);
     }
 }

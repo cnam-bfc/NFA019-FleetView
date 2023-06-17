@@ -1,20 +1,20 @@
 package net.cnam.fleetview.view;
 
-import net.cnam.fleetview.view.components.TitrePanel;
+import net.cnam.fleetview.view.components.IconLabel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ParametrageBddView extends JPanel {
 
-    private final TitrePanel titrePanel;
+    private final IconLabel iconLabel;
 
     public ParametrageBddView() {
         super();
         this.setLayout(new BorderLayout());
 
         // Création des éléments de l'interface
-        this.titrePanel = new TitrePanel("\uF013", "BASE DE DONNEE");
+        this.iconLabel = new IconLabel("\uF013", "BASE DE DONNEE");
         JPanel jpPrincipale = new JPanel(new BorderLayout());
 
         JPanel jpBdInfo = new JPanel();
@@ -74,7 +74,7 @@ public class ParametrageBddView extends JPanel {
         //--- Contenu ---
 
         // Ajout des éléments de l'interface
-        jpPrincipale.add(this.titrePanel, BorderLayout.NORTH);
+        jpPrincipale.add(this.iconLabel, BorderLayout.NORTH);
 
         //ligne 1
         jpIP.add(texteIP);
