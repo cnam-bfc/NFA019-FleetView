@@ -6,7 +6,7 @@ import net.cnam.fleetview.view.components.label.IconLabel;
 import javax.swing.*;
 import java.awt.*;
 
-public class ParametrageBddView extends JPanel {
+public class ParametrageBddView extends JPanel implements View {
 
     private final IconLabel iconLabel;
 
@@ -129,5 +129,10 @@ public class ParametrageBddView extends JPanel {
         this.add(jpPrincipale);
 
 
+    }
+
+    @Override
+    public boolean onClose() {
+        return true;
     }
 }
