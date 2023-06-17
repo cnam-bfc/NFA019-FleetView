@@ -1,5 +1,5 @@
 package net.cnam.fleetview.view;
 
-public class VisualisationCoursierView extends View {
+public class CoursierView extends View {
 
 }

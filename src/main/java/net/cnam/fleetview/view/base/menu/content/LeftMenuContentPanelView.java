@@ -58,7 +58,7 @@ public class LeftMenuContentPanelView extends JPanel {
             CoursiersView coursiersView = new CoursiersView();
 
             // Affichage de la vue de la liste des coursiers
-            App.INSTANCE.getPanel().getMainPanel().setContentPanelView(coursiersView);
+            RootController.open(coursiersView);
         });
 
 
