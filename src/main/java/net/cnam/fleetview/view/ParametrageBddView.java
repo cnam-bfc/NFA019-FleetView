@@ -1,6 +1,6 @@
-package net.cnam.fleetview.view.paramettre;
+package net.cnam.fleetview.view;
 
-import net.cnam.fleetview.view.TitrePanel;
+import net.cnam.fleetview.view.components.TitrePanel;
 
 import javax.swing.*;
 import java.awt.*;

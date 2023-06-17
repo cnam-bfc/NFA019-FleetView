@@ -1,4 +1,4 @@
-package net.cnam.fleetview.view.base;
+package net.cnam.fleetview.view.base.main.head;
 
 import net.cnam.fleetview.App;
 
@@ -8,13 +8,11 @@ import java.awt.*;
 public class TopMenuPanelView extends JPanel {
     // Composants graphiques
     // Logo minimisation de l'application
-    private final JButton minimizeButton = new JButton();
-
+    private final JButton minimizeButton;
     // Logo redimensionnement de l'application
-    private final JButton resizeButton = new JButton();
-
+    private final JButton resizeButton;
     // Logo fermeture de l'application
-    private final JButton closeButton = new JButton();
+    private final JButton closeButton;
 
     public TopMenuPanelView() {
         super();
@@ -29,6 +27,13 @@ public class TopMenuPanelView extends JPanel {
 
         this.setBackground(new Color(103, 175, 172));
 
+        // Création des éléments de l'interface
+        this.minimizeButton = new JButton();
+        this.resizeButton = new JButton();
+        this.closeButton = new JButton();
+
+
+        // Configuration des éléments de l'interface
         // Logo minimisation de l'application
         this.minimizeButton.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(Font.PLAIN, 25));
         this.minimizeButton.setText("\uF2D1");
@@ -41,9 +46,6 @@ public class TopMenuPanelView extends JPanel {
                 frame.setExtendedState(JFrame.ICONIFIED);
             }
         });
-
-        // Ajout du logo minimisation de l'application au menu
-        this.add(this.minimizeButton);
 
         // Logo redimensionnement de l'application
         this.resizeButton.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(Font.PLAIN, 25));
@@ -64,9 +66,6 @@ public class TopMenuPanelView extends JPanel {
             }
         });
 
-        // Ajout du logo redimensionnement de l'application au menu
-        this.add(this.resizeButton);
-
         // Logo fermeture de l'application
         this.closeButton.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(Font.PLAIN, 25));
         this.closeButton.setText("\uF410");
@@ -75,7 +74,10 @@ public class TopMenuPanelView extends JPanel {
 
         this.closeButton.addActionListener(e -> System.exit(0));
 
-        // Ajout du logo fermeture de l'application au menu
+
+        // Ajout des éléments de l'interface
+        this.add(this.minimizeButton);
+        this.add(this.resizeButton);
         this.add(this.closeButton);
     }
 }

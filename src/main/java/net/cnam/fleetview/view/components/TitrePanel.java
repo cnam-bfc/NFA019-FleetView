@@ -1,35 +1,36 @@
-package net.cnam.fleetview.view;
+package net.cnam.fleetview.view.components;
 
 import net.cnam.fleetview.App;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class MenuButton extends JButton {
+public class TitrePanel extends JPanel {
     // CONSTANTES
     private final String logo;
-    private final String texte;
+    private final String titre;
 
     // ÉLÉMENTS DE L'INTERFACE
     private final JLabel logoLabel;
-    private final JLabel texteLabel;
+    private final JLabel titreLabel;
 
-    public MenuButton(String logo, String texte) {
-        super();
+    public TitrePanel(String logo, String titre) {
+        super(new FlowLayout(FlowLayout.LEFT));
 
         this.logo = logo;
-        this.texte = texte;
+        this.titre = titre;
 
         // Création des éléments de l'interface
         this.logoLabel = new JLabel();
-        this.texteLabel = new JLabel();
+        this.titreLabel = new JLabel();
 
         // Configuration des éléments de l'interface
         this.logoLabel.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(32f));
         this.logoLabel.setText(this.logo);
-        this.texteLabel.setText(this.texte);
+        this.titreLabel.setText(this.titre);
 
         // Ajout des éléments de l'interface
         this.add(this.logoLabel);
-        this.add(this.texteLabel);
+        this.add(this.titreLabel);
     }
 }

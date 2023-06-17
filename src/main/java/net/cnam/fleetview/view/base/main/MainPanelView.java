@@ -1,18 +1,32 @@
-package net.cnam.fleetview.view.base;
+package net.cnam.fleetview.view.base.main;
+
+import net.cnam.fleetview.view.base.main.head.TopMenuPanelView;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainPanelView extends JPanel {
-    private final TopMenuPanelView topMenuPanelView = new TopMenuPanelView();
+    // Composants graphiques
+    // Top menu
+    private final TopMenuPanelView topMenuPanelView;
+    // Content panel
     private JPanel contentPanelView;
 
     public MainPanelView() {
         super();
 
+        // Layout
         BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
 
+        // Création des éléments de l'interface
+        this.topMenuPanelView = new TopMenuPanelView();
+
+
+        // Configuration des éléments de l'interface
+
+
+        // Ajout des éléments de l'interface
         this.add(topMenuPanelView, BorderLayout.NORTH);
     }
 
