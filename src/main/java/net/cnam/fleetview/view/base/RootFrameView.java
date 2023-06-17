@@ -1,6 +1,7 @@
 package net.cnam.fleetview.view.base;
 
 import net.cnam.fleetview.App;
+import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.utils.ComponentMover;
 import net.cnam.fleetview.view.utils.ComponentResizer;
 
@@ -8,6 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RootFrameView extends JFrame {
+    // Controller
+    private final RootController controller;
+
+    // Composants graphiques
+    // Panel
     private final RootPanelView panel;
 
     public RootFrameView() {
@@ -39,6 +45,9 @@ public class RootFrameView extends JFrame {
 
         // Permet de déplacer la fenêtre (menu de gauche et menu du haut)
         ComponentMover mover = new ComponentMover(this, panel.getRightMenuPanel(), panel.getMainPanel().getTopMenuPanel());
+
+        // Initialisation du controller
+        this.controller = new RootController(this);
     }
 
     public RootPanelView getPanel() {

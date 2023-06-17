@@ -1,6 +1,7 @@
 package net.cnam.fleetview.view.base.menu.foot;
 
 import net.cnam.fleetview.App;
+import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.ParametrageBddView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 
@@ -36,7 +37,7 @@ public class LeftMenuFootPanelView extends JPanel {
             ParametrageBddView parametrageBddView = new ParametrageBddView();
 
             // Affichage de la vue des paramètres
-            App.INSTANCE.getPanel().getMainPanel().setContentPanelView(parametrageBddView);
+            RootController.open(parametrageBddView);
         });
 
         // Version

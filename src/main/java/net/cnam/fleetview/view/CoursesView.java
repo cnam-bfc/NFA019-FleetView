@@ -2,9 +2,7 @@ package net.cnam.fleetview.view;
 
 import net.cnam.fleetview.view.components.label.IconLabel;
 
-import javax.swing.*;
-
-public class CoursesView extends JPanel implements View {
+public class CoursesView extends View {
     // ÉLÉMENTS DE L'INTERFACE
     private final IconLabel iconLabel;
 
@@ -16,10 +14,5 @@ public class CoursesView extends JPanel implements View {
 
         // Ajout des éléments de l'interface
         this.add(this.iconLabel);
-    }
-
-    @Override
-    public boolean onClose() {
-        return true;
     }
 }
