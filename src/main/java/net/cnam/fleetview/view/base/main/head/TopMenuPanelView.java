@@ -1,73 +1,39 @@
 package net.cnam.fleetview.view.base.main.head;
 
-import net.cnam.fleetview.view.components.button.IconButton;
+import net.cnam.fleetview.view.base.main.head.left.TopLeftMenuPanelView;
+import net.cnam.fleetview.view.base.main.head.right.TopRightMenuPanelView;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class TopMenuPanelView extends JPanel {
     // Composants graphiques
-    // Logo minimisation de l'application
-    private final IconButton minimizeButton;
-    // Logo redimensionnement de l'application
-    private final IconButton resizeButton;
-    // Logo fermeture de l'application
-    private final IconButton closeButton;
+    // Panel de gauche
+    private final TopLeftMenuPanelView topLeftMenuPanelView;
+    // Panel de droite
+    private final TopRightMenuPanelView topRightMenuPanelView;
 
     public TopMenuPanelView() {
         super();
 
         // Layout
-        FlowLayout layout = new FlowLayout();
-        layout.setAlignment(FlowLayout.RIGHT);
-        layout.setVgap(10);
-        layout.setHgap(10);
+        BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
+
+        this.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         this.setBackground(new Color(103, 175, 172));
 
         // Création des éléments de l'interface
-        this.minimizeButton = new IconButton();
-        this.resizeButton = new IconButton();
-        this.closeButton = new IconButton();
+        this.topLeftMenuPanelView = new TopLeftMenuPanelView();
+        this.topRightMenuPanelView = new TopRightMenuPanelView();
 
 
         // Configuration des éléments de l'interface
-        // Logo minimisation de l'application
-        this.minimizeButton.setText("\uF2D1");
-
-        this.minimizeButton.addActionListener(e -> {
-            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            if (frame != null) {
-                frame.setExtendedState(JFrame.ICONIFIED);
-            }
-        });
-
-        // Logo redimensionnement de l'application
-        this.resizeButton.setText("\uF2D2");
-
-        this.resizeButton.addActionListener(e -> {
-            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            if (frame != null) {
-                if (frame.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
-                    frame.setExtendedState(JFrame.NORMAL);
-                } else {
-                    GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                    frame.setMaximizedBounds(env.getMaximumWindowBounds());
-                    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                }
-            }
-        });
-
-        // Logo fermeture de l'application
-        this.closeButton.setText("\uF410");
-
-        this.closeButton.addActionListener(e -> System.exit(0));
 
 
         // Ajout des éléments de l'interface
-        this.add(this.minimizeButton);
-        this.add(this.resizeButton);
-        this.add(this.closeButton);
+        this.add(this.topLeftMenuPanelView, BorderLayout.CENTER);
+        this.add(this.topRightMenuPanelView, BorderLayout.EAST);
     }
 }

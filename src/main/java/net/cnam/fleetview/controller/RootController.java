@@ -5,7 +5,6 @@ import net.cnam.fleetview.view.base.RootFrameView;
 
 import javax.swing.*;
 import java.util.LinkedList;
-import java.util.List;
 
 public class RootController {
     private static RootController INSTANCE = null;
@@ -13,7 +12,7 @@ public class RootController {
     // Vue
     private final RootFrameView view;
 
-    private final List<View> views = new LinkedList<>();
+    private final LinkedList<View> views = new LinkedList<>();
 
     public RootController(RootFrameView view) {
         INSTANCE = this;
@@ -23,7 +22,7 @@ public class RootController {
 
     public void openView(View view) {
         // Si une vue est déjà ouverte, on vérifie que l'on peut en ouvrir une autre
-        if (!this.views.isEmpty() && !this.views.get(this.views.size() - 1).canOpenNewView()) {
+        if (!this.views.isEmpty() && !this.views.getLast().canOpenNewView()) {
             return;
         }
 
@@ -45,7 +44,8 @@ public class RootController {
 
         // On affiche la vue précédente
         if (!this.views.isEmpty()) {
-            this.view.getPanel().getMainPanel().setContentPanelView(this.views.get(this.views.size() - 1));
+            // On affiche la vue précédente
+            this.view.getPanel().getMainPanel().setContentPanelView(this.views.getLast());
         }
         // Sinon, on affiche rien
         else {
@@ -57,7 +57,7 @@ public class RootController {
 
     public boolean closeLastView() {
         if (!this.views.isEmpty()) {
-            return this.closeView(this.views.get(this.views.size() - 1));
+            return this.closeView(this.views.getLast());
         }
         return false;
     }

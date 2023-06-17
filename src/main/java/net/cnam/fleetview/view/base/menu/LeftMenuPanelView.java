@@ -26,6 +26,8 @@ public class LeftMenuPanelView extends JPanel {
         // Largeur maximale du menu
         this.setPreferredSize(new Dimension(200, Integer.MAX_VALUE));
 
+        this.setBackground(new Color(74, 123, 89, 255));
+
         // Création des éléments de l'interface
         this.headPanel = new LeftMenuHeadPanelView();
         this.contentPanel = new LeftMenuContentPanelView();
@@ -33,14 +35,6 @@ public class LeftMenuPanelView extends JPanel {
 
 
         // Configuration des éléments de l'interface
-        // Head menu
-        this.headPanel.setBackground(new Color(74, 123, 89, 255));
-
-        // Content menu
-        this.contentPanel.setBackground(new Color(74, 123, 89, 255));
-
-        // Foot menu
-        this.footPanel.setBackground(new Color(74, 123, 89, 255));
 
 
         // Ajout des éléments de l'interface

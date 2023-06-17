@@ -29,6 +29,8 @@ public class LeftMenuFootPanelView extends JPanel {
         BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
         this.setLayout(layout);
 
+        this.setOpaque(false);
+
         // Bordure
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
