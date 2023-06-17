@@ -21,7 +21,8 @@ public class IconLabel extends JPanel {
         this.titre = titre;
 
         // Layout
-        FlowLayout layout = new FlowLayout(FlowLayout.LEFT);
+        BorderLayout layout = new BorderLayout();
+        layout.setHgap(10);
         this.setLayout(layout);
 
         // Création des éléments de l'interface
@@ -39,7 +40,7 @@ public class IconLabel extends JPanel {
 
 
         // Ajout des éléments de l'interface
-        this.add(this.logoLabel);
-        this.add(this.titreLabel);
+        this.add(this.logoLabel, BorderLayout.WEST);
+        this.add(this.titreLabel, BorderLayout.CENTER);
     }
 }
