@@ -1,6 +1,7 @@
 package net.cnam.fleetview.view.base;
 
 import net.cnam.fleetview.App;
+import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.utils.ComponentMover;
 import net.cnam.fleetview.view.utils.ComponentResizer;
 
@@ -8,10 +9,18 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RootFrameView extends JFrame {
+    // Controller
+    private final RootController controller;
+
+    // Composants graphiques
+    // Panel
     private final RootPanelView panel;
 
     public RootFrameView() {
         super("FleetView");
+
+        // Initialisation du controller
+        this.controller = new RootController(this);
 
         this.panel = new RootPanelView();
 

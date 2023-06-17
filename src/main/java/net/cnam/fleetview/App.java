@@ -76,8 +76,6 @@ public class App {
         }
     }
 
-    public static RootFrameView INSTANCE;
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -88,11 +86,7 @@ public class App {
                     e.printStackTrace();
                 }
 
-                if (INSTANCE == null) {
-                    INSTANCE = new RootFrameView();
-                }
-
-                INSTANCE.setVisible(true);
+                new RootFrameView().setVisible(true);
             }
         });
     }

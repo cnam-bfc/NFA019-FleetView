@@ -1,6 +1,7 @@
 package net.cnam.fleetview.view.base.menu.content;
 
-import net.cnam.fleetview.App;
+import net.cnam.fleetview.controller.RootController;
+import net.cnam.fleetview.view.CarteView;
 import net.cnam.fleetview.view.CoursesView;
 import net.cnam.fleetview.view.CoursiersView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
@@ -12,6 +13,8 @@ public class LeftMenuContentPanelView extends JPanel {
     // Composants graphiques
     // Courses
     private final IconLabelButton coursesButton;
+    // Carte
+    private final IconLabelButton carteButton;
     private final IconLabelButton coursiersButton;
 
     public LeftMenuContentPanelView() {
@@ -26,6 +29,7 @@ public class LeftMenuContentPanelView extends JPanel {
 
         // Création des éléments de l'interface
         this.coursesButton = new IconLabelButton("\uF0D1", "Courses");
+        this.carteButton = new IconLabelButton("\uf279", "Carte");
         this.coursiersButton = new IconLabelButton("\uF84A", "Coursiers");
 
 
@@ -36,7 +40,16 @@ public class LeftMenuContentPanelView extends JPanel {
             CoursesView coursesView = new CoursesView();
 
             // Affichage de la vue de la liste des courses
-            App.INSTANCE.getPanel().getMainPanel().setContentPanelView(coursesView);
+            RootController.open(coursesView);
+        });
+
+        // Bouton de la carte
+        this.carteButton.addActionListener(e -> {
+            // Création de la vue de la carte
+            CarteView coursesView = new CarteView();
+
+            // Affichage de la vue de la carte
+            RootController.open(coursesView);
         });
 
         // Bouton de liste des coursiers
@@ -52,6 +65,7 @@ public class LeftMenuContentPanelView extends JPanel {
         // Ajout des éléments de l'interface
         this.add(this.coursesButton);
         this.add(this.coursiersButton);
+        this.add(this.carteButton);
     }
 
     @Override
