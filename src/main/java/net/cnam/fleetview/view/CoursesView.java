@@ -4,11 +4,11 @@ import net.cnam.fleetview.view.components.label.IconLabel;
 
 import javax.swing.*;
 
-public class ListeCoursesPanelView extends JPanel {
+public class CoursesView extends JPanel {
     // ÉLÉMENTS DE L'INTERFACE
     private final IconLabel iconLabel;
 
-    public ListeCoursesPanelView() {
+    public CoursesView() {
         super();
 
         // Création des éléments de l'interface

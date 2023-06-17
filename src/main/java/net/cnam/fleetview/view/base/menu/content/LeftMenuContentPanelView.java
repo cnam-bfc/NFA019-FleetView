@@ -1,8 +1,7 @@
 package net.cnam.fleetview.view.base.menu.content;
 
 import net.cnam.fleetview.App;
-import net.cnam.fleetview.view.ListeCoursesPanelView;
-import net.cnam.fleetview.view.ParametrageBddView;
+import net.cnam.fleetview.view.CoursesView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 
 import javax.swing.*;
@@ -31,10 +30,10 @@ public class LeftMenuContentPanelView extends JPanel {
         // Bouton de liste des courses
         this.coursesButton.addActionListener(e -> {
             // Création de la vue de la liste des courses
-            ListeCoursesPanelView listeCoursesPanelView = new ListeCoursesPanelView();
+            CoursesView coursesView = new CoursesView();
 
             // Affichage de la vue de la liste des courses
-            App.INSTANCE.getPanel().getMainPanel().setContentPanelView(listeCoursesPanelView);
+            App.INSTANCE.getPanel().getMainPanel().setContentPanelView(coursesView);
         });
 
 

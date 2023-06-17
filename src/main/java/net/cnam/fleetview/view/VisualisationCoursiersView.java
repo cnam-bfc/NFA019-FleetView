@@ -1,4 +1,6 @@
 package net.cnam.fleetview.view;
 
-public class VisualisationCoursiersView {
+import javax.swing.*;
+
+public class VisualisationCoursiersView extends JPanel {
 }
