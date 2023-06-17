@@ -20,10 +20,9 @@ public class TopMenuPanelView extends JPanel {
         // Layout
         FlowLayout layout = new FlowLayout();
         layout.setAlignment(FlowLayout.RIGHT);
+        layout.setVgap(10);
+        layout.setHgap(10);
         this.setLayout(layout);
-
-        // Hauteur maximale du menu
-        this.setPreferredSize(new Dimension(Integer.MAX_VALUE, 50));
 
         this.setBackground(new Color(103, 175, 172));
 
