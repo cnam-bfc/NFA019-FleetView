@@ -31,6 +31,9 @@ public class RootController {
 
         // On affiche la vue
         this.view.getPanel().getMainPanel().setContentPanelView(view);
+
+        // On affiche le bouton de retour
+        this.view.getPanel().getMainPanel().getTopMenuPanel().getTopLeftMenuPanelView().setBackButtonVisible(true);
     }
 
     public boolean closeView(View view) {
@@ -49,7 +52,11 @@ public class RootController {
         }
         // Sinon, on affiche rien
         else {
+            // On affiche une vue vide
             this.view.getPanel().getMainPanel().setContentPanelView(new JPanel());
+
+            // On cache le bouton de retour
+            this.view.getPanel().getMainPanel().getTopMenuPanel().getTopLeftMenuPanelView().setBackButtonVisible(false);
         }
 
         return true;

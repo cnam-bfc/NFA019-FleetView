@@ -30,6 +30,7 @@ public class TopLeftMenuPanelView extends JPanel {
         // Configuration des éléments de l'interface
         // Logo retour
         this.backButton.setText("\uF0A8");
+        this.backButton.setVisible(false);
 
         this.backButton.addActionListener(e -> {
             RootController.closeLast();
@@ -38,5 +39,9 @@ public class TopLeftMenuPanelView extends JPanel {
 
         // Ajout des éléments de l'interface
         this.add(this.backButton);
+    }
+
+    public void setBackButtonVisible(boolean visible) {
+        this.backButton.setVisible(visible);
     }
 }

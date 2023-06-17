@@ -36,4 +36,12 @@ public class TopMenuPanelView extends JPanel {
         this.add(this.topLeftMenuPanelView, BorderLayout.CENTER);
         this.add(this.topRightMenuPanelView, BorderLayout.EAST);
     }
+
+    public TopLeftMenuPanelView getTopLeftMenuPanelView() {
+        return topLeftMenuPanelView;
+    }
+
+    public TopRightMenuPanelView getTopRightMenuPanelView() {
+        return topRightMenuPanelView;
+    }
 }
