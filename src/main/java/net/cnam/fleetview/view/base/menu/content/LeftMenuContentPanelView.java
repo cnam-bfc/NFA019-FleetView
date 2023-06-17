@@ -2,6 +2,7 @@ package net.cnam.fleetview.view.base.menu.content;
 
 import net.cnam.fleetview.App;
 import net.cnam.fleetview.view.CoursesView;
+import net.cnam.fleetview.view.CoursiersView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ public class LeftMenuContentPanelView extends JPanel {
     // Composants graphiques
     // Courses
     private final IconLabelButton coursesButton;
+    private final IconLabelButton coursiersButton;
 
     public LeftMenuContentPanelView() {
         super();
@@ -24,6 +26,7 @@ public class LeftMenuContentPanelView extends JPanel {
 
         // Création des éléments de l'interface
         this.coursesButton = new IconLabelButton("\uF0D1", "Courses");
+        this.coursiersButton = new IconLabelButton("\uF84A", "Coursiers");
 
 
         // Configuration des éléments de l'interface
@@ -36,9 +39,19 @@ public class LeftMenuContentPanelView extends JPanel {
             App.INSTANCE.getPanel().getMainPanel().setContentPanelView(coursesView);
         });
 
+        // Bouton de liste des coursiers
+        this.coursiersButton.addActionListener(e -> {
+            // Création de la vue de la liste des coursiers
+            CoursiersView coursiersView = new CoursiersView();
+
+            // Affichage de la vue de la liste des coursiers
+            App.INSTANCE.getPanel().getMainPanel().setContentPanelView(coursiersView);
+        });
+
 
         // Ajout des éléments de l'interface
         this.add(this.coursesButton);
+        this.add(this.coursiersButton);
     }
 
     @Override
