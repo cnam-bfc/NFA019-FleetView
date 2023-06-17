@@ -1,6 +1,6 @@
 package net.cnam.fleetview.view;
 
-import net.cnam.fleetview.view.components.IconLabel;
+import net.cnam.fleetview.view.components.label.IconLabel;
 
 import javax.swing.*;
 import java.awt.*;

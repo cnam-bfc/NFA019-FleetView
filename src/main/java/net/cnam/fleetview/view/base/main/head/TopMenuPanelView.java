@@ -1,6 +1,7 @@
 package net.cnam.fleetview.view.base.main.head;
 
 import net.cnam.fleetview.App;
+import net.cnam.fleetview.view.components.button.IconButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,17 +28,14 @@ public class TopMenuPanelView extends JPanel {
         this.setBackground(new Color(103, 175, 172));
 
         // Création des éléments de l'interface
-        this.minimizeButton = new JButton();
-        this.resizeButton = new JButton();
-        this.closeButton = new JButton();
+        this.minimizeButton = new IconButton();
+        this.resizeButton = new IconButton();
+        this.closeButton = new IconButton();
 
 
         // Configuration des éléments de l'interface
         // Logo minimisation de l'application
-        this.minimizeButton.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(Font.PLAIN, 25));
         this.minimizeButton.setText("\uF2D1");
-        this.minimizeButton.setOpaque(false);
-        this.minimizeButton.setVerticalAlignment(SwingConstants.CENTER);
 
         this.minimizeButton.addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -47,10 +45,7 @@ public class TopMenuPanelView extends JPanel {
         });
 
         // Logo redimensionnement de l'application
-        this.resizeButton.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(Font.PLAIN, 25));
         this.resizeButton.setText("\uF2D2");
-        this.resizeButton.setOpaque(false);
-        this.resizeButton.setVerticalAlignment(SwingConstants.CENTER);
 
         this.resizeButton.addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -66,10 +61,7 @@ public class TopMenuPanelView extends JPanel {
         });
 
         // Logo fermeture de l'application
-        this.closeButton.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(Font.PLAIN, 25));
         this.closeButton.setText("\uF410");
-        this.closeButton.setOpaque(false);
-        this.closeButton.setVerticalAlignment(SwingConstants.CENTER);
 
         this.closeButton.addActionListener(e -> System.exit(0));
 

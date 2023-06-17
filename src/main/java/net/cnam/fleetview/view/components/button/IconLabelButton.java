@@ -1,4 +1,4 @@
-package net.cnam.fleetview.view.components;
+package net.cnam.fleetview.view.components.button;
 
 import net.cnam.fleetview.App;
 
@@ -7,17 +7,23 @@ import java.awt.*;
 
 public class IconLabelButton extends JButton {
     // CONSTANTES
-    private final String logo;
+    private final String icon;
     private final String texte;
 
     // ÉLÉMENTS DE L'INTERFACE
-    private final JLabel logoLabel;
+    private final JLabel iconLabel;
     private final JLabel texteLabel;
 
-    public IconLabelButton(String logo, String texte) {
+    /**
+     * Constructeur
+     *
+     * @param icon  Icône du bouton
+     * @param texte Texte du bouton
+     */
+    public IconLabelButton(String icon, String texte) {
         super();
 
-        this.logo = logo;
+        this.icon = icon;
         this.texte = texte;
 
         // Layout
@@ -25,29 +31,30 @@ public class IconLabelButton extends JButton {
         this.setLayout(layout);
 
         this.setOpaque(false);
+        this.setFocusPainted(false);
 
         // Création des éléments de l'interface
-        this.logoLabel = new JLabel();
+        this.iconLabel = new JLabel();
         this.texteLabel = new JLabel();
 
 
         // Configuration des éléments de l'interface
-        // Logo label
-        this.logoLabel.setText(this.logo);
-        this.logoLabel.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(32f));
+        // Icon label
+        this.iconLabel.setText(this.icon);
+        this.iconLabel.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(32f));
         // Définir la taille souhaitée pour l'icône
-        Dimension logoSize = new Dimension(40, 40);
-        this.logoLabel.setPreferredSize(logoSize);
-        this.logoLabel.setMaximumSize(logoSize);
-        this.logoLabel.setMinimumSize(logoSize);
-        this.logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        Dimension iconSize = new Dimension(40, 40);
+        this.iconLabel.setPreferredSize(iconSize);
+        this.iconLabel.setMaximumSize(iconSize);
+        this.iconLabel.setMinimumSize(iconSize);
+        this.iconLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Texte label
         this.texteLabel.setText(this.texte);
 
 
         // Ajout des éléments de l'interface
-        this.add(this.logoLabel);
+        this.add(this.iconLabel);
         this.add(Box.createRigidArea(new Dimension(10, 0)));
         this.add(this.texteLabel);
     }

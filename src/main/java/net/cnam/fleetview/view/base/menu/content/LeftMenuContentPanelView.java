@@ -3,7 +3,7 @@ package net.cnam.fleetview.view.base.menu.content;
 import net.cnam.fleetview.App;
 import net.cnam.fleetview.view.ListeCoursesPanelView;
 import net.cnam.fleetview.view.ParametrageBddView;
-import net.cnam.fleetview.view.components.IconLabelButton;
+import net.cnam.fleetview.view.components.button.IconLabelButton;
 
 import javax.swing.*;
 import java.awt.*;
