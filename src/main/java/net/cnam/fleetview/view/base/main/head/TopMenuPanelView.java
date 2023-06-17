@@ -1,6 +1,6 @@
-package net.cnam.fleetview.view.base;
+package net.cnam.fleetview.view.base.main.head;
 
-import net.cnam.fleetview.App;
+import net.cnam.fleetview.view.components.button.IconButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,13 +8,11 @@ import java.awt.*;
 public class TopMenuPanelView extends JPanel {
     // Composants graphiques
     // Logo minimisation de l'application
-    private final JButton minimizeButton = new JButton();
-
+    private final IconButton minimizeButton;
     // Logo redimensionnement de l'application
-    private final JButton resizeButton = new JButton();
-
+    private final IconButton resizeButton;
     // Logo fermeture de l'application
-    private final JButton closeButton = new JButton();
+    private final IconButton closeButton;
 
     public TopMenuPanelView() {
         super();
@@ -22,18 +20,21 @@ public class TopMenuPanelView extends JPanel {
         // Layout
         FlowLayout layout = new FlowLayout();
         layout.setAlignment(FlowLayout.RIGHT);
+        layout.setVgap(10);
+        layout.setHgap(10);
         this.setLayout(layout);
-
-        // Hauteur maximale du menu
-        this.setPreferredSize(new Dimension(Integer.MAX_VALUE, 50));
 
         this.setBackground(new Color(103, 175, 172));
 
+        // Création des éléments de l'interface
+        this.minimizeButton = new IconButton();
+        this.resizeButton = new IconButton();
+        this.closeButton = new IconButton();
+
+
+        // Configuration des éléments de l'interface
         // Logo minimisation de l'application
-        this.minimizeButton.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(Font.PLAIN, 25));
         this.minimizeButton.setText("\uF2D1");
-        this.minimizeButton.setOpaque(false);
-        this.minimizeButton.setVerticalAlignment(SwingConstants.CENTER);
 
         this.minimizeButton.addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -42,14 +43,8 @@ public class TopMenuPanelView extends JPanel {
             }
         });
 
-        // Ajout du logo minimisation de l'application au menu
-        this.add(this.minimizeButton);
-
         // Logo redimensionnement de l'application
-        this.resizeButton.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(Font.PLAIN, 25));
         this.resizeButton.setText("\uF2D2");
-        this.resizeButton.setOpaque(false);
-        this.resizeButton.setVerticalAlignment(SwingConstants.CENTER);
 
         this.resizeButton.addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -64,18 +59,15 @@ public class TopMenuPanelView extends JPanel {
             }
         });
 
-        // Ajout du logo redimensionnement de l'application au menu
-        this.add(this.resizeButton);
-
         // Logo fermeture de l'application
-        this.closeButton.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(Font.PLAIN, 25));
         this.closeButton.setText("\uF410");
-        this.closeButton.setOpaque(false);
-        this.closeButton.setVerticalAlignment(SwingConstants.CENTER);
 
         this.closeButton.addActionListener(e -> System.exit(0));
 
-        // Ajout du logo fermeture de l'application au menu
+
+        // Ajout des éléments de l'interface
+        this.add(this.minimizeButton);
+        this.add(this.resizeButton);
         this.add(this.closeButton);
     }
 }
