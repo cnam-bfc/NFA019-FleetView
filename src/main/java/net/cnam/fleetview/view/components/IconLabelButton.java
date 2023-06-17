@@ -11,7 +11,6 @@ public class IconLabelButton extends JButton {
     private final String texte;
 
     // ÉLÉMENTS DE L'INTERFACE
-    private final JPanel contentPanel;
     private final JLabel logoLabel;
     private final JLabel texteLabel;
 
@@ -21,18 +20,18 @@ public class IconLabelButton extends JButton {
         this.logo = logo;
         this.texte = texte;
 
+        // Layout
+        BorderLayout layout = new BorderLayout();
+        layout.setHgap(10);
+        this.setLayout(layout);
+
+
         // Création des éléments de l'interface
-        this.contentPanel = new JPanel();
         this.logoLabel = new JLabel();
         this.texteLabel = new JLabel();
 
 
         // Configuration des éléments de l'interface
-        // Content panel
-        FlowLayout layout = new FlowLayout(FlowLayout.LEADING);
-        this.contentPanel.setLayout(layout);
-        this.contentPanel.setOpaque(false);
-
         // Logo label
         this.logoLabel.setText(this.logo);
         this.logoLabel.setFont(App.FONTAWESOME_SOLID_FONT.deriveFont(32f));
@@ -42,8 +41,7 @@ public class IconLabelButton extends JButton {
 
 
         // Ajout des éléments de l'interface
-        this.contentPanel.add(this.logoLabel);
-        this.contentPanel.add(this.texteLabel);
-        this.add(this.contentPanel);
+        this.add(this.logoLabel, BorderLayout.WEST);
+        this.add(this.texteLabel, BorderLayout.CENTER);
     }
 }
