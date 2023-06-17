@@ -12,8 +12,6 @@ public class LeftMenuContentPanelView extends JPanel {
     // Composants graphiques
     // Courses
     private final IconLabelButton coursesButton;
-    // Paramètres
-    private final IconLabelButton parametresButton;
 
     public LeftMenuContentPanelView() {
         super();
@@ -27,7 +25,6 @@ public class LeftMenuContentPanelView extends JPanel {
 
         // Création des éléments de l'interface
         this.coursesButton = new IconLabelButton("\uF0D1", "Courses");
-        this.parametresButton = new IconLabelButton("\uF013", "Paramètres");
 
 
         // Configuration des éléments de l'interface
@@ -40,19 +37,9 @@ public class LeftMenuContentPanelView extends JPanel {
             App.INSTANCE.getPanel().getMainPanel().setContentPanelView(listeCoursesPanelView);
         });
 
-        // Bouton de paramètres
-        this.parametresButton.addActionListener(e -> {
-            // Création de la vue des paramètres
-            ParametrageBddView parametrageBddView = new ParametrageBddView();
-
-            // Affichage de la vue des paramètres
-            App.INSTANCE.getPanel().getMainPanel().setContentPanelView(parametrageBddView);
-        });
-
 
         // Ajout des éléments de l'interface
         this.add(this.coursesButton);
-        this.add(this.parametresButton);
     }
 
     @Override
