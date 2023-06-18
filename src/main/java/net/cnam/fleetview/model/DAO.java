@@ -1,6 +1,9 @@
 package net.cnam.fleetview.model;
 
+import net.cnam.fleetview.model.historique.HistoriqueDAO;
 import net.cnam.fleetview.model.historiquedata.HistoriqueData;
+import net.cnam.fleetview.model.historiquedata.HistoriqueDataDAO;
+import net.cnam.fleetview.model.historiquetype.HistoriqueTypeDAO;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +40,11 @@ public abstract class DAO<T> {
      */
     public DAO(Connection connection) {
         this.connection = connection;
-        this.historique = HistoriqueManager.getInstance(connection);
+        if (!(this instanceof HistoriqueDAO) && !(this instanceof HistoriqueDataDAO) && !(this instanceof HistoriqueTypeDAO)) {
+            this.historique = HistoriqueManager.getInstance(connection);
+        } else {
+            this.historique = null;
+        }
     }
 
     /**

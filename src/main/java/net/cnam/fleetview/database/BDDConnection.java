@@ -1,5 +1,6 @@
 package net.cnam.fleetview.database;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,7 +14,6 @@ import java.sql.SQLException;
  * @param <T> type générique dérivé de la classe abstraite Connector
  */
 public class BDDConnection<T extends Connector> {
-
     /**
      * Objet contenant les informations de connexion à la base
      */
@@ -37,11 +37,12 @@ public class BDDConnection<T extends Connector> {
      * @param connector le connecteur contenant les informations de connection
      */
     private BDDConnection(T connector) {
-
         this.connector = connector;
         try {
             connect = DriverManager.getConnection(this.connector.getURL(), this.connector.getUSER(), this.connector.getPWD());
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erreur de connexion à la base de données : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            System.err.println("Erreur de connexion à la base de données : " + ex.getMessage());
             connect = null;
         }
     }
@@ -59,7 +60,6 @@ public class BDDConnection<T extends Connector> {
         return laBDDConnection.connect;
     }
 
-   
 
     /**
      * Vérifie si l'instance de la base de donnée existe pour ce connecteur.
@@ -68,10 +68,9 @@ public class BDDConnection<T extends Connector> {
      * @return true si l'instance existe, false sinon
      */
     public static boolean isInstanceOf(Connector connector) {
-
         return laBDDConnection != null && laBDDConnection.connector.equals(connector);
     }
-    
+
     /**
      * Ferme la connexion en cours.
      *
@@ -79,7 +78,6 @@ public class BDDConnection<T extends Connector> {
      * @return true si la connexion a été fermée, false sinon
      */
     public static boolean killInstance(Connector connector1) {
-
         if (isInstanceOf(connector1)) {
             laBDDConnection = null;
             return true;

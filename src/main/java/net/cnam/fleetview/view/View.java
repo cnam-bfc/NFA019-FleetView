@@ -29,4 +29,8 @@ public abstract class View extends JPanel {
     public boolean canSwitchView() {
         return true;
     }
+
+    public void afficherMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
 }
