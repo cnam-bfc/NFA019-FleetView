@@ -15,8 +15,12 @@ public class CourseView extends View<CourseController> {
     private final JPanel contenu;
     // Champ de saisie de l'id
     private final JTextField idField;
+    // Champ de saisie du nom
+    private final JTextField nomField;
     // Champ de saisie de la date
     private final JTextField dateField;
+    // Tableau des colis
+    //private final JTable colisTable;
 
     public CourseView() {
         super();
@@ -32,6 +36,7 @@ public class CourseView extends View<CourseController> {
         this.titre = new IconLabel("\uF0D1", "Course");
         this.contenu = new JPanel();
         this.idField = new JTextField();
+        this.nomField = new JTextField();
         this.dateField = new JTextField();
 
 
@@ -44,17 +49,16 @@ public class CourseView extends View<CourseController> {
 
         // Champ de saisie de l'id
         this.idField.setEditable(false);
-        this.idField.setBorder(BorderFactory.createTitledBorder("Id"));
-        this.idField.setPreferredSize(new Dimension(200, 50));
+
+        // Champ de saisie du nom
 
         // Champ de saisie de la date
-        this.dateField.setBorder(BorderFactory.createTitledBorder("Date"));
-        this.dateField.setPreferredSize(new Dimension(200, 50));
 
 
         // Ajout des éléments de l'interface
         this.add(this.titre, BorderLayout.NORTH);
         this.contenu.add(this.idField);
+        this.contenu.add(this.nomField);
         this.contenu.add(this.dateField);
         this.add(this.contenu, BorderLayout.CENTER);
     }
@@ -65,6 +69,7 @@ public class CourseView extends View<CourseController> {
      * @param editable
      */
     public void setFieldsEditable(boolean editable) {
+        this.nomField.setEditable(editable);
         this.dateField.setEditable(editable);
     }
 
@@ -72,14 +77,16 @@ public class CourseView extends View<CourseController> {
      * Remplir les champs de la vue
      *
      * @param id
+     * @param nom
      * @param date
      */
-    public void fill(String id, String date) {
+    public void fill(String id, String nom, String date) {
         // Titre
-        this.titre.getTexteLabel().setText("Course n°" + id);
+        this.titre.getTexteLabel().setText("Course n°" + id + " - " + nom);
 
         // Champs
         this.idField.setText(id);
+        this.nomField.setText(nom);
         this.dateField.setText(date);
     }
 }

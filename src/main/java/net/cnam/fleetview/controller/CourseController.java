@@ -36,10 +36,11 @@ public class CourseController extends Controller<CourseView> {
         Course course = courseDAO.getById(id);
 
         String idForm = String.valueOf(course.getIdCourse());
+        String nomForm = course.getNom();
         String dateForm = course.getDateCourse().toString();
 
         // Chargement des données dans la vue
-        view.fill(idForm, dateForm);
+        view.fill(idForm, nomForm, dateForm);
 
         // Rendre les champs non modifiables
         view.setFieldsEditable(false);
@@ -55,10 +56,11 @@ public class CourseController extends Controller<CourseView> {
         Course course = courseDAO.getById(id);
 
         String idForm = String.valueOf(course.getIdCourse());
+        String nomForm = course.getNom();
         String dateForm = course.getDateCourse().toString();
 
         // Chargement des données dans la vue
-        view.fill(idForm, dateForm);
+        view.fill(idForm, nomForm, dateForm);
 
         // Rendre les champs modifiables
         view.setFieldsEditable(true);
