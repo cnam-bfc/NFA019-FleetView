@@ -22,13 +22,6 @@ public class FicheAccidentView extends DebugView {
         //--- Titre ---
         this.iconLabel = new IconLabel("\uF56C", "DOCUMENTS");
         JPanel jpEntete = new JPanel(new BorderLayout());
-
-        JPanel jpEnteteMargeLaterale = new JPanel();
-        jpEnteteMargeLaterale.setPreferredSize(new Dimension(20, 0));
-
-        JPanel jpEnteteMargeHorizontale = new JPanel();
-        jpEnteteMargeHorizontale.setPreferredSize(new Dimension(0, 20));
-
         JPanel jpPrincipale = new JPanel(new BorderLayout());
 
         //--- Contenu ---
@@ -38,59 +31,33 @@ public class FicheAccidentView extends DebugView {
         jpDonneeAccident.setLayout(new BoxLayout(jpDonneeAccident, BoxLayout.PAGE_AXIS));
 
             //bloc 1 GRID 2,1
-        JPanel jpBloc1 = new JPanel(new GridLayout(1,2));
-                //droite
-        JPanel jpBloc1droite = new JPanel(new GridLayout(2,1));
-                        // bloc 1.1.1 BORDER
+        JPanel jpBloc1 = new JPanel(new GridLayout(2,2));
+
         JPanel jpLivreur = new JPanel(new BorderLayout());
         jpLivreur.setLayout(new BoxLayout(jpLivreur, BoxLayout.PAGE_AXIS));
-                            //FLOW
         JPanel jpMatricule = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                            //FLOW
         JPanel jpNom = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                        // bloc 1.1.2(marge) BORDER
-        JPanel jpMargeB1 = new JPanel(new BorderLayout());
-        jpMargeB1.setLayout(new BoxLayout(jpMargeB1, BoxLayout.PAGE_AXIS));
-                        // bloc 1.1.3 BORDER
+
         JPanel jpDate = new JPanel(new BorderLayout());
         jpDate.setLayout(new BoxLayout(jpDate, BoxLayout.PAGE_AXIS));
-                            //FLOW
         JPanel jpJour = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                            //FLOW
         JPanel jpHeure = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                //gauche
-                    //GRID 1,2
-        JPanel jpBloc1Gauche = new JPanel(new GridLayout(2,1));
-                        // bloc 1.2.1 BORDER
+
         JPanel jpCourse = new JPanel(new BorderLayout());
         jpCourse.setLayout(new BoxLayout(jpCourse, BoxLayout.PAGE_AXIS));
-                            //FLOW
         JPanel jpCourseId = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                            //FLOW
         JPanel jpCycle= new JPanel(new FlowLayout(FlowLayout.LEFT));
-                        // bloc 1.2.2 (marge) BORDER
-            //bloc 2
+
         JPanel jpAdresse = new JPanel(new GridLayout(3,1));
-                // grid 1,3
-                    //FLOW
         JPanel jpRue = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                    //FLOW
         JPanel jpCommune = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                    //FLOw
         JPanel jpCP = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 
         jpLivreur.setPreferredSize(new Dimension(400, 50));
-        jpMargeB1.setPreferredSize(new Dimension(300, 50));
         jpDate.setPreferredSize(new Dimension(400, 50));
         jpCourse.setPreferredSize(new Dimension(400, 50));
         jpAdresse.setPreferredSize(new Dimension(400, 50));
-
-        //Marge
-        JPanel jpMargeGauche = new JPanel();
-        jpMargeGauche.setPreferredSize(new Dimension(100, 0));
-        JPanel jpMargeHaut = new JPanel();
-        jpMargeHaut.setPreferredSize(new Dimension(0, 50));
 
         //Label
         JLabel texteMatricule = new JLabel("Matricule");
@@ -182,11 +149,6 @@ public class FicheAccidentView extends DebugView {
         jpHeure.add(champHeure);
         jpDate.add(jpHeure);
 
-        //bloc1d
-        jpBloc1droite.add(jpLivreur);
-        jpBloc1droite.add(jpDate);
-
-
         //Course
         jpCourseId.add(texteCourse);
         jpCourseId.add(champCourse);
@@ -195,10 +157,6 @@ public class FicheAccidentView extends DebugView {
         jpCycle.add(texteCycle);
         jpCycle.add(champCycle);
         jpCourse.add(jpCycle);
-
-        //bloc1g
-        jpBloc1Gauche.add(jpCourse);
-        jpBloc1Gauche.add(jpMargeB1);
 
         //Adresse
         jpRue.add(texteRue);
@@ -213,9 +171,10 @@ public class FicheAccidentView extends DebugView {
         jpCP.add(champCP);
         jpAdresse.add(jpCP);
 
-
-        jpBloc1.add(jpBloc1droite);
-        jpBloc1.add(jpBloc1Gauche);
+        //bloc1d
+        jpBloc1.add(jpLivreur);
+        jpBloc1.add(jpCourse);
+        jpBloc1.add(jpDate);
 
         jpDonneeAccident.add(jpBloc1);
         jpDonneeAccident.add(jpAdresse);

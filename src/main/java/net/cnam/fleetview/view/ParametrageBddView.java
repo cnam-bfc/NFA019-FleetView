@@ -31,12 +31,6 @@ public class ParametrageBddView extends View {
         this.iconLabel = new IconLabel("\uF013", "BASE DE DONNEE");
         JPanel jpEntete = new JPanel(new BorderLayout());
 
-        JPanel jpEnteteMargeLaterale = new JPanel();
-        jpEnteteMargeLaterale.setPreferredSize(new Dimension(20, 0));
-
-        JPanel jpEnteteMargeHorizontale = new JPanel();
-        jpEnteteMargeHorizontale.setPreferredSize(new Dimension(0, 20));
-
         JPanel jpPrincipale = new JPanel(new BorderLayout());
 
         JPanel jpBdInfo = new JPanel();
@@ -99,11 +93,6 @@ public class ParametrageBddView extends View {
         //JPannel
         JPanel jpActionHolder = new JPanel(new BorderLayout());
         JPanel jpActionLine = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            //marge
-        JPanel jpMargeBasDePageMargeVerticale = new JPanel();
-        jpMargeBasDePageMargeVerticale.setPreferredSize(new Dimension(20, 0));
-        JPanel jpMargeBasDePageMargeHorizontale = new JPanel();
-        jpMargeBasDePageMargeHorizontale.setPreferredSize(new Dimension(0, 20));
 
 
         //********************************
