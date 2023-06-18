@@ -2,7 +2,6 @@ package net.cnam.fleetview.view;
 
 import net.cnam.fleetview.view.components.label.IconLabel;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class CoursiersView extends View {
@@ -11,7 +10,8 @@ public class CoursiersView extends View {
 
     public CoursiersView() {
         super();
-        this.setLayout(new BorderLayout());
+        BorderLayout borderLayout = new BorderLayout();
+        this.setLayout(borderLayout);
 
         // Création des éléments de l'interface
         this.iconLabel = new IconLabel("\uF84A", "COURSIERS");
