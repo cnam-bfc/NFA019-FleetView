@@ -1,8 +1,11 @@
 package net.cnam.fleetview.view.accueil;
 
+import net.cnam.fleetview.view.View;
+import net.cnam.fleetview.view.components.label.IconLabel;
+
 import javax.swing.*;
 import java.awt.*;
-public class AdminMainView extends JPanel {
+public class AdminMainView extends View {
 
     //private final JFrame test = new JFrame();
     private final JButton viewUsers = new JButton("<html>Visualisation de tous les utilisateurs</html>");
@@ -22,35 +25,45 @@ public class AdminMainView extends JPanel {
 
     private final JButton map = new JButton("<html>Carte interactive</html>");
 
+    private final IconLabel iconLabel;
+
     public AdminMainView(){
-        //this.setPreferredSize(new Dimension(800,100));
-        //this.setUI();
-        //this.setBackground(new Color(24, 123, 89));
-        //this.add(new JButton("ok"));
-        //this.add(new JButton("Visualisation de tous les utilisateurs"));
-        //this.viewUsers.setMargin(new Insets(10,10,10,10));
 
-        //this.dbConnection.setBorder(new RoundedBorder(10));
+        this.iconLabel = new IconLabel("\uF013", "Création / Modification d'un Utilisateur");
+        JPanel mainPanel = new JPanel(new BorderLayout());
 
-        this.dbConnection.setPreferredSize(new Dimension(100,100));
-        this.modifyUsers.setPreferredSize(new Dimension(100,100));
-        this.viewUsers.setPreferredSize(new Dimension(100,100));
-        this.viewCourses.setPreferredSize(new Dimension(100,100));
-        this.viewCoursiers.setPreferredSize(new Dimension(100,100));
+        JPanel bttnPanel = new JPanel(new GridLayout(2,5,50,50));
+
+        this.dbConnection.setPreferredSize(new Dimension(120,120));
+        this.modifyUsers.setPreferredSize(new Dimension(120,120));
+        this.viewUsers.setPreferredSize(new Dimension(120,120));
+        this.viewCourses.setPreferredSize(new Dimension(120,120));
+        this.viewCoursiers.setPreferredSize(new Dimension(120,120));
         this.viewCycles.setPreferredSize(new Dimension(100,100));
         this.viewDocs.setPreferredSize(new Dimension(100,100));
         this.stats.setPreferredSize(new Dimension(100,100));
         this.map.setPreferredSize(new Dimension(100,100));
 
-        this.add(this.dbConnection);
-        this.add(this.modifyUsers);
-        this.add(this.viewUsers);
-        this.add(this.viewCourses);
-        this.add(this.viewCoursiers);
-        this.add(this.viewCycles);
-        this.add(this.viewDocs);
-        this.add(this.stats);
-        this.add(this.map);
+        bttnPanel.add(this.dbConnection);
+        bttnPanel.add(this.modifyUsers);
+        bttnPanel.add(this.viewUsers);
+        bttnPanel.add(this.viewCourses);
+        bttnPanel.add(this.viewCoursiers);
+        bttnPanel.add(this.viewCycles);
+        bttnPanel.add(this.viewDocs);
+        bttnPanel.add(this.stats);
+        bttnPanel.add(this.map);
+
+        JPanel leftPanel = new JPanel();
+        leftPanel.setPreferredSize(new Dimension(100,0));
+        JPanel rightPanel = new JPanel();
+        rightPanel.setPreferredSize(new Dimension(100,0));
+
+        mainPanel.add(this.iconLabel,BorderLayout.NORTH);
+        mainPanel.add(leftPanel,BorderLayout.LINE_START);
+        mainPanel.add(bttnPanel,BorderLayout.CENTER);
+        mainPanel.add(rightPanel,BorderLayout.LINE_END);
+        this.add(mainPanel);
     }
 
 
