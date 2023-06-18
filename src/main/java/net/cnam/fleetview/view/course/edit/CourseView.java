@@ -75,6 +75,10 @@ public class CourseView extends View<CourseController> {
      * @param date
      */
     public void fill(String id, String date) {
+        // Titre
+        this.titre.getTexteLabel().setText("Course n°" + id);
+
+        // Champs
         this.idField.setText(id);
         this.dateField.setText(date);
     }
