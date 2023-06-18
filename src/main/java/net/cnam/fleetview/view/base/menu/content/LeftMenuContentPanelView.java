@@ -2,7 +2,8 @@ package net.cnam.fleetview.view.base.menu.content;
 
 import net.cnam.fleetview.controller.CoursesController;
 import net.cnam.fleetview.controller.RootController;
-import net.cnam.fleetview.view.CoursiersView;
+import net.cnam.fleetview.controller.coursier.CoursiersController;
+import net.cnam.fleetview.view.coursier.list.CoursiersView;
 import net.cnam.fleetview.view.StatistiquesView;
 import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
@@ -73,10 +74,13 @@ public class LeftMenuContentPanelView extends JPanel {
             // Fermeture de toutes les vues
             RootController.closeAll();
 
-            // Création de la vue de la liste des coursiers
+            // Création de la vue de la liste des courses
             CoursiersView coursiersView = new CoursiersView();
+            // Création du contrôleur de la vue
+            CoursiersController coursiersController = new CoursiersController(coursiersView);
+            coursiersView.setController(coursiersController);
 
-            // Affichage de la vue de la liste des coursiers
+            // Affichage de la vue de la liste des courses
             RootController.open(coursiersView);
         });
 
