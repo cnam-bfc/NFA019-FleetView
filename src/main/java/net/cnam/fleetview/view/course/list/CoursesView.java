@@ -61,6 +61,7 @@ public class CoursesView extends View<CoursesController> {
         JScrollPane tableauScrollPane = new JScrollPane(tableau);
 
         model.addColumn("ID");
+        model.addColumn("Nom");
         model.addColumn("Date");
         model.addColumn("Distance");
         model.addColumn("Cycle");
@@ -80,7 +81,7 @@ public class CoursesView extends View<CoursesController> {
             public void actionPerformed(ActionEvent e) {
                 controller.onVoirCourse(Integer.parseInt(model.getValueAt(tableau.getSelectedRow(), 0).toString()));
             }
-        }, 6);
+        }, 7);
 
         // Action modifier
         ButtonColumn modifierButtonColumn = new ButtonColumn(tableau, new AbstractAction() {
@@ -88,7 +89,7 @@ public class CoursesView extends View<CoursesController> {
             public void actionPerformed(ActionEvent e) {
                 controller.onEditerCourse(Integer.parseInt(model.getValueAt(tableau.getSelectedRow(), 0).toString()));
             }
-        }, 7);
+        }, 8);
 
         // Action supprimer
         ButtonColumn supprimerButtonColumn = new ButtonColumn(tableau, new AbstractAction() {
@@ -96,7 +97,7 @@ public class CoursesView extends View<CoursesController> {
             public void actionPerformed(ActionEvent e) {
                 controller.onSupprimerCourse(Integer.parseInt(model.getValueAt(tableau.getSelectedRow(), 0).toString()));
             }
-        }, 8);
+        }, 9);
 
         tableau.setDefaultRenderer(Object.class, cellRenderer);
 
@@ -120,9 +121,9 @@ public class CoursesView extends View<CoursesController> {
         this.add(this.contenu, BorderLayout.CENTER);
     }
 
-    public void addCourse(String id, String date, String distance, String cycle, String livreur, String statut) {
+    public void addCourse(String id, String nom, String date, String distance, String cycle, String livreur, String statut) {
         DefaultTableModel model = (DefaultTableModel) this.tableau.getModel();
 
-        model.addRow(new Object[]{id, date, distance, cycle, livreur, statut, "\uF06E", "\uF044", "\uF1F8"});
+        model.addRow(new Object[]{id, nom, date, distance, cycle, livreur, statut, "\uF06E", "\uF044", "\uF1F8"});
     }
 }

@@ -25,11 +25,12 @@ public class CoursesController extends Controller<CoursesView> {
         List<Course> courses = courseDAO.getAllNotArchived();
         for (Course course : courses) {
             String id = String.valueOf(course.getIdCourse());
+            String nom = course.getNom();
             String date = course.getDateCourse().toString();
             String distance = String.valueOf(course.getDistance());
 
             // Ajout des courses dans la vue
-            view.addCourse(id, date, distance + " km", "Cycle", "Livreur", "status");
+            view.addCourse(id, nom, date, distance + " km", "Cycle", "Livreur", "status");
         }
     }
 
