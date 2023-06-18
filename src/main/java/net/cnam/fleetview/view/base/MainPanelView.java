@@ -1,6 +1,7 @@
 package net.cnam.fleetview.view.base;
 
-import net.cnam.fleetview.view.administrateur.AdminMainView;
+import net.cnam.fleetview.view.accueil.AdminMainView;
+import net.cnam.fleetview.view.administrateur.ViewUsers;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +9,8 @@ import java.awt.*;
 public class MainPanelView extends JPanel {
     private final TopMenuPanelView topMenuPanelView = new TopMenuPanelView();
     //private final ContentPanelView contentPanelView = new ContentPanelView();
-    private final AdminMainView adminMainView = new AdminMainView();
+    //private final AdminMainView adminMainView = new AdminMainView();
+    private final ViewUsers viewUsers = new ViewUsers();
     public MainPanelView() {
         super();
 
@@ -17,7 +19,8 @@ public class MainPanelView extends JPanel {
 
         this.add(topMenuPanelView, BorderLayout.NORTH);
         //this.add(contentPanelView, BorderLayout.CENTER);
-        this.add(adminMainView,BorderLayout.CENTER);
+        //this.add(adminMainView,BorderLayout.CENTER);
+        this.add(viewUsers,BorderLayout.CENTER);
     }
 
     public TopMenuPanelView getTopMenuPanel() {

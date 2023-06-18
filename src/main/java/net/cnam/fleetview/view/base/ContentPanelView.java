@@ -1,9 +1,8 @@
 package net.cnam.fleetview.view.base;
 
-import net.cnam.fleetview.view.administrateur.AdminMainView;
+import net.cnam.fleetview.view.accueil.AdminMainView;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class ContentPanelView extends JPanel {
     public ContentPanelView() {
