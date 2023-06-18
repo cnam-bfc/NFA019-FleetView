@@ -4,6 +4,7 @@ import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.CarteView;
 import net.cnam.fleetview.view.CoursesView;
 import net.cnam.fleetview.view.CoursiersView;
+import net.cnam.fleetview.view.StatistiquesView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 
 import javax.swing.*;
@@ -16,6 +17,8 @@ public class LeftMenuContentPanelView extends JPanel {
     // Carte
     private final IconLabelButton carteButton;
     private final IconLabelButton coursiersButton;
+    // Statistiques
+    private final IconLabelButton statistiquesButton;
 
     public LeftMenuContentPanelView() {
         super();
@@ -31,6 +34,8 @@ public class LeftMenuContentPanelView extends JPanel {
         this.coursesButton = new IconLabelButton("\uF0D1", "Courses");
         this.carteButton = new IconLabelButton("\uf279", "Carte");
         this.coursiersButton = new IconLabelButton("\uF84A", "Coursiers");
+        this.statistiquesButton = new IconLabelButton("\uF200", "Statistiques");
+
 
 
         // Configuration des éléments de l'interface
@@ -61,11 +66,21 @@ public class LeftMenuContentPanelView extends JPanel {
             RootController.open(coursiersView);
         });
 
+        // Bouton de statistiques
+        this.statistiquesButton.addActionListener(e -> {
+            // Création de la vue des statistiques
+            StatistiquesView statistiquesView = new StatistiquesView();
+
+            // Affichage de la vue des statistiques
+            RootController.open(statistiquesView);
+        });
+
 
         // Ajout des éléments de l'interface
         this.add(this.coursesButton);
         this.add(this.coursiersButton);
         this.add(this.carteButton);
+        this.add(this.statistiquesButton);
     }
 
     @Override
