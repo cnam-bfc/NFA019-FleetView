@@ -58,4 +58,12 @@ public class IconLabelButton extends JButton {
         this.add(Box.createRigidArea(new Dimension(10, 0)));
         this.add(this.texteLabel);
     }
+
+    public JLabel getIconLabel() {
+        return iconLabel;
+    }
+
+    public JLabel getTexteLabel() {
+        return texteLabel;
+    }
 }
