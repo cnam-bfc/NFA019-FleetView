@@ -4,17 +4,18 @@ import net.cnam.fleetview.view.components.label.IconLabel;
 
 import java.awt.*;
 
-public class CoursiersView extends View {
+public class StatistiquesView extends View {
+
     // ÉLÉMENTS DE L'INTERFACE
     private final IconLabel iconLabel;
 
-    public CoursiersView() {
+    public StatistiquesView() {
         super();
-        BorderLayout borderLayout = new BorderLayout();
-        this.setLayout(borderLayout);
+        GridLayout gridLayout = new GridLayout();
+        this.setLayout(gridLayout);
 
         // Création des éléments de l'interface
-        this.iconLabel = new IconLabel("\uF84A", "COURSIERS");
+        this.iconLabel = new IconLabel("\uF200", "STATISTIQUES");
 
         // Ajout des éléments de l'interface
         this.add(this.iconLabel);

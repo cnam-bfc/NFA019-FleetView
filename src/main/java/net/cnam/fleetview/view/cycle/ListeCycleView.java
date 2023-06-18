@@ -1,5 +1,6 @@
 package net.cnam.fleetview.view.cycle;
 
+import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.label.IconLabel;
 import net.cnam.fleetview.view.utils.ButtonColumn;
 
@@ -11,8 +12,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 
-public class ListeCycleView extends JPanel {
-   /* public ListeCycleView() {
+public class ListeCycleView extends View {
+   public ListeCycleView() {
 
         //JLabel LabelTitrePage = new JLabel("Cycles");
         JPanel panelTable = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -164,7 +165,7 @@ public class ListeCycleView extends JPanel {
         header.setFont(font);
         BoutonAjoutCycle.setPreferredSize(new Dimension(600, 30));
 
-        titrepanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 100, 1100));
+        titrepanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 100, 1100));
         this.add(titrepanel, BorderLayout.NORTH);
         panelTable.add(scrollPane);
         panelTable.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
@@ -173,6 +174,6 @@ public class ListeCycleView extends JPanel {
         panelBouton.add(BoutonAjoutCycle);
         this.add(panelBouton, BorderLayout.SOUTH);
 
-    }*/
+    }
 }
 
