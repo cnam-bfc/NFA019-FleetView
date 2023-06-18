@@ -53,6 +53,7 @@ public class CoursesView extends View<CoursesController> {
 
         // Barre de recherche
         // Set placeholder
+        this.barreDeRecherche.setBorder(BorderFactory.createEmptyBorder(10, 25, 25, 25));
         this.barreDeRecherche.getTextField().setToolTipText("Rechercher une course");
 
         // Tableau
