@@ -1,4 +1,5 @@
 package net.cnam.fleetview.controller;
 
-public class Controller {
+public abstract class Controller {
+    public abstract void onViewLoaded();
 }
