@@ -1,8 +1,10 @@
 package net.cnam.fleetview.controller;
 
-public class CoursiersController extends Controller {
-    @Override
-    public void onViewLoaded() {
+import net.cnam.fleetview.view.CoursiersView;
 
+public class CoursiersController extends Controller<CoursiersView> {
+
+    public CoursiersController(CoursiersView view) {
+        super(view);
     }
 }
