@@ -2,8 +2,11 @@ package net.cnam.fleetview.controller;
 
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.course.CourseDAO;
 import net.cnam.fleetview.view.course.list.CoursesView;
+
+import java.util.List;
 
 public class CoursesController extends Controller {
     // Vue
@@ -21,6 +24,19 @@ public class CoursesController extends Controller {
         DefaultConnector connector = new DefaultConnector();
 
         this.courseDAO = new CourseDAO(BDDConnection.getInstance(connector));
+    }
+
+    @Override
+    public void onViewLoaded() {
+        List<Course> courses = courseDAO.getAllNotArchived();
+        for (Course course : courses) {
+            String id = String.valueOf(course.getIdCourse());
+            String date = course.getDateCourse().toString();
+            String distance = String.valueOf(course.getDistance());
+
+            // Ajout des courses dans la vue
+            view.addCourse(id, date, distance + " km", "Cycle", "Livreur", "status");
+        }
     }
 
     public void onAjouterCourse() {

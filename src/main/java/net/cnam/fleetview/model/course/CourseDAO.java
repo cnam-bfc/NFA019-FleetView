@@ -303,6 +303,53 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
     }
 
     /**
+     * Méthode de récupération de tous les enregistrements des Course non archivées
+     *
+     * @return Une List d'objets Course, vide en cas d'erreur ou si la table est vide
+     */
+    public List<Course> getAllNotArchived() {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_course WHERE date_archive IS NULL";
+
+        // Résultat de la requête
+        List<Course> result = new LinkedList<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On parcourt le résultat pour créer les objets Course correspondants
+            while (resultSet.next()) {
+                // Création d'un objet CycleFournisseur
+                Course course = new Course();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(course, resultSet);
+
+                // On ajoute l'objet au résultat final
+                result.add(course);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer les Course", ex);
+
+            // Si une erreur s'est produite, on renvoie la liste vide
+            result = null;
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
+    /**
      * Méthode de récupération d'un enregistrement d'une Course par son identifiant.
      *
      * @param id L'identificateur à rechercher

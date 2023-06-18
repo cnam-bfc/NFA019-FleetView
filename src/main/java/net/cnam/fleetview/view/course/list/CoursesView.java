@@ -73,10 +73,6 @@ public class CoursesView extends View {
         model.addColumn("Modifier");
         model.addColumn("Supprimer");
 
-        model.addRow(new Object[]{"1", "01/01/2021", "10 km", "1", "Jean", "En cours", "\uF06E", "\uF044", "\uF1F8"});
-        model.addRow(new Object[]{"2", "02/01/2021", "20 km", "2", "Jean", "En cours", "\uF06E", "\uF044", "\uF1F8"});
-        model.addRow(new Object[]{"3", "03/01/2021", "30 km", "3", "Jean", "En cours", "\uF06E", "\uF044", "\uF1F8"});
-
         tableau.setModel(model);
 
         cellRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -125,6 +121,8 @@ public class CoursesView extends View {
         this.contenu.add(tableauScrollPane, BorderLayout.CENTER);
         this.contenu.add(this.ajouterCourse, BorderLayout.SOUTH);
         this.add(this.contenu, BorderLayout.CENTER);
+
+        controller.onViewLoaded();
     }
 
     public void addCourse(String id, String date, String distance, String cycle, String livreur, String statut) {

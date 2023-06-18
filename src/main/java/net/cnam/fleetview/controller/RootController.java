@@ -20,6 +20,11 @@ public class RootController extends Controller {
         this.view = view;
     }
 
+    @Override
+    public void onViewLoaded() {
+
+    }
+
     public void openView(View view) {
         // Si une vue est déjà ouverte, on vérifie que l'on peut en ouvrir une autre
         if (!this.views.isEmpty() && !this.views.getLast().canOpenNewView()) {
