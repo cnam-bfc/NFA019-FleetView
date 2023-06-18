@@ -1,11 +1,12 @@
 package net.cnam.fleetview.view.base.menu.content;
 
+import net.cnam.fleetview.controller.CoursesController;
 import net.cnam.fleetview.controller.RootController;
-import net.cnam.fleetview.view.carte.CarteView;
-import net.cnam.fleetview.view.course.list.CoursesView;
 import net.cnam.fleetview.view.CoursiersView;
 import net.cnam.fleetview.view.StatistiquesView;
+import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
+import net.cnam.fleetview.view.course.list.CoursesView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,12 +40,17 @@ public class LeftMenuContentPanelView extends JPanel {
         this.statistiquesButton = new IconLabelButton("\uF200", "Statistiques");
 
 
-
         // Configuration des éléments de l'interface
         // Bouton de liste des courses
         this.coursesButton.addActionListener(e -> {
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+
             // Création de la vue de la liste des courses
             CoursesView coursesView = new CoursesView();
+            // Création du contrôleur de la vue
+            CoursesController coursesController = new CoursesController(coursesView);
+            coursesView.setController(coursesController);
 
             // Affichage de la vue de la liste des courses
             RootController.open(coursesView);
@@ -52,6 +58,9 @@ public class LeftMenuContentPanelView extends JPanel {
 
         // Bouton de la carte
         this.carteButton.addActionListener(e -> {
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+
             // Création de la vue de la carte
             CarteView coursesView = new CarteView();
 
@@ -61,6 +70,9 @@ public class LeftMenuContentPanelView extends JPanel {
 
         // Bouton de liste des coursiers
         this.coursiersButton.addActionListener(e -> {
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+
             // Création de la vue de la liste des coursiers
             CoursiersView coursiersView = new CoursiersView();
 
@@ -70,6 +82,9 @@ public class LeftMenuContentPanelView extends JPanel {
 
         // Bouton de statistiques
         this.statistiquesButton.addActionListener(e -> {
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+
             // Création de la vue des statistiques
             StatistiquesView statistiquesView = new StatistiquesView();
 

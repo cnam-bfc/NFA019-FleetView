@@ -16,6 +16,11 @@ public class Course {
     private int idCourse;
 
     /**
+     * Nom de la course
+     */
+    private String nom;
+
+    /**
      * Distance de la course
      */
     private double distance;
@@ -69,6 +74,24 @@ public class Course {
      */
     public void setIdCourse(int idCourse) {
         this.idCourse = idCourse;
+    }
+
+    /**
+     * Récupère le nom de la course
+     *
+     * @return nomCourse
+     */
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * Définit le nom de la course
+     *
+     * @param nom nomCourse
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     /**

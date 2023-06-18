@@ -1,12 +1,13 @@
 package net.cnam.fleetview.view.base;
 
+import net.cnam.fleetview.controller.RootController;
+import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.base.main.MainPanelView;
 import net.cnam.fleetview.view.base.menu.LeftMenuPanelView;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class RootPanelView extends JPanel {
+public class RootPanelView extends View<RootController> {
     // Composants graphiques
     // Left menu
     private final LeftMenuPanelView leftMenuPanelView;

@@ -47,6 +47,10 @@ public class IconTextField extends JPanel {
         this.add(this.textField);
     }
 
+    public JLabel getIconLabel() {
+        return iconLabel;
+    }
+
     public JTextField getTextField() {
         return textField;
     }
