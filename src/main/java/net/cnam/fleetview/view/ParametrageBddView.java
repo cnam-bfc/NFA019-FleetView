@@ -1,8 +1,10 @@
 package net.cnam.fleetview.view;
 
+import net.cnam.fleetview.view.components.button.LabelButton;
 import net.cnam.fleetview.view.components.label.IconLabel;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /*
@@ -15,6 +17,7 @@ A faire :
 
 public class ParametrageBddView extends View {
 
+    Color GREEN = new Color(200, 255,190);
     private final IconLabel iconLabel;
 
     public ParametrageBddView() {
@@ -109,8 +112,7 @@ public class ParametrageBddView extends View {
 
         //--- Entete ---
         jpEntete.add(this.iconLabel, BorderLayout.CENTER);
-        jpEntete.add(jpEnteteMargeLaterale, BorderLayout.LINE_START);
-        jpEntete.add(jpEnteteMargeHorizontale, BorderLayout.NORTH);
+        jpEntete.setBorder(new EmptyBorder(20, 20, 20,20));
         jpPrincipale.add(jpEntete, BorderLayout.NORTH);
 
         //--- Contenu ---
@@ -149,26 +151,21 @@ public class ParametrageBddView extends View {
         jpPrincipale.add(jpBdInfo, BorderLayout.CENTER);
 
         //--- Marges ---
-        jpPrincipale.add(jpMargeGauche, BorderLayout.LINE_START);
-        jpPrincipale.add(jpMargeDroite, BorderLayout.LINE_END);
-
+        jpBdInfo.setBorder(new EmptyBorder(0,100,0,100));
         //--- Bloc Action ---
 
-        JButton btnValider = new JButton("Valider");
-        JButton btnQuitter = new JButton("Quitter");
+        LabelButton btnValider = new LabelButton("Valider");
+        LabelButton btnQuitter = new LabelButton("Quitter");
 
         jpActionLine.add(btnValider);
         jpActionLine.add(btnQuitter);
 
         jpActionHolder.add(jpActionLine, BorderLayout.CENTER);
-        jpActionHolder.add(jpMargeBasDePageMargeVerticale, BorderLayout.LINE_END);
-        jpActionHolder.add(jpMargeBasDePageMargeHorizontale, BorderLayout.SOUTH);
+        jpActionHolder.setBorder(new EmptyBorder(25,100,25,100));
         jpPrincipale.add(jpActionHolder, BorderLayout.SOUTH);
 
 
-
         this.add(jpPrincipale);
-
 
 
 
