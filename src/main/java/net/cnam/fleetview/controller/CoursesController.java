@@ -4,6 +4,7 @@ import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.course.CourseDAO;
+import net.cnam.fleetview.view.course.edit.CourseView;
 import net.cnam.fleetview.view.course.list.CoursesView;
 
 import java.util.List;
@@ -46,7 +47,11 @@ public class CoursesController extends Controller {
     }
 
     public void onVoirCourse(int id) {
-        view.afficherMessage("Voir la course " + id);
+        // Création de la vue
+        CourseView courseView = new CourseView();
+
+        // Ouverture de la vue
+        RootController.open(courseView);
     }
 
     public void onEditerCourse(int id) {

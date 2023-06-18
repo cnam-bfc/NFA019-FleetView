@@ -5,7 +5,6 @@ import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.label.IconLabel;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class CourseView extends View {
