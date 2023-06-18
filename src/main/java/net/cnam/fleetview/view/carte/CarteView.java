@@ -25,7 +25,7 @@ public class CarteView extends View {
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Création des éléments de l'interface
-        this.titre = new IconLabel("\uF0D1", "Courses");
+        this.titre = new IconLabel("\uf279", "Carte");
         this.carte = new JMapViewer();
 
 
