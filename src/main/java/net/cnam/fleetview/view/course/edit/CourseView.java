@@ -58,4 +58,24 @@ public class CourseView extends View<CourseController> {
         this.contenu.add(this.dateField);
         this.add(this.contenu, BorderLayout.CENTER);
     }
+
+    /**
+     * Rendre les champs modifiables ou non
+     *
+     * @param editable
+     */
+    public void setFieldsEditable(boolean editable) {
+        this.dateField.setEditable(editable);
+    }
+
+    /**
+     * Remplir les champs de la vue
+     *
+     * @param id
+     * @param date
+     */
+    public void fill(String id, String date) {
+        this.idField.setText(id);
+        this.dateField.setText(date);
+    }
 }

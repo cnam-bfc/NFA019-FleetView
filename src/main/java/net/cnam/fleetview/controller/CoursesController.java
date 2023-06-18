@@ -68,9 +68,6 @@ public class CoursesController extends Controller<CoursesView> {
         CourseController courseController = new CourseController(courseView);
         courseView.setController(courseController);
 
-        // On rend les champs éditables
-        courseController.setEditable(true);
-
         // On charge la course avec l'id voulu
         courseController.loadEditableCourse(id);
 
