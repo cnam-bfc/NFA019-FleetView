@@ -44,7 +44,7 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
         }
 
         // Requête d'insertion
-        String query = "INSERT INTO fleetview_course (distance, date_course, date_debut_course, date_archive, id_coursier_travail, id_cycle) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO fleetview_course (nom, distance, date_course, date_debut_course, date_archive, id_coursier_travail, id_cycle) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         // Résultat de la requête
         int result = 0;
@@ -54,12 +54,13 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
             // On prépare la requête d'insertion
             statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // On attribue les valeurs aux paramètres
-            statement.setDouble(1, obj.getDistance());
-            statement.setDate(2, Date.valueOf(obj.getDateCourse()));
-            statement.setObject(3, obj.getDateDebutCourse());
-            statement.setObject(4, obj.getDateArchive());
-            statement.setInt(5, obj.getIdCoursierTravail());
-            statement.setInt(6, obj.getIdCycle());
+            statement.setString(1, obj.getNom());
+            statement.setDouble(2, obj.getDistance());
+            statement.setDate(3, Date.valueOf(obj.getDateCourse()));
+            statement.setObject(4, obj.getDateDebutCourse());
+            statement.setObject(5, obj.getDateArchive());
+            statement.setInt(6, obj.getIdCoursierTravail());
+            statement.setInt(7, obj.getIdCycle());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -212,7 +213,7 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
         }
 
         // Requête de mise à jour
-        String query = "UPDATE fleetview_course SET distance = ?, date_course = ?, date_debut_course = ?, date_archive = ?, id_coursier_travail = ?, id_cycle = ? WHERE id_course = ?";
+        String query = "UPDATE fleetview_course SET nom = ?, distance = ?, date_course = ?, date_debut_course = ?, date_archive = ?, id_coursier_travail = ?, id_cycle = ? WHERE id_course = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -222,12 +223,13 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
             // On prépare la requête de mise à jour
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setDouble(1, obj.getDistance());
-            statement.setObject(2, obj.getDateCourse());
-            statement.setObject(3, obj.getDateDebutCourse());
-            statement.setObject(4, obj.getDateArchive());
-            statement.setInt(5, obj.getIdCoursierTravail());
-            statement.setInt(6, obj.getIdCycle());
+            statement.setString(1, obj.getNom());
+            statement.setDouble(2, obj.getDistance());
+            statement.setObject(3, obj.getDateCourse());
+            statement.setObject(4, obj.getDateDebutCourse());
+            statement.setObject(5, obj.getDateArchive());
+            statement.setInt(6, obj.getIdCoursierTravail());
+            statement.setInt(7, obj.getIdCycle());
 
             // Récupération de l'objet avant modification
             Course objAvantModification = this.getById(obj.getIdCourse());
@@ -404,6 +406,7 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
         try {
             // Remplissage de l'objet CycleFournisseur
             course.setIdCourse(resultSet.getInt("id_course"));
+            course.setNom(resultSet.getString("nom"));
             course.setDistance(resultSet.getDouble("distance"));
             course.setDateCourse(resultSet.getObject("date_course", LocalDate.class));
             course.setDateDebutCourse(resultSet.getObject("date_debut_course", LocalDateTime.class));
@@ -428,6 +431,7 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
         }
 
         // Construction des changements
+        HistoriqueData nom = this.checkChanges("nom", before != null ? before.getNom() : null, after != null ? after.getNom() : null);
         HistoriqueData distance = this.checkChanges("distance", before != null ? before.getDistance() : null, after != null ? after.getDistance() : null);
         HistoriqueData dateCourse = this.checkChanges("date_course", before != null ? before.getDateCourse() : null, after != null ? after.getDateCourse() : null);
         HistoriqueData dateDebutCourse = this.checkChanges("date_debut_course", before != null ? before.getDateDebutCourse() : null, after != null ? after.getDateDebutCourse() : null);
@@ -436,6 +440,6 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
         HistoriqueData idCycle = this.checkChanges("id_cycle", before != null ? before.getIdCycle() : null, after != null ? after.getIdCycle() : null);
 
         // Création de l'historique
-        this.historique.addHistorique(type, user, "fleetview_course", id, distance, dateCourse, dateDebutCourse, dateArchive, idCoursierTravail, idCycle);
+        this.historique.addHistorique(type, user, "fleetview_course", id, nom, distance, dateCourse, dateDebutCourse, dateArchive, idCoursierTravail, idCycle);
     }
 }

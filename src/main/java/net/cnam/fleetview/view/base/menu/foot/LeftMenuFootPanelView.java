@@ -3,7 +3,6 @@ package net.cnam.fleetview.view.base.menu.foot;
 import net.cnam.fleetview.App;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.ConnectionView;
-import net.cnam.fleetview.view.DebugView;
 import net.cnam.fleetview.view.ParametrageBddView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.cycle.CreationCycleView;
@@ -48,6 +47,9 @@ public class LeftMenuFootPanelView extends JPanel {
         // Configuration des éléments de l'interface
         // Bouton de paramètres
         this.parametresButton.addActionListener(e -> {
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+
             // Création de la vue des paramètres
             ParametrageBddView parametrageBddView = new ParametrageBddView();
 
@@ -57,6 +59,9 @@ public class LeftMenuFootPanelView extends JPanel {
 
         // Bouton de debug 1
         this.debug1Button.addActionListener(e -> {
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+
             // Création de la vue des paramètres
             ListeCycleView debugView = new ListeCycleView();
 
@@ -66,6 +71,9 @@ public class LeftMenuFootPanelView extends JPanel {
 
         // Bouton de debug 2
         this.debug2Button.addActionListener(e -> {
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+
             // Création de la vue des paramètres
             CreationCycleView debugView = new CreationCycleView();
 
@@ -75,6 +83,9 @@ public class LeftMenuFootPanelView extends JPanel {
 
         // Bouton de debug 3
         this.debug3Button.addActionListener(e -> {
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+
             // Création de la vue des paramètres
             ConnectionView debugView = new ConnectionView();
 
