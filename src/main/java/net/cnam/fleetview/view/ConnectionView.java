@@ -39,6 +39,7 @@ public class ConnectionView extends View{
         panel1.add(Box.createRigidArea(new Dimension(200, 50)));
 
         mainPanel.add(panel1, BorderLayout.CENTER);
+        this.add(mainPanel, BorderLayout.CENTER);
 
         JPanel PanelBouton = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton BoutonConnect = new JButton("<html>Connection</html>");
@@ -46,10 +47,8 @@ public class ConnectionView extends View{
         BoutonConnect.setPreferredSize(new Dimension(80, 50));
         PanelBouton.add(BoutonConnect);
 
-        //PanelBouton.setBorder(BorderFactory.createEmptyBorder(200, 1000, 50, 10));
-        mainPanel.add(PanelBouton, BorderLayout.SOUTH);
-
-        this.add(mainPanel, BorderLayout.CENTER);
+        PanelBouton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        this.add(PanelBouton, BorderLayout.SOUTH);
 
     }
 }
