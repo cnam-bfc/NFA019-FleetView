@@ -21,8 +21,8 @@ public class CoursesController extends Controller {
 
         this.view = view;
 
+        // Initialisation des DAO
         DefaultConnector connector = new DefaultConnector();
-
         this.courseDAO = new CourseDAO(BDDConnection.getInstance(connector));
     }
 
