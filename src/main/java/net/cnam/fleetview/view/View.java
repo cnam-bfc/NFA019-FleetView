@@ -1,8 +1,21 @@
 package net.cnam.fleetview.view;
 
+import net.cnam.fleetview.controller.Controller;
+
 import javax.swing.*;
 
-public abstract class View extends JPanel {
+public abstract class View<C extends Controller> extends JPanel {
+    protected C controller;
+
+    /**
+     * Méthode permettant de définir le controlleur de la vue
+     *
+     * @param controller le controlleur de la vue
+     */
+    public void setController(C controller) {
+        this.controller = controller;
+    }
+
     /**
      * Méthode appelée lorsqu'une nouvelle vue veut s'ouvrir
      *

@@ -13,10 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class CoursesView extends View {
-    // Controlleur
-    private final CoursesController controller = new CoursesController(this);
-
+public class CoursesView extends View<CoursesController> {
     // ÉLÉMENTS DE L'INTERFACE
     // Titre
     private final IconLabel titre;
@@ -121,8 +118,6 @@ public class CoursesView extends View {
         this.contenu.add(tableauScrollPane, BorderLayout.CENTER);
         this.contenu.add(this.ajouterCourse, BorderLayout.SOUTH);
         this.add(this.contenu, BorderLayout.CENTER);
-
-        controller.onViewLoaded();
     }
 
     public void addCourse(String id, String date, String distance, String cycle, String livreur, String statut) {

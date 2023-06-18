@@ -5,25 +5,28 @@ import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.course.CourseDAO;
 import net.cnam.fleetview.view.course.edit.CourseView;
 
-public class CourseController extends Controller {
-    // Vue
-    private final CourseView view;
-
+public class CourseController extends Controller<CourseView> {
     // DAO
     private final CourseDAO courseDAO;
 
     public CourseController(CourseView view) {
-        super();
-
-        this.view = view;
+        super(view);
 
         // Initialisation des DAO
         DefaultConnector connector = new DefaultConnector();
         this.courseDAO = new CourseDAO(BDDConnection.getInstance(connector));
     }
 
-    @Override
-    public void onViewLoaded() {
-
+    /**
+     * Rendre la page éditable ou non
+     *
+     * @param editable
+     */
+    public void setEditable(boolean editable) {
+        view.setEditable(editable);
     }
+
+    /**
+     * Charger
+     */
 }

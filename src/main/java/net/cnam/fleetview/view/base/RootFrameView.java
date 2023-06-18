@@ -9,9 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RootFrameView extends JFrame {
-    // Controller
-    private final RootController controller;
-
     // Composants graphiques
     // Panel
     private final RootPanelView panel;
@@ -19,10 +16,11 @@ public class RootFrameView extends JFrame {
     public RootFrameView() {
         super("FleetView");
 
-        // Initialisation du controller
-        this.controller = new RootController(this);
-
+        // Création de la vue
         this.panel = new RootPanelView();
+        // Création du contrôleur de la vue
+        RootController rootController = new RootController(panel);
+        panel.setController(rootController);
 
         this.setIconImage(App.LOGO_SIMPLIFIED);
         this.setContentPane(panel);
@@ -48,9 +46,5 @@ public class RootFrameView extends JFrame {
 
         // Permet de déplacer la fenêtre (menu de gauche et menu du haut)
         ComponentMover mover = new ComponentMover(this, panel.getRightMenuPanel(), panel.getMainPanel().getTopMenuPanel());
-    }
-
-    public RootPanelView getPanel() {
-        return panel;
     }
 }

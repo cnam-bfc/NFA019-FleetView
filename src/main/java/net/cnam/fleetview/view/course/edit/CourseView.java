@@ -7,10 +7,7 @@ import net.cnam.fleetview.view.components.label.IconLabel;
 import javax.swing.*;
 import java.awt.*;
 
-public class CourseView extends View {
-    // Controlleur
-    private final CourseController controller = new CourseController(this);
-
+public class CourseView extends View<CourseController> {
     // ÉLÉMENTS DE L'INTERFACE
     // Titre
     private final IconLabel titre;
@@ -60,7 +57,5 @@ public class CourseView extends View {
         this.contenu.add(this.idField);
         this.contenu.add(this.dateField);
         this.add(this.contenu, BorderLayout.CENTER);
-
-        controller.onViewLoaded();
     }
 }

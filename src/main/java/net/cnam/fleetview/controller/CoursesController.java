@@ -9,26 +9,19 @@ import net.cnam.fleetview.view.course.list.CoursesView;
 
 import java.util.List;
 
-public class CoursesController extends Controller {
-    // Vue
-    private final CoursesView view;
-
+public class CoursesController extends Controller<CoursesView> {
     // Modèle
     // DAO
     private final CourseDAO courseDAO;
 
     public CoursesController(CoursesView view) {
-        super();
-
-        this.view = view;
+        super(view);
 
         // Initialisation des DAO
         DefaultConnector connector = new DefaultConnector();
         this.courseDAO = new CourseDAO(BDDConnection.getInstance(connector));
-    }
 
-    @Override
-    public void onViewLoaded() {
+        // Chargement des courses dans la vue
         List<Course> courses = courseDAO.getAllNotArchived();
         for (Course course : courses) {
             String id = String.valueOf(course.getIdCourse());
@@ -41,21 +34,48 @@ public class CoursesController extends Controller {
     }
 
     public void onAjouterCourse() {
-        view.afficherMessage("Ajouter une course");
+        // Création de la vue
+        CourseView courseView = new CourseView();
+        // Créer le contrôleur
+        CourseController courseController = new CourseController(courseView);
+        courseView.setController(courseController);
 
-        view.addCourse("5", "Date", "2 km", "Cycle", "Livreur", "status");
+        // On charge une course vide
+        courseController.loadEmptyCourse();
+
+        // Ouverture de la vue du cycle
+        RootController.open(courseView);
     }
 
     public void onVoirCourse(int id) {
         // Création de la vue
         CourseView courseView = new CourseView();
+        // Créer le contrôleur
+        CourseController courseController = new CourseController(courseView);
+        courseView.setController(courseController);
 
-        // Ouverture de la vue
+        // On charge la course avec l'id voulu
+        courseController.loadViewableCourse(id);
+
+        // Ouverture de la vue du cycle
         RootController.open(courseView);
     }
 
     public void onEditerCourse(int id) {
-        view.afficherMessage("Editer la course " + id);
+        // Création de la vue
+        CourseView courseView = new CourseView();
+        // Créer le contrôleur
+        CourseController courseController = new CourseController(courseView);
+        courseView.setController(courseController);
+
+        // On rend les champs éditables
+        courseController.setEditable(true);
+
+        // On charge la course avec l'id voulu
+        courseController.loadEditableCourse(id);
+
+        // Ouverture de la vue du cycle
+        RootController.open(courseView);
     }
 
     public void onSupprimerCourse(int id) {
