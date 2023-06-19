@@ -52,9 +52,8 @@ public class CoursesView extends View<CoursesController> {
         this.contenu.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
         // Barre de recherche
-        // Set placeholder
         this.barreDeRecherche.setBorder(BorderFactory.createEmptyBorder(10, 25, 25, 25));
-        this.barreDeRecherche.getTextField().setToolTipText("Rechercher une course");
+        this.barreDeRecherche.getTextField().setPlaceholder("Rechercher une course");
 
         // Tableau
         DefaultTableModel model = new DefaultTableModel();
