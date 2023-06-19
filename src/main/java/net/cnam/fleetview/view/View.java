@@ -17,6 +17,13 @@ public abstract class View<C extends Controller> extends JPanel {
     }
 
     /**
+     * Méthode appelée lorsque la vue est affichée (ou réaffichée)
+     */
+    public void onDisplayed() {
+
+    }
+
+    /**
      * Méthode appelée lorsqu'une nouvelle vue veut s'ouvrir
      *
      * @return true si la vue peut s'ouvrir, false sinon

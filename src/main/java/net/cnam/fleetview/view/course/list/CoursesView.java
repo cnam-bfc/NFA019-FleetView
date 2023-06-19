@@ -23,7 +23,7 @@ public class CoursesView extends View<CoursesController> {
     // Barre de recherche
     private final IconTextField barreDeRecherche;
     // Tableau
-    private final JTable tableau;
+    private final JTable coursesTable;
     // Ajout d'une course
     private final IconLabelButton ajouterCourse;
 
@@ -41,7 +41,7 @@ public class CoursesView extends View<CoursesController> {
         this.titre = new IconLabel("\uF0D1", "Courses");
         this.contenu = new JPanel();
         this.barreDeRecherche = new IconTextField("\uF002");
-        this.tableau = new JTable();
+        this.coursesTable = new JTable();
         this.ajouterCourse = new IconLabelButton("\uF067", "Ajouter une course");
 
 
@@ -57,62 +57,62 @@ public class CoursesView extends View<CoursesController> {
         this.barreDeRecherche.getTextField().setPlaceholder("Rechercher une course");
 
         // Tableau
-        DefaultTableModel model = new DefaultTableModel();
-        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-        JScrollPane tableauScrollPane = new JScrollPane(tableau);
+        DefaultTableModel coursesTableModel = new DefaultTableModel();
+        DefaultTableCellRenderer coursesTableCellRenderer = new DefaultTableCellRenderer();
+        TableRowSorter<DefaultTableModel> coursesTableRowSorter = new TableRowSorter<>(coursesTableModel);
+        JScrollPane coursesTableScrollPane = new JScrollPane(coursesTable);
 
-        model.addColumn("ID");
-        model.addColumn("Nom");
-        model.addColumn("Date");
-        model.addColumn("Distance");
-        model.addColumn("Cycle");
-        model.addColumn("Livreur");
-        model.addColumn("Statut");
-        model.addColumn("Voir");
-        model.addColumn("Modifier");
-        model.addColumn("Supprimer");
+        coursesTableModel.addColumn("ID");
+        coursesTableModel.addColumn("Nom");
+        coursesTableModel.addColumn("Date");
+        coursesTableModel.addColumn("Distance");
+        coursesTableModel.addColumn("Cycle");
+        coursesTableModel.addColumn("Livreur");
+        coursesTableModel.addColumn("Statut");
+        coursesTableModel.addColumn("Voir");
+        coursesTableModel.addColumn("Modifier");
+        coursesTableModel.addColumn("Supprimer");
 
-        tableau.setModel(model);
+        coursesTable.setModel(coursesTableModel);
 
-        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        coursesTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Action voir
-        ButtonColumn voirButtonColumn = new ButtonColumn(tableau, new AbstractAction() {
+        ButtonColumn voirButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.onVoirCourse(Integer.parseInt(model.getValueAt(tableau.getSelectedRow(), 0).toString()));
+                controller.onVoirCourse(Integer.parseInt(coursesTableModel.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
             }
         }, 7);
 
         // Action modifier
-        ButtonColumn modifierButtonColumn = new ButtonColumn(tableau, new AbstractAction() {
+        ButtonColumn modifierButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.onEditerCourse(Integer.parseInt(model.getValueAt(tableau.getSelectedRow(), 0).toString()));
+                controller.onEditerCourse(Integer.parseInt(coursesTableModel.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
             }
         }, 8);
 
         // Action supprimer
-        ButtonColumn supprimerButtonColumn = new ButtonColumn(tableau, new AbstractAction() {
+        ButtonColumn supprimerButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.onSupprimerCourse(Integer.parseInt(model.getValueAt(tableau.getSelectedRow(), 0).toString()));
+                controller.onSupprimerCourse(Integer.parseInt(coursesTableModel.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
             }
         }, 9);
 
-        tableau.setDefaultRenderer(Object.class, cellRenderer);
+        coursesTable.setDefaultRenderer(Object.class, coursesTableCellRenderer);
 
         // Tableau non editable
-        tableau.setDefaultEditor(Object.class, null);
+        coursesTable.setDefaultEditor(Object.class, null);
 
         // Tri du tableau
         this.barreDeRecherche.getTextField().addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + barreDeRecherche.getTextField().getText()));
+                coursesTableRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + barreDeRecherche.getTextField().getText()));
             }
         });
-        tableau.setRowSorter(sorter);
+        coursesTable.setRowSorter(coursesTableRowSorter);
 
         // Ajout d'une course
         this.ajouterCourse.addActionListener(new AbstractAction() {
@@ -126,19 +126,32 @@ public class CoursesView extends View<CoursesController> {
         // Ajout des éléments de l'interface
         this.add(this.titre, BorderLayout.NORTH);
         this.contenu.add(this.barreDeRecherche, BorderLayout.NORTH);
-        this.contenu.add(tableauScrollPane, BorderLayout.CENTER);
+        this.contenu.add(coursesTableScrollPane, BorderLayout.CENTER);
         this.contenu.add(this.ajouterCourse, BorderLayout.SOUTH);
         this.add(this.contenu, BorderLayout.CENTER);
     }
 
+    @Override
+    public void onDisplayed() {
+        super.onDisplayed();
+
+        // Effacer la tableau
+        DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
+
+        model.setRowCount(0);
+
+        // Charger les courses
+        controller.onRefreshCourses();
+    }
+
     public void addCourse(String id, String nom, String date, String distance, String cycle, String livreur, String statut) {
-        DefaultTableModel model = (DefaultTableModel) this.tableau.getModel();
+        DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
 
         model.addRow(new Object[]{id, nom, date, distance, cycle, livreur, statut, "\uF06E", "\uF044", "\uF1F8"});
     }
 
     public void removeCourse(String id) {
-        DefaultTableModel model = (DefaultTableModel) this.tableau.getModel();
+        DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
 
         for (int i = 0; i < model.getRowCount(); i++) {
             if (model.getValueAt(i, 0).equals(id)) {

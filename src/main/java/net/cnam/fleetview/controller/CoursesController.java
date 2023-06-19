@@ -7,6 +7,7 @@ import net.cnam.fleetview.model.course.CourseDAO;
 import net.cnam.fleetview.view.course.edit.CourseView;
 import net.cnam.fleetview.view.course.list.CoursesView;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class CoursesController extends Controller<CoursesView> {
@@ -19,8 +20,11 @@ public class CoursesController extends Controller<CoursesView> {
 
         // Initialisation des DAO
         DefaultConnector connector = new DefaultConnector();
-        this.courseDAO = new CourseDAO(BDDConnection.getInstance(connector));
+        Connection connection = BDDConnection.getInstance(connector);
+        this.courseDAO = new CourseDAO(connection);
+    }
 
+    public void onRefreshCourses() {
         // Chargement des courses dans la vue
         List<Course> courses = courseDAO.getAllNotArchived();
         for (Course course : courses) {

@@ -1,11 +1,17 @@
 package net.cnam.fleetview.view.course.edit;
 
 import net.cnam.fleetview.controller.CourseController;
+import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.View;
+import net.cnam.fleetview.view.components.button.LabelButton;
 import net.cnam.fleetview.view.components.label.IconLabel;
+import net.cnam.fleetview.view.utils.ButtonColumn;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class CourseView extends View<CourseController> {
     // ÉLÉMENTS DE L'INTERFACE
@@ -22,7 +28,7 @@ public class CourseView extends View<CourseController> {
     // Tableau des colis
     private final JTable colisTable;
     // Bouton de sauvegarde
-    private final JButton saveButton;
+    private final LabelButton saveButton;
 
     public CourseView() {
         super();
@@ -41,7 +47,7 @@ public class CourseView extends View<CourseController> {
         this.nomField = new JTextField();
         this.dateField = new JTextField();
         this.colisTable = new JTable();
-        this.saveButton = new JButton("Sauvegarder");
+        this.saveButton = new LabelButton("Sauvegarder");
 
 
         // Configuration des éléments de l'interface
@@ -59,17 +65,89 @@ public class CourseView extends View<CourseController> {
         // Champ de saisie de la date
 
         // Tableau des colis
+        DefaultTableModel colisTableModel = new DefaultTableModel();
+        DefaultTableCellRenderer colisTableCellRenderer = new DefaultTableCellRenderer();
+        JScrollPane colisTableScrollPane = new JScrollPane(colisTable);
+
+        colisTableModel.addColumn("ID");
+        colisTableModel.addColumn("Numero");
+        colisTableModel.addColumn("Poids");
+        colisTableModel.addColumn("Adresse");
+        colisTableModel.addColumn("Destinataire");
+        colisTableModel.addColumn("Statut");
+        colisTableModel.addColumn("Voir");
+        colisTableModel.addColumn("Monter");
+        colisTableModel.addColumn("Descendre");
+        colisTableModel.addColumn("Supprimer");
+
+        colisTable.setModel(colisTableModel);
+
+        colisTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        // Action voir
+        ButtonColumn voirButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //controller.onVoirColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
+                afficherMessageInformation("Voir");
+            }
+        }, 6);
+
+        // Action monter
+        ButtonColumn monterButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //controller.onMonterColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
+                afficherMessageInformation("Monter");
+            }
+        }, 7);
+
+        // Action descendre
+        ButtonColumn descendreButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //controller.onDescendreColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
+                afficherMessageInformation("Descendre");
+            }
+        }, 8);
+
+        // Action supprimer
+        ButtonColumn supprimerButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //controller.onSupprimerColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
+                afficherMessageInformation("Supprimer");
+            }
+        }, 9);
+
+        colisTable.setDefaultRenderer(Object.class, colisTableCellRenderer);
+
+        // Tableau non editable
+        colisTable.setDefaultEditor(Object.class, null);
 
         // Bouton de sauvegarde
+        this.saveButton.setVisible(false);
+        this.saveButton.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean success = controller.saveCourse(nomField.getText(), dateField.getText());
+                if (!success) {
+                    afficherMessageErreur("Impossible de sauvegarder la course");
+                    return;
+                }
 
-
+                RootController.close(CourseView.this);
+            }
+        });
 
         // Ajout des éléments de l'interface
         this.add(this.titre, BorderLayout.NORTH);
         this.contenu.add(this.idField);
         this.contenu.add(this.nomField);
         this.contenu.add(this.dateField);
+        this.contenu.add(colisTableScrollPane);
         this.add(this.contenu, BorderLayout.CENTER);
+        this.add(this.saveButton, BorderLayout.SOUTH);
     }
 
     /**
@@ -80,6 +158,11 @@ public class CourseView extends View<CourseController> {
     public void setFieldsEditable(boolean editable) {
         this.nomField.setEditable(editable);
         this.dateField.setEditable(editable);
+        // Désactiver les boutons de suppression de colis
+        ButtonColumn supprimerButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(7).getCellEditor();
+        supprimerButtonColumn.setButtonEnabled(editable);
+        // Rendre le bouton de sauvegarde visible ou non
+        this.saveButton.setVisible(editable);
     }
 
     /**
@@ -97,5 +180,37 @@ public class CourseView extends View<CourseController> {
         this.idField.setText(id);
         this.nomField.setText(nom);
         this.dateField.setText(date);
+    }
+
+    /**
+     * Ajouter un colis dans le tableau
+     *
+     * @param id
+     * @param numero
+     * @param poids
+     * @param adresse
+     * @param destinataire
+     * @param statut
+     */
+    public void addColis(String id, String numero, String poids, String adresse, String destinataire, String statut) {
+        DefaultTableModel colisTableModel = (DefaultTableModel) this.colisTable.getModel();
+
+        colisTableModel.addRow(new Object[]{id, numero, poids, adresse, destinataire, statut, "\uF06E", "\uF1F8"});
+    }
+
+    /**
+     * Supprimer un colis du tableau
+     *
+     * @param id
+     */
+    public void removeColis(String id) {
+        DefaultTableModel colisTableModel = (DefaultTableModel) this.colisTable.getModel();
+
+        for (int i = 0; i < colisTableModel.getRowCount(); i++) {
+            if (colisTableModel.getValueAt(i, 0).equals(id)) {
+                colisTableModel.removeRow(i);
+                break;
+            }
+        }
     }
 }

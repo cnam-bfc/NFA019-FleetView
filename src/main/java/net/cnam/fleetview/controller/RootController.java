@@ -42,6 +42,9 @@ public class RootController extends Controller<RootPanelView> {
 
         // On affiche le bouton de retour
         this.view.getMainPanel().getTopMenuPanel().getTopLeftMenuPanelView().setBackButtonVisible(true);
+
+        // On notifie la vue qu'elle a été affichée
+        view.onDisplayed();
     }
 
     /**
@@ -61,15 +64,28 @@ public class RootController extends Controller<RootPanelView> {
 
         // On affiche la vue précédente
         if (!this.views.isEmpty()) {
+            // On récupère la vue précédente
+            View previousView = this.views.getLast();
+
             // On affiche la vue précédente
-            this.view.getMainPanel().setContentPanelView(this.views.getLast());
+            this.view.getMainPanel().setContentPanelView(previousView);
+
+            // On notifie la vue qu'elle a été réaffichée
+            previousView.onDisplayed();
         }
         // Sinon, on affiche accueil
         else {
-            this.view.getMainPanel().setContentPanelView(new AccueilView());
+            // On crée la vue accueil
+            AccueilView accueilView = new AccueilView();
+
+            // On affiche la vue accueil
+            this.view.getMainPanel().setContentPanelView(accueilView);
 
             // On cache le bouton de retour
             this.view.getMainPanel().getTopMenuPanel().getTopLeftMenuPanelView().setBackButtonVisible(false);
+
+            // On notifie la vue qu'elle a été affichée
+            accueilView.onDisplayed();
         }
 
         return true;
