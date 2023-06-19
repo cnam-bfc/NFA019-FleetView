@@ -1,5 +1,6 @@
-package net.cnam.fleetview.view;
+package net.cnam.fleetview.view.statistiques;
 
+import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.label.IconLabel;
 
 import java.awt.*;
