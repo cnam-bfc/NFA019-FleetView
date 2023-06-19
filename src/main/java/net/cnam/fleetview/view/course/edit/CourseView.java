@@ -55,8 +55,6 @@ public class CourseView extends View<CourseController> {
         BoxLayout contenuLayout = new BoxLayout(this.contenu, BoxLayout.Y_AXIS);
         this.contenu.setLayout(contenuLayout);
 
-        this.contenu.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
-
         // Champ de saisie de l'id
         this.idField.setEditable(false);
 
