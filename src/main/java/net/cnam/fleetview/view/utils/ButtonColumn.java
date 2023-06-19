@@ -26,8 +26,7 @@ import java.awt.event.MouseListener;
  * source of the Action will be the table. The action command will contain
  * the model row number of the button that was clicked.
  */
-public class ButtonColumn extends AbstractCellEditor
-        implements TableCellRenderer, TableCellEditor, ActionListener, MouseListener {
+public class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, TableCellEditor, ActionListener, MouseListener {
     private JTable table;
     private Action action;
     private int mnemonic;
@@ -102,8 +101,7 @@ public class ButtonColumn extends AbstractCellEditor
     }
 
     @Override
-    public Component getTableCellEditorComponent(
-            JTable table, Object value, boolean isSelected, int row, int column) {
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         if (value == null) {
             editButton.setText("");
             editButton.setIcon(null);
@@ -125,10 +123,9 @@ public class ButtonColumn extends AbstractCellEditor
     }
 
     //
-//  Implement TableCellRenderer interface
-//
-    public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    //  Implement TableCellRenderer interface
+    //
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         if (isSelected) {
             renderButton.setForeground(table.getSelectionForeground());
             renderButton.setBackground(table.getSelectionBackground());
@@ -143,7 +140,7 @@ public class ButtonColumn extends AbstractCellEditor
             renderButton.setBorder(originalBorder);
         }
 
-//		renderButton.setText( (value == null) ? "" : value.toString() );
+        //renderButton.setText( (value == null) ? "" : value.toString() );
         if (value == null) {
             renderButton.setText("");
             renderButton.setIcon(null);
@@ -159,8 +156,8 @@ public class ButtonColumn extends AbstractCellEditor
     }
 
     //
-//  Implement ActionListener interface
-//
+    //  Implement ActionListener interface
+    //
     /*
      *	The button has been pressed. Stop editing and invoke the custom Action
      */
@@ -169,42 +166,43 @@ public class ButtonColumn extends AbstractCellEditor
         fireEditingStopped();
 
         //  Invoke the Action
-
         ActionEvent event = new ActionEvent(
                 table,
                 ActionEvent.ACTION_PERFORMED,
-                "" + row);
+                "" + row
+        );
         action.actionPerformed(event);
     }
 
     //
-//  Implement MouseListener interface
-//
+    //  Implement MouseListener interface
+    //
     /*
      *  When the mouse is pressed the editor is invoked. If you then then drag
      *  the mouse to another cell before releasing it, the editor is still
      *  active. Make sure editing is stopped when the mouse is released.
      */
     public void mousePressed(MouseEvent e) {
-        if (table.isEditing()
-                && table.getCellEditor() == this)
+        if (table.isEditing() && table.getCellEditor() == this)
             isButtonColumnEditor = true;
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (isButtonColumnEditor
-                && table.isEditing())
+        if (isButtonColumnEditor && table.isEditing())
             table.getCellEditor().stopCellEditing();
 
         isButtonColumnEditor = false;
     }
 
     public void mouseClicked(MouseEvent e) {
+
     }
 
     public void mouseEntered(MouseEvent e) {
+
     }
 
     public void mouseExited(MouseEvent e) {
+
     }
 }
