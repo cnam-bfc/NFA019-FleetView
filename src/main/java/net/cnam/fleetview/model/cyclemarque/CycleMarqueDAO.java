@@ -223,7 +223,7 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
             statement.setObject(2, obj.getDateArchive());
-
+            statement.setInt(3, obj.getIdCycleMarque());
 
             // Récupération de l'objet avant modification
             CycleMarque objAvantModification = this.getById(obj.getIdCycleMarque());

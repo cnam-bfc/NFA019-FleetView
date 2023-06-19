@@ -226,7 +226,7 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
             statement.setObject(1, obj.getDateSaisie());
             statement.setObject(2, obj.getDateArchive());
             statement.setInt(3, obj.getIdCoursier());
-
+            statement.setInt(4, obj.getIdCoursierTravail());
 
             // Récupération de l'objet avant modification
             CoursierTravail objAvantModification = this.getById(obj.getIdCoursierTravail());

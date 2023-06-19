@@ -231,6 +231,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
             statement.setObject(3, obj.getDateArchive());
             statement.setInt(4, obj.getIdAdresse());
             statement.setInt(5, obj.getIdColisDestinataire());
+            statement.setInt(6, obj.getIdColis());
 
 
             // Récupération de l'objet avant modification

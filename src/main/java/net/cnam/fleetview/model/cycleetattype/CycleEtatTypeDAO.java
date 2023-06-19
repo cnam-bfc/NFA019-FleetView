@@ -226,6 +226,7 @@ public class CycleEtatTypeDAO extends DAO<CycleEtatType> implements Archivable<C
             statement.setString(1, obj.getNom());
             statement.setBoolean(2, obj.isUtilisable());
             statement.setObject(3, obj.getDateArchive());
+            statement.setInt(4, obj.getIdCycleEtatType());
 
             // Récupération de l'objet avant modification
             CycleEtatType objAvantModification = this.getById(obj.getIdCycleEtatType());

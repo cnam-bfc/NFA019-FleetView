@@ -225,7 +225,7 @@ public class CycleModeleDAO extends DAO<CycleModele> implements Archivable<Cycle
             statement.setString(1, obj.getNom());
             statement.setObject(2, obj.getDateArchive());
             statement.setInt(3, obj.getIdCycleMarque());
-
+            statement.setInt(4, obj.getIdCycleModele());
 
             // Récupération de l'objet avant modification
             CycleModele objAvantModification = this.getById(obj.getIdCycleModele());

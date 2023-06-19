@@ -227,6 +227,7 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
             statement.setString(2, obj.getCommentaire());
             statement.setObject(3, obj.getDateArchive());
             statement.setInt(4, obj.getIdCycle());
+            statement.setInt(5, obj.getIdCycleRevision());
 
             // Récupération de l'objet avant modification
             CycleRevision objAvantModification = this.getById(obj.getIdCycleRevision());

@@ -230,6 +230,7 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
             statement.setObject(3, obj.getDateArchive());
             statement.setInt(4, obj.getIdColis());
             statement.setInt(5, obj.getIdCourse());
+            statement.setInt(6, obj.getIdColisCourse());
 
             // Récupération de l'objet avant modification
             ColisCourse objAvantModification = this.getById(obj.getIdColisCourse());

@@ -161,7 +161,6 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
             statement.setInt(4, obj.getIdSecteur());
             statement.setInt(5, obj.getIdSecteurPoint());
 
-
             // Récupération de l'objet avant modification
             SecteurDelimitation objAvantModification = this.getByIds(obj.getIdSecteur(), obj.getIdSecteurPoint());
 
@@ -237,7 +236,7 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
 
     /**
      * Méthode impossible : la table utilise une clé primaire composite, il faut utiliser getByIds
-     *
+     * <p>
      * Exception levée systématiquement
      */
     @Override

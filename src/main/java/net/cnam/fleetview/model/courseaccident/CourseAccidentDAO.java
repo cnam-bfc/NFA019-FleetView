@@ -228,6 +228,7 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
             statement.setObject(2, obj.getDateArchive());
             statement.setInt(3, obj.getIdAdresse());
             statement.setInt(4, obj.getIdCourse());
+            statement.setInt(5, obj.getIdCourseAccident());
 
             // Récupération de l'objet avant modification
             CourseAccident objAvantModification = this.getById(obj.getIdCourseAccident());

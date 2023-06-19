@@ -223,6 +223,7 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
             statement.setObject(2, obj.getDateArchive());
+            statement.setInt(3, obj.getIdSecteur());
 
             // Récupération de l'objet avant modification
             Secteur objAvantModification = this.getById(obj.getIdSecteur());

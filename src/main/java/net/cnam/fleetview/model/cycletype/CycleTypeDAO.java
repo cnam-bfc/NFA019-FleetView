@@ -223,6 +223,7 @@ public class CycleTypeDAO extends DAO<CycleType> implements Archivable<CycleType
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
             statement.setObject(2, obj.getDateArchive());
+            statement.setInt(3, obj.getIdCycleType());
 
             // Récupération de l'objet avant modification
             CycleType objAvantModification = this.getById(obj.getIdCycleType());

@@ -164,6 +164,7 @@ public class DroitsDAO extends DAO<Droits> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
+            statement.setInt(2, obj.getIdDroits());
 
             // Récupération de l'objet avant modification
             Droits objAvantModification = this.getById(obj.getIdDroits());

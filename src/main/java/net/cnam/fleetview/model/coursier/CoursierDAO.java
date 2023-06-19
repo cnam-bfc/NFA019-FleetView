@@ -166,6 +166,7 @@ public class CoursierDAO extends DAO<Coursier> {
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getMatricule());
             statement.setInt(2, obj.getIdUtilisateur());
+            statement.setInt(3, obj.getIdCoursier());
 
             // Récupération de l'objet avant modification
             Coursier objAvantModification = this.getById(obj.getIdCoursier());

@@ -163,6 +163,7 @@ public class RoleDAO extends DAO<Role> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
+            statement.setInt(2, obj.getIdRole());
 
             // Récupération de l'objet avant modification
             Role objAvantModification = this.getById(obj.getIdRole());
