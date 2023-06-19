@@ -67,6 +67,16 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
     }
 
     /**
+     * Set button enabled
+     *
+     * @param enabled
+     */
+    public void setButtonEnabled(boolean enabled) {
+        renderButton.setEnabled(enabled);
+        editButton.setEnabled(enabled);
+    }
+
+    /**
      * Get foreground color of the button when the cell has focus
      *
      * @return the foreground color
@@ -125,6 +135,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
     //
     //  Implement TableCellRenderer interface
     //
+    @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         if (isSelected) {
             renderButton.setForeground(table.getSelectionForeground());
@@ -161,6 +172,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
     /*
      *	The button has been pressed. Stop editing and invoke the custom Action
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         int row = table.convertRowIndexToModel(table.getEditingRow());
         fireEditingStopped();
@@ -182,11 +194,13 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
      *  the mouse to another cell before releasing it, the editor is still
      *  active. Make sure editing is stopped when the mouse is released.
      */
+    @Override
     public void mousePressed(MouseEvent e) {
         if (table.isEditing() && table.getCellEditor() == this)
             isButtonColumnEditor = true;
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
         if (isButtonColumnEditor && table.isEditing())
             table.getCellEditor().stopCellEditing();
@@ -194,14 +208,17 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
         isButtonColumnEditor = false;
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
 
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
 
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
 
     }
