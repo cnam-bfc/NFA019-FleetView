@@ -8,7 +8,6 @@ import net.cnam.fleetview.view.course.edit.CourseView;
 
 import java.sql.Connection;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 public class CourseController extends Controller<CourseView> {
     // DAO
@@ -45,7 +44,7 @@ public class CourseController extends Controller<CourseView> {
 
         String idForm = String.valueOf(course.getIdCourse());
         String nomForm = course.getNom();
-        String dateForm = course.getDateCourse().toString();
+        LocalDate dateForm = course.getDateCourse();
 
         // Chargement des données dans la vue
         view.fill(idForm, nomForm, dateForm);
@@ -65,7 +64,7 @@ public class CourseController extends Controller<CourseView> {
 
         String idForm = String.valueOf(course.getIdCourse());
         String nomForm = course.getNom();
-        String dateForm = course.getDateCourse().toString();
+        LocalDate dateForm = course.getDateCourse();
 
         // Chargement des données dans la vue
         view.fill(idForm, nomForm, dateForm);
@@ -81,19 +80,15 @@ public class CourseController extends Controller<CourseView> {
      * @param date Date de la course
      * @return Si la sauvegarde a réussi
      */
-    public boolean saveCourse(String nom, String date) {
+    public boolean saveCourse(String nom, LocalDate date) {
         // Si on est en mode ajout d'une course
         if (course == null) {
             this.course = new Course();
         }
 
-        try {
-            // Sauvegarde des données dans la course
-            course.setNom(nom);
-            course.setDateCourse(LocalDate.parse(date));
-        } catch (DateTimeParseException e) {
-            return false;
-        }
+        // Sauvegarde des données dans la course
+        course.setNom(nom);
+        course.setDateCourse(date);
 
         // Sauvegarde de la course
         boolean success;

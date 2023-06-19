@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 
 public class CourseView extends View<CourseController> {
     // ÉLÉMENTS DE L'INTERFACE
@@ -170,7 +171,7 @@ public class CourseView extends View<CourseController> {
         this.saveButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean success = controller.saveCourse(nomField.getText(), dateField.getText());
+                boolean success = controller.saveCourse(nomField.getText(), dateField.getDate());
                 if (!success) {
                     afficherMessageErreur("Impossible de sauvegarder la course");
                     return;
@@ -227,14 +228,14 @@ public class CourseView extends View<CourseController> {
      * @param nom
      * @param date
      */
-    public void fill(String id, String nom, String date) {
+    public void fill(String id, String nom, LocalDate date) {
         // Titre
         this.titre.getTexteLabel().setText("Course n°" + id + " - " + nom);
 
         // Champs
         this.idField.setText(id);
         this.nomField.setText(nom);
-        this.dateField.setText(date);
+        this.dateField.setDate(date);
     }
 
     /**
