@@ -151,6 +151,11 @@ public class CycleTypeDAO extends DAO<CycleType> implements Archivable<CycleType
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_cycle_type SET date_archive = ? WHERE id_cycle_type = ?";
 
@@ -218,6 +223,7 @@ public class CycleTypeDAO extends DAO<CycleType> implements Archivable<CycleType
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
             statement.setObject(2, obj.getDateArchive());
+            statement.setInt(3, obj.getIdCycleType());
 
             // Récupération de l'objet avant modification
             CycleType objAvantModification = this.getById(obj.getIdCycleType());

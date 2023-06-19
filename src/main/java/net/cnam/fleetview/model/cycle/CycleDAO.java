@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Classe DAO pour les Cycles
- *
+ * <p>
  * Cette classe permet de créer des objets Cycle
  * Concerne la table : fleetview_cycle
  */
@@ -159,6 +159,11 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_cycle SET date_archive = ? WHERE id_cycle = ?";
 
@@ -233,6 +238,7 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
             statement.setInt(7, obj.getIdCycleFournisseur());
             statement.setInt(8, obj.getIdCycleModele());
             statement.setInt(9, obj.getIdCycleType());
+            statement.setInt(10, obj.getIdCycle());
 
             // Récupération de l'objet avant modification
             Cycle objAvantModification = this.getById(obj.getIdCycle());
@@ -355,7 +361,7 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
     /**
      * Méthode permettant de remplir un objet Cycle avec les valeurs d'un enregistrement de la table fleetview_cycle
      *
-     * @param cycle   L'objet Cycle à remplir
+     * @param cycle     L'objet Cycle à remplir
      * @param resultSet Le résultat de la requête de sélection
      */
     protected void fillObject(Cycle cycle, ResultSet resultSet) {

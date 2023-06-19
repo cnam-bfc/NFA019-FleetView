@@ -151,6 +151,11 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_secteur SET date_archive = ? WHERE id_secteur = ?";
 
@@ -218,6 +223,7 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
             statement.setObject(2, obj.getDateArchive());
+            statement.setInt(3, obj.getIdSecteur());
 
             // Récupération de l'objet avant modification
             Secteur objAvantModification = this.getById(obj.getIdSecteur());

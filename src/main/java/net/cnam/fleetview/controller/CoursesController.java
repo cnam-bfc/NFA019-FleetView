@@ -77,6 +77,21 @@ public class CoursesController extends Controller<CoursesView> {
     }
 
     public void onSupprimerCourse(int id) {
-        view.afficherMessage("Supprimer la course " + id);
+        // Récupération de la course
+        Course course = courseDAO.getById(id);
+
+        String idCourse = String.valueOf(course.getIdCourse());
+        String nomCourse = course.getNom();
+
+        // Demande de confirmation
+        boolean confirm = view.afficherMessageConfirmation("Supprimer la course", "Êtes-vous sûr de vouloir supprimer la course " + idCourse + " - " + nomCourse + " ?");
+
+        if (confirm) {
+            // Suppression de la course
+            courseDAO.archive(course, RootController.getCurrentUser());
+
+            // Suppression de la course dans la vue
+            view.removeCourse(idCourse);
+        }
     }
 }

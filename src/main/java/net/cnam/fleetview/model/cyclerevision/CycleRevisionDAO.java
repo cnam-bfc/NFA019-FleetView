@@ -153,6 +153,11 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_cycle_revision SET date_archive = ? WHERE id_cycle_revision = ?";
 
@@ -222,6 +227,7 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
             statement.setString(2, obj.getCommentaire());
             statement.setObject(3, obj.getDateArchive());
             statement.setInt(4, obj.getIdCycle());
+            statement.setInt(5, obj.getIdCycleRevision());
 
             // Récupération de l'objet avant modification
             CycleRevision objAvantModification = this.getById(obj.getIdCycleRevision());

@@ -43,7 +43,63 @@ public abstract class View<C extends Controller> extends JPanel {
         return true;
     }
 
-    public void afficherMessage(String message) {
-        JOptionPane.showMessageDialog(this, message);
+    /**
+     * Méthode permettant d'afficher un message à l'utilisateur
+     *
+     * @param message le message à afficher
+     */
+    public void afficherMessageInformation(String message) {
+        this.afficherMessageInformation("Information", message);
+    }
+
+    /**
+     * Méthode permettant d'afficher un message à l'utilisateur
+     *
+     * @param titre   le titre du message
+     * @param message le message à afficher
+     */
+    public void afficherMessageInformation(String titre, String message) {
+        JOptionPane.showMessageDialog(this, message, titre, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+     * Méthode permettant d'afficher un message d'erreur à l'utilisateur
+     *
+     * @param message le message à afficher
+     */
+    public void afficherMessageErreur(String message) {
+        this.afficherMessageErreur("Erreur", message);
+    }
+
+    /**
+     * Méthode permettant d'afficher un message d'erreur à l'utilisateur
+     *
+     * @param titre   le titre du message
+     * @param message le message à afficher
+     */
+    public void afficherMessageErreur(String titre, String message) {
+        JOptionPane.showMessageDialog(this, message, titre, JOptionPane.ERROR_MESSAGE);
+    }
+
+    /**
+     * Méthode permettant d'afficher un message de confirmation à l'utilisateur (Avec boutons Oui/Non)
+     *
+     * @param message le message à afficher
+     * @return true si l'utilisateur a cliqué sur Oui, false sinon
+     */
+    public boolean afficherMessageConfirmation(String message) {
+        return this.afficherMessageConfirmation("Confirmation", message);
+    }
+
+    /**
+     * Méthode permettant d'afficher un message de confirmation à l'utilisateur (Avec boutons Oui/Non)
+     *
+     * @param titre   le titre du message
+     * @param message le message à afficher
+     * @return true si l'utilisateur a cliqué sur Oui, false sinon
+     */
+    public boolean afficherMessageConfirmation(String titre, String message) {
+        int reponse = JOptionPane.showConfirmDialog(this, message, titre, JOptionPane.YES_NO_OPTION);
+        return reponse == JOptionPane.YES_OPTION;
     }
 }

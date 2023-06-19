@@ -154,6 +154,11 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_utilisateur SET date_archive = ? WHERE id_utilisateur = ?";
 

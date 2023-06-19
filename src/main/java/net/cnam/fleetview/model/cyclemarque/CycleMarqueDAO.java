@@ -151,6 +151,11 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_cycle_marque SET date_archive = ? WHERE id_cycle_marque = ?";
 
@@ -218,7 +223,7 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
             statement.setObject(2, obj.getDateArchive());
-
+            statement.setInt(3, obj.getIdCycleMarque());
 
             // Récupération de l'objet avant modification
             CycleMarque objAvantModification = this.getById(obj.getIdCycleMarque());

@@ -155,6 +155,11 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_colis_course SET date_archive = ? WHERE id_colis_course = ?";
 
@@ -225,6 +230,7 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
             statement.setObject(3, obj.getDateArchive());
             statement.setInt(4, obj.getIdColis());
             statement.setInt(5, obj.getIdCourse());
+            statement.setInt(6, obj.getIdColisCourse());
 
             // Récupération de l'objet avant modification
             ColisCourse objAvantModification = this.getById(obj.getIdColisCourse());

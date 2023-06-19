@@ -165,7 +165,6 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
             statement.setInt(4, obj.getIdRole());
             statement.setInt(5, obj.getIdDroits());
 
-
             // Récupération de l'objet avant modification
             DroitsRole objAvantModification = this.getByIds(obj.getIdRole(), obj.getIdDroits());
 

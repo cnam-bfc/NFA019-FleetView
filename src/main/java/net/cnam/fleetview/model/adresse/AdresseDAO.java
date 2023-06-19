@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Classe DAO pour les adresses
- *
+ * <p>
  * Concerne la table : fleetview_adresse
  */
 public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
@@ -157,6 +157,11 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
         if (obj.getIdAdresse() == 0) {
             logger.error("L'objet Adresse n'a pas d'ID");
             return false;
+        }
+
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
         }
 
         // Requête de mise à jour

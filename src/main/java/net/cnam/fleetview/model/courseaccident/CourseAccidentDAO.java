@@ -154,6 +154,11 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_course_accident SET date_archive = ? WHERE id_course_accident = ?";
 
@@ -223,6 +228,7 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
             statement.setObject(2, obj.getDateArchive());
             statement.setInt(3, obj.getIdAdresse());
             statement.setInt(4, obj.getIdCourse());
+            statement.setInt(5, obj.getIdCourseAccident());
 
             // Récupération de l'objet avant modification
             CourseAccident objAvantModification = this.getById(obj.getIdCourseAccident());
