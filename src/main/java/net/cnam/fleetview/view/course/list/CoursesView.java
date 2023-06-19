@@ -50,10 +50,8 @@ public class CoursesView extends View<CoursesController> {
         BorderLayout contenuLayout = new BorderLayout();
         this.contenu.setLayout(contenuLayout);
 
-        this.contenu.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
-
         // Barre de recherche
-        this.barreDeRecherche.setBorder(BorderFactory.createEmptyBorder(0, 25, 25, 25));
+        this.barreDeRecherche.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
         this.barreDeRecherche.getTextField().setPlaceholder("Rechercher une course");
 
         // Tableau
@@ -119,19 +117,21 @@ public class CoursesView extends View<CoursesController> {
         coursesTable.setRowSorter(coursesTableRowSorter);
 
         // Ajout d'une course
+        JPanel ajouterCoursePanel = new JPanel();
         this.ajouterCourse.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onAjouterCourse();
             }
         });
+        ajouterCoursePanel.add(this.ajouterCourse);
 
 
         // Ajout des éléments de l'interface
         this.add(this.titre, BorderLayout.NORTH);
         this.contenu.add(this.barreDeRecherche, BorderLayout.NORTH);
         this.contenu.add(coursesTableScrollPane, BorderLayout.CENTER);
-        this.contenu.add(this.ajouterCourse, BorderLayout.SOUTH);
+        this.contenu.add(ajouterCoursePanel, BorderLayout.SOUTH);
         this.add(this.contenu, BorderLayout.CENTER);
     }
 
