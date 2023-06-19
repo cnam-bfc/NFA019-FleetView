@@ -70,7 +70,7 @@ public class CoursiersView extends View<CoursiersController> {
         ButtonColumn voirButtonColumn = new ButtonColumn(tableau, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.onShowCoursier(Integer.parseInt(model.getValueAt(tableau.getSelectedRow(), 0).toString()));
+                controller.onShowCoursier(model.getValueAt(tableau.getSelectedRow(), 0).toString(), model.getValueAt(tableau.getSelectedRow(), 1).toString(), model.getValueAt(tableau.getSelectedRow(), 2).toString(), model.getValueAt(tableau.getSelectedRow(), 3).toString());
             }
         }, 5);
 

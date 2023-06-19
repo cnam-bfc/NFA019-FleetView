@@ -4,7 +4,7 @@ import net.cnam.fleetview.controller.CoursesController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
 import net.cnam.fleetview.view.coursier.list.CoursiersView;
-import net.cnam.fleetview.view.StatistiquesView;
+import net.cnam.fleetview.view.statistiques.StatistiquesView;
 import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.course.list.CoursesView;

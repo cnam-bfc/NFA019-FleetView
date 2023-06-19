@@ -40,7 +40,7 @@ public class CoursiersController extends Controller<CoursiersView> {
         }
     }
 
-    public void onShowCoursier(int id) {
+    public void onShowCoursier(String id, String matricule, String nom, String prenom) {
         // Création de la vue
         CoursierView coursierView = new CoursierView();
         // Créer le contrôleur
@@ -48,6 +48,7 @@ public class CoursiersController extends Controller<CoursiersView> {
         coursierView.setController(coursierController);
 
         // Mettre la méthode loadViewableCoursier
+        coursierController.loadViewableCoursier(id, matricule, nom, prenom);
 
         // Ouverture de la vue du cycle
         RootController.open(coursierView);
