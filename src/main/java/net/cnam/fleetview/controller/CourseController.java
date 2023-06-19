@@ -8,6 +8,7 @@ import net.cnam.fleetview.view.course.edit.CourseView;
 
 import java.sql.Connection;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class CourseController extends Controller<CourseView> {
     // DAO
@@ -86,9 +87,13 @@ public class CourseController extends Controller<CourseView> {
             this.course = new Course();
         }
 
-        // Sauvegarde des données dans la course
-        course.setNom(nom);
-        course.setDateCourse(LocalDate.parse(date));
+        try {
+            // Sauvegarde des données dans la course
+            course.setNom(nom);
+            course.setDateCourse(LocalDate.parse(date));
+        } catch (DateTimeParseException e) {
+            return false;
+        }
 
         // Sauvegarde de la course
         boolean success;
