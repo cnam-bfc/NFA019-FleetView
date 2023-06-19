@@ -20,7 +20,9 @@ public class CourseView extends View<CourseController> {
     // Champ de saisie de la date
     private final JTextField dateField;
     // Tableau des colis
-    //private final JTable colisTable;
+    private final JTable colisTable;
+    // Bouton de sauvegarde
+    private final JButton saveButton;
 
     public CourseView() {
         super();
@@ -38,6 +40,8 @@ public class CourseView extends View<CourseController> {
         this.idField = new JTextField();
         this.nomField = new JTextField();
         this.dateField = new JTextField();
+        this.colisTable = new JTable();
+        this.saveButton = new JButton("Sauvegarder");
 
 
         // Configuration des éléments de l'interface
@@ -53,6 +57,11 @@ public class CourseView extends View<CourseController> {
         // Champ de saisie du nom
 
         // Champ de saisie de la date
+
+        // Tableau des colis
+
+        // Bouton de sauvegarde
+
 
 
         // Ajout des éléments de l'interface
