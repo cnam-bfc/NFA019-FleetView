@@ -10,6 +10,7 @@ import net.cnam.fleetview.view.utils.ButtonColumn;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -58,6 +59,7 @@ public class CoursesView extends View<CoursesController> {
         // Tableau
         DefaultTableModel model = new DefaultTableModel();
         DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         JScrollPane tableauScrollPane = new JScrollPane(tableau);
 
         model.addColumn("ID");
@@ -103,6 +105,14 @@ public class CoursesView extends View<CoursesController> {
 
         // Tableau non editable
         tableau.setDefaultEditor(Object.class, null);
+
+        // Tri du tableau
+        this.barreDeRecherche.getTextField().addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                sorter.setRowFilter(RowFilter.regexFilter("(?i)" + barreDeRecherche.getTextField().getText()));
+            }
+        });
+        tableau.setRowSorter(sorter);
 
         // Ajout d'une course
         this.ajouterCourse.addActionListener(new AbstractAction() {
