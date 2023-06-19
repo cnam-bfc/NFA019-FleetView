@@ -53,7 +53,7 @@ public class CoursesView extends View<CoursesController> {
         this.contenu.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
         // Barre de recherche
-        this.barreDeRecherche.setBorder(BorderFactory.createEmptyBorder(10, 25, 25, 25));
+        this.barreDeRecherche.setBorder(BorderFactory.createEmptyBorder(0, 25, 25, 25));
         this.barreDeRecherche.getTextField().setPlaceholder("Rechercher une course");
 
         // Tableau
@@ -78,6 +78,7 @@ public class CoursesView extends View<CoursesController> {
         coursesTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Action voir
+        coursesTable.getColumnModel().getColumn(7).setPreferredWidth(30);
         ButtonColumn voirButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,6 +87,7 @@ public class CoursesView extends View<CoursesController> {
         }, 7);
 
         // Action modifier
+        coursesTable.getColumnModel().getColumn(8).setPreferredWidth(30);
         ButtonColumn modifierButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -94,6 +96,7 @@ public class CoursesView extends View<CoursesController> {
         }, 8);
 
         // Action supprimer
+        coursesTable.getColumnModel().getColumn(9).setPreferredWidth(30);
         ButtonColumn supprimerButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,6 +105,7 @@ public class CoursesView extends View<CoursesController> {
         }, 9);
 
         coursesTable.setDefaultRenderer(Object.class, coursesTableCellRenderer);
+        coursesTable.setRowHeight(30);
 
         // Tableau non editable
         coursesTable.setDefaultEditor(Object.class, null);
