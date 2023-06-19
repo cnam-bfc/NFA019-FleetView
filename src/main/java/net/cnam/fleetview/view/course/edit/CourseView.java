@@ -1,11 +1,13 @@
 package net.cnam.fleetview.view.course.edit;
 
+import com.github.lgooddatepicker.components.DatePicker;
 import net.cnam.fleetview.controller.CourseController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.View;
-import net.cnam.fleetview.view.components.button.LabelButton;
+import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.components.label.IconLabel;
 import net.cnam.fleetview.view.utils.ButtonColumn;
+import net.cnam.fleetview.view.utils.SpringUtilities;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -19,16 +21,26 @@ public class CourseView extends View<CourseController> {
     private final IconLabel titre;
     // Panel du contenu
     private final JPanel contenu;
+    // Panel des champs
+    private final JPanel champs;
+    // Label de l'id
+    private final JLabel idLabel;
     // Champ de saisie de l'id
     private final JTextField idField;
+    // Label du nom
+    private final JLabel nomLabel;
     // Champ de saisie du nom
     private final JTextField nomField;
+    // Label de la date
+    private final JLabel dateLabel;
     // Champ de saisie de la date
-    private final JTextField dateField;
+    private final DatePicker dateField;
+    // Titre des colis
+    private final IconLabel colisTitre;
     // Tableau des colis
     private final JTable colisTable;
     // Bouton de sauvegarde
-    private final LabelButton saveButton;
+    private final IconLabelButton saveButton;
 
     public CourseView() {
         super();
@@ -43,11 +55,16 @@ public class CourseView extends View<CourseController> {
         // Création des éléments de l'interface
         this.titre = new IconLabel("\uF0D1", "Course");
         this.contenu = new JPanel();
+        this.champs = new JPanel();
+        this.idLabel = new JLabel("ID :", JLabel.TRAILING);
         this.idField = new JTextField();
-        this.nomField = new JTextField();
-        this.dateField = new JTextField();
+        this.nomLabel = new JLabel("Nom :", JLabel.TRAILING);
+        this.nomField = new JTextField(50);
+        this.dateLabel = new JLabel("Date :", JLabel.TRAILING);
+        this.dateField = new DatePicker();
+        this.colisTitre = new IconLabel("\uF466", "Colis");
         this.colisTable = new JTable();
-        this.saveButton = new LabelButton("Sauvegarder");
+        this.saveButton = new IconLabelButton("\uF0C7", "Sauvegarder");
 
 
         // Configuration des éléments de l'interface
@@ -55,10 +72,26 @@ public class CourseView extends View<CourseController> {
         BoxLayout contenuLayout = new BoxLayout(this.contenu, BoxLayout.Y_AXIS);
         this.contenu.setLayout(contenuLayout);
 
+        // Panel des champs
+        SpringLayout champsLayout = new SpringLayout();
+        this.champs.setLayout(champsLayout);
+        this.champs.setBorder(BorderFactory.createEmptyBorder(25, 0, 25, 0));
+        // Pas d'agrandissement des champs sur la hauteur
+        this.champs.setMaximumSize(new Dimension(Short.MAX_VALUE, 0));
+
+        // Label de l'id
+        this.idLabel.setLabelFor(this.idField);
+
         // Champ de saisie de l'id
         this.idField.setEditable(false);
 
+        // Label du nom
+        this.nomLabel.setLabelFor(this.nomField);
+
         // Champ de saisie du nom
+
+        // Label de la date
+        this.dateLabel.setLabelFor(this.dateField);
 
         // Champ de saisie de la date
 
@@ -132,6 +165,7 @@ public class CourseView extends View<CourseController> {
         colisTable.getTableHeader().setReorderingAllowed(false);
 
         // Bouton de sauvegarde
+        JPanel saveButtonPanel = new JPanel();
         this.saveButton.setVisible(false);
         this.saveButton.addActionListener(new AbstractAction() {
             @Override
@@ -145,15 +179,26 @@ public class CourseView extends View<CourseController> {
                 RootController.close(CourseView.this);
             }
         });
+        saveButtonPanel.add(this.saveButton);
 
         // Ajout des éléments de l'interface
         this.add(this.titre, BorderLayout.NORTH);
-        this.contenu.add(this.idField);
-        this.contenu.add(this.nomField);
-        this.contenu.add(this.dateField);
+        this.champs.add(this.idLabel);
+        this.champs.add(this.idField);
+        this.champs.add(this.nomLabel);
+        this.champs.add(this.nomField);
+        this.champs.add(this.dateLabel);
+        this.champs.add(this.dateField);
+        // Lay out the panel
+        SpringUtilities.makeCompactGrid(this.champs,
+                3, 2, //rows, cols
+                6, 6,        //initX, initY
+                6, 6);       //xPad, yPad
+        this.contenu.add(this.champs);
+        this.contenu.add(this.colisTitre);
         this.contenu.add(colisTableScrollPane);
         this.add(this.contenu, BorderLayout.CENTER);
-        this.add(this.saveButton, BorderLayout.SOUTH);
+        this.add(saveButtonPanel, BorderLayout.SOUTH);
     }
 
     /**
@@ -163,7 +208,7 @@ public class CourseView extends View<CourseController> {
      */
     public void setFieldsEditable(boolean editable) {
         this.nomField.setEditable(editable);
-        this.dateField.setEditable(editable);
+        this.dateField.setEnabled(editable);
         // Désactiver les boutons du tableau des colis
         ButtonColumn monterButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(7).getCellEditor();
         monterButtonColumn.setButtonEnabled(editable);
