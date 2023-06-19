@@ -12,7 +12,7 @@ public class Colis {
     /**
      * Identifiant du colis
      */
-    private int idColis;
+    private Integer idColis;
     /**
      * Numéro du colis
      */
@@ -20,7 +20,7 @@ public class Colis {
     /**
      * Poids du colis
      */
-    private double poids;
+    private Double poids;
     /**
      * Date d'archivage
      */
@@ -28,11 +28,11 @@ public class Colis {
     /**
      * Identifiant de l'adresse
      */
-    private int idAdresse;
+    private Integer idAdresse;
     /**
      * Identifiant du colis destinataire
      */
-    private int idColisDestinataire;
+    private Integer idColisDestinataire;
 
     /**
      * Constructeur par défaut
@@ -47,7 +47,7 @@ public class Colis {
      *
      * @return idColis
      */
-    public int getIdColis() {
+    public Integer getIdColis() {
         return idColis;
     }
 
@@ -56,7 +56,7 @@ public class Colis {
      *
      * @param idColis idColis
      */
-    public void setIdColis(int idColis) {
+    public void setIdColis(Integer idColis) {
         this.idColis = idColis;
     }
 
@@ -83,7 +83,7 @@ public class Colis {
      *
      * @return poids
      */
-    public double getPoids() {
+    public Double getPoids() {
         return poids;
     }
 
@@ -92,7 +92,7 @@ public class Colis {
      *
      * @param poids poids
      */
-    public void setPoids(double poids) {
+    public void setPoids(Double poids) {
         this.poids = poids;
     }
 
@@ -119,7 +119,7 @@ public class Colis {
      *
      * @return idAdresse
      */
-    public int getIdAdresse() {
+    public Integer getIdAdresse() {
         return idAdresse;
     }
 
@@ -128,7 +128,7 @@ public class Colis {
      *
      * @param idAdresse idAdresse
      */
-    public void setIdAdresse(int idAdresse) {
+    public void setIdAdresse(Integer idAdresse) {
         this.idAdresse = idAdresse;
     }
 
@@ -137,7 +137,7 @@ public class Colis {
      *
      * @return idColisDestinataire
      */
-    public int getIdColisDestinataire() {
+    public Integer getIdColisDestinataire() {
         return idColisDestinataire;
     }
 
@@ -146,7 +146,7 @@ public class Colis {
      *
      * @param idColisDestinataire idColisDestinataire
      */
-    public void setIdColisDestinataire(int idColisDestinataire) {
+    public void setIdColisDestinataire(Integer idColisDestinataire) {
         this.idColisDestinataire = idColisDestinataire;
     }
 }
