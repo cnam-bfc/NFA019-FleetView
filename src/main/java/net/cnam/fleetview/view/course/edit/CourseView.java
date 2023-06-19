@@ -85,6 +85,7 @@ public class CourseView extends View<CourseController> {
         colisTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Action voir
+        colisTable.getColumnModel().getColumn(6).setPreferredWidth(30);
         ButtonColumn voirButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -94,6 +95,7 @@ public class CourseView extends View<CourseController> {
         }, 6);
 
         // Action monter
+        colisTable.getColumnModel().getColumn(7).setPreferredWidth(30);
         ButtonColumn monterButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -103,6 +105,7 @@ public class CourseView extends View<CourseController> {
         }, 7);
 
         // Action descendre
+        colisTable.getColumnModel().getColumn(8).setPreferredWidth(30);
         ButtonColumn descendreButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,6 +115,7 @@ public class CourseView extends View<CourseController> {
         }, 8);
 
         // Action supprimer
+        colisTable.getColumnModel().getColumn(9).setPreferredWidth(30);
         ButtonColumn supprimerButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -121,6 +125,7 @@ public class CourseView extends View<CourseController> {
         }, 9);
 
         colisTable.setDefaultRenderer(Object.class, colisTableCellRenderer);
+        colisTable.setRowHeight(30);
 
         // Tableau non editable
         colisTable.setDefaultEditor(Object.class, null);
@@ -158,8 +163,12 @@ public class CourseView extends View<CourseController> {
     public void setFieldsEditable(boolean editable) {
         this.nomField.setEditable(editable);
         this.dateField.setEditable(editable);
-        // Désactiver les boutons de suppression de colis
-        ButtonColumn supprimerButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(7).getCellEditor();
+        // Désactiver les boutons du tableau des colis
+        ButtonColumn monterButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(7).getCellEditor();
+        monterButtonColumn.setButtonEnabled(editable);
+        ButtonColumn descendreButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(8).getCellEditor();
+        descendreButtonColumn.setButtonEnabled(editable);
+        ButtonColumn supprimerButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(9).getCellEditor();
         supprimerButtonColumn.setButtonEnabled(editable);
         // Rendre le bouton de sauvegarde visible ou non
         this.saveButton.setVisible(editable);
