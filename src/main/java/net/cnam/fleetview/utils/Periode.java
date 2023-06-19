@@ -4,22 +4,24 @@ package net.cnam.fleetview.utils;
  * Enumération des périodes
  */
 public enum Periode {
-    JOUR("Jour"),
-    SEMAINE("Semaine"),
-    MOIS("Mois"),
-    TRIMESTRE("Trimestre"),
-    ANNEE("Année"),
-    ALL_TIME ("Depuis toujours");
+    JOUR("Jour", "DAY"),
+    SEMAINE("Semaine", "WEEK"),
+    MOIS("Mois", "MONTH"),
+    TRIMESTRE("Trimestre", "QUARTER"),
+    ANNEE("Année", "YEAR"),
+    ALL_TIME ("Depuis toujours", "ALL_TIME");
 
     private final String name;
+    private final String englishName;
 
     /**
      * Constructeur
      *
      * @param name Nom de la période
      */
-    Periode(String name) {
+    Periode(String name, String englishName) {
         this.name = name;
+        this.englishName = englishName;
     }
 
     /**
@@ -29,5 +31,14 @@ public enum Periode {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Récupérer le nom anglais de la période
+     *
+     * @return le nom anglais de la période
+     */
+    public String getEnglishName() {
+        return englishName;
     }
 }
