@@ -411,7 +411,7 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
     protected void fillObject(Course course, ResultSet resultSet) {
         try {
             // Remplissage de l'objet CycleFournisseur
-            course.setIdCourse(resultSet.getObject("id_course", Integer.class));
+            course.setIdCourse(resultSet.getInt("id_course"));
             course.setNom(resultSet.getString("nom"));
             course.setDistance(resultSet.getObject("distance", Double.class));
             course.setDateCourse(resultSet.getObject("date_course", LocalDate.class));

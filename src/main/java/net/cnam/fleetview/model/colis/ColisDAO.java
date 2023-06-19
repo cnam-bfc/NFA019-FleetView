@@ -361,7 +361,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
     protected void fillObject(Colis colis, ResultSet resultSet) {
         try {
             // Remplissage de l'objet CycleFournisseur
-            colis.setIdColis(resultSet.getObject("id_colis", Integer.class));
+            colis.setIdColis(resultSet.getInt("id_colis"));
             colis.setNumero(resultSet.getString("numero"));
             colis.setPoids(resultSet.getObject("poids", Double.class));
             colis.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));

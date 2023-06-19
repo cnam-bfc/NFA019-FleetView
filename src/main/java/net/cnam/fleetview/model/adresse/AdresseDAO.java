@@ -368,7 +368,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
     protected void fillObject(Adresse adresse, ResultSet resultSet) {
         try {
             // Remplissage de l'objet Adresse
-            adresse.setIdAdresse(resultSet.getObject("id_adresse", Integer.class));
+            adresse.setIdAdresse(resultSet.getInt("id_adresse"));
             adresse.setOsmType(resultSet.getString("osm_type"));
             adresse.setOsmId(resultSet.getObject("osm_id", Long.class));
             adresse.setPays(resultSet.getString("pays"));
