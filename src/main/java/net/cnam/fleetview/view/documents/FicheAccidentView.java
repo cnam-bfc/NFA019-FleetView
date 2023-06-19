@@ -30,7 +30,7 @@ public class FicheAccidentView extends DebugView {
         JPanel jpDonneeAccident = new JPanel();
         jpDonneeAccident.setLayout(new BoxLayout(jpDonneeAccident, BoxLayout.PAGE_AXIS));
 
-            //bloc 1 GRID 2,1
+
         JPanel jpBloc1 = new JPanel(new GridLayout(2,2));
 
         JPanel jpLivreur = new JPanel(new BorderLayout());
@@ -113,12 +113,6 @@ public class FicheAccidentView extends DebugView {
         //JPannel
         JPanel jpActionHolder = new JPanel(new BorderLayout());
         JPanel jpActionLine = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        //marge
-        JPanel jpMargeBasDePageMargeVerticale = new JPanel();
-        jpMargeBasDePageMargeVerticale.setPreferredSize(new Dimension(20, 0));
-        JPanel jpMargeBasDePageMargeHorizontale = new JPanel();
-        jpMargeBasDePageMargeHorizontale.setPreferredSize(new Dimension(0, 20));
-
 
         //********************************
         //--- Affectation des éléments ---

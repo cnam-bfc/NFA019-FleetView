@@ -30,7 +30,7 @@ public class FicheCourseView extends DebugView {
         JPanel jpDonneeCourse = new JPanel();
         jpDonneeCourse.setLayout(new BoxLayout(jpDonneeCourse, BoxLayout.PAGE_AXIS));
 
-            //bloc 1 GRID 2,1
+
         JPanel jpBloc1 = new JPanel(new GridLayout( 1,2));
 
         JPanel jpLivreur = new JPanel(new BorderLayout());
