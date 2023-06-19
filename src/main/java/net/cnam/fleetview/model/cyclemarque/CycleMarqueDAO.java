@@ -151,6 +151,11 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_cycle_marque SET date_archive = ? WHERE id_cycle_marque = ?";
 

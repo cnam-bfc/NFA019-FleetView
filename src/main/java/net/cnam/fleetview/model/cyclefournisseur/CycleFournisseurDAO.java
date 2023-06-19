@@ -148,6 +148,11 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_cycle_fournisseur SET date_archive = ? WHERE id = ?";
 

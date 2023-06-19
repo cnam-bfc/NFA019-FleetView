@@ -156,6 +156,11 @@ public class CycleEtatDAO extends DAO<CycleEtat> implements Archivable<CycleEtat
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_cycle_etat SET date_archive = ? WHERE id_cycle_etat = ?";
 

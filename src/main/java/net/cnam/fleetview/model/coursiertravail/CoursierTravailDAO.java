@@ -153,6 +153,11 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_coursier_travail SET date_archive = ? WHERE id_coursier_travail = ?";
 

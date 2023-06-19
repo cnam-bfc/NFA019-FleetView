@@ -153,6 +153,11 @@ public class ColisDestinataireDAO extends DAO<ColisDestinataire> implements Arch
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_colis_destinataire SET date_archive = ? WHERE id_colis_destinataire = ?";
 

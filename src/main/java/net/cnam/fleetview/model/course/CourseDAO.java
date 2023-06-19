@@ -158,6 +158,11 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_course SET date_archive = ? WHERE id_course = ?";
 

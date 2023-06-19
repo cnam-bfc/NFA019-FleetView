@@ -159,6 +159,11 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_adresse SET date_archive = ? WHERE id_adresse = ?";
 

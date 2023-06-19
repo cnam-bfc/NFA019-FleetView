@@ -152,6 +152,11 @@ public class SecteurPointDAO extends DAO<SecteurPoint> implements Archivable<Sec
             return false;
         }
 
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
+        }
+
         // Requête de mise à jour
         String query = "UPDATE fleetview_secteur_point SET date_archive = ? WHERE id_secteur_point = ?";
 
