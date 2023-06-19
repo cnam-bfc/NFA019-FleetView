@@ -477,6 +477,48 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
         return result;
     }
 
+    /**
+     * Méthode qui retourne la course en cours d'un coursier (s'il y en a une)
+     *
+     * @param idCoursier idCoursier
+     * @return Course en cours du coursier ou null si aucune
+     */
+    public Course getCourseEnCours(int idCoursier) {
+        String query = "SELECT * FROM fleetview_course AS fc LEFT JOIN fleetview_coursier_travail AS fct ON fc.id_coursier_travail = fct.id_coursier_travail WHERE fct.id_coursier = ? AND fc.date_course IS NOT NULL AND fc.date_debut_course IS NOT NULL AND fc.date_archive IS NULL;";
+
+        // Résultat de la requête
+        Course result = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, idCoursier);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                // Création d'un objet CycleFournisseur
+                result = new Course();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(result, resultSet);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer la course en cours d'un coursier", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
 
     @Override
     protected void handleHistorique(TypeHistorique type, Utilisateur user, Course before, Course after) {
