@@ -12,7 +12,7 @@ public class CycleMarque {
     /**
      * Identifiant du cycle marque
      */
-    private int idCycleMarque;
+    private Integer idCycleMarque;
     /**
      * Nom du cycle marque
      */
@@ -35,7 +35,7 @@ public class CycleMarque {
      *
      * @return l'identifiant du cycle marque
      */
-    public int getIdCycleMarque() {
+    public Integer getIdCycleMarque() {
         return idCycleMarque;
     }
 
@@ -44,7 +44,7 @@ public class CycleMarque {
      *
      * @param idCycleMarque le nouvel identifiant du cycle marque
      */
-    public void setIdCycleMarque(int idCycleMarque) {
+    public void setIdCycleMarque(Integer idCycleMarque) {
         this.idCycleMarque = idCycleMarque;
     }
 

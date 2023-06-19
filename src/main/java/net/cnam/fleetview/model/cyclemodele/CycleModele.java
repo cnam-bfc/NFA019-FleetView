@@ -12,7 +12,7 @@ public class CycleModele {
     /**
      * Identifiant du cycle modele
      */
-    private int idCycleModele;
+    private Integer idCycleModele;
     /**
      * Nom du cycle modele
      */
@@ -24,7 +24,7 @@ public class CycleModele {
     /**
      * Identifiant de la marque du cycle
      */
-    private int idCycleMarque;
+    private Integer idCycleMarque;
 
     /**
      * Constructeur par défaut
@@ -39,7 +39,7 @@ public class CycleModele {
      *
      * @return l'identifiant du cycle modele
      */
-    public int getIdCycleModele() {
+    public Integer getIdCycleModele() {
         return idCycleModele;
     }
 
@@ -48,7 +48,7 @@ public class CycleModele {
      *
      * @param idCycleModele le nouvel identifiant du cycle modele
      */
-    public void setIdCycleModele(int idCycleModele) {
+    public void setIdCycleModele(Integer idCycleModele) {
         this.idCycleModele = idCycleModele;
     }
 
@@ -93,7 +93,7 @@ public class CycleModele {
      *
      * @return l'identifiant de la marque du cycle
      */
-    public int getIdCycleMarque() {
+    public Integer getIdCycleMarque() {
         return idCycleMarque;
     }
 
@@ -102,7 +102,7 @@ public class CycleModele {
      *
      * @param idCycleMarque le nouvel identifiant de la marque du cycle
      */
-    public void setIdCycleMarque(int idCycleMarque) {
+    public void setIdCycleMarque(Integer idCycleMarque) {
         this.idCycleMarque = idCycleMarque;
     }
 }

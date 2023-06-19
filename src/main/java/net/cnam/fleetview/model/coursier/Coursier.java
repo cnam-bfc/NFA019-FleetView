@@ -10,7 +10,7 @@ public class Coursier {
     /**
      * Identifiant du coursier
      */
-    private int idCoursier;
+    private Integer idCoursier;
 
     /**
      * Matricule du coursier
@@ -20,7 +20,7 @@ public class Coursier {
     /**
      * Identifiant de l'utilisateur
      */
-    private int idUtilisateur;
+    private Integer idUtilisateur;
 
     /**
      * Constructeur par défaut
@@ -35,7 +35,7 @@ public class Coursier {
      *
      * @return idCoursier
      */
-    public int getIdCoursier() {
+    public Integer getIdCoursier() {
         return idCoursier;
     }
 
@@ -44,7 +44,7 @@ public class Coursier {
      *
      * @param idCoursier idCoursier
      */
-    public void setIdCoursier(int idCoursier) {
+    public void setIdCoursier(Integer idCoursier) {
         this.idCoursier = idCoursier;
     }
 
@@ -71,7 +71,7 @@ public class Coursier {
      *
      * @return idUtilisateur
      */
-    public int getIdUtilisateur() {
+    public Integer getIdUtilisateur() {
         return idUtilisateur;
     }
 
@@ -80,7 +80,7 @@ public class Coursier {
      *
      * @param idUtilisateur idUtilisateur
      */
-    public void setIdUtilisateur(int idUtilisateur) {
+    public void setIdUtilisateur(Integer idUtilisateur) {
         this.idUtilisateur = idUtilisateur;
     }
 }

@@ -31,7 +31,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     @Override
     public boolean create(CycleFournisseur obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdCycleFournisseur() != 0) {
+        if (obj.getIdCycleFournisseur() != null) {
             logger.error("L'objet CycleFournisseur a déjà un ID");
             return false;
         }
@@ -93,7 +93,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     @Override
     public boolean delete(CycleFournisseur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleFournisseur() == 0) {
+        if (obj.getIdCycleFournisseur() == null) {
             logger.error("L'objet CycleFournisseur n'a pas d'ID");
             return false;
         }
@@ -143,7 +143,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
      */
     public boolean archive(CycleFournisseur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleFournisseur() == 0) {
+        if (obj.getIdCycleFournisseur() == null) {
             logger.error("L'objet CycleFournisseur n'a pas d'ID");
             return false;
         }
@@ -165,7 +165,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdCycleFournisseur());
+            statement.setObject(2, obj.getIdCycleFournisseur());
 
             // Récupération de l'objet avant mise à jour
             CycleFournisseur objAvantMAJ = this.getById(obj.getIdCycleFournisseur());
@@ -202,7 +202,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     @Override
     public boolean update(CycleFournisseur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleFournisseur() == 0) {
+        if (obj.getIdCycleFournisseur() == null) {
             logger.error("L'objet CycleFournisseur n'a pas d'ID");
             return false;
         }
@@ -222,7 +222,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             statement.setString(2, obj.getMail());
             statement.setString(3, obj.getTelephone());
             statement.setObject(4, obj.getDateArchive());
-            statement.setInt(5, obj.getIdCycleFournisseur());
+            statement.setObject(5, obj.getIdCycleFournisseur());
 
             // Récupération de l'objet avant modification
             CycleFournisseur objAvantModification = this.getById(obj.getIdCycleFournisseur());
@@ -317,7 +317,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();

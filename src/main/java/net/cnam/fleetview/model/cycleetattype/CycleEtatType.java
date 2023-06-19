@@ -12,7 +12,7 @@ public class CycleEtatType {
     /**
      * Identifiant du cycle etat type
      */
-    private int idCycleEtatType;
+    private Integer idCycleEtatType;
     /**
      * Nom du cycle etat type
      */
@@ -20,7 +20,7 @@ public class CycleEtatType {
     /**
      * Boolean permettant de définir si le cyle est utilisable
      */
-    private boolean utilisable;
+    private Boolean utilisable;
     /**
      * Date d'archivage du cycle etat type
      */
@@ -39,7 +39,7 @@ public class CycleEtatType {
      *
      * @return l'identifiant du cycle etat type
      */
-    public int getIdCycleEtatType() {
+    public Integer getIdCycleEtatType() {
         return idCycleEtatType;
     }
 
@@ -48,7 +48,7 @@ public class CycleEtatType {
      *
      * @param idCycleEtatType le nouvel identifiant du cycle etat type
      */
-    public void setIdCycleEtatType(int idCycleEtatType) {
+    public void setIdCycleEtatType(Integer idCycleEtatType) {
         this.idCycleEtatType = idCycleEtatType;
     }
 
@@ -75,7 +75,7 @@ public class CycleEtatType {
      *
      * @return le boolean permettant de définir si le cyle est utilisable
      */
-    public boolean isUtilisable() {
+    public Boolean isUtilisable() {
         return utilisable;
     }
 
@@ -84,7 +84,7 @@ public class CycleEtatType {
      *
      * @param utilisable le nouveau boolean permettant de définir si le cyle est utilisable
      */
-    public void setUtilisable(boolean utilisable) {
+    public void setUtilisable(Boolean utilisable) {
         this.utilisable = utilisable;
     }
 

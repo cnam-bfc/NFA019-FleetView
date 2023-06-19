@@ -13,7 +13,7 @@ public class CoursierTravail {
     /**
      * Identifiant du coursier travail
      */
-    private int idCoursierTravail;
+    private Integer idCoursierTravail;
 
     /**
      * Date de saisie du travail
@@ -28,7 +28,7 @@ public class CoursierTravail {
     /**
      * Identifiant du coursier
      */
-    private int idCoursier;
+    private Integer idCoursier;
 
     /**
      * Constructeur par défaut
@@ -43,7 +43,7 @@ public class CoursierTravail {
      *
      * @return idCoursierTravail
      */
-    public int getIdCoursierTravail() {
+    public Integer getIdCoursierTravail() {
         return idCoursierTravail;
     }
 
@@ -52,7 +52,7 @@ public class CoursierTravail {
      *
      * @param idCoursierTravail idCoursierTravail
      */
-    public void setIdCoursierTravail(int idCoursierTravail) {
+    public void setIdCoursierTravail(Integer idCoursierTravail) {
         this.idCoursierTravail = idCoursierTravail;
     }
 
@@ -97,7 +97,7 @@ public class CoursierTravail {
      *
      * @return idCoursier
      */
-    public int getIdCoursier() {
+    public Integer getIdCoursier() {
         return idCoursier;
     }
 
@@ -106,7 +106,7 @@ public class CoursierTravail {
      *
      * @param idCoursier idCoursier
      */
-    public void setIdCoursier(int idCoursier) {
+    public void setIdCoursier(Integer idCoursier) {
         this.idCoursier = idCoursier;
     }
 }
