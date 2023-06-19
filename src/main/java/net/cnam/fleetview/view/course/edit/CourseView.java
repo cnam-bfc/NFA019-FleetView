@@ -40,6 +40,8 @@ public class CourseView extends View<CourseController> {
     private final IconLabel colisTitre;
     // Tableau des colis
     private final JTable colisTable;
+    // Bouton d'ajout d'un colis
+    private final IconLabelButton ajouterColis;
     // Bouton de sauvegarde
     private final IconLabelButton saveButton;
 
@@ -65,6 +67,7 @@ public class CourseView extends View<CourseController> {
         this.dateField = new DatePicker();
         this.colisTitre = new IconLabel("\uF466", "Colis");
         this.colisTable = new JTable();
+        this.ajouterColis = new IconLabelButton("\uF067", "Ajouter");
         this.saveButton = new IconLabelButton("\uF0C7", "Sauvegarder");
 
 
@@ -95,6 +98,9 @@ public class CourseView extends View<CourseController> {
         this.dateLabel.setLabelFor(this.dateField);
 
         // Champ de saisie de la date
+
+        // Titre des colis
+        this.colisTitre.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Tableau des colis
         DefaultTableModel colisTableModel = new DefaultTableModel();
@@ -165,12 +171,34 @@ public class CourseView extends View<CourseController> {
         // Désactiver le dragging des colonnes
         colisTable.getTableHeader().setReorderingAllowed(false);
 
+        // Bouton d'ajout de colis
+        this.ajouterColis.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.ajouterColis.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //controller.onAjouterColis();
+                afficherMessageInformation("Ajouter");
+            }
+        });
+
         // Bouton de sauvegarde
         JPanel saveButtonPanel = new JPanel();
         this.saveButton.setVisible(false);
         this.saveButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Vérification des champs
+                // Nom
+                if (nomField.getText().isEmpty()) {
+                    afficherMessageErreur("Le nom de la course est obligatoire");
+                    return;
+                }
+                // Date
+                if (dateField.getDate() == null) {
+                    afficherMessageErreur("La date de la course est obligatoire");
+                    return;
+                }
+
                 boolean success = controller.saveCourse(nomField.getText(), dateField.getDate());
                 if (!success) {
                     afficherMessageErreur("Impossible de sauvegarder la course");
@@ -198,6 +226,7 @@ public class CourseView extends View<CourseController> {
         this.contenu.add(this.champs);
         this.contenu.add(this.colisTitre);
         this.contenu.add(colisTableScrollPane);
+        this.contenu.add(this.ajouterColis);
         this.add(this.contenu, BorderLayout.CENTER);
         this.add(saveButtonPanel, BorderLayout.SOUTH);
     }
