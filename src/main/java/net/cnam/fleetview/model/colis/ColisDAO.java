@@ -66,7 +66,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
             // Si la requête a réussi
             if (result != 0) {
                 // On récupère l'id auto-généré par la requête d'insertion
-                int id = statement.getGeneratedKeys().getObject(1, Integer.class);
+                int id = statement.getGeneratedKeys().getInt(1);
 
                 // On met à jour l'objet pour lui attribuer l'id récupéré
                 obj.setIdAdresse(id);
