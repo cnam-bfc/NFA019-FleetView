@@ -12,11 +12,11 @@ public class ColisCourse {
     /**
      * Identifiant du colis course
      */
-    private int idColisCourse;
+    private Integer idColisCourse;
     /**
      * Ordre du colis course
      */
-    private int ordre;
+    private Integer ordre;
     /**
      * Date de livraison
      */
@@ -28,11 +28,11 @@ public class ColisCourse {
     /**
      * Identifiant du colis
      */
-    private int idColis;
+    private Integer idColis;
     /**
      * Identifiant de la course
      */
-    private int idCourse;
+    private Integer idCourse;
 
     /**
      * Constructeur par défaut
@@ -47,7 +47,7 @@ public class ColisCourse {
      *
      * @return idColisCourse
      */
-    public int getIdColisCourse() {
+    public Integer getIdColisCourse() {
         return idColisCourse;
     }
 
@@ -56,7 +56,7 @@ public class ColisCourse {
      *
      * @param idColisCourse idColisCourse
      */
-    public void setIdColisCourse(int idColisCourse) {
+    public void setIdColisCourse(Integer idColisCourse) {
         this.idColisCourse = idColisCourse;
     }
 
@@ -65,7 +65,7 @@ public class ColisCourse {
      *
      * @return ordre
      */
-    public int getOrdre() {
+    public Integer getOrdre() {
         return ordre;
     }
 
@@ -74,7 +74,7 @@ public class ColisCourse {
      *
      * @param ordre ordre
      */
-    public void setOrdre(int ordre) {
+    public void setOrdre(Integer ordre) {
         this.ordre = ordre;
     }
 
@@ -119,7 +119,7 @@ public class ColisCourse {
      *
      * @return idColis
      */
-    public int getIdColis() {
+    public Integer getIdColis() {
         return idColis;
     }
 
@@ -128,7 +128,7 @@ public class ColisCourse {
      *
      * @param idColis idColis
      */
-    public void setIdColis(int idColis) {
+    public void setIdColis(Integer idColis) {
         this.idColis = idColis;
     }
 
@@ -137,7 +137,7 @@ public class ColisCourse {
      *
      * @return idCourse
      */
-    public int getIdCourse() {
+    public Integer getIdCourse() {
         return idCourse;
     }
 
@@ -146,7 +146,7 @@ public class ColisCourse {
      *
      * @param idCourse idCourse
      */
-    public void setIdCourse(int idCourse) {
+    public void setIdCourse(Integer idCourse) {
         this.idCourse = idCourse;
     }
 }

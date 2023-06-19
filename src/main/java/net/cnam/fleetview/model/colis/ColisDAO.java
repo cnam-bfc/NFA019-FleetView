@@ -37,7 +37,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
     @Override
     public boolean create(Colis obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdColis() != 0) {
+        if (obj.getIdColis() != null) {
             logger.error("L'objet Colis a déjà un ID");
             return false;
         }
@@ -54,10 +54,10 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
             statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNumero());
-            statement.setDouble(2, obj.getPoids());
+            statement.setObject(2, obj.getPoids());
             statement.setObject(3, obj.getDateArchive());
-            statement.setInt(4, obj.getIdAdresse());
-            statement.setInt(5, obj.getIdColisDestinataire());
+            statement.setObject(4, obj.getIdAdresse());
+            statement.setObject(5, obj.getIdColisDestinataire());
 
 
             // On exécute la requête
@@ -101,7 +101,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
     @Override
     public boolean delete(Colis obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdColis() == 0) {
+        if (obj.getIdColis() == null) {
             logger.error("L'objet Colis n'a pas d'ID");
             return false;
         }
@@ -117,7 +117,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdColis());
+            statement.setObject(1, obj.getIdColis());
 
             // Récupération de l'objet avant suppression
             Colis objAvantSuppression = this.getById(obj.getIdColis());
@@ -151,7 +151,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
      */
     public boolean archive(Colis obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdColis() == 0) {
+        if (obj.getIdColis() == null) {
             logger.error("L'objet Colis n'a pas d'ID");
             return false;
         }
@@ -173,7 +173,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdColis());
+            statement.setObject(2, obj.getIdColis());
 
             // Récupération de l'objet avant mise à jour
             Colis objAvantMAJ = this.getById(obj.getIdColis());
@@ -210,7 +210,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
     @Override
     public boolean update(Colis obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdColis() == 0) {
+        if (obj.getIdColis() == null) {
             logger.error("L'objet Colis n'a pas d'ID");
             return false;
         }
@@ -227,11 +227,11 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNumero());
-            statement.setDouble(2, obj.getPoids());
+            statement.setObject(2, obj.getPoids());
             statement.setObject(3, obj.getDateArchive());
-            statement.setInt(4, obj.getIdAdresse());
-            statement.setInt(5, obj.getIdColisDestinataire());
-            statement.setInt(6, obj.getIdColis());
+            statement.setObject(4, obj.getIdAdresse());
+            statement.setObject(5, obj.getIdColisDestinataire());
+            statement.setObject(6, obj.getIdColis());
 
 
             // Récupération de l'objet avant modification
@@ -327,7 +327,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -363,10 +363,10 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
             // Remplissage de l'objet CycleFournisseur
             colis.setIdColis(resultSet.getInt("id_colis"));
             colis.setNumero(resultSet.getString("numero"));
-            colis.setPoids(resultSet.getDouble("poids"));
+            colis.setPoids(resultSet.getObject("poids", Double.class));
             colis.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
-            colis.setIdAdresse(resultSet.getInt("id_adresse"));
-            colis.setIdColisDestinataire(resultSet.getInt("id_colis_destinataire"));
+            colis.setIdAdresse(resultSet.getObject("id_adresse", Integer.class));
+            colis.setIdColisDestinataire(resultSet.getObject("id_colis_destinataire", Integer.class));
         } catch (SQLException ex) {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet colis", ex);

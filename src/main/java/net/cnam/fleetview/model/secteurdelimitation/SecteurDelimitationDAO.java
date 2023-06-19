@@ -33,7 +33,7 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
     @Override
     public boolean create(SecteurDelimitation obj, Utilisateur user) {
         // On vérifie que l'objet a les id d'ID
-        if (obj.getIdSecteur() == 0 || obj.getIdSecteurPoint() == 0) {
+        if (obj.getIdSecteur() == null || obj.getIdSecteurPoint() == null) {
             logger.error("L'objet SecteurDelimitation manque d'ID");
             return false;
         }
@@ -49,9 +49,9 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
             // On prépare la requête d'insertion
             statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdSecteur());
-            statement.setInt(2, obj.getIdSecteurPoint());
-            statement.setInt(3, obj.getOrdre());
+            statement.setObject(1, obj.getIdSecteur());
+            statement.setObject(2, obj.getIdSecteurPoint());
+            statement.setObject(3, obj.getOrdre());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -85,7 +85,7 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
     @Override
     public boolean delete(SecteurDelimitation obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdSecteur() == 0 || obj.getIdSecteurPoint() == 0) {
+        if (obj.getIdSecteur() == null || obj.getIdSecteurPoint() == null) {
             logger.error("L'objet SecteurDelimitation n'a pas d'ID");
             return false;
         }
@@ -101,8 +101,8 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdSecteur());
-            statement.setInt(2, obj.getIdSecteurPoint());
+            statement.setObject(1, obj.getIdSecteur());
+            statement.setObject(2, obj.getIdSecteurPoint());
 
             // Récupération de l'objet avant suppression
             SecteurDelimitation objAvantSuppression = this.getByIds(obj.getIdSecteur(), obj.getIdSecteurPoint());
@@ -139,7 +139,7 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
     @Override
     public boolean update(SecteurDelimitation obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdSecteur() == 0 || obj.getIdSecteurPoint() == 0) {
+        if (obj.getIdSecteur() == null || obj.getIdSecteurPoint() == null) {
             logger.error("L'objet SecteurDelimitation n'a pas d'ID");
             return false;
         }
@@ -155,11 +155,11 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
             // On prépare la requête de mise à jour
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getOrdre());
-            statement.setInt(2, obj.getIdSecteur());
-            statement.setInt(3, obj.getIdSecteurPoint());
-            statement.setInt(4, obj.getIdSecteur());
-            statement.setInt(5, obj.getIdSecteurPoint());
+            statement.setObject(1, obj.getOrdre());
+            statement.setObject(2, obj.getIdSecteur());
+            statement.setObject(3, obj.getIdSecteurPoint());
+            statement.setObject(4, obj.getIdSecteur());
+            statement.setObject(5, obj.getIdSecteurPoint());
 
             // Récupération de l'objet avant modification
             SecteurDelimitation objAvantModification = this.getByIds(obj.getIdSecteur(), obj.getIdSecteurPoint());
@@ -264,8 +264,8 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, idSecteur);
-            statement.setInt(2, idSecteurPoint);
+            statement.setObject(1, idSecteur);
+            statement.setObject(2, idSecteurPoint);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -303,8 +303,8 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
         try {
             // Remplissage de l'objet SecteurDelimitation
             secteurDelimitation.setIdSecteur(resultSet.getInt("id_secteur"));
-            secteurDelimitation.setIdSecteurPoint(resultSet.getInt("id_secteur_point"));
-            secteurDelimitation.setOrdre(resultSet.getInt("ordre"));
+            secteurDelimitation.setIdSecteurPoint(resultSet.getObject("id_secteur_point", Integer.class));
+            secteurDelimitation.setOrdre(resultSet.getObject("ordre", Integer.class));
         } catch (SQLException ex) {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet SecteurDelimitation", ex);

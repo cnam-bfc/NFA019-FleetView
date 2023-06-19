@@ -13,7 +13,7 @@ public class Course {
     /**
      * Id de la course
      */
-    private int idCourse;
+    private Integer idCourse;
 
     /**
      * Nom de la course
@@ -23,7 +23,7 @@ public class Course {
     /**
      * Distance de la course
      */
-    private double distance;
+    private Double distance;
 
     /**
      * Date de la course
@@ -43,12 +43,12 @@ public class Course {
     /**
      * Id du travail coursier
      */
-    private int idCoursierTravail;
+    private Integer idCoursierTravail;
 
     /**
      * Id du cycle utilisé pour la course
      */
-    private int idCycle;
+    private Integer idCycle;
 
     /**
      * Constructeur par défaut
@@ -63,7 +63,7 @@ public class Course {
      *
      * @return idCourse
      */
-    public int getIdCourse() {
+    public Integer getIdCourse() {
         return idCourse;
     }
 
@@ -72,7 +72,7 @@ public class Course {
      *
      * @param idCourse idCourse
      */
-    public void setIdCourse(int idCourse) {
+    public void setIdCourse(Integer idCourse) {
         this.idCourse = idCourse;
     }
 
@@ -99,7 +99,7 @@ public class Course {
      *
      * @return distance
      */
-    public double getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
@@ -108,7 +108,7 @@ public class Course {
      *
      * @param distance distance
      */
-    public void setDistance(double distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
@@ -171,7 +171,7 @@ public class Course {
      *
      * @return idCoursierTravail
      */
-    public int getIdCoursierTravail() {
+    public Integer getIdCoursierTravail() {
         return idCoursierTravail;
     }
 
@@ -180,7 +180,7 @@ public class Course {
      *
      * @param idCoursierTravail idCoursierTravail
      */
-    public void setIdCoursierTravail(int idCoursierTravail) {
+    public void setIdCoursierTravail(Integer idCoursierTravail) {
         this.idCoursierTravail = idCoursierTravail;
     }
 
@@ -189,7 +189,7 @@ public class Course {
      *
      * @return idCycle
      */
-    public int getIdCycle() {
+    public Integer getIdCycle() {
         return idCycle;
     }
 
@@ -198,25 +198,7 @@ public class Course {
      *
      * @param idCycle idCycle
      */
-    public void setIdCycle(int idCycle) {
-        this.idCycle = idCycle;
-    }
-
-    /**
-     * Récupère l'identifiant du cycle utilisé pour la course
-     *
-     * @return idCycle
-     */
-    public int getIdCycleFournisseur() {
-        return idCycle;
-    }
-
-    /**
-     * Définit l'identifiant du cycle utilisé pour la course
-     *
-     * @param idCycle idCycle
-     */
-    public void setIdCycleFournisseur(int idCycle) {
+    public void setIdCycle(Integer idCycle) {
         this.idCycle = idCycle;
     }
 }

@@ -12,7 +12,7 @@ public class Adresse {
     /**
      * Identifiant de l'adresse
      */
-    private int idAdresse;
+    private Integer idAdresse;
     /**
      * Type OSM
      */
@@ -20,7 +20,7 @@ public class Adresse {
     /**
      * Identifiant OSM
      */
-    private long osmId;
+    private Long osmId;
     /**
      * Pays
      */
@@ -52,7 +52,7 @@ public class Adresse {
     /**
      * Identifiant du secteur
      */
-    private int idSecteur;
+    private Integer idSecteur;
 
     /**
      * Constructeur par défaut
@@ -66,7 +66,7 @@ public class Adresse {
      * Récupère l'identifiant de l'adresse
      * @return idAdresse
      */
-    public int getIdAdresse() {
+    public Integer getIdAdresse() {
         return idAdresse;
     }
 
@@ -74,7 +74,7 @@ public class Adresse {
      * Définit l'identifiant de l'adresse
      * @param idAdresse idAdresse
      */
-    public void setIdAdresse(int idAdresse) {
+    public void setIdAdresse(Integer idAdresse) {
         this.idAdresse = idAdresse;
     }
 
@@ -100,7 +100,7 @@ public class Adresse {
      * Récupère l'identifiant OSM
      * @return osmId
      */
-    public long getOsmId() {
+    public Long getOsmId() {
         return osmId;
     }
 
@@ -108,7 +108,7 @@ public class Adresse {
      * Définit l'identifiant OSM
      * @param osmId osmId
      */
-    public void setOsmId(long osmId) {
+    public void setOsmId(Long osmId) {
         this.osmId = osmId;
     }
 
@@ -228,7 +228,7 @@ public class Adresse {
      * Récupère l'identifiant du secteur
      * @return idSecteur
      */
-    public int getIdSecteur() {
+    public Integer getIdSecteur() {
         return idSecteur;
     }
 
@@ -236,7 +236,7 @@ public class Adresse {
      * Définit l'identifiant du secteur
      * @param idSecteur
      */
-    public void setIdSecteur(int idSecteur) {
+    public void setIdSecteur(Integer idSecteur) {
         this.idSecteur = idSecteur;
     }
 }

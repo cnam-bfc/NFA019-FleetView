@@ -1,6 +1,7 @@
 package net.cnam.fleetview.view.base.main;
 
 import net.cnam.fleetview.view.AccueilView;
+import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.base.main.head.TopMenuPanelView;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ public class MainPanelView extends JPanel {
     // Top menu
     private final TopMenuPanelView topMenuPanelView;
     // Content panel
-    private JPanel contentPanelView;
+    private View contentPanelView;
 
     public MainPanelView() {
         super();
@@ -23,6 +24,7 @@ public class MainPanelView extends JPanel {
         // Création des éléments de l'interface
         this.topMenuPanelView = new TopMenuPanelView();
         this.contentPanelView = new AccueilView();
+        contentPanelView.onDisplayed();
 
 
         // Configuration des éléments de l'interface
@@ -37,11 +39,11 @@ public class MainPanelView extends JPanel {
         return topMenuPanelView;
     }
 
-    public JPanel getContentPanelView() {
+    public View getContentPanelView() {
         return contentPanelView;
     }
 
-    public synchronized void setContentPanelView(JPanel contentPanelView) {
+    public synchronized void setContentPanelView(View contentPanelView) {
         // Suppression du panel actuel
         if (this.contentPanelView != null) {
             this.remove(this.contentPanelView);

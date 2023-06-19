@@ -12,7 +12,7 @@ public class CycleType {
     /**
      * Identifiant du cycle type
      */
-    private int idCycleType;
+    private Integer idCycleType;
     /**
      * Nom du cycle type
      */
@@ -35,7 +35,7 @@ public class CycleType {
      *
      * @return l'identifiant du cycle type
      */
-    public int getIdCycleType() {
+    public Integer getIdCycleType() {
         return idCycleType;
     }
 
@@ -44,7 +44,7 @@ public class CycleType {
      *
      * @param idCycleType le nouvel identifiant du cycle type
      */
-    public void setIdCycleType(int idCycleType) {
+    public void setIdCycleType(Integer idCycleType) {
         this.idCycleType = idCycleType;
     }
 

@@ -37,7 +37,7 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
     @Override
     public boolean create(DroitsRole obj, Utilisateur user) {
         // On vérifie que l'objet a les id d'ID
-        if (obj.getIdRole() == 0 || obj.getIdDroits() == 0) {
+        if (obj.getIdRole() == null || obj.getIdDroits() == null) {
             logger.error("L'objet DroitsRole manque d'ID");
             return false;
         }
@@ -53,9 +53,9 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
             // On prépare la requête d'insertion
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdRole());
-            statement.setInt(2, obj.getIdDroits());
-            statement.setBoolean(3, obj.isAutorise());
+            statement.setObject(1, obj.getIdRole());
+            statement.setObject(2, obj.getIdDroits());
+            statement.setObject(3, obj.isAutorise());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -89,7 +89,7 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
     @Override
     public boolean delete(DroitsRole obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdRole() == 0 || obj.getIdDroits() == 0) {
+        if (obj.getIdRole() == null || obj.getIdDroits() == null) {
             logger.error("L'objet DroitsRole n'a pas d'ID");
             return false;
         }
@@ -105,8 +105,8 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdRole());
-            statement.setInt(2, obj.getIdDroits());
+            statement.setObject(1, obj.getIdRole());
+            statement.setObject(2, obj.getIdDroits());
 
             // Récupération de l'objet avant suppression
             DroitsRole objAvantSuppression = this.getByIds(obj.getIdRole(), obj.getIdDroits());
@@ -143,7 +143,7 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
     @Override
     public boolean update(DroitsRole obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdRole() == 0 || obj.getIdDroits() == 0) {
+        if (obj.getIdRole() == null || obj.getIdDroits() == null) {
             logger.error("L'objet DroitsRole n'a pas d'ID");
             return false;
         }
@@ -159,11 +159,11 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
             // On prépare la requête de mise à jour
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdRole());
-            statement.setInt(2, obj.getIdDroits());
-            statement.setBoolean(3, obj.isAutorise());
-            statement.setInt(4, obj.getIdRole());
-            statement.setInt(5, obj.getIdDroits());
+            statement.setObject(1, obj.getIdRole());
+            statement.setObject(2, obj.getIdDroits());
+            statement.setObject(3, obj.isAutorise());
+            statement.setObject(4, obj.getIdRole());
+            statement.setObject(5, obj.getIdDroits());
 
             // Récupération de l'objet avant modification
             DroitsRole objAvantModification = this.getByIds(obj.getIdRole(), obj.getIdDroits());
@@ -267,8 +267,8 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, idRole);
-            statement.setInt(2, idDroits);
+            statement.setObject(1, idRole);
+            statement.setObject(2, idDroits);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -307,7 +307,7 @@ public class DroitsRoleDAO extends DAO<DroitsRole> {
             // Remplissage de l'objet DroitsRole
             droitsRole.setIdRole(resultSet.getInt("id_role"));
             droitsRole.setIdDroits(resultSet.getInt("id_droits"));
-            droitsRole.setAutorise(resultSet.getBoolean("autorise"));
+            droitsRole.setAutorise(resultSet.getObject("autorise", Boolean.class));
         } catch (SQLException ex) {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet DroitsRole", ex);

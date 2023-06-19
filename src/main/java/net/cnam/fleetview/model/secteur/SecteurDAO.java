@@ -36,7 +36,7 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
     @Override
     public boolean create(Secteur obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdSecteur() != 0) {
+        if (obj.getIdSecteur() != null) {
             logger.error("L'objet Secteur a déjà un ID");
             return false;
         }
@@ -96,7 +96,7 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
     @Override
     public boolean delete(Secteur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdSecteur() == 0) {
+        if (obj.getIdSecteur() == null) {
             logger.error("L'objet Secteur n'a pas d'ID");
             return false;
         }
@@ -112,7 +112,7 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdSecteur());
+            statement.setObject(1, obj.getIdSecteur());
 
             // Récupération de l'objet avant suppression
             Secteur objAvantSuppression = this.getById(obj.getIdSecteur());
@@ -146,7 +146,7 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
      */
     public boolean archive(Secteur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdSecteur() == 0) {
+        if (obj.getIdSecteur() == null) {
             logger.error("L'objet Secteur n'a pas d'ID");
             return false;
         }
@@ -168,7 +168,7 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdSecteur());
+            statement.setObject(2, obj.getIdSecteur());
 
             // Récupération de l'objet avant mise à jour
             Secteur objAvantMAJ = this.getById(obj.getIdSecteur());
@@ -205,7 +205,7 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
     @Override
     public boolean update(Secteur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdSecteur() == 0) {
+        if (obj.getIdSecteur() == null) {
             logger.error("L'objet Secteur n'a pas d'ID");
             return false;
         }
@@ -223,7 +223,7 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
             statement.setObject(2, obj.getDateArchive());
-            statement.setInt(3, obj.getIdSecteur());
+            statement.setObject(3, obj.getIdSecteur());
 
             // Récupération de l'objet avant modification
             Secteur objAvantModification = this.getById(obj.getIdSecteur());
@@ -318,7 +318,7 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();

@@ -10,15 +10,15 @@ public class SecteurDelimitation {
     /**
      * Identifiant du secteur
      */
-    private int idSecteur;
+    private Integer idSecteur;
     /**
      * Identifiant du secteur point
      */
-    private int idSecteurPoint;
+    private Integer idSecteurPoint;
     /**
      * Ordre du secteur delimitation
      */
-    private int ordre;
+    private Integer ordre;
 
     /**
      * Constructeur par défaut
@@ -33,7 +33,7 @@ public class SecteurDelimitation {
      *
      * @return l'identifiant du secteur
      */
-    public int getIdSecteur() {
+    public Integer getIdSecteur() {
         return idSecteur;
     }
 
@@ -42,7 +42,7 @@ public class SecteurDelimitation {
      *
      * @param idSecteur le nouvel identifiant du secteur
      */
-    public void setIdSecteur(int idSecteur) {
+    public void setIdSecteur(Integer idSecteur) {
         this.idSecteur = idSecteur;
     }
 
@@ -51,7 +51,7 @@ public class SecteurDelimitation {
      *
      * @return l'identifiant du secteur point
      */
-    public int getIdSecteurPoint() {
+    public Integer getIdSecteurPoint() {
         return idSecteurPoint;
     }
 
@@ -60,7 +60,7 @@ public class SecteurDelimitation {
      *
      * @param idSecteurPoint le nouvel identifiant du secteur point
      */
-    public void setIdSecteurPoint(int idSecteurPoint) {
+    public void setIdSecteurPoint(Integer idSecteurPoint) {
         this.idSecteurPoint = idSecteurPoint;
     }
 
@@ -69,7 +69,7 @@ public class SecteurDelimitation {
      *
      * @return l'ordre du secteur delimitation
      */
-    public int getOrdre() {
+    public Integer getOrdre() {
         return ordre;
     }
 
@@ -78,7 +78,7 @@ public class SecteurDelimitation {
      *
      * @param ordre le nouvel ordre du secteur delimitation
      */
-    public void setOrdre(int ordre) {
+    public void setOrdre(Integer ordre) {
         this.ordre = ordre;
     }
 }

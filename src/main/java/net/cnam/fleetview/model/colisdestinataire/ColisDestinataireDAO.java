@@ -37,7 +37,7 @@ public class ColisDestinataireDAO extends DAO<ColisDestinataire> implements Arch
     @Override
     public boolean create(ColisDestinataire obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdColisDestinataire() != 0) {
+        if (obj.getIdColisDestinataire() != null) {
             logger.error("L'objet ColisDestinataire a déjà un ID");
             return false;
         }
@@ -98,7 +98,7 @@ public class ColisDestinataireDAO extends DAO<ColisDestinataire> implements Arch
     @Override
     public boolean delete(ColisDestinataire obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdColisDestinataire() == 0) {
+        if (obj.getIdColisDestinataire() == null) {
             logger.error("L'objet ColisDestinataire n'a pas d'ID");
             return false;
         }
@@ -114,7 +114,7 @@ public class ColisDestinataireDAO extends DAO<ColisDestinataire> implements Arch
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdColisDestinataire());
+            statement.setObject(1, obj.getIdColisDestinataire());
 
             // Récupération de l'objet avant suppression
             ColisDestinataire objAvantSuppression = this.getById(obj.getIdColisDestinataire());
@@ -148,7 +148,7 @@ public class ColisDestinataireDAO extends DAO<ColisDestinataire> implements Arch
      */
     public boolean archive(ColisDestinataire obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdColisDestinataire() == 0) {
+        if (obj.getIdColisDestinataire() == null) {
             logger.error("L'objet ColisDestinataire n'a pas d'ID");
             return false;
         }
@@ -170,7 +170,7 @@ public class ColisDestinataireDAO extends DAO<ColisDestinataire> implements Arch
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdColisDestinataire());
+            statement.setObject(2, obj.getIdColisDestinataire());
 
             // Récupération de l'objet avant mise à jour
             ColisDestinataire objAvantMAJ = this.getById(obj.getIdColisDestinataire());
@@ -207,7 +207,7 @@ public class ColisDestinataireDAO extends DAO<ColisDestinataire> implements Arch
     @Override
     public boolean update(ColisDestinataire obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdColisDestinataire() == 0) {
+        if (obj.getIdColisDestinataire() == null) {
             logger.error("L'objet ColisDestinataire n'a pas d'ID");
             return false;
         }
@@ -226,7 +226,7 @@ public class ColisDestinataireDAO extends DAO<ColisDestinataire> implements Arch
             statement.setString(1, obj.getPrenom());
             statement.setString(2, obj.getNom());
             statement.setObject(3, obj.getDateArchive());
-            statement.setInt(4, obj.getIdColisDestinataire());
+            statement.setObject(4, obj.getIdColisDestinataire());
 
 
             // Récupération de l'objet avant modification
@@ -322,7 +322,7 @@ public class ColisDestinataireDAO extends DAO<ColisDestinataire> implements Arch
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();

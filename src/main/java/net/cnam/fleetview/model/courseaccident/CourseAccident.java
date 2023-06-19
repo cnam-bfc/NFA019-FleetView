@@ -12,7 +12,7 @@ public class CourseAccident {
     /**
      * Identifiant de la course accident
      */
-    private int idCourseAccident;
+    private Integer idCourseAccident;
 
     /**
      * Date de l'accident
@@ -27,12 +27,12 @@ public class CourseAccident {
     /**
      * Identifiant de l'adresse de l'accident
      */
-    private int idAdresse;
+    private Integer idAdresse;
 
     /**
      * Identifiant de la course
      */
-    private int idCourse;
+    private Integer idCourse;
 
     /**
      * Constructeur par défaut
@@ -47,7 +47,7 @@ public class CourseAccident {
      *
      * @return idCourseAccident
      */
-    public int getIdCourseAccident() {
+    public Integer getIdCourseAccident() {
         return idCourseAccident;
     }
 
@@ -56,7 +56,7 @@ public class CourseAccident {
      *
      * @param idCourseAccident idCourseAccident
      */
-    public void setIdCourseAccident(int idCourseAccident) {
+    public void setIdCourseAccident(Integer idCourseAccident) {
         this.idCourseAccident = idCourseAccident;
     }
 
@@ -101,7 +101,7 @@ public class CourseAccident {
      *
      * @return idAdresse
      */
-    public int getIdAdresse() {
+    public Integer getIdAdresse() {
         return idAdresse;
     }
 
@@ -110,7 +110,7 @@ public class CourseAccident {
      *
      * @param idAdresse idAdresse
      */
-    public void setIdAdresse(int idAdresse) {
+    public void setIdAdresse(Integer idAdresse) {
         this.idAdresse = idAdresse;
     }
 
@@ -119,7 +119,7 @@ public class CourseAccident {
      *
      * @return idCourse
      */
-    public int getIdCourse() {
+    public Integer getIdCourse() {
         return idCourse;
     }
 
@@ -128,7 +128,7 @@ public class CourseAccident {
      *
      * @param idCourse idCourse
      */
-    public void setIdCourse(int idCourse) {
+    public void setIdCourse(Integer idCourse) {
         this.idCourse = idCourse;
     }
 }

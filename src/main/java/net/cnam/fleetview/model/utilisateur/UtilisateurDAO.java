@@ -35,7 +35,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
     @Override
     public boolean create(Utilisateur obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdUtilisateur() != 0) {
+        if (obj.getIdUtilisateur() != null) {
             logger.error("L'objet Utilisateur a déjà un ID");
             return false;
         }
@@ -56,7 +56,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
             statement.setString(3, obj.getNom());
             statement.setString(4, obj.getPrenom());
             statement.setObject(5, obj.getDateArchive());
-            statement.setInt(6, obj.getIdRole());
+            statement.setObject(6, obj.getIdRole());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -99,7 +99,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
     @Override
     public boolean delete(Utilisateur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdUtilisateur() == 0) {
+        if (obj.getIdUtilisateur() == null) {
             logger.error("L'objet Utilisateur n'a pas d'ID");
             return false;
         }
@@ -115,7 +115,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdUtilisateur());
+            statement.setObject(1, obj.getIdUtilisateur());
 
             // Récupération de l'objet avant suppression
             Utilisateur objAvantSuppression = this.getById(obj.getIdUtilisateur());
@@ -149,7 +149,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
      */
     public boolean archive(Utilisateur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdUtilisateur() == 0) {
+        if (obj.getIdUtilisateur() == null) {
             logger.error("L'objet Utilisateur n'a pas d'ID");
             return false;
         }
@@ -171,7 +171,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdUtilisateur());
+            statement.setObject(2, obj.getIdUtilisateur());
 
             // Récupération de l'objet avant mise à jour
             Utilisateur objAvantMAJ = this.getById(obj.getIdUtilisateur());
@@ -208,7 +208,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
     @Override
     public boolean update(Utilisateur obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdUtilisateur() == 0) {
+        if (obj.getIdUtilisateur() == null) {
             logger.error("L'objet Utilisateur n'a pas d'ID");
             return false;
         }
@@ -229,8 +229,8 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
             statement.setString(3, obj.getNom());
             statement.setString(4, obj.getPrenom());
             statement.setObject(5, obj.getDateArchive());
-            statement.setInt(6, obj.getIdRole());
-            statement.setInt(7, obj.getIdUtilisateur());
+            statement.setObject(6, obj.getIdRole());
+            statement.setObject(7, obj.getIdUtilisateur());
 
             // Récupération de l'objet avant modification
             Utilisateur objAvantModification = this.getById(obj.getIdUtilisateur());
@@ -325,7 +325,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -365,7 +365,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
             utilisateur.setNom(resultSet.getString("nom"));
             utilisateur.setPrenom(resultSet.getString("prenom"));
             utilisateur.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
-            utilisateur.setIdRole(resultSet.getInt("id_role"));
+            utilisateur.setIdRole(resultSet.getObject("id_role", Integer.class));
         } catch (SQLException ex) {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet Utilisateur", ex);

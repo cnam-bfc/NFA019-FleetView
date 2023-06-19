@@ -12,7 +12,7 @@ public class CycleEtat {
     /**
      * Identifiant du cycle etat
      */
-    private int idCycleEtat;
+    private Integer idCycleEtat;
     /**
      * Date de début de l'état
      */
@@ -32,11 +32,11 @@ public class CycleEtat {
     /**
      * Identifiant du cycle etat type
      */
-    private int idCycleEtatType;
+    private Integer idCycleEtatType;
     /**
      * Identifiant du cycle
      */
-    private int idCycle;
+    private Integer idCycle;
 
     /**
      * Constructeur par défaut
@@ -51,7 +51,7 @@ public class CycleEtat {
      *
      * @return l'identifiant du cycle etat
      */
-    public int getIdCycleEtat() {
+    public Integer getIdCycleEtat() {
         return idCycleEtat;
     }
 
@@ -60,7 +60,7 @@ public class CycleEtat {
      *
      * @param idCycleEtat le nouvel identifiant du cycle etat
      */
-    public void setIdCycleEtat(int idCycleEtat) {
+    public void setIdCycleEtat(Integer idCycleEtat) {
         this.idCycleEtat = idCycleEtat;
     }
 
@@ -141,7 +141,7 @@ public class CycleEtat {
      *
      * @return l'identifiant du cycle etat type
      */
-    public int getIdCycleEtatType() {
+    public Integer getIdCycleEtatType() {
         return idCycleEtatType;
     }
 
@@ -150,7 +150,7 @@ public class CycleEtat {
      *
      * @param idCycleEtatType le nouvel identifiant du cycle etat type
      */
-    public void setIdCycleEtatType(int idCycleEtatType) {
+    public void setIdCycleEtatType(Integer idCycleEtatType) {
         this.idCycleEtatType = idCycleEtatType;
     }
 
@@ -159,7 +159,7 @@ public class CycleEtat {
      *
      * @return l'identifiant du cycle
      */
-    public int getIdCycle() {
+    public Integer getIdCycle() {
         return idCycle;
     }
 
@@ -168,7 +168,7 @@ public class CycleEtat {
      *
      * @param idCycle le nouvel identifiant du cycle
      */
-    public void setIdCycle(int idCycle) {
+    public void setIdCycle(Integer idCycle) {
         this.idCycle = idCycle;
     }
 }

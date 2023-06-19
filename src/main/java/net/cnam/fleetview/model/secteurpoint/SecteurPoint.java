@@ -12,15 +12,15 @@ public class SecteurPoint {
     /**
      * Identifiant du secteur point
      */
-    private int idSecteurPoint;
+    private Integer idSecteurPoint;
     /**
      * latitude du secteur point
      */
-    private double latitude;
+    private Double latitude;
     /**
      * longitude du secteur point
      */
-    private double longitude;
+    private Double longitude;
     /**
      * Date Archive du secteur point
      */
@@ -39,7 +39,7 @@ public class SecteurPoint {
      *
      * @return l'identifiant du secteur point
      */
-    public int getIdSecteurPoint() {
+    public Integer getIdSecteurPoint() {
         return idSecteurPoint;
     }
 
@@ -48,7 +48,7 @@ public class SecteurPoint {
      *
      * @param idSecteurPoint le nouvel identifiant du secteur point
      */
-    public void setIdSecteurPoint(int idSecteurPoint) {
+    public void setIdSecteurPoint(Integer idSecteurPoint) {
         this.idSecteurPoint = idSecteurPoint;
     }
 
@@ -57,7 +57,7 @@ public class SecteurPoint {
      *
      * @return la latitude du secteur point
      */
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
@@ -66,7 +66,7 @@ public class SecteurPoint {
      *
      * @param latitude la nouvelle latitude du secteur point
      */
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
@@ -75,7 +75,7 @@ public class SecteurPoint {
      *
      * @return la longitude du secteur point
      */
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
@@ -84,7 +84,7 @@ public class SecteurPoint {
      *
      * @param longitude la nouvelle longitude du secteur point
      */
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 

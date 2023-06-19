@@ -35,7 +35,7 @@ public class CoursierDAO extends DAO<Coursier> {
     @Override
     public boolean create(Coursier obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdCoursier() != 0) {
+        if (obj.getIdCoursier() != null) {
             logger.error("L'objet Coursier a déjà un ID");
             return false;
         }
@@ -52,7 +52,7 @@ public class CoursierDAO extends DAO<Coursier> {
             statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getMatricule());
-            statement.setInt(2, obj.getIdUtilisateur());
+            statement.setObject(2, obj.getIdUtilisateur());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -95,7 +95,7 @@ public class CoursierDAO extends DAO<Coursier> {
     @Override
     public boolean delete(Coursier obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCoursier() == 0) {
+        if (obj.getIdCoursier() == null) {
             logger.error("L'objet Coursier n'a pas d'ID");
             return false;
         }
@@ -111,7 +111,7 @@ public class CoursierDAO extends DAO<Coursier> {
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdCoursier());
+            statement.setObject(1, obj.getIdCoursier());
 
             // Récupération de l'objet avant suppression
             Coursier objAvantSuppression = this.getById(obj.getIdCoursier());
@@ -148,7 +148,7 @@ public class CoursierDAO extends DAO<Coursier> {
     @Override
     public boolean update(Coursier obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCoursier() == 0) {
+        if (obj.getIdCoursier() == null) {
             logger.error("L'objet Coursier n'a pas d'ID");
             return false;
         }
@@ -165,8 +165,8 @@ public class CoursierDAO extends DAO<Coursier> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getMatricule());
-            statement.setInt(2, obj.getIdUtilisateur());
-            statement.setInt(3, obj.getIdCoursier());
+            statement.setObject(2, obj.getIdUtilisateur());
+            statement.setObject(3, obj.getIdCoursier());
 
             // Récupération de l'objet avant modification
             Coursier objAvantModification = this.getById(obj.getIdCoursier());
@@ -261,7 +261,7 @@ public class CoursierDAO extends DAO<Coursier> {
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -297,7 +297,7 @@ public class CoursierDAO extends DAO<Coursier> {
             // Remplissage de l'objet CycleFournisseur
             coursier.setIdCoursier(resultSet.getInt("id_coursier"));
             coursier.setMatricule(resultSet.getString("matricule"));
-            coursier.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
+            coursier.setIdUtilisateur(resultSet.getObject("id_utilisateur", Integer.class));
         } catch (SQLException ex) {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet Coursier", ex);

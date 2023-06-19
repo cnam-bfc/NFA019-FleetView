@@ -12,7 +12,7 @@ public class ColisDestinataire {
     /**
      * Identifiant du colis destinataire
      */
-    private int idColisDestinataire;
+    private Integer idColisDestinataire;
     /**
      * Prénom du destinataire
      */
@@ -39,7 +39,7 @@ public class ColisDestinataire {
      *
      * @return idColisDestinataire
      */
-    public int getIdColisDestinataire() {
+    public Integer getIdColisDestinataire() {
         return idColisDestinataire;
     }
 
@@ -48,7 +48,7 @@ public class ColisDestinataire {
      *
      * @param idColisDestinataire idColisDestinataire
      */
-    public void setIdColisDestinataire(int idColisDestinataire) {
+    public void setIdColisDestinataire(Integer idColisDestinataire) {
         this.idColisDestinataire = idColisDestinataire;
     }
 
