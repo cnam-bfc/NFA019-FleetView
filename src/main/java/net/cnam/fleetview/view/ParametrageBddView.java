@@ -1,11 +1,15 @@
 package net.cnam.fleetview.view;
 
+import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.view.components.button.LabelButton;
 import net.cnam.fleetview.view.components.label.IconLabel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.HashMap;
+
 
 /*
 A faire :
@@ -15,10 +19,16 @@ A faire :
 
  */
 
-public class ParametrageBddView extends View {
+public class ParametrageBddView extends View <ParametrageBddController> {
 
-    Color GREEN = new Color(200, 255,190);
     private final IconLabel iconLabel;
+     JTextField champIP;
+    private JTextField champPort;
+    private JTextField champNomBD;
+    private JTextField champNomUtilisateur;
+    private JTextField champMotDePasse;
+    private LabelButton btnValider;
+    private LabelButton btnQuitter;
 
     public ParametrageBddView() {
         super();
@@ -60,11 +70,6 @@ public class ParametrageBddView extends View {
         JPanel jpMotDePasse = new JPanel(new BorderLayout());
         jpMotDePasse.setLayout(new BoxLayout(jpMotDePasse, BoxLayout.PAGE_AXIS));
 
-            //Marge
-        JPanel jpMargeGauche = new JPanel();
-        jpMargeGauche.setPreferredSize(new Dimension(200, 0));
-        JPanel jpMargeDroite = new JPanel();
-
         //Label
         JLabel texteIP = new JLabel("Adresse IP");
         JLabel textePort = new JLabel("Port");
@@ -74,19 +79,17 @@ public class ParametrageBddView extends View {
 
         //champ texte
             //ligne 1
-        JTextField champIP = new JTextField();
-        champIP.setPreferredSize( new Dimension( 200, 24 ) );
+        this.champIP = new JTextField();
+        champIP.setPreferredSize(new Dimension(200, 24));
+        this.champPort = new JTextField();
+        champPort.setPreferredSize(new Dimension(200, 24));
 
-        JTextField champPort = new JTextField();
-        champPort.setPreferredSize( new Dimension( 200, 24 ) );
-            //ligne 2
-        JTextField champNomBD = new JTextField();
-        champNomBD.setPreferredSize( new Dimension( 500, 24 ) );
-            //ligne 3
-        JTextField champNomUtilisateur = new JTextField();
+        this.champNomBD = new JTextField();
+        champNomBD.setPreferredSize(new Dimension(500, 24));
+
+        this.champNomUtilisateur = new JTextField();
         champNomUtilisateur.setPreferredSize( new Dimension( 200, 24 ) );
-
-        JTextField champMotDePasse = new JTextField();
+        this.champMotDePasse = new JPasswordField();
         champMotDePasse.setPreferredSize( new Dimension( 200, 24 ) );
 
         //--- BasDePage ---
@@ -140,14 +143,12 @@ public class ParametrageBddView extends View {
         jpPrincipale.add(jpBdInfo, BorderLayout.CENTER);
 
         //--- Marges ---
-        jpBdInfo.setBorder(new EmptyBorder(0,100,0,100));
+        jpBdInfo.setBorder(new EmptyBorder(50,200,0,200));
         //--- Bloc Action ---
 
-        LabelButton btnValider = new LabelButton("Valider");
-        LabelButton btnQuitter = new LabelButton("Quitter");
+        this.btnValider = new LabelButton("Valider");
 
-        jpActionLine.add(btnValider);
-        jpActionLine.add(btnQuitter);
+        jpActionLine.add(this.btnValider);
 
         jpActionHolder.add(jpActionLine, BorderLayout.CENTER);
         jpActionHolder.setBorder(new EmptyBorder(25,100,25,100));
@@ -156,7 +157,35 @@ public class ParametrageBddView extends View {
 
         this.add(jpPrincipale);
 
-
+        // Ajout d'une course
+        this.btnValider.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setDatabase();
+            }
+        });
 
     }
+
+    public HashMap<String,String> getInformation(){
+        HashMap<String,String> data = new HashMap<String,String>();
+        data.put("ip", this.champIP.getText());
+        data.put("port", this.champPort.getText());
+        data.put("nom", this.champNomBD.getText());
+        data.put("id", this.champNomUtilisateur.getText());
+        data.put("mdp", this.champMotDePasse.getText());
+
+        return data;
+    }
+
+    public void fill(String ip, String port, String nom, String id, String mdp) {
+
+        // Champs
+        this.champIP.setText(ip);
+        this.champPort.setText(port);
+        this.champNomBD.setText(nom);
+        this.champNomUtilisateur.setText(id);
+        this.champMotDePasse.setText(mdp);
+    }
+
 }
