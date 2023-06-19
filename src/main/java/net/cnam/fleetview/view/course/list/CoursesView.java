@@ -116,6 +116,9 @@ public class CoursesView extends View<CoursesController> {
         });
         coursesTable.setRowSorter(coursesTableRowSorter);
 
+        // Désactiver le dragging des colonnes
+        coursesTable.getTableHeader().setReorderingAllowed(false);
+
         // Ajout d'une course
         JPanel ajouterCoursePanel = new JPanel();
         this.ajouterCourse.addActionListener(new AbstractAction() {

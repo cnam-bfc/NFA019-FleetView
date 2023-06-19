@@ -130,6 +130,9 @@ public class CourseView extends View<CourseController> {
         // Tableau non editable
         colisTable.setDefaultEditor(Object.class, null);
 
+        // Désactiver le dragging des colonnes
+        colisTable.getTableHeader().setReorderingAllowed(false);
+
         // Bouton de sauvegarde
         this.saveButton.setVisible(false);
         this.saveButton.addActionListener(new AbstractAction() {
