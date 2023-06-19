@@ -126,4 +126,14 @@ public class CoursesView extends View<CoursesController> {
 
         model.addRow(new Object[]{id, nom, date, distance, cycle, livreur, statut, "\uF06E", "\uF044", "\uF1F8"});
     }
+
+    public void removeCourse(String id) {
+        DefaultTableModel model = (DefaultTableModel) this.tableau.getModel();
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            if (model.getValueAt(i, 0).equals(id)) {
+                model.removeRow(i);
+            }
+        }
+    }
 }
