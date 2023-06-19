@@ -139,6 +139,7 @@ public class ColisView extends View<ColisController> {
                 6, 6,        //initX, initY
                 6, 6);       //xPad, yPad
         this.contenu.add(this.champs);
+        this.contenu.add(Box.createVerticalGlue());
         this.add(this.contenu, BorderLayout.CENTER);
         this.add(saveButtonPanel, BorderLayout.SOUTH);
     }

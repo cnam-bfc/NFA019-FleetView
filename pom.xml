@@ -20,6 +20,12 @@
 
     <repositories>
         <repository>
+            <name>FarmVivi</name>
+            <id>farmvivi</id>
+            <url>https://nexus.farmvivi.fr/repository/maven-releases/</url>
+        </repository>
+
+        <repository>
             <name>JOSM</name>
             <id>josm</id>
             <url>https://josm.openstreetmap.de/nexus/content/repositories/releases</url>
@@ -39,6 +45,14 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.36</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- https://nexus.farmvivi.fr/#browse/browse:maven-releases:net%2Fwytrem%2Fwylog%2F2.0 -->
+        <dependency>
+            <groupId>net.wytrem</groupId>
+            <artifactId>wylog</artifactId>
+            <version>2.0</version>
             <scope>compile</scope>
         </dependency>
 
