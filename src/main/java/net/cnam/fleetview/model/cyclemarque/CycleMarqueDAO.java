@@ -36,7 +36,7 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
     @Override
     public boolean create(CycleMarque obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdCycleMarque() != 0) {
+        if (obj.getIdCycleMarque() != null) {
             logger.error("L'objet CycleMarque a déjà un ID");
             return false;
         }
@@ -96,7 +96,7 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
     @Override
     public boolean delete(CycleMarque obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleMarque() == 0) {
+        if (obj.getIdCycleMarque() == null) {
             logger.error("L'objet CycleMarque n'a pas d'ID");
             return false;
         }
@@ -112,7 +112,7 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdCycleMarque());
+            statement.setObject(1, obj.getIdCycleMarque());
 
             // Récupération de l'objet avant suppression
             CycleMarque objAvantSuppression = this.getById(obj.getIdCycleMarque());
@@ -146,9 +146,14 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
      */
     public boolean archive(CycleMarque obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleMarque() == 0) {
+        if (obj.getIdCycleMarque() == null) {
             logger.error("L'objet CycleMarque n'a pas d'ID");
             return false;
+        }
+
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
         }
 
         // Requête de mise à jour
@@ -163,7 +168,7 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdCycleMarque());
+            statement.setObject(2, obj.getIdCycleMarque());
 
             // Récupération de l'objet avant mise à jour
             CycleMarque objAvantMAJ = this.getById(obj.getIdCycleMarque());
@@ -200,7 +205,7 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
     @Override
     public boolean update(CycleMarque obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleMarque() == 0) {
+        if (obj.getIdCycleMarque() == null) {
             logger.error("L'objet CycleMarque n'a pas d'ID");
             return false;
         }
@@ -218,7 +223,7 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
             statement.setObject(2, obj.getDateArchive());
-
+            statement.setObject(3, obj.getIdCycleMarque());
 
             // Récupération de l'objet avant modification
             CycleMarque objAvantModification = this.getById(obj.getIdCycleMarque());
@@ -313,7 +318,7 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();

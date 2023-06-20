@@ -35,7 +35,7 @@ public class DroitsDAO extends DAO<Droits> {
     @Override
     public boolean create(Droits obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdDroits() != 0) {
+        if (obj.getIdDroits() != null) {
             logger.error("L'objet Droits a déjà un ID");
             return false;
         }
@@ -94,7 +94,7 @@ public class DroitsDAO extends DAO<Droits> {
     @Override
     public boolean delete(Droits obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdDroits() == 0) {
+        if (obj.getIdDroits() == null) {
             logger.error("L'objet Droits n'a pas d'ID");
             return false;
         }
@@ -110,7 +110,7 @@ public class DroitsDAO extends DAO<Droits> {
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdDroits());
+            statement.setObject(1, obj.getIdDroits());
 
             // Récupération de l'objet avant suppression
             Droits objAvantSuppression = this.getById(obj.getIdDroits());
@@ -147,7 +147,7 @@ public class DroitsDAO extends DAO<Droits> {
     @Override
     public boolean update(Droits obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdDroits() == 0) {
+        if (obj.getIdDroits() == null) {
             logger.error("L'objet Droits n'a pas d'ID");
             return false;
         }
@@ -164,6 +164,7 @@ public class DroitsDAO extends DAO<Droits> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
+            statement.setObject(2, obj.getIdDroits());
 
             // Récupération de l'objet avant modification
             Droits objAvantModification = this.getById(obj.getIdDroits());
@@ -258,7 +259,7 @@ public class DroitsDAO extends DAO<Droits> {
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();

@@ -12,7 +12,7 @@ public class Utilisateur {
     /**
      * Identifiant de l'utilisateur
      */
-    private int idUtilisateur;
+    private Integer idUtilisateur;
     /**
      * Identifiant pour la connexion
      */
@@ -36,7 +36,7 @@ public class Utilisateur {
     /**
      * Identifiant du rôle de l'utilisateur
      */
-    private int idRole;
+    private Integer idRole;
 
     /**
      * Constructeur par défaut
@@ -51,7 +51,7 @@ public class Utilisateur {
      *
      * @return l'identifiant de l'utilisateur
      */
-    public int getIdUtilisateur() {
+    public Integer getIdUtilisateur() {
         return idUtilisateur;
     }
 
@@ -60,7 +60,7 @@ public class Utilisateur {
      *
      * @param idUtilisateur le nouvel identifiant de l'utilisateur
      */
-    public void setIdUtilisateur(int idUtilisateur) {
+    public void setIdUtilisateur(Integer idUtilisateur) {
         this.idUtilisateur = idUtilisateur;
     }
 
@@ -159,7 +159,7 @@ public class Utilisateur {
      *
      * @return l'identifiant du rôle de l'utilisateur
      */
-    public int getIdRole() {
+    public Integer getIdRole() {
         return idRole;
     }
 
@@ -168,7 +168,7 @@ public class Utilisateur {
      *
      * @param idRole le nouvel identifiant du rôle de l'utilisateur
      */
-    public void setIdRole(int idRole) {
+    public void setIdRole(Integer idRole) {
         this.idRole = idRole;
     }
 }

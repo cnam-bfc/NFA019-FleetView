@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Classe DAO pour les Cycles
- *
+ * <p>
  * Cette classe permet de créer des objets Cycle
  * Concerne la table : fleetview_cycle
  */
@@ -37,7 +37,7 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
     @Override
     public boolean create(Cycle obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdCycle() != 0) {
+        if (obj.getIdCycle() != null) {
             logger.error("L'objet Cycle a déjà un ID");
             return false;
         }
@@ -55,13 +55,13 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getIdentifiant());
             statement.setString(2, obj.getNumeroSerie());
-            statement.setDouble(3, obj.getChargeMaximale());
-            statement.setDouble(4, obj.getPrixAchat());
+            statement.setObject(3, obj.getChargeMaximale());
+            statement.setObject(4, obj.getPrixAchat());
             statement.setObject(5, obj.getDateAcquisition());
             statement.setObject(6, obj.getDateArchive());
-            statement.setInt(7, obj.getIdCycleFournisseur());
-            statement.setInt(8, obj.getIdCycleModele());
-            statement.setInt(9, obj.getIdCycleType());
+            statement.setObject(7, obj.getIdCycleFournisseur());
+            statement.setObject(8, obj.getIdCycleModele());
+            statement.setObject(9, obj.getIdCycleType());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -104,7 +104,7 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
     @Override
     public boolean delete(Cycle obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycle() == 0) {
+        if (obj.getIdCycle() == null) {
             logger.error("L'objet Cycle n'a pas d'ID");
             return false;
         }
@@ -120,7 +120,7 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdCycle());
+            statement.setObject(1, obj.getIdCycle());
 
             // Récupération de l'objet avant suppression
             Cycle objAvantSuppression = this.getById(obj.getIdCycle());
@@ -154,9 +154,14 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
      */
     public boolean archive(Cycle obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycle() == 0) {
+        if (obj.getIdCycle() == null) {
             logger.error("L'objet Cycle n'a pas d'ID");
             return false;
+        }
+
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
         }
 
         // Requête de mise à jour
@@ -171,7 +176,7 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdCycle());
+            statement.setObject(2, obj.getIdCycle());
 
             // Récupération de l'objet avant mise à jour
             Cycle objAvantMAJ = this.getById(obj.getIdCycle());
@@ -208,7 +213,7 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
     @Override
     public boolean update(Cycle obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycle() == 0) {
+        if (obj.getIdCycle() == null) {
             logger.error("L'objet Cycle n'a pas d'ID");
             return false;
         }
@@ -226,13 +231,14 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getIdentifiant());
             statement.setString(2, obj.getNumeroSerie());
-            statement.setDouble(3, obj.getChargeMaximale());
-            statement.setDouble(4, obj.getPrixAchat());
+            statement.setObject(3, obj.getChargeMaximale());
+            statement.setObject(4, obj.getPrixAchat());
             statement.setObject(5, obj.getDateAcquisition());
             statement.setObject(6, obj.getDateArchive());
-            statement.setInt(7, obj.getIdCycleFournisseur());
-            statement.setInt(8, obj.getIdCycleModele());
-            statement.setInt(9, obj.getIdCycleType());
+            statement.setObject(7, obj.getIdCycleFournisseur());
+            statement.setObject(8, obj.getIdCycleModele());
+            statement.setObject(9, obj.getIdCycleType());
+            statement.setObject(10, obj.getIdCycle());
 
             // Récupération de l'objet avant modification
             Cycle objAvantModification = this.getById(obj.getIdCycle());
@@ -327,7 +333,7 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -355,7 +361,7 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
     /**
      * Méthode permettant de remplir un objet Cycle avec les valeurs d'un enregistrement de la table fleetview_cycle
      *
-     * @param cycle   L'objet Cycle à remplir
+     * @param cycle     L'objet Cycle à remplir
      * @param resultSet Le résultat de la requête de sélection
      */
     protected void fillObject(Cycle cycle, ResultSet resultSet) {
@@ -364,13 +370,13 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
             cycle.setIdCycle(resultSet.getInt("id_cycle"));
             cycle.setIdentifiant(resultSet.getString("identifiant"));
             cycle.setNumeroSerie(resultSet.getString("numero_serie"));
-            cycle.setChargeMaximale(resultSet.getDouble("charge_maximale"));
-            cycle.setPrixAchat(resultSet.getDouble("prix_achat"));
+            cycle.setChargeMaximale(resultSet.getObject("charge_maximale", Double.class));
+            cycle.setPrixAchat(resultSet.getObject("prix_achat", Double.class));
             cycle.setDateAcquisition(resultSet.getObject("date_acquisition", LocalDateTime.class));
             cycle.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
-            cycle.setIdCycleFournisseur(resultSet.getInt("id_cycle_fournisseur"));
-            cycle.setIdCycleModele(resultSet.getInt("id_cycle_modele"));
-            cycle.setIdCycleType(resultSet.getInt("id_cycle_type"));
+            cycle.setIdCycleFournisseur(resultSet.getObject("id_cycle_fournisseur", Integer.class));
+            cycle.setIdCycleModele(resultSet.getObject("id_cycle_modele", Integer.class));
+            cycle.setIdCycleType(resultSet.getObject("id_cycle_type", Integer.class));
         } catch (SQLException ex) {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet Cycle", ex);

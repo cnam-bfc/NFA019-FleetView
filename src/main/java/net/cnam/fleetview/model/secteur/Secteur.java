@@ -12,7 +12,7 @@ public class Secteur {
     /**
      * Identifiant du secteur
      */
-    private int idSecteur;
+    private Integer idSecteur;
     /**
      * Nom du secteur
      */
@@ -35,7 +35,7 @@ public class Secteur {
      *
      * @return l'identifiant du secteur
      */
-    public int getIdSecteur() {
+    public Integer getIdSecteur() {
         return idSecteur;
     }
 
@@ -44,7 +44,7 @@ public class Secteur {
      *
      * @param idSecteur le nouvel identifiant du secteur
      */
-    public void setIdSecteur(int idSecteur) {
+    public void setIdSecteur(Integer idSecteur) {
         this.idSecteur = idSecteur;
     }
 

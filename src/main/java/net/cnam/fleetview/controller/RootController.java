@@ -1,5 +1,9 @@
 package net.cnam.fleetview.controller;
 
+import net.cnam.fleetview.database.BDDConnection;
+import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.model.utilisateur.Utilisateur;
+import net.cnam.fleetview.model.utilisateur.UtilisateurDAO;
 import net.cnam.fleetview.view.AccueilView;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.base.RootPanelView;
@@ -10,6 +14,8 @@ public class RootController extends Controller<RootPanelView> {
     private static RootController INSTANCE = null;
 
     private final LinkedList<View> views = new LinkedList<>();
+
+    private Utilisateur utilisateur = new UtilisateurDAO(BDDConnection.getInstance(new DefaultConnector())).getById(1);
 
     public RootController(RootPanelView view) {
         super(view);
@@ -36,6 +42,9 @@ public class RootController extends Controller<RootPanelView> {
 
         // On affiche le bouton de retour
         this.view.getMainPanel().getTopMenuPanel().getTopLeftMenuPanelView().setBackButtonVisible(true);
+
+        // On notifie la vue qu'elle a été affichée
+        view.onDisplayed();
     }
 
     /**
@@ -55,15 +64,28 @@ public class RootController extends Controller<RootPanelView> {
 
         // On affiche la vue précédente
         if (!this.views.isEmpty()) {
+            // On récupère la vue précédente
+            View previousView = this.views.getLast();
+
             // On affiche la vue précédente
-            this.view.getMainPanel().setContentPanelView(this.views.getLast());
+            this.view.getMainPanel().setContentPanelView(previousView);
+
+            // On notifie la vue qu'elle a été réaffichée
+            previousView.onDisplayed();
         }
         // Sinon, on affiche accueil
         else {
-            this.view.getMainPanel().setContentPanelView(new AccueilView());
+            // On crée la vue accueil
+            AccueilView accueilView = new AccueilView();
+
+            // On affiche la vue accueil
+            this.view.getMainPanel().setContentPanelView(accueilView);
 
             // On cache le bouton de retour
             this.view.getMainPanel().getTopMenuPanel().getTopLeftMenuPanelView().setBackButtonVisible(false);
+
+            // On notifie la vue qu'elle a été affichée
+            accueilView.onDisplayed();
         }
 
         return true;
@@ -108,5 +130,13 @@ public class RootController extends Controller<RootPanelView> {
 
     public static void closeAll() {
         INSTANCE.closeAllViews();
+    }
+
+    public static Utilisateur getCurrentUser() {
+        return INSTANCE.utilisateur;
+    }
+
+    public static void setCurrentUser(Utilisateur utilisateur) {
+        INSTANCE.utilisateur = utilisateur;
     }
 }

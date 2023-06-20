@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * table concernée : fleetview_cycle_fournisseur
  */
 public class CycleFournisseur {
-    private int idCycleFournisseur;
+    private Integer idCycleFournisseur;
     private String nom;
     private String mail;
     private String telephone;
@@ -28,7 +28,7 @@ public class CycleFournisseur {
      *
      * @return
      */
-    public int getIdCycleFournisseur() {
+    public Integer getIdCycleFournisseur() {
         return idCycleFournisseur;
     }
 
@@ -37,7 +37,7 @@ public class CycleFournisseur {
      *
      * @param idCycleFournisseur
      */
-    public void setId(int idCycleFournisseur) {
+    public void setId(Integer idCycleFournisseur) {
         this.idCycleFournisseur = idCycleFournisseur;
     }
 

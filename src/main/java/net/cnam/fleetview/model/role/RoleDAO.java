@@ -34,7 +34,7 @@ public class RoleDAO extends DAO<Role> {
     @Override
     public boolean create(Role obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdRole() != 0) {
+        if (obj.getIdRole() != null) {
             logger.error("L'objet Role a déjà un ID");
             return false;
         }
@@ -93,7 +93,7 @@ public class RoleDAO extends DAO<Role> {
     @Override
     public boolean delete(Role obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdRole() == 0) {
+        if (obj.getIdRole() == null) {
             logger.error("L'objet Role n'a pas d'ID");
             return false;
         }
@@ -109,7 +109,7 @@ public class RoleDAO extends DAO<Role> {
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdRole());
+            statement.setObject(1, obj.getIdRole());
 
             // Récupération de l'objet avant suppression
             Role objAvantSuppression = this.getById(obj.getIdRole());
@@ -146,7 +146,7 @@ public class RoleDAO extends DAO<Role> {
     @Override
     public boolean update(Role obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdRole() == 0) {
+        if (obj.getIdRole() == null) {
             logger.error("L'objet Role n'a pas d'ID");
             return false;
         }
@@ -163,6 +163,7 @@ public class RoleDAO extends DAO<Role> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
+            statement.setObject(2, obj.getIdRole());
 
             // Récupération de l'objet avant modification
             Role objAvantModification = this.getById(obj.getIdRole());
@@ -257,7 +258,7 @@ public class RoleDAO extends DAO<Role> {
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();

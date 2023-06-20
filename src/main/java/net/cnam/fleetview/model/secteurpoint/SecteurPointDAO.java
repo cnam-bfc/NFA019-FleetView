@@ -36,7 +36,7 @@ public class SecteurPointDAO extends DAO<SecteurPoint> implements Archivable<Sec
     @Override
     public boolean create(SecteurPoint obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdSecteurPoint() != 0) {
+        if (obj.getIdSecteurPoint() != null) {
             logger.error("L'objet SecteurPoint a déjà un ID");
             return false;
         }
@@ -52,8 +52,8 @@ public class SecteurPointDAO extends DAO<SecteurPoint> implements Archivable<Sec
             // On prépare la requête d'insertion
             statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // On attribue les valeurs aux paramètres
-            statement.setDouble(1, obj.getLatitude());
-            statement.setDouble(2, obj.getLongitude());
+            statement.setObject(1, obj.getLatitude());
+            statement.setObject(2, obj.getLongitude());
             statement.setObject(3, obj.getDateArchive());
 
             // On exécute la requête
@@ -97,7 +97,7 @@ public class SecteurPointDAO extends DAO<SecteurPoint> implements Archivable<Sec
     @Override
     public boolean delete(SecteurPoint obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdSecteurPoint() == 0) {
+        if (obj.getIdSecteurPoint() == null) {
             logger.error("L'objet SecteurPoint n'a pas d'ID");
             return false;
         }
@@ -113,7 +113,7 @@ public class SecteurPointDAO extends DAO<SecteurPoint> implements Archivable<Sec
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdSecteurPoint());
+            statement.setObject(1, obj.getIdSecteurPoint());
 
             // Récupération de l'objet avant suppression
             SecteurPoint objAvantSuppression = this.getById(obj.getIdSecteurPoint());
@@ -147,9 +147,14 @@ public class SecteurPointDAO extends DAO<SecteurPoint> implements Archivable<Sec
      */
     public boolean archive(SecteurPoint obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdSecteurPoint() == 0) {
+        if (obj.getIdSecteurPoint() == null) {
             logger.error("L'objet SecteurPoint n'a pas d'ID");
             return false;
+        }
+
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
         }
 
         // Requête de mise à jour
@@ -164,7 +169,7 @@ public class SecteurPointDAO extends DAO<SecteurPoint> implements Archivable<Sec
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdSecteurPoint());
+            statement.setObject(2, obj.getIdSecteurPoint());
 
             // Récupération de l'objet avant mise à jour
             SecteurPoint objAvantMAJ = this.getById(obj.getIdSecteurPoint());
@@ -201,7 +206,7 @@ public class SecteurPointDAO extends DAO<SecteurPoint> implements Archivable<Sec
     @Override
     public boolean update(SecteurPoint obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdSecteurPoint() == 0) {
+        if (obj.getIdSecteurPoint() == null) {
             logger.error("L'objet SecteurPoint n'a pas d'ID");
             return false;
         }
@@ -217,9 +222,10 @@ public class SecteurPointDAO extends DAO<SecteurPoint> implements Archivable<Sec
             // On prépare la requête de mise à jour
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setDouble(1, obj.getLatitude());
-            statement.setDouble(2, obj.getLongitude());
+            statement.setObject(1, obj.getLatitude());
+            statement.setObject(2, obj.getLongitude());
             statement.setObject(3, obj.getDateArchive());
+            statement.setObject(4, obj.getIdSecteurPoint());
 
             // Récupération de l'objet avant modification
             SecteurPoint objAvantModification = this.getById(obj.getIdSecteurPoint());
@@ -314,7 +320,7 @@ public class SecteurPointDAO extends DAO<SecteurPoint> implements Archivable<Sec
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -349,8 +355,8 @@ public class SecteurPointDAO extends DAO<SecteurPoint> implements Archivable<Sec
         try {
             // Remplissage de l'objet SecteurPoint
             secteurPoint.setIdSecteurPoint(resultSet.getInt("id_secteur_point"));
-            secteurPoint.setLatitude(resultSet.getDouble("latitude"));
-            secteurPoint.setLongitude(resultSet.getDouble("longitude"));
+            secteurPoint.setLatitude(resultSet.getObject("latitude", Double.class));
+            secteurPoint.setLongitude(resultSet.getObject("longitude", Double.class));
             secteurPoint.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
         } catch (SQLException ex) {
             // On log l'erreur

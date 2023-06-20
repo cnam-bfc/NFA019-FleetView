@@ -10,15 +10,15 @@ public class DroitsRole {
     /**
      * Identifiant du role
      */
-    private int idRole;
+    private Integer idRole;
     /**
      * Identifiant du droits
      */
-    private int idDroits;
+    private Integer idDroits;
     /**
      * Boolean permettant de définir si le droit est autorisé
      */
-    private boolean autorise;
+    private Boolean autorise;
 
     /**
      * Constructeur par défaut
@@ -33,7 +33,7 @@ public class DroitsRole {
      *
      * @return l'identifiant du role
      */
-    public int getIdRole() {
+    public Integer getIdRole() {
         return idRole;
     }
 
@@ -42,7 +42,7 @@ public class DroitsRole {
      *
      * @param idRole le nouvel identifiant du role
      */
-    public void setIdRole(int idRole) {
+    public void setIdRole(Integer idRole) {
         this.idRole = idRole;
     }
 
@@ -51,7 +51,7 @@ public class DroitsRole {
      *
      * @return l'identifiant du droits
      */
-    public int getIdDroits() {
+    public Integer getIdDroits() {
         return idDroits;
     }
 
@@ -60,7 +60,7 @@ public class DroitsRole {
      *
      * @param idDroits le nouvel identifiant du droits
      */
-    public void setIdDroits(int idDroits) {
+    public void setIdDroits(Integer idDroits) {
         this.idDroits = idDroits;
     }
 
@@ -69,7 +69,7 @@ public class DroitsRole {
      *
      * @return le boolean autorise
      */
-    public boolean isAutorise() {
+    public Boolean isAutorise() {
         return autorise;
     }
 
@@ -78,7 +78,7 @@ public class DroitsRole {
      *
      * @param autorise le nouveau boolean autorise
      */
-    public void setAutorise(boolean autorise) {
+    public void setAutorise(Boolean autorise) {
         this.autorise = autorise;
     }
 }

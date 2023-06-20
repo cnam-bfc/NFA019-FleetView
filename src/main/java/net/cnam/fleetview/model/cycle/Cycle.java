@@ -12,7 +12,7 @@ public class Cycle {
     /**
      * Identifiant du cycle
      */
-    private int idCycle;
+    private Integer idCycle;
 
     /**
      * Identifiant spécifique du cycle
@@ -27,12 +27,12 @@ public class Cycle {
     /**
      * Charge maximale du cycle
      */
-    private double chargeMaximale;
+    private Double chargeMaximale;
 
     /**
      * Prix d'achat du cycle
      */
-    private double prixAchat;
+    private Double prixAchat;
 
     /**
      * Date d'acquisition du cycle
@@ -47,17 +47,17 @@ public class Cycle {
     /**
      * Identifiant du fournisseur de cycle
      */
-    private int idCycleFournisseur;
+    private Integer idCycleFournisseur;
 
     /**
      * Identifiant du modele de cycle
      */
-    private int idCycleModele;
+    private Integer idCycleModele;
 
     /**
      * Identifiant du type de cycle
      */
-    private int idCycleType;
+    private Integer idCycleType;
 
     /**
      * Constructeur par défaut
@@ -72,7 +72,7 @@ public class Cycle {
      *
      * @return idCycle
      */
-    public int getIdCycle() {
+    public Integer getIdCycle() {
         return idCycle;
     }
 
@@ -81,7 +81,7 @@ public class Cycle {
      *
      * @param idCycle idCycle
      */
-    public void setIdCycle(int idCycle) {
+    public void setIdCycle(Integer idCycle) {
         this.idCycle = idCycle;
     }
 
@@ -126,7 +126,7 @@ public class Cycle {
      *
      * @return chargeMaximale
      */
-    public double getChargeMaximale() {
+    public Double getChargeMaximale() {
         return chargeMaximale;
     }
 
@@ -135,7 +135,7 @@ public class Cycle {
      *
      * @param chargeMaximale chargeMaximale
      */
-    public void setChargeMaximale(double chargeMaximale) {
+    public void setChargeMaximale(Double chargeMaximale) {
         this.chargeMaximale = chargeMaximale;
     }
 
@@ -144,7 +144,7 @@ public class Cycle {
      *
      * @return prixAchat
      */
-    public double getPrixAchat() {
+    public Double getPrixAchat() {
         return prixAchat;
     }
 
@@ -153,7 +153,7 @@ public class Cycle {
      *
      * @param prixAchat prixAchat
      */
-    public void setPrixAchat(double prixAchat) {
+    public void setPrixAchat(Double prixAchat) {
         this.prixAchat = prixAchat;
     }
 
@@ -198,7 +198,7 @@ public class Cycle {
      *
      * @return idCycleFournisseur
      */
-    public int getIdCycleFournisseur() {
+    public Integer getIdCycleFournisseur() {
         return idCycleFournisseur;
     }
 
@@ -207,7 +207,7 @@ public class Cycle {
      *
      * @param idCycleFournisseur idCycleFournisseur
      */
-    public void setIdCycleFournisseur(int idCycleFournisseur) {
+    public void setIdCycleFournisseur(Integer idCycleFournisseur) {
         this.idCycleFournisseur = idCycleFournisseur;
     }
 
@@ -216,7 +216,7 @@ public class Cycle {
      *
      * @return idCycleModele
      */
-    public int getIdCycleModele() {
+    public Integer getIdCycleModele() {
         return idCycleModele;
     }
 
@@ -225,7 +225,7 @@ public class Cycle {
      *
      * @param idCycleModele idCycleModele
      */
-    public void setIdCycleModele(int idCycleModele) {
+    public void setIdCycleModele(Integer idCycleModele) {
         this.idCycleModele = idCycleModele;
     }
 
@@ -234,7 +234,7 @@ public class Cycle {
      *
      * @return idTypeCycle
      */
-    public int getIdCycleType() {
+    public Integer getIdCycleType() {
         return idCycleType;
     }
 
@@ -243,7 +243,7 @@ public class Cycle {
      *
      * @param idCycleType idTypeCycle
      */
-    public void setIdCycleType(int idCycleType) {
+    public void setIdCycleType(Integer idCycleType) {
         this.idCycleType = idCycleType;
     }
 }

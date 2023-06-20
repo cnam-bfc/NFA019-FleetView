@@ -11,7 +11,7 @@ public class IconTextField extends JPanel {
 
     // ÉLÉMENTS DE L'INTERFACE
     private final JLabel iconLabel;
-    private final JTextField textField;
+    private final TextField textField;
 
     public IconTextField(String icon) {
         super();
@@ -24,7 +24,7 @@ public class IconTextField extends JPanel {
 
         // Création des éléments de l'interface
         this.iconLabel = new JLabel();
-        this.textField = new JTextField();
+        this.textField = new TextField();
 
 
         // Configuration des éléments de l'interface
@@ -51,7 +51,7 @@ public class IconTextField extends JPanel {
         return iconLabel;
     }
 
-    public JTextField getTextField() {
+    public TextField getTextField() {
         return textField;
     }
 }

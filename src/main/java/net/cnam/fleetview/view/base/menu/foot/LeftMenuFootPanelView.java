@@ -5,11 +5,11 @@ import net.cnam.fleetview.controller.ConnectionController;
 import net.cnam.fleetview.controller.CreationCycleController;
 import net.cnam.fleetview.controller.ListeCycleController;
 import net.cnam.fleetview.controller.RootController;
-import net.cnam.fleetview.view.ConnectionView;
+import net.cnam.fleetview.view.DebugView;
 import net.cnam.fleetview.view.ParametrageBddView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
-import net.cnam.fleetview.view.cycle.CreationCycleView;
-import net.cnam.fleetview.view.cycle.ListeCycleView;
+import net.cnam.fleetview.view.documents.FicheAccidentView;
+import net.cnam.fleetview.view.documents.FicheCourseView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,9 +50,6 @@ public class LeftMenuFootPanelView extends JPanel {
         // Configuration des éléments de l'interface
         // Bouton de paramètres
         this.parametresButton.addActionListener(e -> {
-            // Fermeture de toutes les vues
-            RootController.closeAll();
-
             // Création de la vue des paramètres
             ParametrageBddView parametrageBddView = new ParametrageBddView();
 
@@ -62,11 +59,8 @@ public class LeftMenuFootPanelView extends JPanel {
 
         // Bouton de debug 1
         this.debug1Button.addActionListener(e -> {
-            // Fermeture de toutes les vues
-            RootController.closeAll();
-
             // Création de la vue des paramètres
-            ListeCycleView debugView = new ListeCycleView();
+            DebugView debugView = new FicheAccidentView();
 
             //Création du controller de la vue
             ListeCycleController debugControl = new ListeCycleController(debugView);
@@ -79,11 +73,8 @@ public class LeftMenuFootPanelView extends JPanel {
 
         // Bouton de debug 2
         this.debug2Button.addActionListener(e -> {
-            // Fermeture de toutes les vues
-            RootController.closeAll();
-
             // Création de la vue des paramètres
-            CreationCycleView debugView = new CreationCycleView();
+            DebugView debugView = new FicheCourseView();
 
             //Création du controller de la vue
             CreationCycleController debugControl = new CreationCycleController(debugView);
@@ -96,11 +87,8 @@ public class LeftMenuFootPanelView extends JPanel {
 
         // Bouton de debug 3
         this.debug3Button.addActionListener(e -> {
-            // Fermeture de toutes les vues
-            RootController.closeAll();
-
             // Création de la vue des paramètres
-            ConnectionView debugView = new ConnectionView();
+            DebugView debugView = new DebugView();
 
             //Création du controller de la vue
             ConnectionController debugControl = new ConnectionController(debugView);

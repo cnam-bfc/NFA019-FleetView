@@ -37,7 +37,7 @@ public class CycleEtatTypeDAO extends DAO<CycleEtatType> implements Archivable<C
     @Override
     public boolean create(CycleEtatType obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdCycleEtatType() != 0) {
+        if (obj.getIdCycleEtatType() != null) {
             logger.error("L'objet CycleEtatType a déjà un ID");
             return false;
         }
@@ -54,7 +54,7 @@ public class CycleEtatTypeDAO extends DAO<CycleEtatType> implements Archivable<C
             statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
-            statement.setBoolean(2, obj.isUtilisable());
+            statement.setObject(2, obj.isUtilisable());
             statement.setObject(3, obj.getDateArchive());
 
             // On exécute la requête
@@ -98,7 +98,7 @@ public class CycleEtatTypeDAO extends DAO<CycleEtatType> implements Archivable<C
     @Override
     public boolean delete(CycleEtatType obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleEtatType() == 0) {
+        if (obj.getIdCycleEtatType() == null) {
             logger.error("L'objet CycleEtatType n'a pas d'ID");
             return false;
         }
@@ -114,7 +114,7 @@ public class CycleEtatTypeDAO extends DAO<CycleEtatType> implements Archivable<C
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdCycleEtatType());
+            statement.setObject(1, obj.getIdCycleEtatType());
 
             // Récupération de l'objet avant suppression
             CycleEtatType objAvantSuppression = this.getById(obj.getIdCycleEtatType());
@@ -148,9 +148,14 @@ public class CycleEtatTypeDAO extends DAO<CycleEtatType> implements Archivable<C
      */
     public boolean archive(CycleEtatType obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleEtatType() == 0) {
+        if (obj.getIdCycleEtatType() == null) {
             logger.error("L'objet CycleEtatType n'a pas d'ID");
             return false;
+        }
+
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
         }
 
         // Requête de mise à jour
@@ -165,7 +170,7 @@ public class CycleEtatTypeDAO extends DAO<CycleEtatType> implements Archivable<C
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdCycleEtatType());
+            statement.setObject(2, obj.getIdCycleEtatType());
 
             // Récupération de l'objet avant mise à jour
             CycleEtatType objAvantMAJ = this.getById(obj.getIdCycleEtatType());
@@ -202,7 +207,7 @@ public class CycleEtatTypeDAO extends DAO<CycleEtatType> implements Archivable<C
     @Override
     public boolean update(CycleEtatType obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleEtatType() == 0) {
+        if (obj.getIdCycleEtatType() == null) {
             logger.error("L'objet CycleEtatType n'a pas d'ID");
             return false;
         }
@@ -219,8 +224,9 @@ public class CycleEtatTypeDAO extends DAO<CycleEtatType> implements Archivable<C
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getNom());
-            statement.setBoolean(2, obj.isUtilisable());
+            statement.setObject(2, obj.isUtilisable());
             statement.setObject(3, obj.getDateArchive());
+            statement.setObject(4, obj.getIdCycleEtatType());
 
             // Récupération de l'objet avant modification
             CycleEtatType objAvantModification = this.getById(obj.getIdCycleEtatType());
@@ -315,7 +321,7 @@ public class CycleEtatTypeDAO extends DAO<CycleEtatType> implements Archivable<C
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -351,7 +357,7 @@ public class CycleEtatTypeDAO extends DAO<CycleEtatType> implements Archivable<C
             // Remplissage de l'objet CycleFournisseur
             cycleEtatType.setIdCycleEtatType(resultSet.getInt("id_cycle_etat_type"));
             cycleEtatType.setNom(resultSet.getString("nom"));
-            cycleEtatType.setUtilisable(resultSet.getBoolean("utilisable"));
+            cycleEtatType.setUtilisable(resultSet.getObject("utilisable", Boolean.class));
             cycleEtatType.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
         } catch (SQLException ex) {
             // On log l'erreur

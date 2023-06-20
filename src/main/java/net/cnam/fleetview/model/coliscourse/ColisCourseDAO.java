@@ -37,7 +37,7 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
     @Override
     public boolean create(ColisCourse obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdColisCourse() != 0) {
+        if (obj.getIdColisCourse() != null) {
             logger.error("L'objet ColisCourse a déjà un ID");
             return false;
         }
@@ -53,11 +53,11 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
             // On prépare la requête d'insertion
             statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getOrdre());
+            statement.setObject(1, obj.getOrdre());
             statement.setObject(2, obj.getDateLivraison());
             statement.setObject(3, obj.getDateArchive());
-            statement.setInt(4, obj.getIdColis());
-            statement.setInt(5, obj.getIdCourse());
+            statement.setObject(4, obj.getIdColis());
+            statement.setObject(5, obj.getIdCourse());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -100,7 +100,7 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
     @Override
     public boolean delete(ColisCourse obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdColisCourse() == 0) {
+        if (obj.getIdColisCourse() == null) {
             logger.error("L'objet ColisCourse n'a pas d'ID");
             return false;
         }
@@ -116,7 +116,7 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdColisCourse());
+            statement.setObject(1, obj.getIdColisCourse());
 
             // Récupération de l'objet avant suppression
             ColisCourse objAvantSuppression = this.getById(obj.getIdColisCourse());
@@ -150,9 +150,14 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
      */
     public boolean archive(ColisCourse obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdColisCourse() == 0) {
+        if (obj.getIdColisCourse() == null) {
             logger.error("L'objet ColisCourse n'a pas d'ID");
             return false;
+        }
+
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
         }
 
         // Requête de mise à jour
@@ -167,7 +172,7 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdColisCourse());
+            statement.setObject(2, obj.getIdColisCourse());
 
             // Récupération de l'objet avant mise à jour
             ColisCourse objAvantMAJ = this.getById(obj.getIdColisCourse());
@@ -204,7 +209,7 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
     @Override
     public boolean update(ColisCourse obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdColisCourse() == 0) {
+        if (obj.getIdColisCourse() == null) {
             logger.error("L'objet ColisCourse n'a pas d'ID");
             return false;
         }
@@ -220,11 +225,12 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
             // On prépare la requête de mise à jour
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getOrdre());
+            statement.setObject(1, obj.getOrdre());
             statement.setObject(2, obj.getDateLivraison());
             statement.setObject(3, obj.getDateArchive());
-            statement.setInt(4, obj.getIdColis());
-            statement.setInt(5, obj.getIdCourse());
+            statement.setObject(4, obj.getIdColis());
+            statement.setObject(5, obj.getIdCourse());
+            statement.setObject(6, obj.getIdColisCourse());
 
             // Récupération de l'objet avant modification
             ColisCourse objAvantModification = this.getById(obj.getIdColisCourse());
@@ -319,7 +325,7 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -354,11 +360,11 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
         try {
             // Remplissage de l'objet CycleFournisseur
             colisCourse.setIdColisCourse(resultSet.getInt("id_colis_course"));
-            colisCourse.setOrdre(resultSet.getInt("ordre"));
+            colisCourse.setOrdre(resultSet.getObject("ordre", Integer.class));
             colisCourse.setDateLivraison(resultSet.getObject("date_livraison", LocalDateTime.class));
             colisCourse.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
-            colisCourse.setIdColis(resultSet.getInt("id_colis"));
-            colisCourse.setIdCourse(resultSet.getInt("id_course"));
+            colisCourse.setIdColis(resultSet.getObject("id_colis", Integer.class));
+            colisCourse.setIdCourse(resultSet.getObject("id_course", Integer.class));
         } catch (SQLException ex) {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet ColisCourse", ex);

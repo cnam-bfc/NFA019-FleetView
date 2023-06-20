@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Classe DAO pour les adresses
- *
+ * <p>
  * Concerne la table : fleetview_adresse
  */
 public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
@@ -36,7 +36,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
     @Override
     public boolean create(Adresse obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdAdresse() != 0) {
+        if (obj.getIdAdresse() != null) {
             logger.error("L'objet Adresse a déjà un ID");
             return false;
         }
@@ -53,7 +53,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             statement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getOsmType());
-            statement.setLong(2, obj.getOsmId());
+            statement.setObject(2, obj.getOsmId());
             statement.setString(3, obj.getPays());
             statement.setString(4, obj.getCodePostal());
             statement.setString(5, obj.getCommune());
@@ -61,7 +61,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             statement.setString(7, obj.getNumeroDeRue());
             statement.setString(8, obj.getComplement());
             statement.setObject(9, obj.getDateArchive());
-            statement.setInt(10, obj.getIdSecteur());
+            statement.setObject(10, obj.getIdSecteur());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -104,7 +104,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
     @Override
     public boolean delete(Adresse obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdAdresse() == 0) {
+        if (obj.getIdAdresse() == null) {
             logger.error("L'objet Adresse n'a pas d'ID");
             return false;
         }
@@ -120,7 +120,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdAdresse());
+            statement.setObject(1, obj.getIdAdresse());
 
             // Récupération de l'objet avant suppression
             Adresse objAvantSuppression = this.getById(obj.getIdAdresse());
@@ -154,9 +154,14 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
      */
     public boolean archive(Adresse obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdAdresse() == 0) {
+        if (obj.getIdAdresse() == null) {
             logger.error("L'objet Adresse n'a pas d'ID");
             return false;
+        }
+
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
         }
 
         // Requête de mise à jour
@@ -171,7 +176,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdAdresse());
+            statement.setObject(2, obj.getIdAdresse());
 
             // Récupération de l'objet avant mise à jour
             Adresse objAvantMAJ = this.getById(obj.getIdAdresse());
@@ -208,13 +213,13 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
     @Override
     public boolean update(Adresse obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdAdresse() == 0) {
+        if (obj.getIdAdresse() == null) {
             logger.error("L'objet Adresse n'a pas d'ID");
             return false;
         }
 
         // Requête de mise à jour
-        String query = "UPDATE fleetview_adresse SET osm_type = ?, osm_id = ?, pays = ?, code_postal = ?, commune = ?, rue = ?, numero_rue = ?, complement = ?, date_archive = ? WHERE id_adresse = ?";
+        String query = "UPDATE fleetview_adresse SET osm_type = ?, osm_id = ?, pays = ?, code_postal = ?, commune = ?, rue = ?, numero_rue = ?, complement = ?, date_archive = ?, id_secteur = ? WHERE id_adresse = ?";
 
         // Résultat de la requête
         int result = 0;
@@ -225,7 +230,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setString(1, obj.getOsmType());
-            statement.setLong(2, obj.getOsmId());
+            statement.setObject(2, obj.getOsmId());
             statement.setString(3, obj.getPays());
             statement.setString(4, obj.getCodePostal());
             statement.setString(5, obj.getCommune());
@@ -233,8 +238,8 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             statement.setString(7, obj.getNumeroDeRue());
             statement.setString(8, obj.getComplement());
             statement.setObject(9, obj.getDateArchive());
-            statement.setInt(10, obj.getIdAdresse());
-
+            statement.setObject(10, obj.getIdSecteur());
+            statement.setObject(11, obj.getIdAdresse());
 
             // Récupération de l'objet avant modification
             Adresse objAvantModification = this.getById(obj.getIdAdresse());
@@ -329,7 +334,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -365,7 +370,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             // Remplissage de l'objet Adresse
             adresse.setIdAdresse(resultSet.getInt("id_adresse"));
             adresse.setOsmType(resultSet.getString("osm_type"));
-            adresse.setOsmId(resultSet.getLong("osm_id"));
+            adresse.setOsmId(resultSet.getObject("osm_id", Long.class));
             adresse.setPays(resultSet.getString("pays"));
             adresse.setCodePostal(resultSet.getString("code_postal"));
             adresse.setCommune(resultSet.getString("commune"));
@@ -373,6 +378,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             adresse.setNumeroDeRue(resultSet.getString("numero_de_rue"));
             adresse.setComplement(resultSet.getString("complement"));
             adresse.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
+            adresse.setIdSecteur(resultSet.getObject("id_secteur", Integer.class));
         } catch (SQLException ex) {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet Adresse", ex);

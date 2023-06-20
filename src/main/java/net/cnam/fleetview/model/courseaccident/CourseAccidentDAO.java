@@ -37,7 +37,7 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
     @Override
     public boolean create(CourseAccident obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdCourseAccident() != 0) {
+        if (obj.getIdCourseAccident() != null) {
             logger.error("L'objet CourseAccident a déjà un ID");
             return false;
         }
@@ -55,8 +55,8 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateAccident());
             statement.setObject(2, obj.getDateArchive());
-            statement.setInt(3, obj.getIdAdresse());
-            statement.setInt(4, obj.getIdCourse());
+            statement.setObject(3, obj.getIdAdresse());
+            statement.setObject(4, obj.getIdCourse());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -99,7 +99,7 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
     @Override
     public boolean delete(CourseAccident obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCourseAccident() == 0) {
+        if (obj.getIdCourseAccident() == null) {
             logger.error("L'objet CourseAccident n'a pas d'ID");
             return false;
         }
@@ -115,7 +115,7 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdCourseAccident());
+            statement.setObject(1, obj.getIdCourseAccident());
 
             // Récupération de l'objet avant suppression
             CourseAccident objAvantSuppression = this.getById(obj.getIdCourseAccident());
@@ -149,9 +149,14 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
      */
     public boolean archive(CourseAccident obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCourseAccident() == 0) {
+        if (obj.getIdCourseAccident() == null) {
             logger.error("L'objet CourseAccident n'a pas d'ID");
             return false;
+        }
+
+        // Si la date d'archive n'est pas renseignée, on la met à jour
+        if (obj.getDateArchive() == null) {
+            obj.setDateArchive(LocalDateTime.now());
         }
 
         // Requête de mise à jour
@@ -166,7 +171,7 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdCourseAccident());
+            statement.setObject(2, obj.getIdCourseAccident());
 
             // Récupération de l'objet avant mise à jour
             CourseAccident objAvantMAJ = this.getById(obj.getIdCourseAccident());
@@ -203,7 +208,7 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
     @Override
     public boolean update(CourseAccident obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCourseAccident() == 0) {
+        if (obj.getIdCourseAccident() == null) {
             logger.error("L'objet CourseAccident n'a pas d'ID");
             return false;
         }
@@ -221,8 +226,9 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateAccident());
             statement.setObject(2, obj.getDateArchive());
-            statement.setInt(3, obj.getIdAdresse());
-            statement.setInt(4, obj.getIdCourse());
+            statement.setObject(3, obj.getIdAdresse());
+            statement.setObject(4, obj.getIdCourse());
+            statement.setObject(5, obj.getIdCourseAccident());
 
             // Récupération de l'objet avant modification
             CourseAccident objAvantModification = this.getById(obj.getIdCourseAccident());
@@ -317,7 +323,7 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -352,8 +358,8 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
         try {
             // Remplissage de l'objet CycleFournisseur
             courseAccident.setIdCourseAccident(resultSet.getInt("id_course_accident"));
-            courseAccident.setIdCourse(resultSet.getInt("id_course"));
-            courseAccident.setIdAdresse(resultSet.getInt("id_adresse"));
+            courseAccident.setIdCourse(resultSet.getObject("id_course", Integer.class));
+            courseAccident.setIdAdresse(resultSet.getObject("id_adresse", Integer.class));
             courseAccident.setDateAccident(resultSet.getObject("date_accident", LocalDateTime.class));
             courseAccident.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
 

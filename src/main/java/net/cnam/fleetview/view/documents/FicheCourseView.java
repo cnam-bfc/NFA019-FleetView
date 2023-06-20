@@ -30,31 +30,23 @@ public class FicheCourseView extends DebugView {
         JPanel jpDonneeCourse = new JPanel();
         jpDonneeCourse.setLayout(new BoxLayout(jpDonneeCourse, BoxLayout.PAGE_AXIS));
 
-            //bloc 1 GRID 2,1
+
         JPanel jpBloc1 = new JPanel(new GridLayout( 1,2));
 
         JPanel jpLivreur = new JPanel(new BorderLayout());
         jpLivreur.setLayout(new BoxLayout(jpLivreur, BoxLayout.PAGE_AXIS));
-                            //FLOW
         JPanel jpMatricule = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                            //FLOW
         JPanel jpNom = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                //bloc Gauche
+
         JPanel jpCourse = new JPanel(new BorderLayout());
         jpCourse.setLayout(new BoxLayout(jpCourse, BoxLayout.PAGE_AXIS));
-
         JPanel jpCourseId = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel jpCycle = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
         //bloc 2 flow
+        JPanel jpAdresse = new JPanel(new GridLayout(1,2));
         JPanel jpDistanceHolder = new JPanel(new BorderLayout());
         JPanel jpDistance = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            //marge
-        JPanel jpMargeB2top = new JPanel();
-        jpMargeB2top.setPreferredSize(new Dimension(100, 5));
-        JPanel jpMargeB2Bot = new JPanel();
-        jpMargeB2Bot.setPreferredSize(new Dimension(100, 5));
-
 
         //bloc 3
         JPanel jpTableHolder = new JPanel(new BorderLayout());
@@ -76,12 +68,6 @@ public class FicheCourseView extends DebugView {
         jpBloc1.setPreferredSize( new Dimension(400, 70));
         jpLivreur.setPreferredSize(new Dimension(400, 50));
         jpCourse.setPreferredSize(new Dimension(400, 50));
-
-        //Marge
-        JPanel jpMargeGauche = new JPanel();
-        jpMargeGauche.setPreferredSize(new Dimension(100, 0));
-        JPanel jpMargeHaut = new JPanel();
-        jpMargeHaut.setPreferredSize(new Dimension(0, 50));
 
         //Label
         JLabel texteMatricule = new JLabel("Matricule");
@@ -166,8 +152,6 @@ public class FicheCourseView extends DebugView {
         jpDistance.add(texteDistance);
         jpDistance.add(champDistance);
         jpDistanceHolder.add(jpDistance, BorderLayout.CENTER);
-        jpDistanceHolder.add(jpMargeB2top, BorderLayout.NORTH);
-        jpDistanceHolder.add(jpMargeB2Bot, BorderLayout.SOUTH);
 
 
         //Tableau
