@@ -4,8 +4,10 @@ import net.cnam.fleetview.App;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.ConnectionView;
 import net.cnam.fleetview.view.ParametrageBddView;
+import net.cnam.fleetview.view.accueil.AdminMainView;
+import net.cnam.fleetview.view.administrateur.CreateModifyUsers;
+import net.cnam.fleetview.view.administrateur.ViewUsers;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
-import net.cnam.fleetview.view.cycle.CreationCycleView;
 import net.cnam.fleetview.view.cycle.ListeCycleView;
 
 import javax.swing.*;
@@ -47,9 +49,6 @@ public class LeftMenuFootPanelView extends JPanel {
         // Configuration des éléments de l'interface
         // Bouton de paramètres
         this.parametresButton.addActionListener(e -> {
-            // Fermeture de toutes les vues
-            RootController.closeAll();
-
             // Création de la vue des paramètres
             ParametrageBddView parametrageBddView = new ParametrageBddView();
 
@@ -59,11 +58,8 @@ public class LeftMenuFootPanelView extends JPanel {
 
         // Bouton de debug 1
         this.debug1Button.addActionListener(e -> {
-            // Fermeture de toutes les vues
-            RootController.closeAll();
-
             // Création de la vue des paramètres
-            ListeCycleView debugView = new ListeCycleView();
+            ViewUsers debugView = new ViewUsers();
 
             // Affichage de la vue des paramètres
             RootController.open(debugView);
@@ -71,11 +67,8 @@ public class LeftMenuFootPanelView extends JPanel {
 
         // Bouton de debug 2
         this.debug2Button.addActionListener(e -> {
-            // Fermeture de toutes les vues
-            RootController.closeAll();
-
             // Création de la vue des paramètres
-            CreationCycleView debugView = new CreationCycleView();
+            ListeCycleView debugView = new ListeCycleView();
 
             // Affichage de la vue des paramètres
             RootController.open(debugView);
@@ -83,11 +76,8 @@ public class LeftMenuFootPanelView extends JPanel {
 
         // Bouton de debug 3
         this.debug3Button.addActionListener(e -> {
-            // Fermeture de toutes les vues
-            RootController.closeAll();
-
             // Création de la vue des paramètres
-            ConnectionView debugView = new ConnectionView();
+            AdminMainView debugView = new AdminMainView();
 
             // Affichage de la vue des paramètres
             RootController.open(debugView);
