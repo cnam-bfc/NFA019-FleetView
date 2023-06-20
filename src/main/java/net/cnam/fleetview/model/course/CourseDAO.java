@@ -69,7 +69,7 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
             // Si la requête a réussi
             if (result != 0) {
                 // On récupère l'id auto-généré par la requête d'insertion
-                int id = statement.getGeneratedKeys().getObject(1, Integer.class);
+                int id = statement.getGeneratedKeys().getInt(1);
 
                 // On met à jour l'objet pour lui attribuer l'id récupéré
                 obj.setIdCourse(id);
@@ -412,7 +412,7 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
     protected void fillObject(Course course, ResultSet resultSet) {
         try {
             // Remplissage de l'objet CycleFournisseur
-            course.setIdCourse(resultSet.getObject("id_course", Integer.class));
+            course.setIdCourse(resultSet.getInt("id_course"));
             course.setNom(resultSet.getString("nom"));
             course.setDistance(resultSet.getObject("distance", Double.class));
             course.setDateCourse(resultSet.getObject("date_course", LocalDate.class));

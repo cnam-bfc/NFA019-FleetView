@@ -17,6 +17,13 @@ public abstract class View<C extends Controller> extends JPanel {
     }
 
     /**
+     * Méthode appelée lorsque la vue est affichée (ou réaffichée)
+     */
+    public void onDisplayed() {
+
+    }
+
+    /**
      * Méthode appelée lorsqu'une nouvelle vue veut s'ouvrir
      *
      * @return true si la vue peut s'ouvrir, false sinon
@@ -101,5 +108,26 @@ public abstract class View<C extends Controller> extends JPanel {
     public boolean afficherMessageConfirmation(String titre, String message) {
         int reponse = JOptionPane.showConfirmDialog(this, message, titre, JOptionPane.YES_NO_OPTION);
         return reponse == JOptionPane.YES_OPTION;
+    }
+
+    /**
+     * Méthode permettant de demander une valeur à l'utilisateur
+     *
+     * @param message le message à afficher
+     * @return la valeur saisie par l'utilisateur
+     */
+    public String demanderValeur(String message) {
+        return this.demanderValeur("Valeur", message);
+    }
+
+    /**
+     * Méthode permettant de demander une valeur à l'utilisateur
+     *
+     * @param titre   le titre du message
+     * @param message le message à afficher
+     * @return la valeur saisie par l'utilisateur
+     */
+    public String demanderValeur(String titre, String message) {
+        return JOptionPane.showInputDialog(this, message, titre, JOptionPane.QUESTION_MESSAGE);
     }
 }

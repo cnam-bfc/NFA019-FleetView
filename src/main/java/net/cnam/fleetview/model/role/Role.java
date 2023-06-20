@@ -10,7 +10,7 @@ public class Role {
     /**
      * Identifiant du role
      */
-    private int idRole;
+    private Integer idRole;
     /**
      * Nom du role
      */
@@ -29,7 +29,7 @@ public class Role {
      *
      * @return l'identifiant du role
      */
-    public int getIdRole() {
+    public Integer getIdRole() {
         return idRole;
     }
 
@@ -38,7 +38,7 @@ public class Role {
      *
      * @param idRole le nouvel identifiant du role
      */
-    public void setIdRole(int idRole) {
+    public void setIdRole(Integer idRole) {
         this.idRole = idRole;
     }
 

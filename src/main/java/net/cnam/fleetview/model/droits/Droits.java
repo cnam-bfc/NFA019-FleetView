@@ -10,7 +10,7 @@ public class Droits {
     /**
      * Identifiant du droits
      */
-    private int idDroits;
+    private Integer idDroits;
     /**
      * Nom du droits
      */
@@ -29,7 +29,7 @@ public class Droits {
      *
      * @return l'identifiant du droits
      */
-    public int getIdDroits() {
+    public Integer getIdDroits() {
         return idDroits;
     }
 
@@ -38,7 +38,7 @@ public class Droits {
      *
      * @param idDroits le nouvel identifiant du droits
      */
-    public void setIdDroits(int idDroits) {
+    public void setIdDroits(Integer idDroits) {
         this.idDroits = idDroits;
     }
 

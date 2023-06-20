@@ -66,7 +66,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
             // Si la requête a réussi
             if (result != 0) {
                 // On récupère l'id auto-généré par la requête d'insertion
-                int id = statement.getGeneratedKeys().getObject(1, Integer.class);
+                int id = statement.getGeneratedKeys().getInt(1);
 
                 // On met à jour l'objet pour lui attribuer l'id récupéré
                 obj.setIdAdresse(id);
@@ -361,7 +361,7 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
     protected void fillObject(Colis colis, ResultSet resultSet) {
         try {
             // Remplissage de l'objet CycleFournisseur
-            colis.setIdColis(resultSet.getObject("id_colis", Integer.class));
+            colis.setIdColis(resultSet.getInt("id_colis"));
             colis.setNumero(resultSet.getString("numero"));
             colis.setPoids(resultSet.getObject("poids", Double.class));
             colis.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));

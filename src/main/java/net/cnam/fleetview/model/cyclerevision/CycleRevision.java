@@ -12,7 +12,7 @@ public class CycleRevision {
     /**
      * Identifiant du cycle revision
      */
-    private int idCycleRevision;
+    private Integer idCycleRevision;
     /**
      * Date de révision
      */
@@ -28,7 +28,7 @@ public class CycleRevision {
     /**
      * Identifiant du cycle
      */
-    private int idCycle;
+    private Integer idCycle;
 
     /**
      * Constructeur par défaut
@@ -43,7 +43,7 @@ public class CycleRevision {
      *
      * @return l'identifiant du cycle revision
      */
-    public int getIdCycleRevision() {
+    public Integer getIdCycleRevision() {
         return idCycleRevision;
     }
 
@@ -52,7 +52,7 @@ public class CycleRevision {
      *
      * @param idCycleRevision le nouvel identifiant du cycle revision
      */
-    public void setIdCycleRevision(int idCycleRevision) {
+    public void setIdCycleRevision(Integer idCycleRevision) {
         this.idCycleRevision = idCycleRevision;
     }
 
@@ -115,7 +115,7 @@ public class CycleRevision {
      *
      * @return l'identifiant du cycle
      */
-    public int getIdCycle() {
+    public Integer getIdCycle() {
         return idCycle;
     }
 
@@ -124,7 +124,7 @@ public class CycleRevision {
      *
      * @param idCycle le nouvel identifiant du cycle
      */
-    public void setIdCycle(int idCycle) {
+    public void setIdCycle(Integer idCycle) {
         this.idCycle = idCycle;
     }
 }

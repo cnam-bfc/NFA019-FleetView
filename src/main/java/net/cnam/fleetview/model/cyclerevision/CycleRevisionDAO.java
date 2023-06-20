@@ -36,7 +36,7 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
     @Override
     public boolean create(CycleRevision obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdCycleRevision() != 0) {
+        if (obj.getIdCycleRevision() != null) {
             logger.error("L'objet CycleRevision a déjà un ID");
             return false;
         }
@@ -55,7 +55,7 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
             statement.setObject(1, obj.getDateRevision());
             statement.setString(2, obj.getCommentaire());
             statement.setObject(3, obj.getDateArchive());
-            statement.setInt(4, obj.getIdCycle());
+            statement.setObject(4, obj.getIdCycle());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -98,7 +98,7 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
     @Override
     public boolean delete(CycleRevision obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleRevision() == 0) {
+        if (obj.getIdCycleRevision() == null) {
             logger.error("L'objet CycleRevision n'a pas d'ID");
             return false;
         }
@@ -114,7 +114,7 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdCycleRevision());
+            statement.setObject(1, obj.getIdCycleRevision());
 
             // Récupération de l'objet avant suppression
             CycleRevision objAvantSuppression = this.getById(obj.getIdCycleRevision());
@@ -148,7 +148,7 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
      */
     public boolean archive(CycleRevision obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleRevision() == 0) {
+        if (obj.getIdCycleRevision() == null) {
             logger.error("L'objet CycleRevision n'a pas d'ID");
             return false;
         }
@@ -170,7 +170,7 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdCycleRevision());
+            statement.setObject(2, obj.getIdCycleRevision());
 
             // Récupération de l'objet avant mise à jour
             CycleRevision objAvantMAJ = this.getById(obj.getIdCycleRevision());
@@ -207,7 +207,7 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
     @Override
     public boolean update(CycleRevision obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCycleRevision() == 0) {
+        if (obj.getIdCycleRevision() == null) {
             logger.error("L'objet CycleRevision n'a pas d'ID");
             return false;
         }
@@ -226,8 +226,8 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
             statement.setObject(1, obj.getDateRevision());
             statement.setString(2, obj.getCommentaire());
             statement.setObject(3, obj.getDateArchive());
-            statement.setInt(4, obj.getIdCycle());
-            statement.setInt(5, obj.getIdCycleRevision());
+            statement.setObject(4, obj.getIdCycle());
+            statement.setObject(5, obj.getIdCycleRevision());
 
             // Récupération de l'objet avant modification
             CycleRevision objAvantModification = this.getById(obj.getIdCycleRevision());
@@ -322,7 +322,7 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -360,7 +360,7 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
             cycleRevision.setDateRevision(resultSet.getObject("date_revision", LocalDateTime.class));
             cycleRevision.setCommentaire(resultSet.getString("commentaire"));
             cycleRevision.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
-            cycleRevision.setIdCycle(resultSet.getInt("id_cycle"));
+            cycleRevision.setIdCycle(resultSet.getObject("id_cycle", Integer.class));
         } catch (SQLException ex) {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet CycleRevision", ex);

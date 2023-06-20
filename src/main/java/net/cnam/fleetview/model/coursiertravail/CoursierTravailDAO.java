@@ -37,7 +37,7 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
     @Override
     public boolean create(CoursierTravail obj, Utilisateur user) {
         // On vérifie que l'objet n'a pas d'ID
-        if (obj.getIdCoursierTravail() != 0) {
+        if (obj.getIdCoursierTravail() != null) {
             logger.error("L'objet CoursierTravail a déjà un ID");
             return false;
         }
@@ -55,7 +55,7 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateSaisie());
             statement.setObject(2, obj.getDateArchive());
-            statement.setInt(3, obj.getIdCoursier());
+            statement.setObject(3, obj.getIdCoursier());
 
             // On exécute la requête
             result = statement.executeUpdate();
@@ -98,7 +98,7 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
     @Override
     public boolean delete(CoursierTravail obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCoursierTravail() == 0) {
+        if (obj.getIdCoursierTravail() == null) {
             logger.error("L'objet CoursierTravail n'a pas d'ID");
             return false;
         }
@@ -114,7 +114,7 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
             // On prépare la requête de suppression
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, obj.getIdCoursierTravail());
+            statement.setObject(1, obj.getIdCoursierTravail());
 
             // Récupération de l'objet avant suppression
             CoursierTravail objAvantSuppression = this.getById(obj.getIdCoursierTravail());
@@ -148,7 +148,7 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
      */
     public boolean archive(CoursierTravail obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCoursierTravail() == 0) {
+        if (obj.getIdCoursierTravail() == null) {
             logger.error("L'objet CoursierTravail n'a pas d'ID");
             return false;
         }
@@ -170,7 +170,7 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateArchive());
-            statement.setInt(2, obj.getIdCoursierTravail());
+            statement.setObject(2, obj.getIdCoursierTravail());
 
             // Récupération de l'objet avant mise à jour
             CoursierTravail objAvantMAJ = this.getById(obj.getIdCoursierTravail());
@@ -207,7 +207,7 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
     @Override
     public boolean update(CoursierTravail obj, Utilisateur user) {
         // On vérifie que l'objet possède un ID
-        if (obj.getIdCoursierTravail() == 0) {
+        if (obj.getIdCoursierTravail() == null) {
             logger.error("L'objet CoursierTravail n'a pas d'ID");
             return false;
         }
@@ -225,8 +225,8 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
             // On attribue les valeurs aux paramètres
             statement.setObject(1, obj.getDateSaisie());
             statement.setObject(2, obj.getDateArchive());
-            statement.setInt(3, obj.getIdCoursier());
-            statement.setInt(4, obj.getIdCoursierTravail());
+            statement.setObject(3, obj.getIdCoursier());
+            statement.setObject(4, obj.getIdCoursierTravail());
 
             // Récupération de l'objet avant modification
             CoursierTravail objAvantModification = this.getById(obj.getIdCoursierTravail());
@@ -321,7 +321,7 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, id);
+            statement.setObject(1, id);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
@@ -358,7 +358,7 @@ public class CoursierTravailDAO extends DAO<CoursierTravail> implements Archivab
             coursierTravail.setIdCoursierTravail(resultSet.getInt("id_coursier_travail"));
             coursierTravail.setDateSaisie(resultSet.getObject("date_saisie", LocalDateTime.class));
             coursierTravail.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
-            coursierTravail.setIdCoursier(resultSet.getInt("id_coursier"));
+            coursierTravail.setIdCoursier(resultSet.getObject("id_coursier", Integer.class));
         } catch (SQLException ex) {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet CoursierTravail", ex);
