@@ -6,16 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RowLabelInformationForCoursierView extends JPanel {
-    private final JLabel title;
     private final LabelInformation firstLabel;
     private final LabelInformation secondLabel;
     private final LabelInformation thirdLabel;
 
-    public RowLabelInformationForCoursierView(JLabel title, LabelInformation firstLabel, LabelInformation secondLabel, LabelInformation thirdLabel) {
+    public RowLabelInformationForCoursierView(LabelInformation firstLabel, LabelInformation secondLabel, LabelInformation thirdLabel) {
         super();
 
         // Initialisation des attributs
-        this.title = title;
         this.firstLabel = firstLabel;
         this.secondLabel = secondLabel;
         this.thirdLabel = thirdLabel;
@@ -24,13 +22,6 @@ public class RowLabelInformationForCoursierView extends JPanel {
         BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
         this.setLayout(layout);
 
-        // Partie haute contenant le titre
-        JPanel firstJPanel = new JPanel();
-        FlowLayout flowLayoutTitre = new FlowLayout();
-        flowLayoutTitre.setAlignment(FlowLayout.LEFT); // Centrer le label
-        flowLayoutTitre.setHgap(10); // Ajouter un espace de 10px entre les éléments
-        firstJPanel.setLayout(flowLayoutTitre); // Utiliser un BorderLayout pour centrer le label
-        firstJPanel.add(this.title); // Ajouter le label au centre du panel
 
         // Partie basse contenant les informations
         JPanel secondJPanel = new JPanel();
@@ -54,12 +45,7 @@ public class RowLabelInformationForCoursierView extends JPanel {
         secondJPanel.add(thirdLabelPanel);
 
         // Ajout des panels à la vue principale
-        this.add(firstJPanel);
         this.add(secondJPanel);
-    }
-
-    public JLabel getTitle() {
-        return title;
     }
 
     public LabelInformation getFirstLabel() {
