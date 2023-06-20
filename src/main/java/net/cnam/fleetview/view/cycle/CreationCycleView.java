@@ -1,12 +1,13 @@
 package net.cnam.fleetview.view.cycle;
 
+import net.cnam.fleetview.controller.CreationCycleController;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.label.IconLabel;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class CreationCycleView extends View {
+public class CreationCycleView extends View<CreationCycleController> {
 
     public CreationCycleView() {
         JPanel mainPanel = new JPanel(new BorderLayout());
