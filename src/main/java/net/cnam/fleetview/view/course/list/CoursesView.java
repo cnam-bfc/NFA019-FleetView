@@ -142,12 +142,7 @@ public class CoursesView extends View<CoursesController> {
     public void onDisplayed() {
         super.onDisplayed();
 
-        // Effacer la tableau
-        DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
-
-        model.setRowCount(0);
-
-        // Charger les courses
+        // Recharger les courses
         controller.onRefreshCourses();
     }
 
@@ -165,5 +160,11 @@ public class CoursesView extends View<CoursesController> {
                 model.removeRow(i);
             }
         }
+    }
+
+    public void removeAllCourses() {
+        DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
+
+        model.setRowCount(0);
     }
 }

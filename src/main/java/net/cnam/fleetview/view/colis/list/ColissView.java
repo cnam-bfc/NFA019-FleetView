@@ -141,12 +141,7 @@ public class ColissView extends View<ColissController> {
     public void onDisplayed() {
         super.onDisplayed();
 
-        // Effacer la tableau
-        DefaultTableModel model = (DefaultTableModel) this.colissTable.getModel();
-
-        model.setRowCount(0);
-
-        // Charger les colis
+        // Recharger les colis
         controller.onRefreshColiss();
     }
 
@@ -164,5 +159,11 @@ public class ColissView extends View<ColissController> {
                 model.removeRow(i);
             }
         }
+    }
+
+    public void removeAllColis() {
+        DefaultTableModel model = (DefaultTableModel) this.colissTable.getModel();
+
+        model.setRowCount(0);
     }
 }

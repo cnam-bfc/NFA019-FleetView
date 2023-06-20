@@ -25,6 +25,9 @@ public class ColissController extends Controller<ColissView> {
     }
 
     public void onRefreshColiss() {
+        // Suppression des colis de la vue
+        view.removeAllColis();
+
         // Chargement des colis dans la vue
         List<Colis> coliss = colisDAO.getAllNotArchived();
         for (Colis colis : coliss) {

@@ -25,6 +25,9 @@ public class CoursesController extends Controller<CoursesView> {
     }
 
     public void onRefreshCourses() {
+        // Suppression des courses de la vue
+        view.removeAllCourses();
+
         // Chargement des courses dans la vue
         List<Course> courses = courseDAO.getAllNotArchived();
         for (Course course : courses) {
