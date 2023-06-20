@@ -12,7 +12,7 @@ public class LabelInformation extends JPanel {
 
     // ÉLÉMENTS DE L'INTERFACE
     private final JLabel firstLabel;
-    private final JLabel secondLabel;
+    private final InformationJLabel secondLabel;
 
     /**
      * Constructeur
@@ -29,10 +29,13 @@ public class LabelInformation extends JPanel {
         // Layout
         BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
         this.setLayout(layout);
+        // on centre le texte
+        this.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 
         // Création des éléments de l'interface
         this.firstLabel = new JLabel();
-        this.secondLabel = new JLabel();
+        this.secondLabel = new InformationJLabel();
 
 
         // Configuration des éléments de l'interface
@@ -41,7 +44,6 @@ public class LabelInformation extends JPanel {
 
         // Second label
         this.secondLabel.setText(this.textSecondLabel);
-
 
         // Ajout des éléments de l'interface
         this.add(this.firstLabel);
