@@ -147,6 +147,8 @@ public class ColisView extends View<ColisController> {
 
         // Configuration des éléments de l'interface
         // Panel du contenu
+        JScrollPane contenuScrollPanel = new JScrollPane(this.contenu);
+        contenuScrollPanel.setBorder(BorderFactory.createEmptyBorder());
         BoxLayout contenuLayout = new BoxLayout(this.contenu, BoxLayout.Y_AXIS);
         this.contenu.setLayout(contenuLayout);
 
@@ -184,7 +186,6 @@ public class ColisView extends View<ColisController> {
         this.searchAdresseLabel.setLabelFor(this.searchAdresseField);
 
         // Champ de recherche de l'adresse
-        this.searchAdresseField.setEditable(false);
 
         // Label des adresses suggérées
         this.adressesSuggereesLabel.setLabelFor(this.adressesSuggereesList);
@@ -246,6 +247,7 @@ public class ColisView extends View<ColisController> {
 
         // Liste des destinataires suggérés
         this.destinatairesSuggereesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.destinatairesSuggereesList.setEnabled(false);
 
         // Label du nom
         this.nomLabel.setLabelFor(this.nomField);
@@ -352,7 +354,7 @@ public class ColisView extends View<ColisController> {
                 6, 6);       //xPad, yPad
         this.contenu.add(this.champsDestinataire);
         this.contenu.add(Box.createVerticalGlue());
-        this.add(this.contenu, BorderLayout.CENTER);
+        this.add(contenuScrollPanel, BorderLayout.CENTER);
         this.add(saveButtonPanel, BorderLayout.SOUTH);
     }
 
