@@ -4,13 +4,17 @@ import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.colis.Colis;
 import net.cnam.fleetview.model.colis.ColisDAO;
+import net.cnam.fleetview.model.nominatim.NominatimAddress;
+import net.cnam.fleetview.model.nominatim.NominatimAddressDAO;
 import net.cnam.fleetview.view.colis.edit.ColisView;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class ColisController extends Controller<ColisView> {
     // DAO
     private final ColisDAO colisDAO;
+    private final NominatimAddressDAO nominatimAddressDAO;
 
     // Colis
     private Colis colis;
@@ -22,6 +26,7 @@ public class ColisController extends Controller<ColisView> {
         DefaultConnector connector = new DefaultConnector();
         Connection connection = BDDConnection.getInstance(connector);
         this.colisDAO = new ColisDAO(connection);
+        this.nominatimAddressDAO = new NominatimAddressDAO();
     }
 
     /**
@@ -98,5 +103,23 @@ public class ColisController extends Controller<ColisView> {
         }
 
         return success;
+    }
+
+    /**
+     * Charger les suggestions d'adresse auprès de l'API de Nominatim
+     *
+     * @param query
+     */
+    public void onSearchAddress(String query) {
+        // Effacer les suggestions
+        view.clearSuggestionsAdresse();
+
+        // Récupérer les suggestions
+        List<NominatimAddress> suggestions = nominatimAddressDAO.search(query);
+
+        // Ajouter les suggestions
+        for (NominatimAddress suggestion : suggestions) {
+            view.addSuggestionAdresse(suggestion.getCodePostal(), suggestion.getCommune(), suggestion.getRue(), suggestion.getNumeroDeRue(), suggestion.getComplement());
+        }
     }
 }

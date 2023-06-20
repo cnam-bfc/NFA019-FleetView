@@ -10,6 +10,8 @@ import net.cnam.fleetview.view.utils.SpringUtilities;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ColisView extends View<ColisController> {
     // ÉLÉMENTS DE L'INTERFACE
@@ -186,6 +188,15 @@ public class ColisView extends View<ColisController> {
         this.searchAdresseLabel.setLabelFor(this.searchAdresseField);
 
         // Champ de recherche de l'adresse
+        this.searchAdresseField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+
+                // Recherche des adresses correspondantes
+                controller.onSearchAddress(searchAdresseField.getText());
+            }
+        });
 
         // Label des adresses suggérées
         this.adressesSuggereesLabel.setLabelFor(this.adressesSuggereesList);
@@ -385,5 +396,25 @@ public class ColisView extends View<ColisController> {
         this.idField.setText(id);
         this.numeroField.setText(numero);
         this.poidsField.setText(String.valueOf(poids));
+    }
+
+    /**
+     * Vide les suggestions d'adresse
+     */
+    public void clearSuggestionsAdresse() {
+        this.adressesSuggereesList.removeAll();
+    }
+
+    /**
+     * Ajoute une suggestion d'adresse
+     *
+     * @param codePostal
+     * @param commune
+     * @param rue
+     * @param numero
+     * @param complement
+     */
+    public void addSuggestionAdresse(String codePostal, String commune, String rue, String numero, String complement) {
+        this.adressesSuggereesList.add(new JLabel(complement + ", " + numero + " " + rue + ", " + commune + " " + codePostal));
     }
 }
