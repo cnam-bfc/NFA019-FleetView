@@ -9,6 +9,7 @@ import net.cnam.fleetview.view.utils.ButtonColumn;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -48,11 +49,13 @@ public class CoursiersView extends View<CoursiersController> {
 
         // Barre de recherche
         // Set placeholder
+        this.barreDeRecherche.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
         this.barreDeRecherche.getTextField().setToolTipText("Rechercher un coursier");
 
         // Tableau
         DefaultTableModel model = new DefaultTableModel();
         DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        TableRowSorter<DefaultTableModel> coursiersTableRowSorter = new TableRowSorter<>(model);
         JScrollPane tableauScrollPane = new JScrollPane(tableau);
 
         model.addColumn("ID Coursier");
@@ -75,9 +78,18 @@ public class CoursiersView extends View<CoursiersController> {
         }, 5);
 
         tableau.setDefaultRenderer(Object.class, cellRenderer);
+        this.tableau.setRowHeight(30);
 
         // Tableau non editable
         tableau.setDefaultEditor(Object.class, null);
+
+        // Tri du tableau
+        this.barreDeRecherche.getTextField().addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                coursiersTableRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + barreDeRecherche.getTextField().getText()));
+            }
+        });
+        this.tableau.setRowSorter(coursiersTableRowSorter);
 
         // Ajout des éléments de l'interface
         this.add(this.titre, BorderLayout.NORTH);
