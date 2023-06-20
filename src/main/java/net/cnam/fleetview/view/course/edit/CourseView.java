@@ -246,6 +246,8 @@ public class CourseView extends View<CourseController> {
         descendreButtonColumn.setButtonEnabled(editable);
         ButtonColumn supprimerButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(9).getCellEditor();
         supprimerButtonColumn.setButtonEnabled(editable);
+        // Rendre le bouton d'ajout de colis visible ou non
+        this.ajouterColis.setVisible(editable);
         // Rendre le bouton de sauvegarde visible ou non
         this.saveButton.setVisible(editable);
     }
