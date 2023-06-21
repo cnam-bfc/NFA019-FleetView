@@ -38,7 +38,7 @@ public class CycleController extends Controller<CycleView> {
         view.editField(true);
     }
 
-    public void loadVoirCycle(int id){
+    public void loadCycle(int id){
         this.cycle = cycleDAO.getById(id);
         this.cycleMarque = cycleMarqueDAO.getMarqueByIdCycle(this.cycle.getIdCycle());
         this.cycleEtat = cycleEtatDAO.getFirstEtatByIdCycle(this.cycle.getIdCycle());
@@ -59,13 +59,17 @@ public class CycleController extends Controller<CycleView> {
         this.view.editField(false);
     }
 
+    public void loadVoirCycle(int id){
+        loadCycle(id);
+        view.editField(false);
+    }
+
     public void loadModifCycle(int id){
-        this.cycle = cycleDAO.getById(id);
 
         ///récuperer les textFields
+        loadCycle(id);
 
         // renvoie
-        view.fill(/* mettre les données a renvoyer */);//méthode a refaire
         view.editField(true);
     }
 }

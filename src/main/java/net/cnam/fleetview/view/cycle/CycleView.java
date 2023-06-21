@@ -149,7 +149,15 @@ public class CycleView extends View<CycleController> {
     }
 
     public void editField(boolean edit){
-
+        // Champs
+        this.textFieldId.setEditable(edit);
+        this.textFieldModel.setEditable(edit);
+        this.textFieldNS.setEditable(edit);
+        this.textFieldCM.setEditable(edit);
+        this.textFieldDA.setEditable(edit);
+        this.textFieldMS.setEditable(edit);
+        this.textFieldMarque.setEditable(edit);
+        this.textFieldFourn.setEditable(edit);
     }
 
 
