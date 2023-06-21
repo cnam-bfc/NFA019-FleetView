@@ -58,7 +58,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             statement.setString(4, obj.getCodePostal());
             statement.setString(5, obj.getCommune());
             statement.setString(6, obj.getRue());
-            statement.setString(7, obj.getNumeroDeRue());
+            statement.setString(7, obj.getNumeroRue());
             statement.setString(8, obj.getComplement());
             statement.setObject(9, obj.getDateArchive());
             statement.setObject(10, obj.getIdSecteur());
@@ -238,7 +238,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             statement.setString(4, obj.getCodePostal());
             statement.setString(5, obj.getCommune());
             statement.setString(6, obj.getRue());
-            statement.setString(7, obj.getNumeroDeRue());
+            statement.setString(7, obj.getNumeroRue());
             statement.setString(8, obj.getComplement());
             statement.setObject(9, obj.getDateArchive());
             statement.setObject(10, obj.getIdSecteur());
@@ -378,7 +378,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
             adresse.setCodePostal(resultSet.getString("code_postal"));
             adresse.setCommune(resultSet.getString("commune"));
             adresse.setRue(resultSet.getString("rue"));
-            adresse.setNumeroDeRue(resultSet.getString("numero_de_rue"));
+            adresse.setNumeroRue(resultSet.getString("numero_rue"));
             adresse.setComplement(resultSet.getString("complement"));
             adresse.setDateArchive(resultSet.getObject("date_archive", LocalDateTime.class));
             adresse.setIdSecteur(resultSet.getObject("id_secteur", Integer.class));
@@ -406,7 +406,7 @@ public class AdresseDAO extends DAO<Adresse> implements Archivable<Adresse> {
         HistoriqueData codePostal = this.checkChanges("code_postal", before != null ? before.getCodePostal() : null, after != null ? after.getCodePostal() : null);
         HistoriqueData commune = this.checkChanges("commune", before != null ? before.getCommune() : null, after != null ? after.getCommune() : null);
         HistoriqueData rue = this.checkChanges("rue", before != null ? before.getRue() : null, after != null ? after.getRue() : null);
-        HistoriqueData numeroDeRue = this.checkChanges("numero_rue", before != null ? before.getNumeroDeRue() : null, after != null ? after.getNumeroDeRue() : null);
+        HistoriqueData numeroDeRue = this.checkChanges("numero_rue", before != null ? before.getNumeroRue() : null, after != null ? after.getNumeroRue() : null);
         HistoriqueData complement = this.checkChanges("complement", before != null ? before.getComplement() : null, after != null ? after.getComplement() : null);
         HistoriqueData dateArchive = this.checkChanges("date_archive", before != null ? before.getDateArchive() : null, after != null ? after.getDateArchive() : null);
         HistoriqueData idSecteur = this.checkChanges("id_secteur", before != null ? before.getIdSecteur() : null, after != null ? after.getIdSecteur() : null);
