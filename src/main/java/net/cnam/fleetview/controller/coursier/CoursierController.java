@@ -8,16 +8,21 @@ import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.course.CourseDAO;
 import net.cnam.fleetview.model.courseaccident.CourseAccidentDAO;
 import net.cnam.fleetview.model.coursierutilisateur.CoursierUtilisateurDAO;
-import net.cnam.fleetview.utils.Periode;
 import net.cnam.fleetview.view.coursier.show.CoursierView;
 
 import java.sql.Connection;
+import java.time.LocalDate;
 
 public class CoursierController extends Controller<CoursierView> {
+    // variables
+    private int idCoursier;
+
+    // DAO
     private final CoursierUtilisateurDAO coursierUtilisateurDAO;
     private final CourseDAO courseDAO;
     private final ColisCourseDAO colisCourseDAO;
     private final CourseAccidentDAO courseAccidentDAO;
+
     public CoursierController(CoursierView view) {
         super(view);
 
@@ -45,20 +50,9 @@ public class CoursierController extends Controller<CoursierView> {
         prenom = prenom.substring(0, 1).toUpperCase() + prenom.substring(1);
         view.setTitre(nom + " " + prenom);
 
-        int idCoursier = Integer.parseInt(id);
+        this.idCoursier = Integer.parseInt(id);
 
         // On récupère les éléments de la catégorie "COURSE" et on remplie
-        view.setCoursesSemaine(String.valueOf(courseDAO.getNbCourseCoursier(idCoursier, Periode.SEMAINE)));
-        view.setCoursesMois(String.valueOf(courseDAO.getNbCourseCoursier(idCoursier, Periode.MOIS)));
-        view.setCoursesAnnee(String.valueOf(courseDAO.getNbCourseCoursier(idCoursier, Periode.ANNEE)));
-
-        // On récupère les éléments de la catégorie "COLIS" et on remplie
-        view.setColisSemaine(String.valueOf(colisCourseDAO.getNbColisCoursier(idCoursier, Periode.SEMAINE)));
-        view.setColisMois(String.valueOf(colisCourseDAO.getNbColisCoursier(idCoursier, Periode.MOIS)));
-        view.setColisAnnee(String.valueOf(colisCourseDAO.getNbColisCoursier(idCoursier, Periode.ANNEE)));
-
-        // On récupère les éléments de la catégorie "AUTRE" et on remplie
-        view.setAccidents(String.valueOf(courseAccidentDAO.getNbAccidentForCoursier(idCoursier)));
         // Si possible mettre des boutons cliquable pour re diriger vers les pages
         Course courseEnCours = courseDAO.getCourseEnCours(idCoursier);
         if (courseEnCours != null) {
@@ -68,6 +62,37 @@ public class CoursierController extends Controller<CoursierView> {
             view.setCourseEnCours("NON");
             view.setCycleEnCours("NON");
         }
+
+        // On actualise les informations en passant en paramètre l'id du cousier, la date du jour et la date d'il y a un mois
+
+        view.setDateDebut(LocalDate.now().minusMonths(1).toString());
+        view.setDateFin(LocalDate.now().toString());
+
+        this.actualiserInformations();
+    }
+
+    public void actualiserInformations() {
+        // On récupère l'Id du cousier à partir de la vue
+        String dateDebut = view.getDateDebut();
+        String dateFin = view.getDateFin();
+
+        // On récupère le nombre de paquets livrés
+        view.setPaquetLivre("" + colisCourseDAO.getNbColisLivreCoursier(this.idCoursier, dateDebut, dateFin));
+
+        // On récupère le nombre de Poids livrés
+        view.setPoidLivre("" + colisCourseDAO.getPoidsLivreCoursier(this.idCoursier, dateDebut, dateFin));
+
+        // On récupère le poids moyens
+        view.setPoidMoyen("" + colisCourseDAO.getPoidsMoyenCoursier(this.idCoursier, dateDebut, dateFin));
+
+        // On récupère le nombre de course
+        view.setNombreCourse("" + courseDAO.getNbCourseCoursier(this.idCoursier, dateDebut, dateFin));
+
+        // On récupère la distance parcourue
+        view.setDistanceParcourue("" + courseDAO.getDistanceParcourueCoursier(this.idCoursier, dateDebut, dateFin));
+
+        // On récupère le nombre d'accidents
+        view.setNombreAccident("" + courseAccidentDAO.getNbAccidentCoursier(this.idCoursier, dateDebut, dateFin));
     }
 
     /**

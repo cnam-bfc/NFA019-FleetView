@@ -352,11 +352,13 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
      * Méthode permettant de compter le nombre d'accident pour un coursier
      *
      * @param idCoursier L'identifiant du coursier
+     * @param dateDebut  La date de début
+     * @param dateFin    La date de fin
      * @return Le nombre d'accident
      */
-    public int getNbAccidentForCoursier(int idCoursier) {
+    public int getNbAccidentCoursier(int idCoursier, String dateDebut, String dateFin) {
         // Requête de sélection
-        String query = "SELECT IFNULL(COUNT(*),0) AS nbAccident FROM fleetview_course_accident AS fca LEFT JOIN fleetview_course AS fc ON fca.id_course = fc.id_course LEFT JOIN fleetview_coursier_travail AS fct ON fc.id_coursier_travail = fct.id_coursier_travail WHERE fct.id_coursier = ?";
+        String query = "SELECT IFNULL(COUNT(*),0) AS nbAccident FROM fleetview_course_accident AS fca LEFT JOIN fleetview_course AS fc ON fca.id_course = fc.id_course LEFT JOIN fleetview_coursier_travail AS fct ON fc.id_coursier_travail = fct.id_coursier_travail WHERE fct.id_coursier = ? AND fc.date_archive BETWEEN ? AND ?;";
 
         // Résultat de la requête
         int result = -1;
@@ -368,6 +370,8 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
             statement.setObject(1, idCoursier);
+            statement.setObject(2, dateDebut);
+            statement.setObject(3, dateFin);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
