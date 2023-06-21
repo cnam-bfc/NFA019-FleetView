@@ -199,7 +199,7 @@ public class ColissView extends View<ColissController> {
         model.setRowCount(0);
     }
 
-    public void addSelectColumn() {
+    public void addChooseColumn() {
         DefaultTableModel model = (DefaultTableModel) this.colissTable.getModel();
 
         TableColumn choisirColumn = colissTable.getColumnModel().getColumn(8);

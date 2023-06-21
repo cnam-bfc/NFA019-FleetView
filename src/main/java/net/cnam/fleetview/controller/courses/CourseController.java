@@ -3,6 +3,7 @@ package net.cnam.fleetview.controller.courses;
 import net.cnam.fleetview.controller.Controller;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.colis.ColisChooser;
+import net.cnam.fleetview.controller.colis.ColisController;
 import net.cnam.fleetview.controller.colis.ColissController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
@@ -11,10 +12,12 @@ import net.cnam.fleetview.model.adresse.AdresseDAO;
 import net.cnam.fleetview.model.colis.Colis;
 import net.cnam.fleetview.model.coliscourse.ColisCourse;
 import net.cnam.fleetview.model.coliscourse.ColisCourseDAO;
+import net.cnam.fleetview.model.coliscourse.ColisCourseOrdreComparator;
 import net.cnam.fleetview.model.colisdestinataire.ColisDestinataire;
 import net.cnam.fleetview.model.colisdestinataire.ColisDestinataireDAO;
 import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.course.CourseDAO;
+import net.cnam.fleetview.view.colis.edit.ColisView;
 import net.cnam.fleetview.view.colis.list.ColissView;
 import net.cnam.fleetview.view.course.edit.CourseView;
 
@@ -127,6 +130,24 @@ public class CourseController extends Controller<CourseView> implements ColisCho
             return false;
         }
 
+        // Effacer les colis qui ne sont plus dans la course
+        List<ColisCourse> anciensColisCourses = colisCourseDAO.getAllByIdCourse(course.getIdCourse());
+        for (ColisCourse ancienColisCourse : anciensColisCourses) {
+            boolean found = false;
+            for (ColisCourse nouveauColisCourse : courseColis) {
+                if (ancienColisCourse.getIdColisCourse().equals(nouveauColisCourse.getIdColisCourse())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                success = colisCourseDAO.archive(ancienColisCourse, RootController.getCurrentUser());
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+
         // Affectation de l'id de la course aux colis
         for (ColisCourse colisCourse : courseColis) {
             colisCourse.setIdCourse(course.getIdCourse());
@@ -147,11 +168,122 @@ public class CourseController extends Controller<CourseView> implements ColisCho
 
     public void onAjouterColis() {
         // Affichage du tableau des colis
+        // Création de la vue
         ColissView colissView = new ColissView();
-        ColissController colissController = new ColissController(colissView, this);
+        // Création du controller
+        ColissController colissController = new ColissController(colissView);
         colissView.setController(colissController);
 
+        // Liaison callback
+        colissController.bindColisChooser(this);
+
+        // Affichage de la vue
         RootController.open(colissView);
+    }
+
+    public void onVoirColis(int id) {
+        // Affichage du détail du colis
+        // Création de la vue
+        ColisView colisView = new ColisView();
+        // Création du controller
+        ColisController colisController = new ColisController(colisView);
+        colisView.setController(colisController);
+
+        // Chargement du colis
+        colisController.loadViewableColis(id);
+
+        // Affichage de la vue
+        RootController.open(colisView);
+    }
+
+    public void onMonterColis(int id) {
+        // Récupération du colis
+        ColisCourse colisCourse = null;
+        for (ColisCourse colisCourse1 : courseColis) {
+            if (colisCourse1.getIdColis() == id) {
+                colisCourse = colisCourse1;
+                break;
+            }
+        }
+        if (colisCourse == null) {
+            return;
+        }
+
+        // Trier les colis
+        courseColis.sort(new ColisCourseOrdreComparator());
+
+        // Augmentation de l'ordre des colis suivants l'actuel
+        for (ColisCourse colisCourse1 : courseColis) {
+            if (colisCourse1.getOrdre() > colisCourse.getOrdre()) {
+                colisCourse1.setOrdre(colisCourse1.getOrdre() + 1);
+            }
+        }
+
+        // Augmentation de l'ordre du colis
+        colisCourse.setOrdre(colisCourse.getOrdre() + 1);
+
+        // Mise à jour de la vue
+        view.monterColis(String.valueOf(id));
+    }
+
+    public void onDescendreColis(int id) {
+        // Récupération du colis
+        ColisCourse colisCourse = null;
+        for (ColisCourse colisCourse1 : courseColis) {
+            if (colisCourse1.getIdColis() == id) {
+                colisCourse = colisCourse1;
+                break;
+            }
+        }
+        if (colisCourse == null) {
+            return;
+        }
+
+        // Trier les colis
+        courseColis.sort(new ColisCourseOrdreComparator());
+
+        // Diminution de l'ordre des colis suivants l'actuel
+        for (ColisCourse colisCourse1 : courseColis) {
+            if (colisCourse1.getOrdre() > colisCourse.getOrdre()) {
+                colisCourse1.setOrdre(colisCourse1.getOrdre() - 1);
+            }
+        }
+
+        // Diminution de l'ordre du colis
+        colisCourse.setOrdre(colisCourse.getOrdre() - 1);
+
+        // Mise à jour de la vue
+        view.descendreColis(String.valueOf(id));
+    }
+
+    public void onSupprimerColis(int id) {
+        // Récupération du colis
+        ColisCourse colisCourse = null;
+        for (ColisCourse colisCourse1 : courseColis) {
+            if (colisCourse1.getIdColis() == id) {
+                colisCourse = colisCourse1;
+                break;
+            }
+        }
+        if (colisCourse == null) {
+            return;
+        }
+
+        // Suppression du colis
+        boolean success = courseColis.remove(colisCourse);
+        if (!success) {
+            return;
+        }
+
+        // Remettre l'ordre des colis suivants celui supprimé
+        for (ColisCourse colisCourse1 : courseColis) {
+            if (colisCourse1.getOrdre() > colisCourse.getOrdre()) {
+                colisCourse1.setOrdre(colisCourse1.getOrdre() - 1);
+            }
+        }
+
+        // Mise à jour de la vue
+        view.supprimerColis(String.valueOf(id));
     }
 
     private void addColisToView(Colis colis) {

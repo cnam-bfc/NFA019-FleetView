@@ -129,8 +129,7 @@ public class CourseView extends View<CourseController> {
         ButtonColumn voirButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //controller.onVoirColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
-                afficherMessageInformation("Voir");
+                controller.onVoirColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
             }
         }, 5);
 
@@ -141,8 +140,7 @@ public class CourseView extends View<CourseController> {
         ButtonColumn monterButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //controller.onMonterColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
-                afficherMessageInformation("Monter");
+                controller.onMonterColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
             }
         }, 6);
 
@@ -153,8 +151,7 @@ public class CourseView extends View<CourseController> {
         ButtonColumn descendreButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //controller.onDescendreColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
-                afficherMessageInformation("Descendre");
+                controller.onDescendreColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
             }
         }, 7);
 
@@ -165,8 +162,7 @@ public class CourseView extends View<CourseController> {
         ButtonColumn supprimerButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //controller.onSupprimerColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
-                afficherMessageInformation("Supprimer");
+                controller.onSupprimerColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
             }
         }, 8);
 
@@ -302,6 +298,68 @@ public class CourseView extends View<CourseController> {
      * @param id
      */
     public void removeColis(String id) {
+        DefaultTableModel colisTableModel = (DefaultTableModel) this.colisTable.getModel();
+
+        for (int i = 0; i < colisTableModel.getRowCount(); i++) {
+            if (colisTableModel.getValueAt(i, 0).equals(id)) {
+                colisTableModel.removeRow(i);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Monter un colis dans le tableau
+     *
+     * @param id
+     */
+    public void monterColis(String id) {
+        DefaultTableModel colisTableModel = (DefaultTableModel) this.colisTable.getModel();
+
+        for (int i = 0; i < colisTableModel.getRowCount(); i++) {
+            if (colisTableModel.getValueAt(i, 0).equals(id)) {
+                if (i > 0) {
+                    Object[] row = new Object[colisTableModel.getColumnCount()];
+                    for (int j = 0; j < colisTableModel.getColumnCount(); j++) {
+                        row[j] = colisTableModel.getValueAt(i, j);
+                    }
+                    colisTableModel.removeRow(i);
+                    colisTableModel.insertRow(i - 1, row);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Descendre un colis dans le tableau
+     *
+     * @param id
+     */
+    public void descendreColis(String id) {
+        DefaultTableModel colisTableModel = (DefaultTableModel) this.colisTable.getModel();
+
+        for (int i = 0; i < colisTableModel.getRowCount(); i++) {
+            if (colisTableModel.getValueAt(i, 0).equals(id)) {
+                if (i < colisTableModel.getRowCount() - 1) {
+                    Object[] row = new Object[colisTableModel.getColumnCount()];
+                    for (int j = 0; j < colisTableModel.getColumnCount(); j++) {
+                        row[j] = colisTableModel.getValueAt(i, j);
+                    }
+                    colisTableModel.removeRow(i);
+                    colisTableModel.insertRow(i + 1, row);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Supprimer un colis du tableau
+     *
+     * @param id
+     */
+    public void supprimerColis(String id) {
         DefaultTableModel colisTableModel = (DefaultTableModel) this.colisTable.getModel();
 
         for (int i = 0; i < colisTableModel.getRowCount(); i++) {

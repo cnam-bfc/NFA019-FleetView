@@ -18,26 +18,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ColissController extends Controller<ColissView> {
-    // Chooser
-    private final ColisChooser colisChooser;
-
     // Modèle
     // DAO
     private final ColisDAO colisDAO;
     private final AdresseDAO adresseDAO;
     private final ColisDestinataireDAO colisDestinataireDAO;
 
+    private ColisChooser colisChooser;
+
     public ColissController(ColissView view) {
-        this(view, null);
-    }
-
-    public ColissController(ColissView view, ColisChooser colisChooser) {
         super(view);
-
-        this.colisChooser = colisChooser;
-        if (this.colisChooser != null) {
-            view.addSelectColumn();
-        }
 
         // Initialisation des DAO
         DefaultConnector connector = new DefaultConnector();
@@ -91,6 +81,16 @@ public class ColissController extends Controller<ColissView> {
             // Ajout des colis dans la vue
             view.addColis(id, numero, poids + " kg", adresse, destinataire);
         }
+    }
+
+    public void bindColisChooser(ColisChooser colisChooser) {
+        this.colisChooser = colisChooser;
+
+        // Ajout de la colonne choisir dans la vue
+        view.addChooseColumn();
+
+        // Rafraichissement des colis
+        onRefreshColiss();
     }
 
     public void onAjouterColis() {
