@@ -18,6 +18,7 @@ import net.cnam.fleetview.view.course.edit.CourseView;
 import net.cnam.fleetview.view.course.list.CoursesView;
 
 import java.sql.Connection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CoursesController extends Controller<CoursesView> {
@@ -28,6 +29,8 @@ public class CoursesController extends Controller<CoursesView> {
     private final CoursierDAO coursierDAO;
     private final UtilisateurDAO utilisateurDAO;
     private final CycleDAO cycleDAO;
+
+    private CourseChooser courseChooser;
 
     public CoursesController(CoursesView view) {
         super(view);
@@ -46,9 +49,21 @@ public class CoursesController extends Controller<CoursesView> {
         // Suppression des courses de la vue
         view.removeAllCourses();
 
+        List<Integer> coursesBlacklist = new LinkedList<>();
+        if (courseChooser != null) {
+            List<Integer> blacklist = courseChooser.getBlacklist();
+            if (blacklist != null) {
+                coursesBlacklist.addAll(blacklist);
+            }
+        }
+
         // Chargement des courses dans la vue
         List<Course> courses = courseDAO.getAllNotArchived();
         for (Course course : courses) {
+            if (coursesBlacklist.contains(course.getIdCourse())) {
+                continue;
+            }
+
             // Récupération du travail du coursier
             CoursierTravail coursierTravail = null;
             if (course.getIdCoursierTravail() != null) {
@@ -91,6 +106,16 @@ public class CoursesController extends Controller<CoursesView> {
             // Ajout des courses dans la vue
             view.addCourse(id, nom, date, distance + " km", nomCycle, nomCoursier);
         }
+    }
+
+    public void bindCourseChooser(CourseChooser courseChooser) {
+        this.courseChooser = courseChooser;
+
+        // Ajout de la colonne choisir dans la vue
+        view.addChooseColumn();
+
+        // Rafraichissement des courses
+        onRefreshCourses();
     }
 
     public void onAjouterCourse() {
@@ -151,6 +176,23 @@ public class CoursesController extends Controller<CoursesView> {
 
             // Suppression de la course dans la vue
             view.removeCourse(idCourse);
+        }
+    }
+
+    public void onChoisirCourse(int id) {
+        if (courseChooser != null) {
+            Course course = courseDAO.getById(id);
+
+            if (course == null) {
+                view.afficherMessageErreur("Erreur", "La course n'existe pas.");
+                return;
+            }
+
+            // Fermeture de la vue
+            RootController.close(view);
+
+            // Callback du chooser
+            courseChooser.chooseCourse(course);
         }
     }
 }
