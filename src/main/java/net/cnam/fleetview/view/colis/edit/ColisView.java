@@ -452,7 +452,7 @@ public class ColisView extends View<ColisController> {
      */
     public void fill(String id, String numero, double poids) {
         // Titre
-        this.titre.getTexteLabel().setText("Colis n°" + numero);
+        this.titre.getTexteLabel().setText("Colis n°" + id + " - " + numero);
 
         // Champs
         this.idField.setText(id);
