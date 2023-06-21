@@ -132,7 +132,11 @@ public abstract class DAO<T> {
         // Sinon changement
         HistoriqueData historiqueData = new HistoriqueData();
         historiqueData.setNomChamp(champName);
-        historiqueData.setValeurChamp(champAfter.toString());
+        if (champAfter == null) {
+            historiqueData.setValeurChamp("");
+        } else {
+            historiqueData.setValeurChamp(champAfter.toString());
+        }
 
         return historiqueData;
     }

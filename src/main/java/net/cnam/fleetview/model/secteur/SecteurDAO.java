@@ -302,6 +302,53 @@ public class SecteurDAO extends DAO<Secteur> implements Archivable<Secteur> {
     }
 
     /**
+     * Méthode de récupération de tous les enregistrements des Secteur non archivés
+     *
+     * @return Une List d'objets Secteur, vide en cas d'erreur ou si la table est vide
+     */
+    public List<Secteur> getAllNotArchived() {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_secteur WHERE date_archive IS NULL";
+
+        // Résultat de la requête
+        List<Secteur> result = new LinkedList<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On parcourt le résultat pour créer les objets Secteur correspondants
+            while (resultSet.next()) {
+                // Création d'un objet Secteur
+                Secteur secteur = new Secteur();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(secteur, resultSet);
+
+                // On ajoute l'objet au résultat final
+                result.add(secteur);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer les Secteur", ex);
+
+            // Si une erreur s'est produite, on renvoie la liste vide
+            result = null;
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
+    /**
      * Méthode de récupération d'un enregistrement d'un Secteur par son identifiant.
      *
      * @param id L'identificateur à rechercher

@@ -2,6 +2,7 @@ package net.cnam.fleetview.view.accueil;
 
 import net.cnam.fleetview.controller.AdminMainController;
 import net.cnam.fleetview.controller.RootController;
+import net.cnam.fleetview.controller.carte.CarteController;
 import net.cnam.fleetview.view.ParametrageBddView;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.administrateur.CreateModifyUsers;
@@ -118,6 +119,9 @@ public class AdminMainView extends View<AdminMainController> {
         this.map.addActionListener(e -> {
             // Création de la vue des paramètres
             CarteView map = new CarteView();
+            // Création du controller de la vue
+            CarteController carteController = new CarteController(map);
+            map.setController(carteController);
 
             // Affichage de la vue des paramètres
             RootController.open(map);

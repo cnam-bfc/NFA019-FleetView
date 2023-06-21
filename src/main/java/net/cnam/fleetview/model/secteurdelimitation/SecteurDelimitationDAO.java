@@ -235,6 +235,55 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
     }
 
     /**
+     * Méthode de récupération de tous les enregistrements des SecteurDelimitation d'un Secteur
+     *
+     * @param idSecteur ID du Secteur
+     * @return Une List d'objets SecteurDelimitation, vide en cas d'erreur ou si la table est vide
+     */
+    public List<SecteurDelimitation> getAllByIdSecteur(int idSecteur) {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_secteur_delimitation WHERE id_secteur = ?";
+
+        // Résultat de la requête
+        List<SecteurDelimitation> result = new LinkedList<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            statement.setObject(1, idSecteur);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On parcourt le résultat pour créer les objets SecteurDelimitation correspondants
+            while (resultSet.next()) {
+                // Création d'un objet SecteurDelimitation
+                SecteurDelimitation secteurDelimitation = new SecteurDelimitation();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(secteurDelimitation, resultSet);
+
+                // On ajoute l'objet au résultat final
+                result.add(secteurDelimitation);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer les SecteurDelimitation", ex);
+
+            // Si une erreur s'est produite, on renvoie la liste vide
+            result = null;
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
+    /**
      * Méthode impossible : la table utilise une clé primaire composite, il faut utiliser getByIds
      * <p>
      * Exception levée systématiquement
@@ -314,6 +363,6 @@ public class SecteurDelimitationDAO extends DAO<SecteurDelimitation> {
     @Override
     protected void handleHistorique(TypeHistorique type, Utilisateur user, SecteurDelimitation before, SecteurDelimitation after) {
         // Corps à faire, pour le moment lève une exception
-        throw new UnsupportedOperationException("Not supported yet.");
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 }

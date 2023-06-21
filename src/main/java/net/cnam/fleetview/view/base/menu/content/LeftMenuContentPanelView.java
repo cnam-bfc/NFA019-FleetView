@@ -1,6 +1,7 @@
 package net.cnam.fleetview.view.base.menu.content;
 
 import net.cnam.fleetview.controller.RootController;
+import net.cnam.fleetview.controller.carte.CarteController;
 import net.cnam.fleetview.controller.colis.ColissController;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
@@ -72,7 +73,7 @@ public class LeftMenuContentPanelView extends JPanel {
 
         // Bouton de fin de course
         this.coursierEndCourse.addActionListener(e -> {
-           // Envoie sur le rapport d'activite ?
+            // Envoie sur le rapport d'activite ?
             // Archive la course
         });
 
@@ -143,6 +144,9 @@ public class LeftMenuContentPanelView extends JPanel {
 
             // Création de la vue de la carte
             CarteView coursesView = new CarteView();
+            // Création du contrôleur de la vue
+            CarteController coursesController = new CarteController(coursesView);
+            coursesView.setController(coursesController);
 
             // Affichage de la vue de la carte
             RootController.open(coursesView);
