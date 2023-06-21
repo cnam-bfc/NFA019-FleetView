@@ -46,7 +46,11 @@ public class ColisView extends View<ColisController> {
     // Label de la liste des adresses suggérées
     private final JLabel adressesSuggereesLabel;
     // Liste des adresses suggérées
-    private final JList<String> adressesSuggereesList;
+    private final JList<SuggestedAddress> adressesSuggereesList;
+    // Label du pays
+    private final JLabel paysLabel;
+    // Champ de saisie du pays
+    private final JTextField paysField;
     // Label du code postal
     private final JLabel codePostalLabel;
     // Champ de saisie du code postal
@@ -58,7 +62,7 @@ public class ColisView extends View<ColisController> {
     // Label du secteur
     private final JLabel secteurLabel;
     // Liste des secteurs
-    private final JComboBox<String> secteurList;
+    private final JComboBox<SuggestedSecteur> secteurList;
     // Label de la rue
     private final JLabel rueLabel;
     // Champ de saisie de la rue
@@ -96,6 +100,9 @@ public class ColisView extends View<ColisController> {
     // Bouton de sauvegarde
     private final IconLabelButton saveButton;
 
+    private String adresseOSMType;
+    private long adresseOSMId;
+
     public ColisView() {
         super();
 
@@ -113,7 +120,7 @@ public class ColisView extends View<ColisController> {
         this.idLabel = new JLabel("ID :", JLabel.TRAILING);
         this.idField = new JTextField();
         this.numeroLabel = new JLabel("Numéro :", JLabel.TRAILING);
-        this.numeroField = new JTextField(20);
+        this.numeroField = new JTextField();
         this.poidsLabel = new JLabel("Poids :", JLabel.TRAILING);
         this.poidsField = new JTextField();
         this.adresseTitle = new IconLabel("\uF59F", "Adresse");
@@ -122,6 +129,8 @@ public class ColisView extends View<ColisController> {
         this.searchAdresseField = new JTextField();
         this.adressesSuggereesLabel = new JLabel("Adresses suggérées :", JLabel.TRAILING);
         this.adressesSuggereesList = new JList<>();
+        this.paysLabel = new JLabel("Pays :", JLabel.TRAILING);
+        this.paysField = new JTextField();
         this.codePostalLabel = new JLabel("Code postal :", JLabel.TRAILING);
         this.codePostalField = new JTextField();
         this.communeLabel = new JLabel("Commune :", JLabel.TRAILING);
@@ -202,7 +211,23 @@ public class ColisView extends View<ColisController> {
         this.adressesSuggereesLabel.setLabelFor(this.adressesSuggereesList);
 
         // Liste des adresses suggérées
+        this.adressesSuggereesList.setModel(new DefaultListModel<>());
         this.adressesSuggereesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.adressesSuggereesList.addListSelectionListener(e -> {
+            // Récupération de l'adresse sélectionnée
+            SuggestedAddress address = adressesSuggereesList.getSelectedValue();
+
+            // Remplissage des champs
+            if (address != null) {
+                controller.onSelectAddress(address.getOsmType(), address.getOsmId());
+            }
+        });
+
+        // Label du pays
+        this.paysLabel.setLabelFor(this.paysField);
+
+        // Champ de saisie du pays
+        this.paysField.setEditable(false);
 
         // Label du code postal
         this.codePostalLabel.setLabelFor(this.codePostalField);
@@ -220,7 +245,7 @@ public class ColisView extends View<ColisController> {
         this.secteurLabel.setLabelFor(this.secteurList);
 
         // Liste des secteurs
-        this.secteurList.setEnabled(false);
+        this.secteurList.setModel(new DefaultComboBoxModel<>());
 
         // Label de la rue
         this.rueLabel.setLabelFor(this.rueField);
@@ -238,7 +263,6 @@ public class ColisView extends View<ColisController> {
         this.complementLabel.setLabelFor(this.complementField);
 
         // Champ de saisie du complément d'adresse
-        this.complementField.setEditable(false);
 
         // Panel des champs du destinataire
         SpringLayout champsDestinataireLayout = new SpringLayout();
@@ -264,13 +288,11 @@ public class ColisView extends View<ColisController> {
         this.nomLabel.setLabelFor(this.nomField);
 
         // Champ de saisie du nom
-        this.nomField.setEditable(false);
 
         // Label du prénom
         this.prenomLabel.setLabelFor(this.prenomField);
 
         // Champ de saisie du prénom
-        this.prenomField.setEditable(false);
 
         // Bouton de sauvegarde
         JPanel saveButtonPanel = new JPanel();
@@ -300,8 +322,37 @@ public class ColisView extends View<ColisController> {
                     afficherMessageErreur("Le poids du colis doit être un nombre");
                     return;
                 }
+                // Secteur
+                if (secteurList.getModel().getSize() == 0) {
+                    afficherMessageErreur("Aucun secteur disponible");
+                    return;
+                }
+                // Adresse
+                if (paysField.getText().isEmpty() || codePostalField.getText().isEmpty() || communeField.getText().isEmpty() || rueField.getText().isEmpty()) {
+                    afficherMessageErreur("L'adresse du colis est obligatoire");
+                    return;
+                }
+                // Destinataire
+                if (nomField.getText().isEmpty() || prenomField.getText().isEmpty()) {
+                    afficherMessageErreur("Le destinataire du colis est obligatoire");
+                    return;
+                }
 
-                boolean success = controller.saveColis(numeroField.getText(), poids);
+                boolean success = controller.saveColis(
+                        numeroField.getText(),
+                        poids,
+                        ((SuggestedSecteur) secteurList.getModel().getSelectedItem()).getIdSecteur(),
+                        adresseOSMType,
+                        adresseOSMId,
+                        paysField.getText(),
+                        codePostalField.getText(),
+                        communeField.getText(),
+                        rueField.getText(),
+                        numeroRueField.getText(),
+                        complementField.getText(),
+                        nomField.getText(),
+                        prenomField.getText()
+                );
                 if (!success) {
                     afficherMessageErreur("Impossible de sauvegarder le colis");
                     return;
@@ -331,6 +382,8 @@ public class ColisView extends View<ColisController> {
         this.champsAdresse.add(this.searchAdresseField);
         this.champsAdresse.add(this.adressesSuggereesLabel);
         this.champsAdresse.add(this.adressesSuggereesList);
+        this.champsAdresse.add(this.paysLabel);
+        this.champsAdresse.add(this.paysField);
         this.champsAdresse.add(this.codePostalLabel);
         this.champsAdresse.add(this.codePostalField);
         this.champsAdresse.add(this.communeLabel);
@@ -345,7 +398,7 @@ public class ColisView extends View<ColisController> {
         this.champsAdresse.add(this.complementField);
         // Lay out the panel
         SpringUtilities.makeCompactGrid(this.champsAdresse,
-                8, 2, //rows, cols
+                9, 2, //rows, cols
                 6, 6,        //initX, initY
                 6, 6);       //xPad, yPad
         this.contenu.add(this.champsAdresse);
@@ -377,6 +430,15 @@ public class ColisView extends View<ColisController> {
     public void setFieldsEditable(boolean editable) {
         this.numeroField.setEditable(editable);
         this.poidsField.setEditable(editable);
+        // Adresse
+        this.searchAdresseField.setEditable(editable);
+        this.adressesSuggereesList.setEnabled(editable);
+        this.secteurList.setEnabled(editable);
+        this.numeroRueField.setEditable(editable);
+        this.complementField.setEditable(editable);
+        // Destinataire
+        this.nomField.setEditable(editable);
+        this.prenomField.setEditable(editable);
         // Rendre le bouton de sauvegarde visible ou non
         this.saveButton.setVisible(editable);
     }
@@ -402,19 +464,92 @@ public class ColisView extends View<ColisController> {
      * Vide les suggestions d'adresse
      */
     public void clearSuggestionsAdresse() {
-        this.adressesSuggereesList.removeAll();
+        this.adressesSuggereesList.setModel(new DefaultListModel<>());
     }
 
     /**
      * Ajoute une suggestion d'adresse
      *
+     * @param osmType
+     * @param osmId
+     * @param pays
+     * @param codePostal
+     * @param commune
+     * @param rue
+     * @param numero
+     */
+    public void addSuggestionAdresse(String osmType, Long osmId, String pays, String codePostal, String commune, String rue, String numero) {
+        ((DefaultListModel<SuggestedAddress>) this.adressesSuggereesList.getModel()).addElement(new SuggestedAddress(osmType, osmId, pays, codePostal, commune, rue, numero));
+    }
+
+    /**
+     * Remplir les champs de l'adresse
+     *
+     * @param osmType
+     * @param osmId
+     * @param pays
      * @param codePostal
      * @param commune
      * @param rue
      * @param numero
      * @param complement
      */
-    public void addSuggestionAdresse(String codePostal, String commune, String rue, String numero, String complement) {
-        this.adressesSuggereesList.add(new JLabel(complement + ", " + numero + " " + rue + ", " + commune + " " + codePostal));
+    public void fillAdresse(String osmType, long osmId, String pays, String codePostal, String commune, String rue, String numero, String complement) {
+        this.adresseOSMType = osmType;
+        this.adresseOSMId = osmId;
+        this.paysField.setText(pays);
+        this.codePostalField.setText(codePostal);
+        this.communeField.setText(commune);
+        this.rueField.setText(rue);
+        if (numero != null) {
+            this.numeroRueField.setText(numero);
+        } else if (this.complementField.isEditable()) {
+            this.numeroRueField.setEditable(true);
+        }
+        if (complement != null) {
+            this.complementField.setText(complement);
+        }
+    }
+
+    /**
+     * Vide les secteurs
+     */
+    public void clearSecteurs() {
+        this.secteurList.setModel(new DefaultComboBoxModel<>());
+    }
+
+    /**
+     * Ajoute un secteur à la liste
+     *
+     * @param id
+     * @param nom
+     */
+    public void addSecteur(int id, String nom) {
+        ((DefaultComboBoxModel<SuggestedSecteur>) this.secteurList.getModel()).addElement(new SuggestedSecteur(id, nom));
+    }
+
+    /**
+     * Sélectionne un secteur
+     *
+     * @param id
+     */
+    public void fillSecteur(int id) {
+        for (int i = 0; i < this.secteurList.getModel().getSize(); i++) {
+            if (this.secteurList.getModel().getElementAt(i).getIdSecteur() == id) {
+                this.secteurList.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Remplir les champs du destinataire
+     *
+     * @param nom
+     * @param prenom
+     */
+    public void fillDestinataire(String nom, String prenom) {
+        this.nomField.setText(nom);
+        this.prenomField.setText(prenom);
     }
 }

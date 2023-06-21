@@ -62,7 +62,7 @@ public class CourseView extends View<CourseController> {
         this.idLabel = new JLabel("ID :", JLabel.TRAILING);
         this.idField = new JTextField();
         this.nomLabel = new JLabel("Nom :", JLabel.TRAILING);
-        this.nomField = new JTextField(50);
+        this.nomField = new JTextField();
         this.dateLabel = new JLabel("Date :", JLabel.TRAILING);
         this.dateField = new DatePicker();
         this.colisTitre = new IconLabel("\uF466", "Colis");
