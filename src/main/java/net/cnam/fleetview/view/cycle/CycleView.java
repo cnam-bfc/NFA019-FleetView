@@ -19,6 +19,7 @@ public class CycleView extends View<CycleController> {
     private final IconLabel titre;
 
     //Label
+    private final JLabel labelId;
     private final JLabel labelModel;
     private final JLabel labelNS;
     private final JLabel labelDR;
@@ -29,6 +30,7 @@ public class CycleView extends View<CycleController> {
     private final JLabel labelFourn;
 
     //TextField
+    private final JTextField textFieldId;
     private final JTextField textFieldModel;
     private final JTextField textFieldNS;
     private final JTextField textFieldDR;
@@ -63,6 +65,7 @@ public class CycleView extends View<CycleController> {
 
         //Label
 
+        this.labelId = new JLabel("Id");
         this.labelModel = new JLabel("Model");
         this.labelNS = new JLabel("Numéro de Série");
         this.labelDR = new JLabel("Dernière Révision");
@@ -73,7 +76,7 @@ public class CycleView extends View<CycleController> {
         this.labelFourn = new JLabel("Fournisseur");
 
         //TextField
-
+        this.textFieldId = new JTextField(10);
         this.textFieldModel = new JTextField(10);
         this.textFieldNS = new JTextField(10);
         this.textFieldDR = new JTextField(10);
@@ -96,6 +99,8 @@ public class CycleView extends View<CycleController> {
         this.add(titre, BorderLayout.NORTH);
 
         //Add Panel1
+        panel1.add(labelId, BorderLayout.EAST);
+        panel1.add(textFieldId);
         panel1.add(labelModel, BorderLayout.EAST);
         panel1.add(textFieldModel);
         panel1.add(Box.createRigidArea(new Dimension(200, 50)));
@@ -147,7 +152,19 @@ public class CycleView extends View<CycleController> {
 
     }
 
-    public void envoie(){
 
+    public void fill(String idCycle,  String nom, String numSerie, String chargeMax, String dateAchat, String dateMiseService, String marque, String fournisseur){
+        // Titre
+        this.titre.getTexteLabel().setText("Cycle n°" + idCycle + " - " + nom);
+
+        // Champs
+        this.textFieldId.setText(idCycle);
+        this.textFieldModel.setText(nom);
+        this.textFieldNS.setText(numSerie);
+        this.textFieldCM.setText(chargeMax);
+        this.textFieldDA.setText(dateAchat);
+        this.textFieldMS.setText(dateMiseService);
+        this.textFieldMarque.setText(marque);
+        this.textFieldFourn.setText(fournisseur);
     }
 }
