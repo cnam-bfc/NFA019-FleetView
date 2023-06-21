@@ -10,6 +10,7 @@ import net.cnam.fleetview.view.utils.ButtonColumn;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -74,8 +75,15 @@ public class CoursesView extends View<CoursesController> {
 
         coursesTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
+        // Id
+        TableColumn idColumn = coursesTable.getColumnModel().getColumn(0);
+        idColumn.setMinWidth(60);
+        idColumn.setMaxWidth(100);
+
         // Action voir
-        coursesTable.getColumnModel().getColumn(6).setPreferredWidth(30);
+        TableColumn voirColumn = coursesTable.getColumnModel().getColumn(6);
+        voirColumn.setMinWidth(60);
+        voirColumn.setMaxWidth(60);
         ButtonColumn voirButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -84,7 +92,9 @@ public class CoursesView extends View<CoursesController> {
         }, 6);
 
         // Action modifier
-        coursesTable.getColumnModel().getColumn(7).setPreferredWidth(30);
+        TableColumn modifierColumn = coursesTable.getColumnModel().getColumn(7);
+        modifierColumn.setMinWidth(60);
+        modifierColumn.setMaxWidth(60);
         ButtonColumn modifierButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,7 +103,9 @@ public class CoursesView extends View<CoursesController> {
         }, 7);
 
         // Action supprimer
-        coursesTable.getColumnModel().getColumn(8).setPreferredWidth(30);
+        TableColumn supprimerColumn = coursesTable.getColumnModel().getColumn(8);
+        supprimerColumn.setMinWidth(60);
+        supprimerColumn.setMaxWidth(60);
         ButtonColumn supprimerButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {

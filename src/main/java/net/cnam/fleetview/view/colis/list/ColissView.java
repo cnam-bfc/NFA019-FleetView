@@ -10,6 +10,7 @@ import net.cnam.fleetview.view.utils.ButtonColumn;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -73,8 +74,30 @@ public class ColissView extends View<ColissController> {
 
         colissTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
+        // Id
+        TableColumn idColumn = colissTable.getColumnModel().getColumn(0);
+        idColumn.setMinWidth(60);
+        idColumn.setMaxWidth(100);
+
+        // Numéro
+        TableColumn numeroColumn = colissTable.getColumnModel().getColumn(1);
+        numeroColumn.setMinWidth(60);
+        numeroColumn.setMaxWidth(100);
+
+        // Poids
+        TableColumn poidsColumn = colissTable.getColumnModel().getColumn(2);
+        poidsColumn.setMinWidth(60);
+        poidsColumn.setMaxWidth(120);
+
+        // Destinataire
+        TableColumn destinataireColumn = colissTable.getColumnModel().getColumn(4);
+        destinataireColumn.setMinWidth(150);
+        destinataireColumn.setMaxWidth(300);
+
         // Action voir
-        colissTable.getColumnModel().getColumn(5).setPreferredWidth(30);
+        TableColumn voirColumn = colissTable.getColumnModel().getColumn(5);
+        voirColumn.setMinWidth(60);
+        voirColumn.setMaxWidth(60);
         ButtonColumn voirButtonColumn = new ButtonColumn(colissTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,7 +106,9 @@ public class ColissView extends View<ColissController> {
         }, 5);
 
         // Action modifier
-        colissTable.getColumnModel().getColumn(6).setPreferredWidth(30);
+        TableColumn modifierColumn = colissTable.getColumnModel().getColumn(6);
+        modifierColumn.setMinWidth(60);
+        modifierColumn.setMaxWidth(60);
         ButtonColumn modifierButtonColumn = new ButtonColumn(colissTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,7 +117,9 @@ public class ColissView extends View<ColissController> {
         }, 6);
 
         // Action supprimer
-        colissTable.getColumnModel().getColumn(7).setPreferredWidth(30);
+        TableColumn supprimerColumn = colissTable.getColumnModel().getColumn(7);
+        supprimerColumn.setMinWidth(60);
+        supprimerColumn.setMaxWidth(60);
         ButtonColumn supprimerButtonColumn = new ButtonColumn(colissTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
