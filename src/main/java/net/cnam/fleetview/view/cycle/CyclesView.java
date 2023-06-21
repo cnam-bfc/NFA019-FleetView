@@ -88,7 +88,7 @@ public class CyclesView extends View<CyclesController> {
         ButtonColumn ColonneBoutonModif = new ButtonColumn(table, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.voirCycle(Integer.parseInt(model.getValueAt(table.getSelectedRow(), 0).toString()));
+                controller.modifCycle(Integer.parseInt(model.getValueAt(table.getSelectedRow(), 0).toString()));
             }
         }, 4);
 
@@ -97,7 +97,7 @@ public class CyclesView extends View<CyclesController> {
         ButtonColumn ColonneBoutonSup = new ButtonColumn(table, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.voirCycle(Integer.parseInt(model.getValueAt(table.getSelectedRow(), 0).toString()));
+                controller.suppCycle(Integer.parseInt(model.getValueAt(table.getSelectedRow(), 0).toString()));
             }
         }, 4);
 

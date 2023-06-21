@@ -5,10 +5,13 @@ import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
+import net.cnam.fleetview.model.cyclefournisseur.CycleFournisseur;
+import net.cnam.fleetview.model.cyclefournisseur.CycleFournisseurDAO;
 import net.cnam.fleetview.view.cycle.CycleView;
 
 public class CycleController extends Controller<CycleView> {
     private final CycleDAO cycleDAO;
+    private final CycleFournisseurDAO cycleFournisseurDAO;
     private Cycle cycle;
     public CycleController(CycleView view) {
         super(view);
@@ -16,6 +19,7 @@ public class CycleController extends Controller<CycleView> {
         // Initialisation des DAO
         DefaultConnector connector = new DefaultConnector();
         this.cycleDAO = new CycleDAO(BDDConnection.getInstance(connector));
+        this.cycleFournisseurDAO = new CycleFournisseurDAO(BDDConnection.getInstance(connector));
     }
 
     public void loademptyCycle(){
@@ -24,6 +28,7 @@ public class CycleController extends Controller<CycleView> {
 
     public void loadVoirCycle(int id){
         this.cycle = cycleDAO.getById(id);
+        this.cycleFourn = cycleFournisseurDAO.getById(id);
 
         //récuperer les textFields
         String idCycle = cycle.getIdCycle(id);
@@ -32,7 +37,7 @@ public class CycleController extends Controller<CycleView> {
         String chargeMax = cycle.getChargeMaximale().toString();
         String dateAchat = cycle.getDateAcquisition().toString();
         String miseEnService = cycle.;
-        String marque = cycle.;
+        String marque = cycle.get;
 
         // renvoie
         view.envoie(/* mettre les données a renvoyer */);//méthode a refaire
