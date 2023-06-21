@@ -347,6 +347,50 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
     }
 
     /**
+     * Méthode pour récupérer la marque associé à un cycle
+     *
+     * @param idCycleMarque L'identifiant du cycle
+     * @return La marque associé au cycle
+     */
+    public CycleMarque getMarqueByIdCycle(int idCycleMarque) {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_cycle_marque AS fcma LEFT JOIN fleetview_cycle_modele AS fcmo ON fcma.id_cycle_marque = fcmo.id_cycle_marque LEFT JOIN fleetview_cycle AS fc ON fcmo.id_cycle_modele = fc.id_cycle WHERE id_cycle = ?";
+
+        // Résultat de la requête
+        CycleMarque result = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, idCycleMarque);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                // Création d'un objet CycleFournisseur
+                result = new CycleMarque();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(result, resultSet);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer un CycleMarque", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
+    /**
      * Méthode permettant de remplir un objet CycleMarque avec les valeurs d'un enregistrement de la table fleetview_cycle_marque
      *
      * @param cycleMarque L'objet CycleMarque à remplir

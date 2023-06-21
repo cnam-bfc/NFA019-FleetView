@@ -6,13 +6,14 @@ import net.cnam.fleetview.controller.carte.CarteController;
 import net.cnam.fleetview.controller.colis.ColissController;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
+import net.cnam.fleetview.controller.cycle.CyclesController;
 import net.cnam.fleetview.view.CoursierRecapitulatifCourseView;
 import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.colis.list.ColissView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.course.list.CoursesView;
 import net.cnam.fleetview.view.coursier.list.CoursiersView;
-import net.cnam.fleetview.view.cycle.ListeCycleView;
+import net.cnam.fleetview.view.cycle.CyclesView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -113,13 +114,13 @@ public class LeftMenuContentPanelView extends JPanel {
             RootController.closeAll();
 
             // Création de la vue de la liste des cycles
-            ListeCycleView listeCycleView = new ListeCycleView();
+            CyclesView cyclesView = new CyclesView();
             // Création du contrôleur de la vue
-            //ListeC coursesController = new CoursesController(coursesView);
-            //coursesView.setController(coursesController);
+            CyclesController cyclesController = new CyclesController(cyclesView);
+            cyclesView.setController(cyclesController);
 
             // Affichage de la vue de la liste des cycles
-            RootController.open(listeCycleView);
+            RootController.open(cyclesView);
         });
 
         // Bouton de liste des coursiers

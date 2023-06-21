@@ -309,7 +309,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     @Override
     public CycleFournisseur getById(int id) {
         // Requête de sélection
-        String query = "SELECT * FROM fleetview_cycle_fournisseur WHERE id = ?";
+        String query = "SELECT * FROM fleetview_cycle_fournisseur WHERE id_cycle_fournisseur = ?";
 
         // Résultat de la requête
         CycleFournisseur result = null;

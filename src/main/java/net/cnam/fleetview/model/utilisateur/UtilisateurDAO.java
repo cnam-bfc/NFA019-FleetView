@@ -354,6 +354,50 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
     }
 
     /**
+     * Méthode de récupération d'un enregistrement d'une Utilisateur par son username.
+     *
+     * @param iden L'identificateur à rechercher
+     * @return Un objet Utilisateur correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
+     */
+    public Utilisateur getByIden(int iden) {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_utilisateur WHERE identifiant = ?";
+
+        // Résultat de la requête
+        Utilisateur result = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setInt(1, iden);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                // Création d'un objet Utilisateur
+                result = new Utilisateur();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(result, resultSet);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer un Utilisateur", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
+    /**
      * Méthode permettant de remplir un objet Utilisateur avec les valeurs d'un enregistrement de la table fleetview_utilisateur
      *
      * @param utilisateur L'objet Utilisateur à remplir

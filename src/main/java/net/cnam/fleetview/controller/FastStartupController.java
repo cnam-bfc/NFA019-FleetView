@@ -3,6 +3,7 @@ package net.cnam.fleetview.controller;
 import net.cnam.fleetview.controller.courses.CourseChooser;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.cycle.CycleChooser;
+import net.cnam.fleetview.controller.cycle.CyclesController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.coliscourse.ColisCourseDAO;
@@ -16,6 +17,7 @@ import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
 import net.cnam.fleetview.view.CoursierRecapitulatifCourseView;
 import net.cnam.fleetview.view.course.list.CoursesView;
+import net.cnam.fleetview.view.cycle.CyclesView;
 
 import java.sql.Connection;
 import java.time.LocalDateTime;
@@ -64,9 +66,11 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         // On récupère la course en fonction du coursier connecté
         this.course = courseDAO.getCourseEnCours(coursier.getIdCoursier());
 
-        if (this.course != null && this.course.getIdCycle() != 0) {
-            // On récupère le cycle en fonction de la course
-            this.cycle = cycleDAO.getById(course.getIdCycle());
+        if (this.course != null) {
+            RootController.closeAll();
+            // Retirer le bouton et mettre le nouveau
+            RootController.getRootPanelView().getRightMenuPanel().getContentPanel().setVisibleCoursierStartCourse(false);
+            RootController.getRootPanelView().getRightMenuPanel().getContentPanel().setVisibleCoursierEndCourse(true);
         }
 
         // On lance les vérifications
@@ -81,7 +85,7 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         if (this.course == null || !courseDAO.estDisponible(this.course)) {
             this.onAjouterCourse();
         } else if (this.cycle == null || !cycleDAO.estDisponible(this.cycle)) {
-            // Diriger page des cycles
+            this.onAjouterCycle();
         } else {
             return true;
         }
@@ -97,6 +101,8 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
 
         // On crée un nouveau coursier travail
         CoursierTravail coursierTravail = new CoursierTravail();
+        coursierTravail.setIdCoursier(this.coursier.getIdCoursier());
+        coursierTravail.setDateSaisie(LocalDateTime.now());
         boolean coursierTravailCreated = coursierTravailDAO.create(coursierTravail, RootController.getCurrentUser());
 
         if (!coursierTravailCreated) {
@@ -107,9 +113,16 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         this.course.setDateDebutCourse(LocalDateTime.now());
         this.course.setIdCycle(this.cycle.getIdCycle());
         this.course.setIdCoursierTravail(coursierTravail.getIdCoursierTravail());
+        boolean courseUpdated = courseDAO.update(this.course, RootController.getCurrentUser());
 
-        // Retirer le bouton et mettre le nouveau
+        if (!courseUpdated) {
+            throw new RuntimeException("Impossible de mettre à jour la course");
+        }
+
+        // Fermer les pages, retirer le bouton pour prendre une course et mettre le nouveau
+        RootController.closeAll();
         RootController.getRootPanelView().getRightMenuPanel().getContentPanel().setVisibleCoursierStartCourse(false);
+        RootController.getRootPanelView().getRightMenuPanel().getContentPanel().setVisibleCoursierEndCourse(true);
     }
 
 
@@ -131,10 +144,10 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
     @Override
     public void chooseCourse(Course course) {
         this.course = course;
-        this.checkLancerCourse();
         String poidsTotal = "" + colisCourseDAO.getPoidsColisCourse(course.getIdCourse());
         String distance = course.getDistance() == null ? "N/A" : "" + course.getDistance();
         view.fillCourse(distance, poidsTotal);
+        this.checkLancerCourse();
     }
 
     public void onAjouterCycle() {
@@ -146,19 +159,19 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         cyclesView.setController(cyclesController);
 
         // Liaison callback
-        cyclesController.bindCourseChooser(this);
+        cyclesController.bindCycleChooser(this);
 
         // Affichage de la vue
         RootController.open(cyclesView);
     }
 
     @Override
-    public void cycleCourse(Cycle cycle) {
+    public void chooseCycle(Cycle cycle) {
         this.cycle = cycle;
-        this.checkLancerCourse();
         String identifiant = cycle.getIdentifiant() == null ? "N/A" : "" + cycle.getIdentifiant();
         String chargeMax = cycle.getChargeMaximale() == null ? "N/A" : "" + cycle.getChargeMaximale();
         view.fillCycle(identifiant, chargeMax);
+        this.checkLancerCourse();
     }
 
     @Override
