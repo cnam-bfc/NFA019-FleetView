@@ -556,6 +556,40 @@ public class ColisCourseDAO extends DAO<ColisCourse> implements Archivable<Colis
         return result;
     }
 
+    public double getPoidsColisCourse (int idCourse) {
+        String query = "SELECT IFNULL(SUM(fco.poids),0) AS nbCourse FROM fleetview_colis_course AS fcc LEFT JOIN fleetview_colis AS fco ON fco.id_colis = fcc.id_colis WHERE fcc.id_course = ?;";
+
+        // Résultat de la requête
+        double result = -1;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, idCourse);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                result = resultSet.getDouble("nbCourse");
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            result = -999;
+            logger.error("Impossible de récupérer le nombre de course d'un coursier", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
     @Override
     protected void handleHistorique(TypeHistorique type, Utilisateur user, ColisCourse before, ColisCourse after) {
         // Récupération de l'identifiant unique de l'objet

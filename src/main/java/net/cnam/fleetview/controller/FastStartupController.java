@@ -4,6 +4,7 @@ import net.cnam.fleetview.controller.courses.CourseChooser;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.model.coliscourse.ColisCourseDAO;
 import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.course.CourseDAO;
 import net.cnam.fleetview.model.coursier.Coursier;
@@ -27,6 +28,7 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
     private final CoursierDAO coursierDAO;
     private final CourseDAO courseDAO;
     private final CycleDAO cycleDAO;
+    private final ColisCourseDAO colisCourseDAO;
 
     /**
      * Constructeur
@@ -44,6 +46,7 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         this.coursierDAO = new CoursierDAO(bddConnection);
         this.courseDAO = new CourseDAO(bddConnection);
         this.cycleDAO = new CycleDAO(bddConnection);
+        this.colisCourseDAO = new ColisCourseDAO(bddConnection);
 
         // On récupère le coursier en fonction de l'id utilisateur
         this.coursier = this.coursierDAO.getByIdUtilisateur(RootController.getCurrentUser().getIdUtilisateur());
@@ -112,6 +115,9 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
     public void chooseCourse(Course course) {
         this.course = course;
         this.checkLancerCourse();
+        String poidsTotal = ""+colisCourseDAO.getPoidsColisCourse(course.getIdCourse());
+        String distance = course.getDistance() == null ? "N/A" : ""+course.getDistance();
+        view.fillCourse(distance,poidsTotal);
     }
 
     @Override
