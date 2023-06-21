@@ -162,13 +162,31 @@ public class LeftMenuContentPanelView extends JPanel {
     @Override
     public Component add(Component comp) {
         // Ajout d'une bordure entre chaque composant
-        if (this.getComponentCount() > 0) {
-            super.add(Box.createRigidArea(new Dimension(0, 10)));
+        if (comp instanceof JComponent jComponent) {
+            jComponent.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
         }
 
         // 100% de la largeur
         comp.setMaximumSize(new Dimension(Integer.MAX_VALUE, comp.getMaximumSize().height));
 
         return super.add(comp);
+    }
+
+    /**
+     * Méthode permettant de rendre visible ou non le bouton de début de course
+     *
+     * @param visible boolean
+     */
+    public void setVisibleCoursierStartCourse(boolean visible) {
+        this.coursierStartCourse.setVisible(visible);
+    }
+
+    /**
+     * Méthode permettant de rendre visible ou non le bouton de fin de course
+     *
+     * @param visible boolean
+     */
+    public void setVisibleCoursierEndCourse(boolean visible) {
+        this.coursierEndCourse.setVisible(visible);
     }
 }
