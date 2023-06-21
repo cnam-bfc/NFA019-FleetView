@@ -109,7 +109,7 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         this.course.setIdCoursierTravail(coursierTravail.getIdCoursierTravail());
 
         // Retirer le bouton et mettre le nouveau
-
+        RootController.getRootPanelView().getRightMenuPanel().getContentPanel().setVisibleCoursierStartCourse(false);
     }
 
 
