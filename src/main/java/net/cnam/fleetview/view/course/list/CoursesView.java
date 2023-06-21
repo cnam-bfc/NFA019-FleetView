@@ -166,7 +166,7 @@ public class CoursesView extends View<CoursesController> {
     public void addCourse(String id, String nom, String date, String distance, String cycle, String coursier) {
         DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
 
-        model.addRow(new Object[]{id, nom, date, distance, cycle, coursier, "\uF06E", "\uF044", "\uF1F8"});
+        model.addRow(new Object[]{id, nom, date, distance, cycle, coursier, "\uF06E", "\uF044", "\uF1F8", "\uF00C"});
     }
 
     public void removeCourse(String id) {
