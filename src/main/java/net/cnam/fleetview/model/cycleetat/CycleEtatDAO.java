@@ -356,6 +356,50 @@ public class CycleEtatDAO extends DAO<CycleEtat> implements Archivable<CycleEtat
     }
 
     /**
+     * Méthode permettant de récupérer le premier état d'un cycle
+     *
+     * @param idCycle id du cycle
+     * @return Un objet CycleEtat correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
+     */
+    public CycleEtat getFirstEtatByIdCycle(int idCycle) {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_cycle_etat WHERE id_cycle = ? ORDER BY date_debut ASC LIMIT 1";
+
+        // Résultat de la requête
+        CycleEtat result = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, idCycle);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                // Création d'un objet CycleFournisseur
+                result = new CycleEtat();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(result, resultSet);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer une CycleEtat", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
+    /**
      * Méthode permettant de remplir un objet CycleEtat avec les valeurs d'un enregistrement de la table fleetview_cycle_etat
      *
      * @param cycleEtat L'objet CycleEtat à remplir
