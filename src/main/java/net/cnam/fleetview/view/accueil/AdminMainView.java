@@ -2,8 +2,19 @@ package net.cnam.fleetview.view.accueil;
 
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
+import net.cnam.fleetview.view.ParametrageBddView;
 import net.cnam.fleetview.view.View;
+import net.cnam.fleetview.view.administrateur.CreateModifyUsers;
+import net.cnam.fleetview.view.administrateur.ViewUsers;
+import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.components.label.IconLabel;
+import net.cnam.fleetview.view.course.edit.CourseView;
+import net.cnam.fleetview.view.course.list.CoursesView;
+import net.cnam.fleetview.view.coursier.list.CoursiersView;
+import net.cnam.fleetview.view.cycle.ListeCycleView;
+import net.cnam.fleetview.view.documents.FicheAccidentView;
+import net.cnam.fleetview.view.documents.FicheCourseView;
+import net.cnam.fleetview.view.statistiques.StatistiquesView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +44,7 @@ public class AdminMainView extends View {
         Utilisateur user = RootController.getCurrentUser();
 
 
-        this.iconLabel = new IconLabel("\uF013", "Création / Modification d'un Utilisateur");
+        this.iconLabel = new IconLabel("\uF013", "Accueil");
         JPanel mainPanel = new JPanel(new BorderLayout());
 
         JPanel bttnPanel = new JPanel(new GridLayout(2,5,50,50));
@@ -52,25 +63,123 @@ public class AdminMainView extends View {
         this.accidentSheet.setPreferredSize(new Dimension(100,100));
 
         if (user.getIdRole() == 1) {
+            this.dbConnection.addActionListener(e -> {
+                // Création de la vue des paramètres
+                ParametrageBddView bdd = new ParametrageBddView();
+
+                // Affichage de la vue des paramètres
+                RootController.open(bdd);
+            });
+
+            this.modifyUsers.addActionListener(e -> {
+                // Création de la vue des paramètres
+                CreateModifyUsers createModifyUsers = new CreateModifyUsers();
+
+                // Affichage de la vue des paramètres
+                RootController.open(createModifyUsers);
+            });
+
+            this.viewUsers.addActionListener(e -> {
+                // Création de la vue des paramètres
+                ViewUsers viewUsers = new ViewUsers();
+
+                // Affichage de la vue des paramètres
+                RootController.open(viewUsers);
+            });
+
             bttnPanel.add(this.dbConnection);
             bttnPanel.add(this.modifyUsers);
             bttnPanel.add(this.viewUsers);
         }
 
-        if (user.getIdRole() == 2) {
+        //if (user.getIdRole() == 2) {
+
+            this.viewCourses.addActionListener(e -> {
+                // Création de la vue des paramètres
+                CoursesView coursesView = new CoursesView();
+
+                // Affichage de la vue des paramètres
+                RootController.open(coursesView);
+            });
+            this.viewCoursiers.addActionListener(e -> {
+                // Création de la vue des paramètres
+                CoursiersView coursiersView = new CoursiersView();
+
+                // Affichage de la vue des paramètres
+                RootController.open(coursiersView);
+            });
+            this.viewCycles.addActionListener(e -> {
+                // Création de la vue des paramètres
+                ListeCycleView cycleView = new ListeCycleView();
+
+                // Affichage de la vue des paramètres
+                RootController.open(cycleView);
+            });
+            /*
+            this.viewDocs.addActionListener(e -> {
+                // Création de la vue des paramètres
+                DocumentView viewDocs = new DocumentView();
+
+                // Affichage de la vue des paramètres
+                RootController.open(viewDocs);
+            });
+             */
+            this.stats.addActionListener(e -> {
+                // Création de la vue des paramètres
+                StatistiquesView stats = new StatistiquesView();
+
+                // Affichage de la vue des paramètres
+                RootController.open(stats);
+            });
+            this.map.addActionListener(e -> {
+                // Création de la vue des paramètres
+                CarteView map = new CarteView();
+
+                // Affichage de la vue des paramètres
+                RootController.open(map);
+            });
+
             bttnPanel.add(this.viewCourses);
             bttnPanel.add(this.viewCoursiers);
             bttnPanel.add(this.viewCycles);
             bttnPanel.add(this.viewDocs);
             bttnPanel.add(this.stats);
             bttnPanel.add(this.map);
-        }
+        //}
 
-        if (user.getIdRole() == 3) {
+        //if (user.getIdRole() == 3) {
+        /*
+            this.menuCourses.addActionListener(e -> {
+                // Création de la vue des paramètres
+                FicheCourseView menuCourses = new FicheCourseView();
+
+                // Affichage de la vue des paramètres
+                RootController.open(menuCourses);
+            });
+
+         */
+            /*
+            this.dailyReport.addActionListener(e -> {
+                // Création de la vue des paramètres
+                FicheCourseView report = new FicheCourseView();
+
+                // Affichage de la vue des paramètres
+                RootController.open(report);
+            });
+
+             */
+            this.accidentSheet.addActionListener(e -> {
+                // Création de la vue des paramètres
+                FicheAccidentView accidentSheet = new FicheAccidentView();
+
+                // Affichage de la vue des paramètres
+                RootController.open(accidentSheet);
+            });
+
             bttnPanel.add(this.menuCourses);
             bttnPanel.add(this.dailyReport);
             bttnPanel.add(this.accidentSheet);
-        }
+        //}
 
         JPanel leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(100,0));
