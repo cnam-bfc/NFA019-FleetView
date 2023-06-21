@@ -1,9 +1,9 @@
 package net.cnam.fleetview.view.base.menu.foot;
 
 import net.cnam.fleetview.App;
-import net.cnam.fleetview.controller.ConnectionController;
-import net.cnam.fleetview.controller.CreationCycleController;
-import net.cnam.fleetview.controller.ListeCycleController;
+import net.cnam.fleetview.controller.connexion.ConnectionController;
+import net.cnam.fleetview.controller.cycles.CycleController;
+import net.cnam.fleetview.controller.cycles.CyclesController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.DebugView;
 import net.cnam.fleetview.view.ParametrageBddView;
@@ -63,7 +63,7 @@ public class LeftMenuFootPanelView extends JPanel {
             DebugView debugView = new FicheAccidentView();
 
             //Création du controller de la vue
-            ListeCycleController debugControl = new ListeCycleController(debugView);
+            CyclesController debugControl = new CyclesController(debugView);
 
             debugView.setController(debugControl);
 
@@ -77,7 +77,7 @@ public class LeftMenuFootPanelView extends JPanel {
             DebugView debugView = new FicheCourseView();
 
             //Création du controller de la vue
-            CreationCycleController debugControl = new CreationCycleController(debugView);
+            CycleController debugControl = new CycleController(debugView);
 
             debugView.setController(debugControl);
 

@@ -1,6 +1,6 @@
-package net.cnam.fleetview.view;
+package net.cnam.fleetview.view.connexion;
 
-import net.cnam.fleetview.controller.ConnectionController;
+import net.cnam.fleetview.controller.connexion.ConnectionController;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.label.IconLabel;
 
@@ -66,7 +66,7 @@ public class ConnectionView extends View<ConnectionController> {
         this.BoutonConnect.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.onConnection(String identi, String pass);
+                controller.onConnection(identi, pass);
             }
         });
 

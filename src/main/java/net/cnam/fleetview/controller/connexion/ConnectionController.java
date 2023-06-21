@@ -1,13 +1,15 @@
-package net.cnam.fleetview.controller;
+package net.cnam.fleetview.controller.connexion;
 
 
+import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.model.utilisateur.UtilisateurDAO;
-import net.cnam.fleetview.view.ConnectionView;
+import net.cnam.fleetview.view.connexion.ConnectionView;
 
-public class ConnectionController extends Controller<ConnectionView>{
+public class ConnectionController extends Controller<ConnectionView> {
 
     private final UtilisateurDAO utilisateurDAO;
     public ConnectionController(ConnectionView view) {
@@ -19,7 +21,7 @@ public class ConnectionController extends Controller<ConnectionView>{
 
     public void onConnection(String iden, String pass){
 
-        Utilisateur utilisateur = utilisateurDAO.getByIden(iden);
+        Utilisateur utilisateur = utilisateurDAO.getByIden(Integer.parseInt(iden));
 
         String identifiant = utilisateur.getIdentifiant();
         String motDePasse = utilisateur.getMotDePasse();

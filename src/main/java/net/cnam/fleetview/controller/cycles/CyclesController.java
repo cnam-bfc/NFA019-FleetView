@@ -1,21 +1,20 @@
-package net.cnam.fleetview.controller;
+package net.cnam.fleetview.controller.cycles;
 
+import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
-import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
-import net.cnam.fleetview.view.course.edit.CourseView;
-import net.cnam.fleetview.view.cycle.CreationCycleView;
-import net.cnam.fleetview.view.cycle.ListeCycleView;
+import net.cnam.fleetview.view.cycle.CycleView;
+import net.cnam.fleetview.view.cycle.CyclesView;
 
-import java.time.LocalDate;
 import java.util.List;
 
-public class ListeCycleController extends Controller<ListeCycleView> {
+public class CyclesController extends Controller<CyclesView> {
 
     private final CycleDAO cycleDAO;
-    public ListeCycleController(ListeCycleView view) {
+    public CyclesController(CyclesView view) {
 
         super(view);
 
@@ -26,32 +25,33 @@ public class ListeCycleController extends Controller<ListeCycleView> {
     }
 
     public void refreshCycle() {
-        // Chargement des courses dans la vue
+        // Chargement des cycles dans la vue
         List<Cycle> cycles = cycleDAO.getAllNotArchived();
         for (Cycle cycle : cycles) {
-            /* a modif
-            String id = String.valueOf(course.getIdCourse());
-            String nom = course.getNom();
-            String date = course.getDateCourse().toString();
-            String distance = String.valueOf(course.getDistance());
 
-            // Ajout des courses dans la vue
-            view.ajoutCycle(id, nom, date, distance + " km", "Cycle", "Livreur", "status");
-       */ }
+            String id = String.valueOf(cycle.getIdCycle());
+            String nom = cycle.getIdentifiant();
+            String numSerie = cycle.getNumeroSerie();
+            String dateAchat = cycle.getDateAcquisition().toString();
+            String chargeMax = cycle.getChargeMaximale().toString();
+
+            // Ajout des cycles dans la vue
+            view.ajoutCycle(id, nom, numSerie, dateAchat, chargeMax);
+        }
     }
 
     public void ajoutCycle(){
-        CreationCycleView creationCycle = new CreationCycleView();
-        CreationCycleController cycleController = new CreationCycleController(creationCycle);
+        CycleView creationCycle = new CycleView();
+        CycleController cycleController = new CycleController(creationCycle);
         creationCycle.setController(cycleController);
 
-        cycleController.emptyCycle();
+        cycleController.loademptyCycle();
 
         RootController.open(creationCycle);
     }
     public void voirCycle(int id){
-        CreationCycleView voirCycle = new CreationCycleView();
-        CreationCycleController cycleController = new CreationCycleController(voirCycle);
+        CycleView voirCycle = new CycleView();
+        CycleController cycleController = new CycleController(voirCycle);
         voirCycle.setController(cycleController);
 
         cycleController.loadVoirCycle(id);
@@ -60,8 +60,8 @@ public class ListeCycleController extends Controller<ListeCycleView> {
     }
 
     public void modifCycle(int id){
-        CreationCycleView modificationCycle = new CreationCycleView();
-        CreationCycleController cycleController = new CreationCycleController(modificationCycle);
+        CycleView modificationCycle = new CycleView();
+        CycleController cycleController = new CycleController(modificationCycle);
         modificationCycle.setController(cycleController);
 
         cycleController.loadModifCycle(id);
