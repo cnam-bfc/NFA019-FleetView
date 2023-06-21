@@ -359,6 +359,41 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
     }
 
     /**
+     * Méthode permettant de savoir si une course est disponible
+     *
+     * @param course Course à vérifier
+     * @return true si la course est disponible, false sinon
+     */
+    public boolean estDisponible(Cycle cycle) {
+        String query = "SELECT * FROM fleetview_course AS fc WHERE fc.date_archive IS NULL AND fc.date_debut_course IS NULL AND fc.id_cycle = ?;";
+        boolean result = true;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, cycle.getIdCycle());
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                result = false;
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de vérifier si la course est disponible", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+        return result;
+    }
+
+    /**
      * Méthode permettant de remplir un objet Cycle avec les valeurs d'un enregistrement de la table fleetview_cycle
      *
      * @param cycle     L'objet Cycle à remplir

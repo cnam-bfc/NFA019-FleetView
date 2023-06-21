@@ -12,7 +12,7 @@ import net.cnam.fleetview.view.CoursierRecapitulatifCourseView;
 
 import java.sql.Connection;
 
-public class CoursierNomATrouver extends Controller<CoursierRecapitulatifCourseView> {+
+public class CoursierNomATrouver extends Controller<CoursierRecapitulatifCourseView> {
     // Attributs
     private Coursier coursier;
     private Course course;
