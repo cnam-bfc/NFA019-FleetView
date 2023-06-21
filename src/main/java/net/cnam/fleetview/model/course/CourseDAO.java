@@ -552,8 +552,18 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
             this.closeResource(resultSet);
             this.closeResource(statement);
         }
-
         return result;
+    }
+
+    /**
+     * Méthode permettant de savoir si une course est disponible
+     *
+     * @param course Course à vérifier
+     * @return true si la course est disponible, false sinon
+     */
+    public boolean estDisponible (Course course) {
+        String query = "SELECT * FROM fleetview_course WHERE id_course = ? AND date_course IS NULL AND date_debut_course IS NULL AND date_archive IS NULL;";
+
     }
 
     @Override

@@ -287,6 +287,49 @@ public class CoursierDAO extends DAO<Coursier> {
     }
 
     /**
+     * Méthode de récupération d'un Coursier en fonction de l'id_utilisateur
+     *
+     * @param idUtilisateur L'id utilisateur
+     */
+    public Coursier getByIdUtilisateur(int idUtilisateur) {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_coursier WHERE id_utilisateur = ?";
+
+        // Résultat de la requête
+        Coursier result = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, idUtilisateur);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                // Création d'un objet CycleFournisseur
+                result = new Coursier();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(result, resultSet);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer un Coursier", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
+    /**
      * Méthode permettant de remplir un objet Coursier avec les valeurs d'un enregistrement de la table fleetview_coursier
      *
      * @param coursier  L'objet Coursier à remplir
