@@ -3,6 +3,7 @@ package net.cnam.fleetview.model.cycle;
 import net.cnam.fleetview.model.Archivable;
 import net.cnam.fleetview.model.DAO;
 import net.cnam.fleetview.model.TypeHistorique;
+import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.historiquedata.HistoriqueData;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 
@@ -384,6 +385,53 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
             // On log l'erreur
             logger.error("Impossible de remplir l'objet Cycle", ex);
         }
+    }
+
+    /**
+     * Méthode de récupération de tous les enregistrements des Cycle non archivés
+     *
+     * @return Une List d'objets Cycle, vide en cas d'erreur ou si la table est vide
+     */
+    public List<Cycle> getAllNotArchived() {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_cycle WHERE date_archive IS NULL";
+
+        // Résultat de la requête
+        List<Cycle> result = new LinkedList<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On parcourt le résultat pour créer les objets Course correspondants
+            while (resultSet.next()) {
+                // Création d'un objet CycleFournisseur
+                Cycle cycle = new Cycle();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(cycle, resultSet);
+
+                // On ajoute l'objet au résultat final
+                result.add(cycle);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer les Cycle", ex);
+
+            // Si une erreur s'est produite, on renvoie la liste vide
+            result = null;
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
     }
 
     @Override

@@ -28,7 +28,6 @@ public class CyclesController extends Controller<CyclesView> {
         // Chargement des cycles dans la vue
         List<Cycle> cycles = cycleDAO.getAllNotArchived();
         for (Cycle cycle : cycles) {
-
             String id = String.valueOf(cycle.getIdCycle());
             String nom = cycle.getIdentifiant();
             String numSerie = cycle.getNumeroSerie();
