@@ -83,7 +83,7 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         if (this.course == null || !courseDAO.estDisponible(this.course)) {
             this.onAjouterCourse();
         } else if (this.cycle == null || !cycleDAO.estDisponible(this.cycle)) {
-            // Diriger page des cycles
+            this.onAjouterCycle();
         } else {
             return true;
         }
@@ -99,6 +99,8 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
 
         // On crée un nouveau coursier travail
         CoursierTravail coursierTravail = new CoursierTravail();
+        coursierTravail.setIdCoursier(this.coursier.getIdCoursier());
+        coursierTravail.setDateSaisie(LocalDateTime.now());
         boolean coursierTravailCreated = coursierTravailDAO.create(coursierTravail, RootController.getCurrentUser());
 
         if (!coursierTravailCreated) {
@@ -133,10 +135,10 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
     @Override
     public void chooseCourse(Course course) {
         this.course = course;
-        this.checkLancerCourse();
         String poidsTotal = "" + colisCourseDAO.getPoidsColisCourse(course.getIdCourse());
         String distance = course.getDistance() == null ? "N/A" : "" + course.getDistance();
         view.fillCourse(distance, poidsTotal);
+        this.checkLancerCourse();
     }
 
     public void onAjouterCycle() {
@@ -157,10 +159,10 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
     @Override
     public void chooseCycle(Cycle cycle) {
         this.cycle = cycle;
-        this.checkLancerCourse();
         String identifiant = cycle.getIdentifiant() == null ? "N/A" : "" + cycle.getIdentifiant();
         String chargeMax = cycle.getChargeMaximale() == null ? "N/A" : "" + cycle.getChargeMaximale();
         view.fillCycle(identifiant, chargeMax);
+        this.checkLancerCourse();
     }
 
     @Override
