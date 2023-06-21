@@ -122,6 +122,26 @@ public class CourseView extends View<CourseController> {
 
         colisTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
+        // Id
+        TableColumn idColumn = colisTable.getColumnModel().getColumn(0);
+        idColumn.setMinWidth(60);
+        idColumn.setMaxWidth(100);
+
+        // Numéro
+        TableColumn numeroColumn = colisTable.getColumnModel().getColumn(1);
+        numeroColumn.setMinWidth(60);
+        numeroColumn.setMaxWidth(100);
+
+        // Poids
+        TableColumn poidsColumn = colisTable.getColumnModel().getColumn(2);
+        poidsColumn.setMinWidth(60);
+        poidsColumn.setMaxWidth(120);
+
+        // Destinataire
+        TableColumn destinataireColumn = colisTable.getColumnModel().getColumn(4);
+        destinataireColumn.setMinWidth(150);
+        destinataireColumn.setMaxWidth(300);
+
         // Action voir
         TableColumn voirColumn = colisTable.getColumnModel().getColumn(5);
         voirColumn.setMinWidth(60);
