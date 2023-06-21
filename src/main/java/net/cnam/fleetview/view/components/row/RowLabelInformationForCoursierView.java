@@ -21,6 +21,8 @@ public class RowLabelInformationForCoursierView extends JPanel {
         // Layout
         BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
         this.setLayout(layout);
+        // on ajoute de la marge à gauche et à droite
+        this.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
 
         // Partie basse contenant les informations

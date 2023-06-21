@@ -35,20 +35,25 @@ public class LabelInformation extends JPanel {
 
         // Création des éléments de l'interface
         this.firstLabel = new JLabel();
+        this.firstLabel.setFont(App.TEXT_FONT.deriveFont(Font.BOLD, 12f));
         this.secondLabel = new InformationJLabel();
 
 
         // Configuration des éléments de l'interface
         // First label
+        JPanel panelUn = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.firstLabel.setText(this.textFirstLabel);
 
         // Second label
+        JPanel panelDeux = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.secondLabel.setText(this.textSecondLabel);
 
         // Ajout des éléments de l'interface
-        this.add(this.firstLabel);
+        panelUn.add(this.firstLabel);
+        panelDeux.add(this.secondLabel);
+        this.add(panelUn);
         this.add(Box.createRigidArea(new Dimension(0, 3)));
-        this.add(this.secondLabel);
+        this.add(panelDeux);
     }
 
     public JLabel getFirstLabel() {
