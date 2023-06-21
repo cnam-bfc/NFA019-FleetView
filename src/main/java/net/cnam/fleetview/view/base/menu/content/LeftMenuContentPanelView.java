@@ -9,7 +9,6 @@ import net.cnam.fleetview.view.colis.list.ColissView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.course.list.CoursesView;
 import net.cnam.fleetview.view.coursier.list.CoursiersView;
-import net.cnam.fleetview.view.statistiques.StatistiquesView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,8 +23,6 @@ public class LeftMenuContentPanelView extends JPanel {
     private final IconLabelButton coursiersButton;
     // Carte
     private final IconLabelButton carteButton;
-    // Statistiques
-    private final IconLabelButton statistiquesButton;
 
     public LeftMenuContentPanelView() {
         super();
@@ -44,8 +41,6 @@ public class LeftMenuContentPanelView extends JPanel {
         this.coursesButton = new IconLabelButton("\uF0D1", "Courses");
         this.coursiersButton = new IconLabelButton("\uF84A", "Coursiers");
         this.carteButton = new IconLabelButton("\uf279", "Carte");
-        this.statistiquesButton = new IconLabelButton("\uF200", "Statistiques");
-
 
         // Configuration des éléments de l'interface
         // Bouton de liste des colis
@@ -105,25 +100,12 @@ public class LeftMenuContentPanelView extends JPanel {
             RootController.open(coursesView);
         });
 
-        // Bouton de statistiques
-        this.statistiquesButton.addActionListener(e -> {
-            // Fermeture de toutes les vues
-            RootController.closeAll();
-
-            // Création de la vue des statistiques
-            StatistiquesView statistiquesView = new StatistiquesView();
-
-            // Affichage de la vue des statistiques
-            RootController.open(statistiquesView);
-        });
-
 
         // Ajout des éléments de l'interface
         this.add(this.colisButton);
         this.add(this.coursesButton);
         this.add(this.coursiersButton);
         this.add(this.carteButton);
-        this.add(this.statistiquesButton);
     }
 
     @Override
