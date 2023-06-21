@@ -34,7 +34,6 @@ public class IconLabel extends JPanel {
         this.iconLabel = new JLabel();
         this.texteLabel = new JLabel();
 
-
         // Configuration des éléments de l'interface
         // Icon label
         this.iconLabel.setText(this.icon);

@@ -352,6 +352,52 @@ public class CourseAccidentDAO extends DAO<CourseAccident> implements Archivable
     }
 
     /**
+     * Méthode permettant de compter le nombre d'accident pour un coursier
+     *
+     * @param idCoursier L'identifiant du coursier
+     * @param dateDebut  La date de début
+     * @param dateFin    La date de fin
+     * @return Le nombre d'accident
+     */
+    public int getNbAccidentCoursier(int idCoursier, String dateDebut, String dateFin) {
+        // Requête de sélection
+        String query = "SELECT IFNULL(COUNT(*),0) AS nbAccident FROM fleetview_course_accident AS fca LEFT JOIN fleetview_course AS fc ON fca.id_course = fc.id_course LEFT JOIN fleetview_coursier_travail AS fct ON fc.id_coursier_travail = fct.id_coursier_travail WHERE fct.id_coursier = ? AND fc.date_archive BETWEEN ? AND ?;";
+
+        // Résultat de la requête
+        int result = -1;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, idCoursier);
+            statement.setObject(2, dateDebut);
+            statement.setObject(3, dateFin);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                result = resultSet.getInt("nbAccident");
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            result = -999;
+            logger.error("Impossible de récupérer le nombre d'accident d'un coursier", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
+
+    /**
      * Méthode permettant de remplir un objet CourseAccident avec les valeurs d'un enregistrement de la table fleetview_course_accident
      *
      * @param courseAccident L'objet CourseAccident à remplir
