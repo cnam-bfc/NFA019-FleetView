@@ -38,10 +38,10 @@ public class CycleView extends View<CycleController> {
     private final JTextField textFieldDA;
     private final JTextField textFieldMS;
     private final JTextField textFieldMarque;
-    private final JTextField textFieldFourn);
+    private final JTextField textFieldFourn;
 
     //Button
-    private final Button BoutonValidCycle;
+    private final JButton BoutonValidCycle;
     private final JButton BoutonAnnulCycle;
     public CycleView() {
         //Panel
