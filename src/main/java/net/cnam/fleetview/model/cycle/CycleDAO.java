@@ -362,9 +362,9 @@ public class CycleDAO extends DAO<Cycle> implements Archivable<Cycle> {
     }
 
     /**
-     * Méthode permettant de savoir si une course est disponible
+     * Méthode permettant de savoir si un cycle est disponible
      *
-     * @param course Course à vérifier
+     * @param cycle Cycle à vérifier
      * @return true si la course est disponible, false sinon
      */
     public boolean estDisponible(Cycle cycle) {
