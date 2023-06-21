@@ -1,24 +1,29 @@
 package net.cnam.fleetview.view.base.menu.content;
 
-import net.cnam.fleetview.controller.CoursesController;
+import net.cnam.fleetview.controller.colis.ColissController;
+import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
-import net.cnam.fleetview.view.coursier.list.CoursiersView;
-import net.cnam.fleetview.view.statistiques.StatistiquesView;
 import net.cnam.fleetview.view.carte.CarteView;
+import net.cnam.fleetview.view.colis.list.ColissView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.course.list.CoursesView;
+import net.cnam.fleetview.view.coursier.list.CoursiersView;
+import net.cnam.fleetview.view.statistiques.StatistiquesView;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class LeftMenuContentPanelView extends JPanel {
     // Composants graphiques
+    // Colis
+    private final IconLabelButton colisButton;
     // Courses
     private final IconLabelButton coursesButton;
+    // Coursiers
+    private final IconLabelButton coursiersButton;
     // Carte
     private final IconLabelButton carteButton;
-    private final IconLabelButton coursiersButton;
     // Statistiques
     private final IconLabelButton statistiquesButton;
 
@@ -35,13 +40,29 @@ public class LeftMenuContentPanelView extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Création des éléments de l'interface
+        this.colisButton = new IconLabelButton("\uF466", "Colis");
         this.coursesButton = new IconLabelButton("\uF0D1", "Courses");
-        this.carteButton = new IconLabelButton("\uf279", "Carte");
         this.coursiersButton = new IconLabelButton("\uF84A", "Coursiers");
+        this.carteButton = new IconLabelButton("\uf279", "Carte");
         this.statistiquesButton = new IconLabelButton("\uF200", "Statistiques");
 
 
         // Configuration des éléments de l'interface
+        // Bouton de liste des colis
+        this.colisButton.addActionListener(e -> {
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+
+            // Création de la vue de la liste des colis
+            ColissView colissView = new ColissView();
+            // Création du contrôleur de la vue
+            ColissController colissController = new ColissController(colissView);
+            colissView.setController(colissController);
+
+            // Affichage de la vue de la liste des colis
+            RootController.open(colissView);
+        });
+
         // Bouton de liste des courses
         this.coursesButton.addActionListener(e -> {
             // Fermeture de toutes les vues
@@ -54,18 +75,6 @@ public class LeftMenuContentPanelView extends JPanel {
             coursesView.setController(coursesController);
 
             // Affichage de la vue de la liste des courses
-            RootController.open(coursesView);
-        });
-
-        // Bouton de la carte
-        this.carteButton.addActionListener(e -> {
-            // Fermeture de toutes les vues
-            RootController.closeAll();
-
-            // Création de la vue de la carte
-            CarteView coursesView = new CarteView();
-
-            // Affichage de la vue de la carte
             RootController.open(coursesView);
         });
 
@@ -84,6 +93,18 @@ public class LeftMenuContentPanelView extends JPanel {
             RootController.open(coursiersView);
         });
 
+        // Bouton de la carte
+        this.carteButton.addActionListener(e -> {
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+
+            // Création de la vue de la carte
+            CarteView coursesView = new CarteView();
+
+            // Affichage de la vue de la carte
+            RootController.open(coursesView);
+        });
+
         // Bouton de statistiques
         this.statistiquesButton.addActionListener(e -> {
             // Fermeture de toutes les vues
@@ -98,6 +119,7 @@ public class LeftMenuContentPanelView extends JPanel {
 
 
         // Ajout des éléments de l'interface
+        this.add(this.colisButton);
         this.add(this.coursesButton);
         this.add(this.coursiersButton);
         this.add(this.carteButton);

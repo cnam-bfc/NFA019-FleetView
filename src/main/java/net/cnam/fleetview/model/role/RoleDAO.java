@@ -58,10 +58,13 @@ public class RoleDAO extends DAO<Role> {
             // Si la requête a réussi
             if (result != 0) {
                 // On récupère l'id auto-généré par la requête d'insertion
-                int id = statement.getGeneratedKeys().getInt(1);
-
-                // On met à jour l'objet pour lui attribuer l'id récupéré
-                obj.setIdRole(id);
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    // On attribue l'id à l'objet
+                    obj.setIdRole(generatedKeys.getInt(1));
+                } else {
+                    logger.error("Échec de la création du Role en base, aucun ID auto-généré retourné.");
+                }
             }
 
             // On ajoute l'historique

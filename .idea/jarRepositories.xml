@@ -21,5 +21,10 @@
       <option name="name" value="JOSM" />
       <option name="url" value="https://josm.openstreetmap.de/nexus/content/repositories/releases" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="farmvivi" />
+      <option name="name" value="FarmVivi" />
+      <option name="url" value="https://nexus.farmvivi.fr/repository/maven-releases/" />
+    </remote-repository>
   </component>
 </project>

@@ -20,6 +20,12 @@
 
     <repositories>
         <repository>
+            <name>FarmVivi</name>
+            <id>farmvivi</id>
+            <url>https://nexus.farmvivi.fr/repository/maven-releases/</url>
+        </repository>
+
+        <repository>
             <name>JOSM</name>
             <id>josm</id>
             <url>https://josm.openstreetmap.de/nexus/content/repositories/releases</url>
@@ -39,6 +45,14 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>2.0.7</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- https://nexus.farmvivi.fr/#browse/browse:maven-releases:net%2Fwytrem%2Fwylog%2F2.0 -->
+        <dependency>
+            <groupId>net.wytrem</groupId>
+            <artifactId>wylog</artifactId>
+            <version>2.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -62,6 +76,22 @@
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>8.0.33</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.2.1</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

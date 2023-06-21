@@ -66,10 +66,13 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
             // Si la requête a réussi
             if (result != 0) {
                 // On récupère l'id auto-généré par la requête d'insertion
-                int id = statement.getGeneratedKeys().getInt(1);
-
-                // On met à jour l'objet pour lui attribuer l'id récupéré
-                obj.setIdAdresse(id);
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    // On attribue l'id à l'objet
+                    obj.setIdColis(generatedKeys.getInt(1));
+                } else {
+                    logger.error("Échec de la création du Colis en base, aucun ID auto-généré retourné.");
+                }
             }
 
             // On ajoute l'historique
@@ -268,6 +271,53 @@ public class ColisDAO extends DAO<Colis> implements Archivable<Colis> {
     public List<Colis> getAll() {
         // Requête de sélection
         String query = "SELECT * FROM fleetview_colis";
+
+        // Résultat de la requête
+        List<Colis> result = new LinkedList<>();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On parcourt le résultat pour créer les objets CycleFournisseur correspondants
+            while (resultSet.next()) {
+                // Création d'un objet CycleFournisseur
+                Colis colis = new Colis();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(colis, resultSet);
+
+                // On ajoute l'objet au résultat final
+                result.add(colis);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer les colis", ex);
+
+            // Si une erreur s'est produite, on renvoie la liste vide
+            result = null;
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
+    /**
+     * Méthode de récupération de tous les enregistrements des colis non archivés
+     *
+     * @return Une List d'objets Colis, vide en cas d'erreur ou si la table est vide
+     */
+    public List<Colis> getAllNotArchived() {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_colis WHERE date_archive IS NULL";
 
         // Résultat de la requête
         List<Colis> result = new LinkedList<>();
