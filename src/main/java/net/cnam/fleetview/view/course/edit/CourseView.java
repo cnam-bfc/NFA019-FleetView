@@ -12,6 +12,7 @@ import net.cnam.fleetview.view.utils.SpringUtilities;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
@@ -112,7 +113,6 @@ public class CourseView extends View<CourseController> {
         colisTableModel.addColumn("Poids");
         colisTableModel.addColumn("Adresse");
         colisTableModel.addColumn("Destinataire");
-        colisTableModel.addColumn("Statut");
         colisTableModel.addColumn("Voir");
         colisTableModel.addColumn("Monter");
         colisTableModel.addColumn("Descendre");
@@ -123,44 +123,52 @@ public class CourseView extends View<CourseController> {
         colisTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Action voir
-        colisTable.getColumnModel().getColumn(6).setPreferredWidth(30);
+        TableColumn voirColumn = colisTable.getColumnModel().getColumn(5);
+        voirColumn.setMinWidth(60);
+        voirColumn.setMaxWidth(60);
         ButtonColumn voirButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //controller.onVoirColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
                 afficherMessageInformation("Voir");
             }
-        }, 6);
+        }, 5);
 
         // Action monter
-        colisTable.getColumnModel().getColumn(7).setPreferredWidth(30);
+        TableColumn monterColumn = colisTable.getColumnModel().getColumn(6);
+        monterColumn.setMinWidth(60);
+        monterColumn.setMaxWidth(60);
         ButtonColumn monterButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //controller.onMonterColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
                 afficherMessageInformation("Monter");
             }
-        }, 7);
+        }, 6);
 
         // Action descendre
-        colisTable.getColumnModel().getColumn(8).setPreferredWidth(30);
+        TableColumn descendreColumn = colisTable.getColumnModel().getColumn(7);
+        descendreColumn.setMinWidth(60);
+        descendreColumn.setMaxWidth(60);
         ButtonColumn descendreButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //controller.onDescendreColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
                 afficherMessageInformation("Descendre");
             }
-        }, 8);
+        }, 7);
 
         // Action supprimer
-        colisTable.getColumnModel().getColumn(9).setPreferredWidth(30);
+        TableColumn supprimerColumn = colisTable.getColumnModel().getColumn(8);
+        supprimerColumn.setMinWidth(60);
+        supprimerColumn.setMaxWidth(60);
         ButtonColumn supprimerButtonColumn = new ButtonColumn(colisTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //controller.onSupprimerColis(Integer.parseInt(colisTableModel.getValueAt(colisTable.getSelectedRow(), 0).toString()));
                 afficherMessageInformation("Supprimer");
             }
-        }, 9);
+        }, 8);
 
         colisTable.setDefaultRenderer(Object.class, colisTableCellRenderer);
         colisTable.setRowHeight(30);
@@ -176,8 +184,7 @@ public class CourseView extends View<CourseController> {
         this.ajouterColis.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //controller.onAjouterColis();
-                afficherMessageInformation("Ajouter");
+                controller.onAjouterColis();
             }
         });
 
@@ -240,11 +247,11 @@ public class CourseView extends View<CourseController> {
         this.nomField.setEditable(editable);
         this.dateField.setEnabled(editable);
         // Désactiver les boutons du tableau des colis
-        ButtonColumn monterButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(7).getCellEditor();
+        ButtonColumn monterButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(6).getCellEditor();
         monterButtonColumn.setButtonEnabled(editable);
-        ButtonColumn descendreButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(8).getCellEditor();
+        ButtonColumn descendreButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(7).getCellEditor();
         descendreButtonColumn.setButtonEnabled(editable);
-        ButtonColumn supprimerButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(9).getCellEditor();
+        ButtonColumn supprimerButtonColumn = (ButtonColumn) this.colisTable.getColumnModel().getColumn(8).getCellEditor();
         supprimerButtonColumn.setButtonEnabled(editable);
         // Rendre le bouton d'ajout de colis visible ou non
         this.ajouterColis.setVisible(editable);
@@ -277,12 +284,11 @@ public class CourseView extends View<CourseController> {
      * @param poids
      * @param adresse
      * @param destinataire
-     * @param statut
      */
-    public void addColis(String id, String numero, String poids, String adresse, String destinataire, String statut) {
+    public void addColis(String id, String numero, String poids, String adresse, String destinataire) {
         DefaultTableModel colisTableModel = (DefaultTableModel) this.colisTable.getModel();
 
-        colisTableModel.addRow(new Object[]{id, numero, poids, adresse, destinataire, statut, "\uF06E", "\uF1F8"});
+        colisTableModel.addRow(new Object[]{id, numero, poids, adresse, destinataire, "\uF06E", "\uF062", "\uF063", "\uF1F8"});
     }
 
     /**

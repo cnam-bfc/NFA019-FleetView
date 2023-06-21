@@ -69,6 +69,7 @@ public class ColissView extends View<ColissController> {
         colissTableModel.addColumn("Voir");
         colissTableModel.addColumn("Modifier");
         colissTableModel.addColumn("Supprimer");
+        colissTableModel.addColumn("Choisir");
 
         colissTable.setModel(colissTableModel);
 
@@ -127,6 +128,11 @@ public class ColissView extends View<ColissController> {
             }
         }, 7);
 
+        // Action choisir
+        TableColumn choisirColumn = colissTable.getColumnModel().getColumn(8);
+        choisirColumn.setMinWidth(0);
+        choisirColumn.setMaxWidth(0);
+
         colissTable.setDefaultRenderer(Object.class, colissTableCellRenderer);
         colissTable.setRowHeight(30);
 
@@ -174,7 +180,7 @@ public class ColissView extends View<ColissController> {
     public void addColis(String id, String nom, String distance, String adresseDestinataire, String destinataire) {
         DefaultTableModel model = (DefaultTableModel) this.colissTable.getModel();
 
-        model.addRow(new Object[]{id, nom, distance, adresseDestinataire, destinataire, "\uF06E", "\uF044", "\uF1F8"});
+        model.addRow(new Object[]{id, nom, distance, adresseDestinataire, destinataire, "\uF06E", "\uF044", "\uF1F8", "\uF00C"});
     }
 
     public void removeColis(String id) {
@@ -191,5 +197,20 @@ public class ColissView extends View<ColissController> {
         DefaultTableModel model = (DefaultTableModel) this.colissTable.getModel();
 
         model.setRowCount(0);
+    }
+
+    public void addSelectColumn() {
+        DefaultTableModel model = (DefaultTableModel) this.colissTable.getModel();
+
+        TableColumn choisirColumn = colissTable.getColumnModel().getColumn(8);
+        choisirColumn.setMinWidth(60);
+        choisirColumn.setMaxWidth(60);
+        choisirColumn.setPreferredWidth(60);
+        ButtonColumn choisirButtonColumn = new ButtonColumn(colissTable, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onChoisirColis(Integer.parseInt(model.getValueAt(colissTable.getSelectedRow(), 0).toString()));
+            }
+        }, 8);
     }
 }
