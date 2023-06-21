@@ -1,6 +1,6 @@
 package net.cnam.fleetview.view.course.list;
 
-import net.cnam.fleetview.controller.CoursesController;
+import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.components.field.IconTextField;

@@ -1,6 +1,6 @@
 package net.cnam.fleetview.view.colis.list;
 
-import net.cnam.fleetview.controller.ColissController;
+import net.cnam.fleetview.controller.colis.ColissController;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.components.field.IconTextField;

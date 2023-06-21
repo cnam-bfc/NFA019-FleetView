@@ -1,7 +1,7 @@
 package net.cnam.fleetview.view.course.edit;
 
 import com.github.lgooddatepicker.components.DatePicker;
-import net.cnam.fleetview.controller.CourseController;
+import net.cnam.fleetview.controller.courses.CourseController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.button.IconLabelButton;

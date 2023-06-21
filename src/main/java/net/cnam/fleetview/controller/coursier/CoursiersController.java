@@ -1,14 +1,11 @@
 package net.cnam.fleetview.controller.coursier;
 
 import net.cnam.fleetview.controller.Controller;
-import net.cnam.fleetview.controller.CourseController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
-import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.coursierutilisateur.CoursierUtilisateur;
 import net.cnam.fleetview.model.coursierutilisateur.CoursierUtilisateurDAO;
-import net.cnam.fleetview.view.course.edit.CourseView;
 import net.cnam.fleetview.view.coursier.list.CoursiersView;
 import net.cnam.fleetview.view.coursier.show.CoursierView;
 

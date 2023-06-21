@@ -1,5 +1,7 @@
-package net.cnam.fleetview.controller;
+package net.cnam.fleetview.controller.colis;
 
+import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.adresse.Adresse;

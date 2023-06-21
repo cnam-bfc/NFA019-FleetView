@@ -1,7 +1,7 @@
 package net.cnam.fleetview.view.base.menu.content;
 
-import net.cnam.fleetview.controller.ColissController;
-import net.cnam.fleetview.controller.CoursesController;
+import net.cnam.fleetview.controller.colis.ColissController;
+import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
 import net.cnam.fleetview.view.carte.CarteView;
