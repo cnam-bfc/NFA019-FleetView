@@ -354,7 +354,7 @@ public class CycleMarqueDAO extends DAO<CycleMarque> implements Archivable<Cycle
      */
     public CycleMarque getMarqueByIdCycle(int idCycleMarque) {
         // Requête de sélection
-        String query = "SELECT * FROM fleetview_cycle_marque AS fcma LEFT JOIN fleetview_cycle_modele AS fcmo ON fcma.id_cyle_marque = fcmo.id_cycle_marque LEFT_JOIN fleetview_cycle AS fc ON fcmo.id_cycle_modele = fc.id_cycle WHERE id_cycle = ?";
+        String query = "SELECT * FROM fleetview_cycle_marque AS fcma LEFT JOIN fleetview_cycle_modele AS fcmo ON fcma.id_cycle_marque = fcmo.id_cycle_marque LEFT JOIN fleetview_cycle AS fc ON fcmo.id_cycle_modele = fc.id_cycle WHERE id_cycle = ?";
 
         // Résultat de la requête
         CycleMarque result = null;
