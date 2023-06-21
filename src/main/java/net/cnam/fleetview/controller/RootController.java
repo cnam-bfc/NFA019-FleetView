@@ -142,4 +142,8 @@ public class RootController extends Controller<RootPanelView> {
     public static void setCurrentUser(Utilisateur utilisateur) {
         INSTANCE.utilisateur = utilisateur;
     }
+
+    public static RootPanelView getRootPanelView() {
+        return INSTANCE.view;
+    }
 }

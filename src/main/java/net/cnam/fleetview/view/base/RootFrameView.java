@@ -47,4 +47,8 @@ public class RootFrameView extends JFrame {
         // Permet de déplacer la fenêtre (menu de gauche et menu du haut)
         ComponentMover mover = new ComponentMover(this, panel.getRightMenuPanel(), panel.getMainPanel().getTopMenuPanel());
     }
+
+    public RootPanelView getRootPanelView() {
+        return panel;
+    }
 }
