@@ -4,8 +4,8 @@ import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.model.utilisateur.UtilisateurDAO;
-import net.cnam.fleetview.view.AccueilView;
 import net.cnam.fleetview.view.View;
+import net.cnam.fleetview.view.accueil.AdminMainView;
 import net.cnam.fleetview.view.base.RootPanelView;
 
 import java.util.LinkedList;
@@ -76,7 +76,7 @@ public class RootController extends Controller<RootPanelView> {
         // Sinon, on affiche accueil
         else {
             // On crée la vue accueil
-            AccueilView accueilView = new AccueilView();
+            AdminMainView accueilView = new AdminMainView();
 
             // On affiche la vue accueil
             this.view.getMainPanel().setContentPanelView(accueilView);
