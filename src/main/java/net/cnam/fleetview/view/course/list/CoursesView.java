@@ -65,8 +65,7 @@ public class CoursesView extends View<CoursesController> {
         coursesTableModel.addColumn("Date");
         coursesTableModel.addColumn("Distance");
         coursesTableModel.addColumn("Cycle");
-        coursesTableModel.addColumn("Livreur");
-        coursesTableModel.addColumn("Statut");
+        coursesTableModel.addColumn("Coursier");
         coursesTableModel.addColumn("Voir");
         coursesTableModel.addColumn("Modifier");
         coursesTableModel.addColumn("Supprimer");
@@ -76,31 +75,31 @@ public class CoursesView extends View<CoursesController> {
         coursesTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Action voir
-        coursesTable.getColumnModel().getColumn(7).setPreferredWidth(30);
+        coursesTable.getColumnModel().getColumn(6).setPreferredWidth(30);
         ButtonColumn voirButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onVoirCourse(Integer.parseInt(coursesTableModel.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
             }
-        }, 7);
+        }, 6);
 
         // Action modifier
-        coursesTable.getColumnModel().getColumn(8).setPreferredWidth(30);
+        coursesTable.getColumnModel().getColumn(7).setPreferredWidth(30);
         ButtonColumn modifierButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onEditerCourse(Integer.parseInt(coursesTableModel.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
             }
-        }, 8);
+        }, 7);
 
         // Action supprimer
-        coursesTable.getColumnModel().getColumn(9).setPreferredWidth(30);
+        coursesTable.getColumnModel().getColumn(8).setPreferredWidth(30);
         ButtonColumn supprimerButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onSupprimerCourse(Integer.parseInt(coursesTableModel.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
             }
-        }, 9);
+        }, 8);
 
         coursesTable.setDefaultRenderer(Object.class, coursesTableCellRenderer);
         coursesTable.setRowHeight(30);
@@ -146,10 +145,10 @@ public class CoursesView extends View<CoursesController> {
         controller.onRefreshCourses();
     }
 
-    public void addCourse(String id, String nom, String date, String distance, String cycle, String livreur, String statut) {
+    public void addCourse(String id, String nom, String date, String distance, String cycle, String coursier) {
         DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
 
-        model.addRow(new Object[]{id, nom, date, distance, cycle, livreur, statut, "\uF06E", "\uF044", "\uF1F8"});
+        model.addRow(new Object[]{id, nom, date, distance, cycle, coursier, "\uF06E", "\uF044", "\uF1F8"});
     }
 
     public void removeCourse(String id) {
