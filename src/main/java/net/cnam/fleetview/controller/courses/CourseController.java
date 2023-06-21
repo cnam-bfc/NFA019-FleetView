@@ -10,6 +10,7 @@ import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.adresse.Adresse;
 import net.cnam.fleetview.model.adresse.AdresseDAO;
 import net.cnam.fleetview.model.colis.Colis;
+import net.cnam.fleetview.model.colis.ColisDAO;
 import net.cnam.fleetview.model.coliscourse.ColisCourse;
 import net.cnam.fleetview.model.coliscourse.ColisCourseDAO;
 import net.cnam.fleetview.model.coliscourse.ColisCourseOrdreComparator;
@@ -30,6 +31,7 @@ public class CourseController extends Controller<CourseView> implements ColisCho
     // DAO
     private final CourseDAO courseDAO;
     private final AdresseDAO adresseDAO;
+    private final ColisDAO colisDAO;
     private final ColisCourseDAO colisCourseDAO;
     private final ColisDestinataireDAO colisDestinataireDAO;
 
@@ -46,6 +48,7 @@ public class CourseController extends Controller<CourseView> implements ColisCho
         Connection connection = BDDConnection.getInstance(connector);
         this.courseDAO = new CourseDAO(connection);
         this.adresseDAO = new AdresseDAO(connection);
+        this.colisDAO = new ColisDAO(connection);
         this.colisCourseDAO = new ColisCourseDAO(connection);
         this.colisDestinataireDAO = new ColisDestinataireDAO(connection);
     }
@@ -73,6 +76,15 @@ public class CourseController extends Controller<CourseView> implements ColisCho
 
         // Chargement des données dans la vue
         view.fill(idForm, nomForm, dateForm);
+
+        // Chargement des colis
+        this.courseColis = colisCourseDAO.getAllByIdCourse(id);
+        this.courseColis.sort(new ColisCourseOrdreComparator());
+
+        // Chargement des colis dans la vue
+        for (ColisCourse colisCourse : courseColis) {
+            addColisToView(colisCourse);
+        }
     }
 
 
@@ -284,6 +296,17 @@ public class CourseController extends Controller<CourseView> implements ColisCho
 
         // Mise à jour de la vue
         view.supprimerColis(String.valueOf(id));
+    }
+
+    private void addColisToView(ColisCourse colisCourse) {
+        // Récupération du colis
+        Colis colis = colisDAO.getById(colisCourse.getIdColis());
+        if (colis == null) {
+            return;
+        }
+
+        // Ajout du colis à la liste
+        addColisToView(colis);
     }
 
     private void addColisToView(Colis colis) {
