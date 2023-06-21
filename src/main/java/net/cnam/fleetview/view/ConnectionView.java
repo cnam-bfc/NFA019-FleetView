@@ -60,10 +60,13 @@ public class ConnectionView extends View<ConnectionController> {
 
         this.BoutonConnect.setPreferredSize(new Dimension(80, 50));
 
+        String identi = this.getIdent();
+        String pass = this.getPass();
+
         this.BoutonConnect.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.onConnection();
+                controller.onConnection(String identi, String pass);
             }
         });
 
