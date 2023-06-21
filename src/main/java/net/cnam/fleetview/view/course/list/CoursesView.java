@@ -1,6 +1,6 @@
 package net.cnam.fleetview.view.course.list;
 
-import net.cnam.fleetview.controller.CoursesController;
+import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.components.field.IconTextField;
@@ -10,6 +10,7 @@ import net.cnam.fleetview.view.utils.ButtonColumn;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -65,42 +66,58 @@ public class CoursesView extends View<CoursesController> {
         coursesTableModel.addColumn("Date");
         coursesTableModel.addColumn("Distance");
         coursesTableModel.addColumn("Cycle");
-        coursesTableModel.addColumn("Livreur");
-        coursesTableModel.addColumn("Statut");
+        coursesTableModel.addColumn("Coursier");
         coursesTableModel.addColumn("Voir");
         coursesTableModel.addColumn("Modifier");
         coursesTableModel.addColumn("Supprimer");
+        coursesTableModel.addColumn("Choisir");
 
         coursesTable.setModel(coursesTableModel);
 
         coursesTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
+        // Id
+        TableColumn idColumn = coursesTable.getColumnModel().getColumn(0);
+        idColumn.setMinWidth(60);
+        idColumn.setMaxWidth(100);
+
         // Action voir
-        coursesTable.getColumnModel().getColumn(7).setPreferredWidth(30);
+        TableColumn voirColumn = coursesTable.getColumnModel().getColumn(6);
+        voirColumn.setMinWidth(60);
+        voirColumn.setMaxWidth(60);
         ButtonColumn voirButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onVoirCourse(Integer.parseInt(coursesTableModel.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
             }
-        }, 7);
+        }, 6);
 
         // Action modifier
-        coursesTable.getColumnModel().getColumn(8).setPreferredWidth(30);
+        TableColumn modifierColumn = coursesTable.getColumnModel().getColumn(7);
+        modifierColumn.setMinWidth(60);
+        modifierColumn.setMaxWidth(60);
         ButtonColumn modifierButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onEditerCourse(Integer.parseInt(coursesTableModel.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
             }
-        }, 8);
+        }, 7);
 
         // Action supprimer
-        coursesTable.getColumnModel().getColumn(9).setPreferredWidth(30);
+        TableColumn supprimerColumn = coursesTable.getColumnModel().getColumn(8);
+        supprimerColumn.setMinWidth(60);
+        supprimerColumn.setMaxWidth(60);
         ButtonColumn supprimerButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onSupprimerCourse(Integer.parseInt(coursesTableModel.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
             }
-        }, 9);
+        }, 8);
+
+        // Action choisir
+        TableColumn choisirColumn = coursesTable.getColumnModel().getColumn(9);
+        choisirColumn.setMinWidth(0);
+        choisirColumn.setMaxWidth(0);
 
         coursesTable.setDefaultRenderer(Object.class, coursesTableCellRenderer);
         coursesTable.setRowHeight(30);
@@ -146,10 +163,10 @@ public class CoursesView extends View<CoursesController> {
         controller.onRefreshCourses();
     }
 
-    public void addCourse(String id, String nom, String date, String distance, String cycle, String livreur, String statut) {
+    public void addCourse(String id, String nom, String date, String distance, String cycle, String coursier) {
         DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
 
-        model.addRow(new Object[]{id, nom, date, distance, cycle, livreur, statut, "\uF06E", "\uF044", "\uF1F8"});
+        model.addRow(new Object[]{id, nom, date, distance, cycle, coursier, "\uF06E", "\uF044", "\uF1F8"});
     }
 
     public void removeCourse(String id) {
@@ -166,5 +183,20 @@ public class CoursesView extends View<CoursesController> {
         DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
 
         model.setRowCount(0);
+    }
+
+    public void addChooseColumn() {
+        DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
+
+        TableColumn choisirColumn = coursesTable.getColumnModel().getColumn(9);
+        choisirColumn.setMinWidth(60);
+        choisirColumn.setMaxWidth(60);
+        choisirColumn.setPreferredWidth(60);
+        ButtonColumn choisirButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onChoisirCourse(Integer.parseInt(model.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
+            }
+        }, 9);
     }
 }

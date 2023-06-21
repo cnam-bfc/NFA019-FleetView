@@ -1,6 +1,6 @@
 package net.cnam.fleetview.view.colis.list;
 
-import net.cnam.fleetview.controller.ColissController;
+import net.cnam.fleetview.controller.colis.ColissController;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.components.field.IconTextField;
@@ -10,6 +10,7 @@ import net.cnam.fleetview.view.utils.ButtonColumn;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -63,43 +64,74 @@ public class ColissView extends View<ColissController> {
         colissTableModel.addColumn("ID");
         colissTableModel.addColumn("Numéro");
         colissTableModel.addColumn("Poids");
-        colissTableModel.addColumn("Cycle");
-        colissTableModel.addColumn("Livreur");
-        colissTableModel.addColumn("Statut");
+        colissTableModel.addColumn("Adresse destination");
+        colissTableModel.addColumn("Destinataire");
         colissTableModel.addColumn("Voir");
         colissTableModel.addColumn("Modifier");
         colissTableModel.addColumn("Supprimer");
+        colissTableModel.addColumn("Choisir");
 
         colissTable.setModel(colissTableModel);
 
         colissTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
 
+        // Id
+        TableColumn idColumn = colissTable.getColumnModel().getColumn(0);
+        idColumn.setMinWidth(60);
+        idColumn.setMaxWidth(100);
+
+        // Numéro
+        TableColumn numeroColumn = colissTable.getColumnModel().getColumn(1);
+        numeroColumn.setMinWidth(60);
+        numeroColumn.setMaxWidth(100);
+
+        // Poids
+        TableColumn poidsColumn = colissTable.getColumnModel().getColumn(2);
+        poidsColumn.setMinWidth(60);
+        poidsColumn.setMaxWidth(120);
+
+        // Destinataire
+        TableColumn destinataireColumn = colissTable.getColumnModel().getColumn(4);
+        destinataireColumn.setMinWidth(150);
+        destinataireColumn.setMaxWidth(300);
+
         // Action voir
-        colissTable.getColumnModel().getColumn(6).setPreferredWidth(30);
+        TableColumn voirColumn = colissTable.getColumnModel().getColumn(5);
+        voirColumn.setMinWidth(60);
+        voirColumn.setMaxWidth(60);
         ButtonColumn voirButtonColumn = new ButtonColumn(colissTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onVoirColis(Integer.parseInt(colissTableModel.getValueAt(colissTable.getSelectedRow(), 0).toString()));
             }
-        }, 6);
+        }, 5);
 
         // Action modifier
-        colissTable.getColumnModel().getColumn(7).setPreferredWidth(30);
+        TableColumn modifierColumn = colissTable.getColumnModel().getColumn(6);
+        modifierColumn.setMinWidth(60);
+        modifierColumn.setMaxWidth(60);
         ButtonColumn modifierButtonColumn = new ButtonColumn(colissTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onEditerColis(Integer.parseInt(colissTableModel.getValueAt(colissTable.getSelectedRow(), 0).toString()));
             }
-        }, 7);
+        }, 6);
 
         // Action supprimer
-        colissTable.getColumnModel().getColumn(8).setPreferredWidth(30);
+        TableColumn supprimerColumn = colissTable.getColumnModel().getColumn(7);
+        supprimerColumn.setMinWidth(60);
+        supprimerColumn.setMaxWidth(60);
         ButtonColumn supprimerButtonColumn = new ButtonColumn(colissTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.onSupprimerColis(Integer.parseInt(colissTableModel.getValueAt(colissTable.getSelectedRow(), 0).toString()));
             }
-        }, 8);
+        }, 7);
+
+        // Action choisir
+        TableColumn choisirColumn = colissTable.getColumnModel().getColumn(8);
+        choisirColumn.setMinWidth(0);
+        choisirColumn.setMaxWidth(0);
 
         colissTable.setDefaultRenderer(Object.class, colissTableCellRenderer);
         colissTable.setRowHeight(30);
@@ -145,10 +177,10 @@ public class ColissView extends View<ColissController> {
         controller.onRefreshColiss();
     }
 
-    public void addColis(String id, String nom, String distance, String cycle, String livreur, String statut) {
+    public void addColis(String id, String nom, String distance, String adresseDestinataire, String destinataire) {
         DefaultTableModel model = (DefaultTableModel) this.colissTable.getModel();
 
-        model.addRow(new Object[]{id, nom, distance, cycle, livreur, statut, "\uF06E", "\uF044", "\uF1F8"});
+        model.addRow(new Object[]{id, nom, distance, adresseDestinataire, destinataire, "\uF06E", "\uF044", "\uF1F8", "\uF00C"});
     }
 
     public void removeColis(String id) {
@@ -165,5 +197,20 @@ public class ColissView extends View<ColissController> {
         DefaultTableModel model = (DefaultTableModel) this.colissTable.getModel();
 
         model.setRowCount(0);
+    }
+
+    public void addChooseColumn() {
+        DefaultTableModel model = (DefaultTableModel) this.colissTable.getModel();
+
+        TableColumn choisirColumn = colissTable.getColumnModel().getColumn(8);
+        choisirColumn.setMinWidth(60);
+        choisirColumn.setMaxWidth(60);
+        choisirColumn.setPreferredWidth(60);
+        ButtonColumn choisirButtonColumn = new ButtonColumn(colissTable, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onChoisirColis(Integer.parseInt(model.getValueAt(colissTable.getSelectedRow(), 0).toString()));
+            }
+        }, 8);
     }
 }

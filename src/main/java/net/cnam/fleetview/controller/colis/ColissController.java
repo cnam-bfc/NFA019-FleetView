@@ -1,19 +1,30 @@
-package net.cnam.fleetview.controller;
+package net.cnam.fleetview.controller.colis;
 
+import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.model.adresse.Adresse;
+import net.cnam.fleetview.model.adresse.AdresseDAO;
 import net.cnam.fleetview.model.colis.Colis;
 import net.cnam.fleetview.model.colis.ColisDAO;
+import net.cnam.fleetview.model.colisdestinataire.ColisDestinataire;
+import net.cnam.fleetview.model.colisdestinataire.ColisDestinataireDAO;
 import net.cnam.fleetview.view.colis.edit.ColisView;
 import net.cnam.fleetview.view.colis.list.ColissView;
 
 import java.sql.Connection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ColissController extends Controller<ColissView> {
     // Modèle
     // DAO
     private final ColisDAO colisDAO;
+    private final AdresseDAO adresseDAO;
+    private final ColisDestinataireDAO colisDestinataireDAO;
+
+    private ColisChooser colisChooser;
 
     public ColissController(ColissView view) {
         super(view);
@@ -22,22 +33,64 @@ public class ColissController extends Controller<ColissView> {
         DefaultConnector connector = new DefaultConnector();
         Connection connection = BDDConnection.getInstance(connector);
         this.colisDAO = new ColisDAO(connection);
+        this.adresseDAO = new AdresseDAO(connection);
+        this.colisDestinataireDAO = new ColisDestinataireDAO(connection);
     }
 
     public void onRefreshColiss() {
         // Suppression des colis de la vue
         view.removeAllColis();
 
+        List<Integer> colisBlacklist = new LinkedList<>();
+        if (colisChooser != null) {
+            List<Integer> blacklist = colisChooser.getBlacklist();
+            if (blacklist != null) {
+                colisBlacklist.addAll(blacklist);
+            }
+        }
+
         // Chargement des colis dans la vue
         List<Colis> coliss = colisDAO.getAllNotArchived();
         for (Colis colis : coliss) {
+            if (colisBlacklist.contains(colis.getIdColis())) {
+                continue;
+            }
+
+            // Récupération de l'adresse du colis
+            Adresse colisAdresse = adresseDAO.getById(colis.getIdAdresse());
+            // Récupération du destinataire du colis
+            ColisDestinataire colisDestinataire = colisDestinataireDAO.getById(colis.getIdColisDestinataire());
+
+            if (colisAdresse == null || colisDestinataire == null) {
+                continue;
+            }
+
             String id = String.valueOf(colis.getIdColis());
             String numero = colis.getNumero();
             String poids = String.valueOf(colis.getPoids());
 
+            String adresse;
+            if (colisAdresse.getNumeroRue() != null) {
+                adresse = colisAdresse.getNumeroRue() + " " + colisAdresse.getRue() + ", " + colisAdresse.getCodePostal() + " " + colisAdresse.getCommune();
+            } else {
+                adresse = colisAdresse.getRue() + ", " + colisAdresse.getCodePostal() + " " + colisAdresse.getCommune();
+            }
+
+            String destinataire = colisDestinataire.getNom() + " " + colisDestinataire.getPrenom();
+
             // Ajout des colis dans la vue
-            view.addColis(id, numero, poids + " kg", "Cycle", "Livreur", "status");
+            view.addColis(id, numero, poids + " kg", adresse, destinataire);
         }
+    }
+
+    public void bindColisChooser(ColisChooser colisChooser) {
+        this.colisChooser = colisChooser;
+
+        // Ajout de la colonne choisir dans la vue
+        view.addChooseColumn();
+
+        // Rafraichissement des colis
+        onRefreshColiss();
     }
 
     public void onAjouterColis() {
@@ -97,6 +150,23 @@ public class ColissController extends Controller<ColissView> {
 
             // Suppression de la course dans la vue
             view.removeColis(idColis);
+        }
+    }
+
+    public void onChoisirColis(int id) {
+        if (colisChooser != null) {
+            Colis colis = colisDAO.getById(id);
+
+            if (colis == null) {
+                view.afficherMessageErreur("Erreur", "Le colis n'existe pas.");
+                return;
+            }
+
+            // Fermeture de la vue
+            RootController.close(view);
+
+            // Callback du chooser
+            colisChooser.chooseColis(colis);
         }
     }
 }

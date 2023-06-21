@@ -63,10 +63,13 @@ public class CycleRevisionDAO extends DAO<CycleRevision> implements Archivable<C
             // Si la requête a réussi
             if (result != 0) {
                 // On récupère l'id auto-généré par la requête d'insertion
-                int id = statement.getGeneratedKeys().getInt(1);
-
-                // On met à jour l'objet pour lui attribuer l'id récupéré
-                obj.setIdCycleRevision(id);
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    // On attribue l'id à l'objet
+                    obj.setIdCycleRevision(generatedKeys.getInt(1));
+                } else {
+                    logger.error("Échec de la création du CycleRevision, aucun ID auto-généré retourné.");
+                }
             }
 
             // On ajoute l'historique
