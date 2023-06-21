@@ -172,4 +172,4 @@ nbdist/
 
 ### Custom template
 data/
-
+config.properties
