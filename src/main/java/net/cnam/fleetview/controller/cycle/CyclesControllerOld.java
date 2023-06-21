@@ -1,4 +1,4 @@
-package net.cnam.fleetview.controller.cycles;
+package net.cnam.fleetview.controller.cycle;
 
 import net.cnam.fleetview.controller.Controller;
 import net.cnam.fleetview.controller.RootController;
@@ -7,14 +7,14 @@ import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
 import net.cnam.fleetview.view.cycle.CycleView;
-import net.cnam.fleetview.view.cycle.CyclesView;
+import net.cnam.fleetview.view.cycle.CyclesViewOld;
 
 import java.util.List;
 
-public class CyclesController extends Controller<CyclesView> {
+public class CyclesControllerOld extends Controller<CyclesViewOld> {
 
     private final CycleDAO cycleDAO;
-    public CyclesController(CyclesView view) {
+    public CyclesControllerOld(CyclesViewOld view) {
 
         super(view);
 
@@ -44,7 +44,7 @@ public class CyclesController extends Controller<CyclesView> {
         CycleController cycleController = new CycleController(creationCycle);
         creationCycle.setController(cycleController);
 
-        cycleController.loademptyCycle();
+        cycleController.loadEmptyCycle();
 
         RootController.open(creationCycle);
     }
@@ -53,7 +53,7 @@ public class CyclesController extends Controller<CyclesView> {
         CycleController cycleController = new CycleController(voirCycle);
         voirCycle.setController(cycleController);
 
-        cycleController.loadVoirCycle(id);
+        cycleController.loadViewableCycle(id);
 
         RootController.open(voirCycle);
     }
@@ -63,7 +63,7 @@ public class CyclesController extends Controller<CyclesView> {
         CycleController cycleController = new CycleController(modificationCycle);
         modificationCycle.setController(cycleController);
 
-        cycleController.loadModifCycle(id);
+        cycleController.loadEditableCycle(id);
 
         RootController.open(modificationCycle);
     }

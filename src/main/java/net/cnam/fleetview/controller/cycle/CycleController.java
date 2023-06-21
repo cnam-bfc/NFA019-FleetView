@@ -1,4 +1,4 @@
-package net.cnam.fleetview.controller.cycles;
+package net.cnam.fleetview.controller.cycle;
 
 import net.cnam.fleetview.controller.Controller;
 import net.cnam.fleetview.database.BDDConnection;
@@ -34,7 +34,7 @@ public class CycleController extends Controller<CycleView> {
         this.cycleFournisseurDAO = new CycleFournisseurDAO(BDDConnection.getInstance(connector));
     }
 
-    public void loademptyCycle(){
+    public void loadEmptyCycle(){
         view.editField(true);
     }
 
@@ -59,12 +59,12 @@ public class CycleController extends Controller<CycleView> {
         this.view.editField(false);
     }
 
-    public void loadVoirCycle(int id){
+    public void loadViewableCycle(int id){
         loadCycle(id);
         view.editField(false);
     }
 
-    public void loadModifCycle(int id){
+    public void loadEditableCycle(int id){
 
         ///récuperer les textFields
         loadCycle(id);

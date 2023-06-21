@@ -1,6 +1,6 @@
 package net.cnam.fleetview.view.cycle;
 
-import net.cnam.fleetview.controller.cycles.CycleController;
+import net.cnam.fleetview.controller.cycle.CycleController;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.label.IconLabel;
 

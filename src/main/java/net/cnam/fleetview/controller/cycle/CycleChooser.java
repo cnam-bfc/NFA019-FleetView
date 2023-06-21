@@ -5,7 +5,7 @@ import net.cnam.fleetview.model.cycle.Cycle;
 import java.util.List;
 
 public interface CycleChooser {
-    void cycleCourse(Cycle cycle);
+    void chooseCycle(Cycle cycle);
 
     List<Integer> getBlacklist();
 }

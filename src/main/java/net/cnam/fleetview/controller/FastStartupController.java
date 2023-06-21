@@ -3,6 +3,7 @@ package net.cnam.fleetview.controller;
 import net.cnam.fleetview.controller.courses.CourseChooser;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.cycle.CycleChooser;
+import net.cnam.fleetview.controller.cycle.CyclesController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.coliscourse.ColisCourseDAO;
@@ -16,6 +17,7 @@ import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
 import net.cnam.fleetview.view.CoursierRecapitulatifCourseView;
 import net.cnam.fleetview.view.course.list.CoursesView;
+import net.cnam.fleetview.view.cycle.CyclesView;
 
 import java.sql.Connection;
 import java.time.LocalDateTime;
@@ -146,14 +148,14 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         cyclesView.setController(cyclesController);
 
         // Liaison callback
-        cyclesController.bindCourseChooser(this);
+        cyclesController.bindCycleChooser(this);
 
         // Affichage de la vue
         RootController.open(cyclesView);
     }
 
     @Override
-    public void cycleCourse(Cycle cycle) {
+    public void chooseCycle(Cycle cycle) {
         this.cycle = cycle;
         this.checkLancerCourse();
         String identifiant = cycle.getIdentifiant() == null ? "N/A" : "" + cycle.getIdentifiant();

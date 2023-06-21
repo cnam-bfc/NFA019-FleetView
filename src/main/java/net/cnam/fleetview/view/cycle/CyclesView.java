@@ -1,151 +1,176 @@
 package net.cnam.fleetview.view.cycle;
 
-import net.cnam.fleetview.controller.cycles.CyclesController;
+import net.cnam.fleetview.controller.cycle.CyclesController;
 import net.cnam.fleetview.view.View;
+import net.cnam.fleetview.view.components.button.IconLabelButton;
+import net.cnam.fleetview.view.components.field.IconTextField;
 import net.cnam.fleetview.view.components.label.IconLabel;
 import net.cnam.fleetview.view.utils.ButtonColumn;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class CyclesView extends View<CyclesController> {
-    ///Attributs
-    //Panel
-    private final JPanel panelTable;
-    private final JPanel panelBouton;
-
-    //Tritre
-    private final IconLabel titrepanel;
-    private final JButton BoutonAjoutCycle;
-
-    //Table
-    private final JTable table;
-    private final JScrollPane scrollPane;
-    private final DefaultTableCellRenderer cellRenderer;
-    private final DefaultTableModel model;
-    private final JTableHeader header;
-
-    //Font
-    private final Font font;
+    // ÉLÉMENTS DE L'INTERFACE
+    // Titre
+    private final IconLabel titre;
+    // Panel du contenu
+    private final JPanel contenu;
+    // Barre de recherche
+    private final IconTextField barreDeRecherche;
+    // Tableau
+    private final JTable cyclesTable;
+    // Ajout d'un cycle
+    private final IconLabelButton ajouterCycle;
 
     public CyclesView() {
+        super();
 
-        //Panel
-        this.panelTable = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        this.panelBouton = new JPanel();
-        this.setLayout(new BorderLayout());
+        // Layout
+        BorderLayout layout = new BorderLayout();
+        this.setLayout(layout);
 
-        //Titre
-        this.titrepanel = new IconLabel("\uF84A", "Cycles");
-        this.titrepanel.setForeground(Color.BLACK);
-        this.titrepanel.setFont(new Font("Arial", Font.BOLD, 30));
-        this.titrepanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 100, 1100));
+        // Bordures
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        //Boutton
-        this.BoutonAjoutCycle = new JButton("Ajouter un Cycle");
-        this.BoutonAjoutCycle.setPreferredSize(new Dimension(600, 30));
-        this.BoutonAjoutCycle.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.ajoutCycle();
-            }
-        });
+        // Création des éléments de l'interface
+        this.titre = new IconLabel("\uF0D1", "Cycles");
+        this.contenu = new JPanel();
+        this.barreDeRecherche = new IconTextField("\uF002");
+        this.cyclesTable = new JTable();
+        this.ajouterCycle = new IconLabelButton("\uF067", "Ajouter un cycle");
 
-        //Style
-        this.font = new Font("Arial", Font.BOLD, 12);
 
-        //Table
-        this.model = new DefaultTableModel();
-        this.table = new JTable(model);
-        this.scrollPane = new JScrollPane(this.table);
-        this.cellRenderer = new DefaultTableCellRenderer();
-        this.header = table.getTableHeader();
+        // Configuration des éléments de l'interface
+        // Panel du contenu
+        BorderLayout contenuLayout = new BorderLayout();
+        this.contenu.setLayout(contenuLayout);
 
-        model.addColumn("Nom");
-        model.addColumn("Prénom");
-        model.addColumn("Numéro de série");
-        model.addColumn("Date d'achat");
-        model.addColumn("Date de mise en service");
-        model.addColumn("Visualiser");
-        model.addColumn("Modifier");
-        model.addColumn("Supprimer");
+        // Barre de recherche
+        this.barreDeRecherche.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
+        this.barreDeRecherche.getTextField().setPlaceholder("Rechercher un cycle");
+
+        // Tableau
+        DefaultTableModel cyclesTableModel = new DefaultTableModel();
+        DefaultTableCellRenderer cyclesTableCellRenderer = new DefaultTableCellRenderer();
+        TableRowSorter<DefaultTableModel> cyclesTableRowSorter = new TableRowSorter<>(cyclesTableModel);
+        JScrollPane cyclesTableScrollPane = new JScrollPane(cyclesTable);
+
+        cyclesTableModel.addColumn("ID"); // Id du cycle
+        cyclesTableModel.addColumn("Identifiant"); // Identifiant du cycle
+        cyclesTableModel.addColumn("Charge maximal"); // Numéro de série du cycle
+        cyclesTableModel.addColumn("Date d'achat");
+        cyclesTableModel.addColumn("Revision");
+        cyclesTableModel.addColumn("Etat");
+        cyclesTableModel.addColumn("Voir");
+        cyclesTableModel.addColumn("Modifier");
+        cyclesTableModel.addColumn("Supprimer");
+        cyclesTableModel.addColumn("Choisir");
+
+        cyclesTable.setModel(cyclesTableModel);
+
+        cyclesTableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        // Id
+        TableColumn idColumn = cyclesTable.getColumnModel().getColumn(0);
+        idColumn.setMinWidth(60);
+        idColumn.setMaxWidth(100);
 
         // Action voir
-        table.getColumnModel().getColumn(6).setPreferredWidth(20);
-        ButtonColumn ColonneBoutonVisu = new ButtonColumn(table, new AbstractAction() {
+        TableColumn voirColumn = cyclesTable.getColumnModel().getColumn(6);
+        voirColumn.setMinWidth(60);
+        voirColumn.setMaxWidth(60);
+        ButtonColumn voirButtonColumn = new ButtonColumn(cyclesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.voirCycle(Integer.parseInt(model.getValueAt(table.getSelectedRow(), 0).toString()));
+                controller.onVoirCycle(Integer.parseInt(cyclesTableModel.getValueAt(cyclesTable.getSelectedRow(), 0).toString()));
             }
-        }, 3);
+        }, 6);
 
-        // Action Modif
-        table.getColumnModel().getColumn(6).setPreferredWidth(20);
-        ButtonColumn ColonneBoutonModif = new ButtonColumn(table, new AbstractAction() {
+        // Action modifier
+        TableColumn modifierColumn = cyclesTable.getColumnModel().getColumn(7);
+        modifierColumn.setMinWidth(60);
+        modifierColumn.setMaxWidth(60);
+        ButtonColumn modifierButtonColumn = new ButtonColumn(cyclesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.modifCycle(Integer.parseInt(model.getValueAt(table.getSelectedRow(), 0).toString()));
+                controller.onEditerCycle(Integer.parseInt(cyclesTableModel.getValueAt(cyclesTable.getSelectedRow(), 0).toString()));
             }
-        }, 4);
+        }, 7);
 
-        //Action Supp
-        table.getColumnModel().getColumn(6).setPreferredWidth(20);
-        ButtonColumn ColonneBoutonSup = new ButtonColumn(table, new AbstractAction() {
+        // Action supprimer
+        TableColumn supprimerColumn = cyclesTable.getColumnModel().getColumn(8);
+        supprimerColumn.setMinWidth(60);
+        supprimerColumn.setMaxWidth(60);
+        ButtonColumn supprimerButtonColumn = new ButtonColumn(cyclesTable, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.suppCycle(Integer.parseInt(model.getValueAt(table.getSelectedRow(), 0).toString()));
+                controller.onSupprimerCycle(Integer.parseInt(cyclesTableModel.getValueAt(cyclesTable.getSelectedRow(), 0).toString()));
             }
-        }, 4);
+        }, 8);
 
-        this.table.setFont(font);
-        this.cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        this.cellRenderer.setBackground(Color.lightGray);
-        this.cellRenderer.setForeground(Color.black);
-        this.table.setDefaultRenderer(Object.class, cellRenderer);
-        this.scrollPane.setPreferredSize(new Dimension(1000, 100));
-        this.header.setBackground(Color.gray);
-        this.header.setForeground(Color.white);
-        this.header.setFont(font);
+        // Action choisir
+        TableColumn choisirColumn = cyclesTable.getColumnModel().getColumn(9);
+        choisirColumn.setMinWidth(0);
+        choisirColumn.setMaxWidth(0);
 
-        //Panel
-        this.panelTable.add(scrollPane);
-        this.panelTable.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        cyclesTable.setDefaultRenderer(Object.class, cyclesTableCellRenderer);
+        cyclesTable.setRowHeight(30);
 
-        //Button
-        this.panelBouton.setBorder(BorderFactory.createEmptyBorder(10, 0, 100, 0));
-        this.panelBouton.add(BoutonAjoutCycle);
+        // Tableau non editable
+        cyclesTable.setDefaultEditor(Object.class, null);
 
-        //Add
-        this.add(titrepanel, BorderLayout.NORTH);
-        this.add(panelTable, BorderLayout.CENTER);
-        this.add(panelBouton, BorderLayout.SOUTH);
+        // Tri du tableau
+        this.barreDeRecherche.getTextField().addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cyclesTableRowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + barreDeRecherche.getTextField().getText()));
+            }
+        });
+        cyclesTable.setRowSorter(cyclesTableRowSorter);
 
+        // Désactiver le dragging des colonnes
+        cyclesTable.getTableHeader().setReorderingAllowed(false);
+
+        // Ajout d'un cycle
+        JPanel ajouterCyclePanel = new JPanel();
+        this.ajouterCycle.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onAjouterCycle();
+            }
+        });
+        ajouterCyclePanel.add(this.ajouterCycle);
+
+
+        // Ajout des éléments de l'interface
+        this.add(this.titre, BorderLayout.NORTH);
+        this.contenu.add(this.barreDeRecherche, BorderLayout.NORTH);
+        this.contenu.add(cyclesTableScrollPane, BorderLayout.CENTER);
+        this.contenu.add(ajouterCyclePanel, BorderLayout.SOUTH);
+        this.add(this.contenu, BorderLayout.CENTER);
     }
 
-    public void Charg() {
+    @Override
+    public void onDisplayed() {
         super.onDisplayed();
 
-        // Effacer la tableau
-        DefaultTableModel model = (DefaultTableModel) this.table.getModel();
-
-        model.setRowCount(0);
-
-        // Charger les cycles
-        controller.refreshCycle();
+        // Recharger les cycles
+        this.controller.onRefreshCycles();
     }
 
-    public void ajoutCycle(String id, String nom, String numS, String dateA, String chargeMax) {
-        DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+    public void addCycle(String id, String identifiant, String chargeMax, String dateAchat, String revision, String etat) {
+        DefaultTableModel model = (DefaultTableModel) this.cyclesTable.getModel();
 
-        model.addRow(new Object[]{id, nom, numS, dateA, chargeMax, "\uF06E", "\uF044", "\uF1F8"});
+        model.addRow(new Object[]{id, identifiant, chargeMax, dateAchat, revision, etat, "\uF06E", "\uF044", "\uF1F8", "\uF00C"});
     }
 
-    public void SupprimerCycle(String id) {
-        DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+    public void removeCycle(String id) {
+        DefaultTableModel model = (DefaultTableModel) this.cyclesTable.getModel();
 
         for (int i = 0; i < model.getRowCount(); i++) {
             if (model.getValueAt(i, 0).equals(id)) {
@@ -153,5 +178,25 @@ public class CyclesView extends View<CyclesController> {
             }
         }
     }
-}
 
+    public void removeAllCycles() {
+        DefaultTableModel model = (DefaultTableModel) this.cyclesTable.getModel();
+
+        model.setRowCount(0);
+    }
+
+    public void addChooseColumn() {
+        DefaultTableModel model = (DefaultTableModel) this.cyclesTable.getModel();
+
+        TableColumn choisirColumn = cyclesTable.getColumnModel().getColumn(9);
+        choisirColumn.setMinWidth(60);
+        choisirColumn.setMaxWidth(60);
+        choisirColumn.setPreferredWidth(60);
+        ButtonColumn choisirButtonColumn = new ButtonColumn(cyclesTable, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onChoisirCycle(Integer.parseInt(model.getValueAt(cyclesTable.getSelectedRow(), 0).toString()));
+            }
+        }, 9);
+    }
+}

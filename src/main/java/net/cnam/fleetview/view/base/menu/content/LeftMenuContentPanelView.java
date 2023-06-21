@@ -5,6 +5,7 @@ import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.colis.ColissController;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
+import net.cnam.fleetview.controller.cycle.CyclesController;
 import net.cnam.fleetview.view.CoursierRecapitulatifCourseView;
 import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.colis.list.ColissView;
@@ -114,8 +115,8 @@ public class LeftMenuContentPanelView extends JPanel {
             // Création de la vue de la liste des cycles
             CyclesView cyclesView = new CyclesView();
             // Création du contrôleur de la vue
-            //ListeC coursesController = new CoursesController(coursesView);
-            //coursesView.setController(coursesController);
+            CyclesController cyclesController = new CyclesController(cyclesView);
+            cyclesView.setController(cyclesController);
 
             // Affichage de la vue de la liste des cycles
             RootController.open(cyclesView);
