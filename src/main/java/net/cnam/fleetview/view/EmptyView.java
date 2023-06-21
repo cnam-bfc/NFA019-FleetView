@@ -6,12 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class AccueilView extends View {
+public class EmptyView extends View {
     // ÉLÉMENTS DE L'INTERFACE
     // Logo
     private final JLabel logo;
 
-    public AccueilView() {
+    public EmptyView() {
         super();
 
         // Layout centrer horizontalement et verticalement

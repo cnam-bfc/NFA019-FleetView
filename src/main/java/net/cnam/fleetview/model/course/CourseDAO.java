@@ -428,6 +428,171 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
         }
     }
 
+    /**
+     * Méthode qui retoune le nombre de course d'un coursier de periode jusqu'à aujourd'hui
+     *
+     * @param idCoursier idCoursier
+     * @param dateDebut  dateDebut
+     * @param dateFin    dateFin
+     * @return int
+     */
+    public int getNbCourseCoursier(int idCoursier, String dateDebut, String dateFin) {
+        String query = "SELECT IFNULL(COUNT(*),0) AS nbCourse FROM fleetview_course AS fc LEFT JOIN fleetview_coursier_travail AS fct ON fc.id_coursier_travail = fct.id_coursier_travail WHERE fct.id_coursier = ? AND fc.date_course IS NOT NULL AND fc.date_debut_course IS NOT NULL AND fc.date_archive BETWEEN ? AND ?;";
+
+        // Résultat de la requête
+        int result = -1;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, idCoursier);
+            statement.setObject(2, dateDebut);
+            statement.setObject(3, dateFin);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                result = resultSet.getInt("nbCourse");
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            result = -999;
+            logger.error("Impossible de récupérer le nombre de course d'un coursier", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
+    /**
+     * Méthode qui retoune le nombre de course d'un coursier de periode jusqu'à aujourd'hui
+     *
+     * @param idCoursier idCoursier
+     * @param dateDebut  dateDebut
+     * @param dateFin    dateFin
+     * @return int
+     */
+    public int getDistanceParcourueCoursier(int idCoursier, String dateDebut, String dateFin) {
+        String query = "SELECT IFNULL(SUM(fc.distance),0) AS nbCourse FROM fleetview_course AS fc LEFT JOIN fleetview_coursier_travail AS fct ON fc.id_coursier_travail = fct.id_coursier_travail WHERE fct.id_coursier = ? AND fc.date_course IS NOT NULL AND fc.date_debut_course IS NOT NULL AND fc.date_archive BETWEEN ? AND ?;";
+
+        // Résultat de la requête
+        int result = -1;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, idCoursier);
+            statement.setObject(2, dateDebut);
+            statement.setObject(3, dateFin);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                result = resultSet.getInt("nbCourse");
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            result = -999;
+            logger.error("Impossible de récupérer le nombre de course d'un coursier", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
+    /**
+     * Méthode qui retourne la course en cours d'un coursier (s'il y en a une)
+     *
+     * @param idCoursier idCoursier
+     * @return Course en cours du coursier ou null si aucune
+     */
+    public Course getCourseEnCours(int idCoursier) {
+        String query = "SELECT * FROM fleetview_course AS fc LEFT JOIN fleetview_coursier_travail AS fct ON fc.id_coursier_travail = fct.id_coursier_travail WHERE fct.id_coursier = ? AND fc.date_course IS NOT NULL AND fc.date_debut_course IS NOT NULL AND fc.date_archive IS NULL;";
+
+        // Résultat de la requête
+        Course result = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, idCoursier);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                // Création d'un objet CycleFournisseur
+                result = new Course();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(result, resultSet);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer la course en cours d'un coursier", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+        return result;
+    }
+
+    /**
+     * Méthode permettant de savoir si une course est disponible
+     *
+     * @param course Course à vérifier
+     * @return true si la course est disponible, false sinon
+     */
+    public boolean estDisponible (Course course) {
+        String query = "SELECT * FROM fleetview_course AS fc WHERE fc.date_archive IS NULL AND fc.date_debut_course IS NULL AND fc.id_course = ?;";
+        boolean result = false;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, course.getIdCourse());
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                result = true;
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de vérifier si la course est disponible", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+        return result;
+    }
+
     @Override
     protected void handleHistorique(TypeHistorique type, Utilisateur user, Course before, Course after) {
         // Récupération de l'identifiant unique de l'objet
