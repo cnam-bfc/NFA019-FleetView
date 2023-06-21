@@ -40,7 +40,7 @@ public class Adresse {
     /**
      * Numéro de rue
      */
-    private String numeroDeRue;
+    private String numeroRue;
     /**
      * Complément
      */
@@ -180,16 +180,16 @@ public class Adresse {
      * Récupère le numéro de rue
      * @return numeroDeRue
      */
-    public String getNumeroDeRue() {
-        return numeroDeRue;
+    public String getNumeroRue() {
+        return numeroRue;
     }
 
     /**
      * Définit le numéro de rue
-     * @param numeroDeRue
+     * @param numeroRue
      */
-    public void setNumeroDeRue(String numeroDeRue) {
-        this.numeroDeRue = numeroDeRue;
+    public void setNumeroRue(String numeroRue) {
+        this.numeroRue = numeroRue;
     }
 
     /**

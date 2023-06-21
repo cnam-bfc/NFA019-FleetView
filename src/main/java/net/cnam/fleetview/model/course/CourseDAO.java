@@ -68,10 +68,13 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
             // Si la requête a réussi
             if (result != 0) {
                 // On récupère l'id auto-généré par la requête d'insertion
-                int id = statement.getGeneratedKeys().getInt(1);
-
-                // On met à jour l'objet pour lui attribuer l'id récupéré
-                obj.setIdCourse(id);
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    // On attribue l'id à l'objet
+                    obj.setIdCourse(generatedKeys.getInt(1));
+                } else {
+                    logger.error("Échec de la création de la Course en base, aucun ID auto-généré retourné.");
+                }
             }
 
             // On ajoute l'historique
