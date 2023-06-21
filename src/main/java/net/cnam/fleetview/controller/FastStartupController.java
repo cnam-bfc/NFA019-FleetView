@@ -67,7 +67,10 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         this.course = courseDAO.getCourseEnCours(coursier.getIdCoursier());
 
         if (this.course != null) {
-            throw new RuntimeException("Le coursier a déjà une course en cours"); // traiter ça différement
+            RootController.closeAll();
+            // Retirer le bouton et mettre le nouveau
+            RootController.getRootPanelView().getRightMenuPanel().getContentPanel().setVisibleCoursierStartCourse(false);
+            RootController.getRootPanelView().getRightMenuPanel().getContentPanel().setVisibleCoursierEndCourse(true);
         }
 
         // On lance les vérifications
@@ -110,9 +113,16 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         this.course.setDateDebutCourse(LocalDateTime.now());
         this.course.setIdCycle(this.cycle.getIdCycle());
         this.course.setIdCoursierTravail(coursierTravail.getIdCoursierTravail());
+        boolean courseUpdated = courseDAO.update(this.course, RootController.getCurrentUser());
 
-        // Retirer le bouton et mettre le nouveau
+        if (!courseUpdated) {
+            throw new RuntimeException("Impossible de mettre à jour la course");
+        }
+
+        // Fermer les pages, retirer le bouton pour prendre une course et mettre le nouveau
+        RootController.closeAll();
         RootController.getRootPanelView().getRightMenuPanel().getContentPanel().setVisibleCoursierStartCourse(false);
+        RootController.getRootPanelView().getRightMenuPanel().getContentPanel().setVisibleCoursierEndCourse(true);
     }
 
 
