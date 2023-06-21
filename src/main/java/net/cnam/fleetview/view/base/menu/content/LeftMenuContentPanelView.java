@@ -167,8 +167,8 @@ public class LeftMenuContentPanelView extends JPanel {
     @Override
     public Component add(Component comp) {
         // Ajout d'une bordure entre chaque composant
-        if (comp instanceof JComponent jComponent) {
-            jComponent.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        if (this.getComponentCount() > 0) {
+            super.add(Box.createRigidArea(new Dimension(0, 10)));
         }
 
         // 100% de la largeur
@@ -184,6 +184,7 @@ public class LeftMenuContentPanelView extends JPanel {
      */
     public void setVisibleCoursierStartCourse(boolean visible) {
         this.coursierStartCourse.setVisible(visible);
+        refreshMenu();
     }
 
     /**
@@ -193,5 +194,32 @@ public class LeftMenuContentPanelView extends JPanel {
      */
     public void setVisibleCoursierEndCourse(boolean visible) {
         this.coursierEndCourse.setVisible(visible);
+        refreshMenu();
+    }
+
+    private void refreshMenu() {
+        this.removeAll();
+
+        if (coursierStartCourse.isVisible()) {
+            this.add(this.coursierStartCourse);
+        }
+        if (coursierEndCourse.isVisible()) {
+            this.add(this.coursierEndCourse);
+        }
+        if (colisButton.isVisible()) {
+            this.add(this.colisButton);
+        }
+        if (coursesButton.isVisible()) {
+            this.add(this.coursesButton);
+        }
+        if (cyclesButton.isVisible()) {
+            this.add(this.cyclesButton);
+        }
+        if (coursiersButton.isVisible()) {
+            this.add(this.coursiersButton);
+        }
+        if (carteButton.isVisible()) {
+            this.add(this.carteButton);
+        }
     }
 }
