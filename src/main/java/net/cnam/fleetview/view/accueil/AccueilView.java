@@ -3,6 +3,7 @@ package net.cnam.fleetview.view.accueil;
 import net.cnam.fleetview.controller.AccueilController;
 import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
+import net.cnam.fleetview.controller.carte.CarteController;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
 import net.cnam.fleetview.controller.utilisateur.UsersController;
