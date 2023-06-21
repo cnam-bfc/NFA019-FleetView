@@ -66,9 +66,8 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         // On récupère la course en fonction du coursier connecté
         this.course = courseDAO.getCourseEnCours(coursier.getIdCoursier());
 
-        if (this.course != null && this.course.getIdCycle() != 0) {
-            // On récupère le cycle en fonction de la course
-            this.cycle = cycleDAO.getById(course.getIdCycle());
+        if (this.course != null) {
+            throw new RuntimeException("Le coursier a déjà une course en cours"); // traiter ça différement
         }
 
         // On lance les vérifications
