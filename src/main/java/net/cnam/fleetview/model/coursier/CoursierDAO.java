@@ -60,10 +60,13 @@ public class CoursierDAO extends DAO<Coursier> {
             // Si la requête a réussi
             if (result != 0) {
                 // On récupère l'id auto-généré par la requête d'insertion
-                int id = statement.getGeneratedKeys().getInt(1);
-
-                // On met à jour l'objet pour lui attribuer l'id récupéré
-                obj.setIdCoursier(id);
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    // On attribue l'id à l'objet
+                    obj.setIdCoursier(generatedKeys.getInt(1));
+                } else {
+                    logger.error("Échec de la création du Coursier, aucun ID auto-généré retourné.");
+                }
             }
 
             // On ajoute l'historique
