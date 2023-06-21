@@ -31,4 +31,4 @@ jobs:
           title: "Development Build"
           files: |
             LICENSE
-            target/chateau-*.jar
+            target/fleetview-*.jar
