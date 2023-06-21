@@ -1,10 +1,12 @@
 package net.cnam.fleetview.view.base.menu.content;
 
+import net.cnam.fleetview.controller.FastStartupController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.carte.CarteController;
 import net.cnam.fleetview.controller.colis.ColissController;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
+import net.cnam.fleetview.view.CoursierRecapitulatifCourseView;
 import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.colis.list.ColissView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
@@ -45,7 +47,7 @@ public class LeftMenuContentPanelView extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Création des éléments de l'interface
-        this.coursierStartCourse = new IconLabelButton("\uF04B", "Débuter une course");
+        this.coursierStartCourse = new IconLabelButton("\uF11E", "Débuter une course");
         this.coursierEndCourse = new IconLabelButton("\uF04D", "Terminer une course");
         this.colisButton = new IconLabelButton("\uF466", "Colis");
         this.coursesButton = new IconLabelButton("\uF0D1", "Courses");
@@ -58,17 +60,15 @@ public class LeftMenuContentPanelView extends JPanel {
 
         // Bouton de début de course
         this.coursierStartCourse.addActionListener(e -> {
-            // Choix du roi
-            // Regarde s'il est déjà posté sur une course, sinon envoie sur la liste des courses
-            // S'il est déjà posté sur une course
-            // Regarde s'il est déjà posté avec un cycle de livraison, sinon envoie sur la liste des cycles de livraison
-            // S'il est déjà posté avec un cycle de livraison
-            // Envoie sur une page de confirmation de début de course
-            // => Besoin d'ajouter des options pour que si ce soit un coursier de connecter on puisse dans le tableau des cycles de livraison et dans celui des courses pouvoir s'attribuer un cycle (idem dans les pages de détails)
-
-            // Choix de la pute
-            // Envoie sur une page ou il choisi une course, un cycle et confirme
-            // => besoin de créer une nouvelle page
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+            // Création de la vue de la liste des courses
+            CoursierRecapitulatifCourseView coursierRecapitulatifCourseView = new CoursierRecapitulatifCourseView();
+            // Affichage de la vue de la liste des courses
+            RootController.open(coursierRecapitulatifCourseView);
+            // Création du contrôleur de la vue
+            FastStartupController fastStartupController = new FastStartupController(coursierRecapitulatifCourseView);
+            coursierRecapitulatifCourseView.setController(fastStartupController);
         });
 
         // Bouton de fin de course
@@ -166,13 +166,31 @@ public class LeftMenuContentPanelView extends JPanel {
     @Override
     public Component add(Component comp) {
         // Ajout d'une bordure entre chaque composant
-        if (this.getComponentCount() > 0) {
-            super.add(Box.createRigidArea(new Dimension(0, 10)));
+        if (comp instanceof JComponent jComponent) {
+            jComponent.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
         }
 
         // 100% de la largeur
         comp.setMaximumSize(new Dimension(Integer.MAX_VALUE, comp.getMaximumSize().height));
 
         return super.add(comp);
+    }
+
+    /**
+     * Méthode permettant de rendre visible ou non le bouton de début de course
+     *
+     * @param visible boolean
+     */
+    public void setVisibleCoursierStartCourse(boolean visible) {
+        this.coursierStartCourse.setVisible(visible);
+    }
+
+    /**
+     * Méthode permettant de rendre visible ou non le bouton de fin de course
+     *
+     * @param visible boolean
+     */
+    public void setVisibleCoursierEndCourse(boolean visible) {
+        this.coursierEndCourse.setVisible(visible);
     }
 }
