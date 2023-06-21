@@ -107,6 +107,9 @@ public class CoursierController extends Controller<CoursierView> {
     /**
      * Méthode permettant de générer un rapport d'activité en PDF.
      * Utilisation de la librairie Apache PDFBox
+     *
+     * Note : la Biblio est complexe voir si on peut utiliser iText (problème, toutes les versions trouvées ont des licences ou alors des vulnérabilités)
+     * Note 2 : Se serait bien de créer un objet destiner à gérer les PDF si on a le temps (Facilement placer titre/sous titre, infos, image, etc...)
      */
     public void exporterRapportActivite(String selectedFilePath, String selectedFileName, String nbPaquet, String nbPoidsLivre, String poidsMoyen, String nbCourse, String distanceParcourue, String nbAccident) {
         // On récupère l'Id du cousier à partir de la vue
@@ -121,7 +124,7 @@ public class CoursierController extends Controller<CoursierView> {
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
             contentStream.setFont(PDType1Font.HELVETICA_BOLD, 24);
             contentStream.beginText();
-// Centrer le texte au milieu de la page
+            // Centrer le texte au milieu de la page
             float titleWidth = PDType1Font.HELVETICA_BOLD.getStringWidth("Rapport d'activité") / 1000 * 24;
             float titleStartX = (page.getMediaBox().getWidth() - titleWidth) / 2;
             float titleStartY = page.getMediaBox().getHeight() - 50;
