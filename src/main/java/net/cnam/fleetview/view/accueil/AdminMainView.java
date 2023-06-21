@@ -1,5 +1,7 @@
 package net.cnam.fleetview.view.accueil;
 
+import net.cnam.fleetview.controller.RootController;
+import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.label.IconLabel;
 
@@ -10,24 +12,26 @@ public class AdminMainView extends View {
     //private final JFrame test = new JFrame();
     private final JButton viewUsers = new JButton("<html>Visualisation de tous les utilisateurs</html>");
     private final JButton modifyUsers = new JButton("<html>Modification des utilisateurs</html>");
-
     private final JButton dbConnection = new JButton("<html>Connexion à la base de données</html>");
 
+
+    private final JButton menuCourses = new JButton("<html>Menu des courses</html>");
+    private final JButton dailyReport = new JButton("<html>Rapport quotidien</html>");
+    private final JButton accidentSheet = new JButton("<html>Saisie des fiches d'accident</html>");
+
     private final JButton viewDocs = new JButton("<html>Visualisation des documents</html>");
-
     private final JButton viewCourses = new JButton("<html>Visualisation de toutes les courses</html>");
-
     private final JButton viewCoursiers = new JButton("<html>Visualisation de tous les coursiers</html>");
-
     private final JButton viewCycles = new JButton("<html>Visualisation de tous les cycles</html>");
-
     private final JButton stats = new JButton("<html> Gestion des statistiques </html>");
-
     private final JButton map = new JButton("<html>Carte interactive</html>");
+
 
     private final IconLabel iconLabel;
 
     public AdminMainView(){
+        Utilisateur user = RootController.getCurrentUser();
+
 
         this.iconLabel = new IconLabel("\uF013", "Création / Modification d'un Utilisateur");
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -43,16 +47,30 @@ public class AdminMainView extends View {
         this.viewDocs.setPreferredSize(new Dimension(100,100));
         this.stats.setPreferredSize(new Dimension(100,100));
         this.map.setPreferredSize(new Dimension(100,100));
+        this.menuCourses.setPreferredSize(new Dimension(100,100));
+        this.dailyReport.setPreferredSize(new Dimension(100,100));
+        this.accidentSheet.setPreferredSize(new Dimension(100,100));
 
-        bttnPanel.add(this.dbConnection);
-        bttnPanel.add(this.modifyUsers);
-        bttnPanel.add(this.viewUsers);
-        bttnPanel.add(this.viewCourses);
-        bttnPanel.add(this.viewCoursiers);
-        bttnPanel.add(this.viewCycles);
-        bttnPanel.add(this.viewDocs);
-        bttnPanel.add(this.stats);
-        bttnPanel.add(this.map);
+        if (user.getIdRole() == 1) {
+            bttnPanel.add(this.dbConnection);
+            bttnPanel.add(this.modifyUsers);
+            bttnPanel.add(this.viewUsers);
+        }
+
+        if (user.getIdRole() == 2) {
+            bttnPanel.add(this.viewCourses);
+            bttnPanel.add(this.viewCoursiers);
+            bttnPanel.add(this.viewCycles);
+            bttnPanel.add(this.viewDocs);
+            bttnPanel.add(this.stats);
+            bttnPanel.add(this.map);
+        }
+
+        if (user.getIdRole() == 3) {
+            bttnPanel.add(this.menuCourses);
+            bttnPanel.add(this.dailyReport);
+            bttnPanel.add(this.accidentSheet);
+        }
 
         JPanel leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(100,0));
