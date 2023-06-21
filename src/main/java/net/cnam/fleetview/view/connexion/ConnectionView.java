@@ -95,13 +95,24 @@ public class ConnectionView extends View<ConnectionController> {
 
     //Boutton
     private final JButton BoutonValidConnect;
-    private final JButton BoutonAnnulConnect;
+
+    //TextField
+
+    private final JTextField username = new JTextField();
+    private final JTextField password = new JTextField();
 
     //Label
     private final JLabel logo;
 
+    private final JLabel labelUsername = new JLabel("Username ");
+    private final JLabel labelPassword = new JLabel("Password ");
+
 
     public ConnectionView(){
+
+        //Variable
+        String identi = this.getIdent();
+        String pass = this.getPass();
 
         //Panel
         this.MainPanel = new JPanel();
@@ -118,36 +129,37 @@ public class ConnectionView extends View<ConnectionController> {
         this.titre.setFont(new Font("Arial", Font.BOLD, 30));
         this.titre.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
         this.TitrePanel.add(titre);
-        //this.add(TitrePanel, BorderLayout.NORTH);
+
 
         //Image
         this.image = App.LOGO_NORMAL;
         this.logo = new JLabel(new ImageIcon(image));
         this.LogoPanel.add(logo);
         this.LogoPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
-        //this.add(LogoPanel, BorderLayout.SOUTH);
+
 
         //Label
-        String[] label = {"Username ", "Password "};
-        int numPairs = label.length;
-        for (int i = 0; i < numPairs; i++){
-            JLabel l = new JLabel(label[i], JLabel.TRAILING);
-            FormPanel.add(l);
-            JTextField textField = new JTextField(20);
-            l.setLabelFor(textField);
-            FormPanel.add(textField);
-        }
+        labelUsername.setLabelFor(username);
+        labelPassword.setLabelFor(password);
+        FormPanel.add(labelUsername);
+        FormPanel.add(username);
+        FormPanel.add(labelPassword);
+        FormPanel.add(password);
         SpringUtilities.makeCompactGrid(FormPanel,
-                numPairs, 2, //rows, cols
+                2, 2, //rows, cols
                 6, 6,        //initX, initY
                 6, 6);       //xPad, yPad
 
         //Bouton
         this.BoutonValidConnect = new JButton("<html>Connexion</html>");
-        this.BoutonAnnulConnect = new JButton("<html>Annuler</html>");
         this.BoutonValidConnect.setPreferredSize(new Dimension(80, 50));
-        this.BoutonAnnulConnect.setPreferredSize(new Dimension(80, 50));
-        this.BouttonPanel.add(BoutonValidConnect, BoutonAnnulConnect);
+        this.BoutonValidConnect.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onConnection(identi, pass);
+            }
+        });
+        this.BouttonPanel.add(BoutonValidConnect);
 
         this.MainPanel.add(TitrePanel);
         this.MainPanel.add(LogoPanel);
@@ -156,5 +168,13 @@ public class ConnectionView extends View<ConnectionController> {
 
         this.add(MainPanel);
 
+    }
+
+    public String getIdent(){
+        return this.username.getText();
+    }
+
+    public  String getPass(){
+        return this.password.getText();
     }
 }
