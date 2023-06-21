@@ -3,15 +3,15 @@ package net.cnam.fleetview.view.coursier.show;
 import com.github.lgooddatepicker.components.DatePicker;
 import net.cnam.fleetview.controller.coursier.CoursierController;
 import net.cnam.fleetview.view.View;
-import net.cnam.fleetview.view.components.button.IconButton;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
-import net.cnam.fleetview.view.components.button.LabelButton;
 import net.cnam.fleetview.view.components.label.IconLabel;
 import net.cnam.fleetview.view.components.label.LabelInformation;
 import net.cnam.fleetview.view.components.row.RowLabelInformationForCoursierView;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
 import java.time.LocalDate;
 
 public class CoursierView extends View<CoursierController> {
@@ -102,7 +102,7 @@ public class CoursierView extends View<CoursierController> {
         FlowLayout matriculeLayout = new FlowLayout(FlowLayout.LEFT);
         matriculeLayout.setHgap(10);
         this.matricule.setLayout(matriculeLayout);
-        this.matriculeLabel = new IconLabel("\uF2BB","Matricule : ");
+        this.matriculeLabel = new IconLabel("\uF2BB", "Matricule : ");
         this.matriculeContenu = new JLabel("");
         this.matricule.add(this.matriculeLabel);
         this.matricule.add(this.matriculeContenu);
@@ -122,7 +122,7 @@ public class CoursierView extends View<CoursierController> {
         // Ligne 5 : Titre rapport activité
         JPanel rapportActivite = new JPanel();
         FlowLayout rapportActiviteLayout = new FlowLayout(FlowLayout.CENTER);
-        this.rapportActiviteLabel = new IconLabel("\uE473","Rapport d'activité");
+        this.rapportActiviteLabel = new IconLabel("\uE473", "Rapport d'activité");
         this.rapportActiviteLabel.getTexteLabel().setFont(new Font("Roboto", Font.BOLD, 32));
         rapportActivite.add(this.rapportActiviteLabel);
         this.add(rapportActivite);
@@ -184,70 +184,183 @@ public class CoursierView extends View<CoursierController> {
         this.export = new JPanel();
         FlowLayout exportationLayout = new FlowLayout(FlowLayout.CENTER);
         this.export.setLayout(exportationLayout);
-        this.exportButton = new IconLabelButton("\uF56E","Exporter");
+        this.exportButton = new IconLabelButton("\uF56E", "Exporter");
         this.export.add(this.exportButton);
         this.add(this.export);
         this.exportButton.addActionListener((actionEvent) -> {
-            //this.controller.exporterRapport();
+            this.exporterRapportActivite();
         });
     }
 
+    /**
+     * Méthode permettant d'exporter le rapport d'activité en pdf
+     */
+    private void exporterRapportActivite() {
+        JFileChooser fileChooser = new JFileChooser();
+        // Filtrer les fichiers pour n'afficher que les fichiers PDF
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichiers PDF", "pdf");
+        fileChooser.setFileFilter(filter);
+
+        // Afficher la boîte de dialogue pour choisir un fichier
+        int returnValue = fileChooser.showSaveDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            // Récupérer le fichier sélectionné
+            File selectedFile = fileChooser.getSelectedFile();
+            String selectedFilePath = selectedFile.getParent();
+            System.out.println("Chemin du fichier : " + selectedFilePath);
+
+            // Récupérer le nom du fichier sans extension
+            String selectedFileName = selectedFile.getName();
+            int extensionIndex = selectedFileName.lastIndexOf('.');
+            if (extensionIndex > 0) {
+                selectedFileName = selectedFileName.substring(0, extensionIndex);
+            }
+            System.out.println("Nom du fichier : " + selectedFileName);
+
+            // On appelle la méthode d'exportation du rapport d'activité
+            this.controller.exporterRapportActivite(selectedFilePath, selectedFileName,
+                    this.contenuUnRow.getFirstLabel().getSecondLabel().getText(),
+                    this.contenuUnRow.getSecondLabel().getSecondLabel().getText(),
+                    this.contenuUnRow.getThirdLabel().getSecondLabel().getText(),
+                    this.contenuDeuxRow.getFirstLabel().getSecondLabel().getText(),
+                    this.contenuDeuxRow.getSecondLabel().getSecondLabel().getText(),
+                    this.contenuDeuxRow.getThirdLabel().getSecondLabel().getText()
+            );
+        } else {
+            System.out.println("Aucun fichier sélectionné");
+        }
+    }
+
+    /**
+     * Méthode permettant d'actualiser les informations du rapport d'activité
+     */
     private void actualiserInformations() {
         this.controller.actualiserInformations();
     }
 
+    /**
+     * Méthode permettant de mettre à jour le titre du rapport d'activité
+     *
+     * @param titre Le titre du rapport d'activité
+     */
     public void setTitre(String titre) {
         this.titre.getTexteLabel().setText(titre);
     }
 
+    /**
+     * Méthode permettant de mettre à jour le matricule du coursier
+     *
+     * @param matricule Le matricule du coursier
+     */
     public void setMatricule(String matricule) {
         this.matriculeContenu.setText(matricule);
     }
 
+    /**
+     * Méthode permettant de mettre à jour la course en cours
+     *
+     * @param courseEnCours La course en cours
+     */
     public void setCourseEnCours(String courseEnCours) {
         this.courseEnCours.getSecondLabel().setText(courseEnCours);
     }
 
+    /**
+     * Méthode permettant de mettre à jour le cycle en cours
+     *
+     * @param cycleEnCours Le cycle en cours
+     */
     public void setCycleEnCours(String cycleEnCours) {
         this.cycleEnCours.getSecondLabel().setText(cycleEnCours);
     }
 
+    /**
+     * Méthode permettant de mettre à jour le nombre de paquets livrés
+     *
+     * @param paquetLivre Le nombre de paquets livrés
+     */
     public void setPaquetLivre(String paquetLivre) {
         this.contenuUnRow.getFirstLabel().getSecondLabel().setText(paquetLivre);
     }
 
+    /**
+     * Méthode permettant de mettre à jour le poids livré
+     *
+     * @param poidLivre Le poids livré
+     */
     public void setPoidLivre(String poidLivre) {
         this.contenuUnRow.getSecondLabel().getSecondLabel().setText(poidLivre);
     }
 
+    /**
+     * Méthode permettant de mettre à jour le poids moyen
+     *
+     * @param poidMoyen Le poids moyen
+     */
     public void setPoidMoyen(String poidMoyen) {
         this.contenuUnRow.getThirdLabel().getSecondLabel().setText(poidMoyen);
     }
 
+    /**
+     * Méthode permettant de mettre à jour le nombre de course
+     *
+     * @param nombreCourse Le nombre de course
+     */
     public void setNombreCourse(String nombreCourse) {
         this.contenuDeuxRow.getFirstLabel().getSecondLabel().setText(nombreCourse);
     }
 
+    /**
+     * Méthode permettant de mettre à jour la distance parcourue
+     *
+     * @param distanceParcourue La distance parcourue
+     */
     public void setDistanceParcourue(String distanceParcourue) {
         this.contenuDeuxRow.getSecondLabel().getSecondLabel().setText(distanceParcourue);
     }
 
+    /**
+     * Méthode permettant de mettre à jour le nombre d'accidents
+     *
+     * @param nombreAccident Le nombre d'accidents
+     */
     public void setNombreAccident(String nombreAccident) {
         this.contenuDeuxRow.getThirdLabel().getSecondLabel().setText(nombreAccident);
     }
 
+    /**
+     * Méthode permettant de mettre à jour la date de début
+     *
+     * @return La date de début
+     */
     public String getDateDebut() {
         return this.dateDebut.getDateStringOrEmptyString();
     }
 
+    /**
+     * Méthode permettant de mettre à jour la date de fin
+     *
+     * @return La date de fin
+     */
     public String getDateFin() {
         return this.dateFin.getDateStringOrEmptyString();
     }
 
+    /**
+     * Méthode permettant de mettre à jour la date de début
+     *
+     * @param dateDebut La date de début
+     */
     public void setDateDebut(String dateDebut) {
         this.dateDebut.setDate(LocalDate.parse(dateDebut));
     }
 
+    /**
+     * Méthode permettant de mettre à jour la date de fin
+     *
+     * @param dateFin La date de fin
+     */
     public void setDateFin(String dateFin) {
         this.dateFin.setDate(LocalDate.parse(dateFin));
     }
