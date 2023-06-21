@@ -1,7 +1,7 @@
 package net.cnam.fleetview.controller;
 
 import net.cnam.fleetview.database.BDDConnection;
-import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.course.CourseDAO;
 import net.cnam.fleetview.model.coursier.Coursier;
@@ -33,13 +33,13 @@ public class CoursierNomATrouver extends Controller<CoursierRecapitulatifCourseV
         super(view);
 
         // Init du connector
-        DefaultConnector connector = new DefaultConnector();
-        Connection bddConnection = BDDConnection.getInstance(connector);
+        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
+        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
 
         // Initialisation des DAO
-        this.coursierDAO = new CoursierDAO(bddConnection);
-        this.courseDAO = new CourseDAO(bddConnection);
-        this.cycleDAO = new CycleDAO(bddConnection);
+        this.coursierDAO = new CoursierDAO(connection);
+        this.courseDAO = new CourseDAO(connection);
+        this.cycleDAO = new CycleDAO(connection);
 
         // On récupère le coursier en fonction de l'id utilisateur
         this.coursier = this.coursierDAO.getByIdUtilisateur(RootController.getCurrentUser().getIdUtilisateur());
@@ -66,7 +66,7 @@ public class CoursierNomATrouver extends Controller<CoursierRecapitulatifCourseV
      */
     private boolean checkLancerCourse() {
         // On vérifie si le coursier a bien une course d'assigné
-        if (this.course == null ||courseDAO.estDisponible(this.course)) {
+        if (this.course == null || courseDAO.estDisponible(this.course)) {
             // Diriger page des cycles
         } else if (this.cycle == null || cycleDAO.estDisponible(this.cycle)) {
             // Diriger page des cycles
@@ -79,7 +79,7 @@ public class CoursierNomATrouver extends Controller<CoursierRecapitulatifCourseV
     /**
      * Méthode permettant de lancer la course du coursier de l'enregistrer en base de données.
      */
-    public void lancerCourse () {
+    public void lancerCourse() {
         if (!checkLancerCourse())
             return;
     }
