@@ -77,6 +77,9 @@ public class RootController extends Controller<RootPanelView> {
         else {
             // On crée la vue accueil
             AdminMainView accueilView = new AdminMainView();
+            // On crée le controlleur associé
+            AdminMainController accueilController = new AdminMainController(accueilView);
+            accueilView.setController(accueilController);
 
             // On affiche la vue accueil
             this.view.getMainPanel().setContentPanelView(accueilView);
