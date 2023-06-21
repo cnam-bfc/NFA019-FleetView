@@ -562,8 +562,32 @@ public class CourseDAO extends DAO<Course> implements Archivable<Course> {
      * @return true si la course est disponible, false sinon
      */
     public boolean estDisponible (Course course) {
-        String query = "SELECT * FROM fleetview_course WHERE id_course = ? AND date_course IS NULL AND date_debut_course IS NULL AND date_archive IS NULL;";
+        String query = "SELECT * FROM fleetview_course AS fc WHERE fc.date_archive IS NULL AND fc.date_debut_course IS NULL AND fc.id_course = ?;";
+        boolean result = false;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, course.getIdCourse());
 
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                result = true;
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de vérifier si la course est disponible", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+        return result;
     }
 
     @Override
