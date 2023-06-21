@@ -1,9 +1,11 @@
 package net.cnam.fleetview.view.base.menu.content;
 
+import net.cnam.fleetview.controller.FastStartupController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.colis.ColissController;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
+import net.cnam.fleetview.view.CoursierRecapitulatifCourseView;
 import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.colis.list.ColissView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
@@ -57,22 +59,20 @@ public class LeftMenuContentPanelView extends JPanel {
 
         // Bouton de début de course
         this.coursierStartCourse.addActionListener(e -> {
-            // Choix du roi
-            // Regarde s'il est déjà posté sur une course, sinon envoie sur la liste des courses
-            // S'il est déjà posté sur une course
-            // Regarde s'il est déjà posté avec un cycle de livraison, sinon envoie sur la liste des cycles de livraison
-            // S'il est déjà posté avec un cycle de livraison
-            // Envoie sur une page de confirmation de début de course
-            // => Besoin d'ajouter des options pour que si ce soit un coursier de connecter on puisse dans le tableau des cycles de livraison et dans celui des courses pouvoir s'attribuer un cycle (idem dans les pages de détails)
-
-            // Choix de la pute
-            // Envoie sur une page ou il choisi une course, un cycle et confirme
-            // => besoin de créer une nouvelle page
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+            // Création de la vue de la liste des courses
+            CoursierRecapitulatifCourseView coursierRecapitulatifCourseView = new CoursierRecapitulatifCourseView();
+            // Affichage de la vue de la liste des courses
+            RootController.open(coursierRecapitulatifCourseView);
+            // Création du contrôleur de la vue
+            FastStartupController fastStartupController = new FastStartupController(coursierRecapitulatifCourseView);
+            coursierRecapitulatifCourseView.setController(fastStartupController);
         });
 
         // Bouton de fin de course
         this.coursierEndCourse.addActionListener(e -> {
-           // Envoie sur le rapport d'activite ?
+            // Envoie sur le rapport d'activite ?
             // Archive la course
         });
 

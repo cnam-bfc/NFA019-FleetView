@@ -1,5 +1,7 @@
 package net.cnam.fleetview.controller;
 
+import net.cnam.fleetview.controller.courses.CourseChooser;
+import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.course.Course;
@@ -9,10 +11,12 @@ import net.cnam.fleetview.model.coursier.CoursierDAO;
 import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
 import net.cnam.fleetview.view.CoursierRecapitulatifCourseView;
+import net.cnam.fleetview.view.course.list.CoursesView;
 
 import java.sql.Connection;
+import java.util.List;
 
-public class CoursierNomATrouver extends Controller<CoursierRecapitulatifCourseView> {
+public class FastStartupController extends Controller<CoursierRecapitulatifCourseView> implements CourseChooser {
     // Attributs
     private Coursier coursier;
     private Course course;
@@ -29,7 +33,7 @@ public class CoursierNomATrouver extends Controller<CoursierRecapitulatifCourseV
      *
      * @param view
      */
-    public CoursierNomATrouver(CoursierRecapitulatifCourseView view) {
+    public FastStartupController(CoursierRecapitulatifCourseView view) {
         super(view);
 
         // Init du connector
@@ -66,9 +70,9 @@ public class CoursierNomATrouver extends Controller<CoursierRecapitulatifCourseV
      */
     private boolean checkLancerCourse() {
         // On vérifie si le coursier a bien une course d'assigné
-        if (this.course == null ||courseDAO.estDisponible(this.course)) {
-            // Diriger page des cycles
-        } else if (this.cycle == null || cycleDAO.estDisponible(this.cycle)) {
+        if (this.course == null || !courseDAO.estDisponible(this.course)) {
+            this.onAjouterCourse();
+        } else if (this.cycle == null || !cycleDAO.estDisponible(this.cycle)) {
             // Diriger page des cycles
         } else {
             return true;
@@ -77,10 +81,45 @@ public class CoursierNomATrouver extends Controller<CoursierRecapitulatifCourseV
     }
 
     /**
-     * Méthode permettant de lancer la course du coursier de l'enregistrer en base de données.
+     * Méthode permettant de lancer la course du coursier et de l'enregistrer en base de données.
      */
     public void lancerCourse () {
         if (!checkLancerCourse())
             return;
+
+        // Enregistrer en bdd
+
+        // Retirer le bouton et mettre le nouveau
+    }
+
+
+    public void onAjouterCourse() {
+        // Affichage du tableau des course
+        // Création de la vue
+        CoursesView coursesView = new CoursesView();
+        // Création du controller
+        CoursesController coursesController = new CoursesController(coursesView);
+        coursesView.setController(coursesController);
+
+        // Liaison callback
+        coursesController.bindCourseChooser(this);
+
+        // Affichage de la vue
+        RootController.open(coursesView);
+    }
+
+    @Override
+    public void chooseCourse(Course course) {
+        this.course = course;
+        this.checkLancerCourse();
+    }
+
+    @Override
+    public List<Integer> getBlacklist() {
+        return null;
+    }
+
+    public void onAjouterCycle() {
+
     }
 }
