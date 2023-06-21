@@ -1,5 +1,6 @@
 package net.cnam.fleetview.view.accueil;
 
+import net.cnam.fleetview.controller.AdminMainController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.view.ParametrageBddView;
@@ -8,17 +9,15 @@ import net.cnam.fleetview.view.administrateur.CreateModifyUsers;
 import net.cnam.fleetview.view.administrateur.ViewUsers;
 import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.components.label.IconLabel;
-import net.cnam.fleetview.view.course.edit.CourseView;
 import net.cnam.fleetview.view.course.list.CoursesView;
 import net.cnam.fleetview.view.coursier.list.CoursiersView;
 import net.cnam.fleetview.view.cycle.ListeCycleView;
 import net.cnam.fleetview.view.documents.FicheAccidentView;
-import net.cnam.fleetview.view.documents.FicheCourseView;
-import net.cnam.fleetview.view.statistiques.StatistiquesView;
 
 import javax.swing.*;
 import java.awt.*;
-public class AdminMainView extends View {
+
+public class AdminMainView extends View<AdminMainController> {
 
     //private final JFrame test = new JFrame();
     private final JButton viewUsers = new JButton("<html>Visualisation de tous les utilisateurs</html>");
@@ -40,27 +39,27 @@ public class AdminMainView extends View {
 
     private final IconLabel iconLabel;
 
-    public AdminMainView(){
+    public AdminMainView() {
         Utilisateur user = RootController.getCurrentUser();
 
 
         this.iconLabel = new IconLabel("\uF013", "Accueil");
         JPanel mainPanel = new JPanel(new BorderLayout());
 
-        JPanel bttnPanel = new JPanel(new GridLayout(2,5,50,50));
+        JPanel bttnPanel = new JPanel(new GridLayout(2, 5, 50, 50));
 
-        this.dbConnection.setPreferredSize(new Dimension(120,120));
-        this.modifyUsers.setPreferredSize(new Dimension(120,120));
-        this.viewUsers.setPreferredSize(new Dimension(120,120));
-        this.viewCourses.setPreferredSize(new Dimension(120,120));
-        this.viewCoursiers.setPreferredSize(new Dimension(120,120));
-        this.viewCycles.setPreferredSize(new Dimension(100,100));
-        this.viewDocs.setPreferredSize(new Dimension(100,100));
-        this.stats.setPreferredSize(new Dimension(100,100));
-        this.map.setPreferredSize(new Dimension(100,100));
-        this.menuCourses.setPreferredSize(new Dimension(100,100));
-        this.dailyReport.setPreferredSize(new Dimension(100,100));
-        this.accidentSheet.setPreferredSize(new Dimension(100,100));
+        this.dbConnection.setPreferredSize(new Dimension(120, 120));
+        this.modifyUsers.setPreferredSize(new Dimension(120, 120));
+        this.viewUsers.setPreferredSize(new Dimension(120, 120));
+        this.viewCourses.setPreferredSize(new Dimension(120, 120));
+        this.viewCoursiers.setPreferredSize(new Dimension(120, 120));
+        this.viewCycles.setPreferredSize(new Dimension(100, 100));
+        this.viewDocs.setPreferredSize(new Dimension(100, 100));
+        this.stats.setPreferredSize(new Dimension(100, 100));
+        this.map.setPreferredSize(new Dimension(100, 100));
+        this.menuCourses.setPreferredSize(new Dimension(100, 100));
+        this.dailyReport.setPreferredSize(new Dimension(100, 100));
+        this.accidentSheet.setPreferredSize(new Dimension(100, 100));
 
         if (user.getIdRole() == 1) {
             this.dbConnection.addActionListener(e -> {
@@ -94,27 +93,27 @@ public class AdminMainView extends View {
 
         //if (user.getIdRole() == 2) {
 
-            this.viewCourses.addActionListener(e -> {
-                // Création de la vue des paramètres
-                CoursesView coursesView = new CoursesView();
+        this.viewCourses.addActionListener(e -> {
+            // Création de la vue des paramètres
+            CoursesView coursesView = new CoursesView();
 
-                // Affichage de la vue des paramètres
-                RootController.open(coursesView);
-            });
-            this.viewCoursiers.addActionListener(e -> {
-                // Création de la vue des paramètres
-                CoursiersView coursiersView = new CoursiersView();
+            // Affichage de la vue des paramètres
+            RootController.open(coursesView);
+        });
+        this.viewCoursiers.addActionListener(e -> {
+            // Création de la vue des paramètres
+            CoursiersView coursiersView = new CoursiersView();
 
-                // Affichage de la vue des paramètres
-                RootController.open(coursiersView);
-            });
-            this.viewCycles.addActionListener(e -> {
-                // Création de la vue des paramètres
-                ListeCycleView cycleView = new ListeCycleView();
+            // Affichage de la vue des paramètres
+            RootController.open(coursiersView);
+        });
+        this.viewCycles.addActionListener(e -> {
+            // Création de la vue des paramètres
+            ListeCycleView cycleView = new ListeCycleView();
 
-                // Affichage de la vue des paramètres
-                RootController.open(cycleView);
-            });
+            // Affichage de la vue des paramètres
+            RootController.open(cycleView);
+        });
             /*
             this.viewDocs.addActionListener(e -> {
                 // Création de la vue des paramètres
@@ -124,27 +123,20 @@ public class AdminMainView extends View {
                 RootController.open(viewDocs);
             });
              */
-            this.stats.addActionListener(e -> {
-                // Création de la vue des paramètres
-                StatistiquesView stats = new StatistiquesView();
+        this.map.addActionListener(e -> {
+            // Création de la vue des paramètres
+            CarteView map = new CarteView();
 
-                // Affichage de la vue des paramètres
-                RootController.open(stats);
-            });
-            this.map.addActionListener(e -> {
-                // Création de la vue des paramètres
-                CarteView map = new CarteView();
+            // Affichage de la vue des paramètres
+            RootController.open(map);
+        });
 
-                // Affichage de la vue des paramètres
-                RootController.open(map);
-            });
-
-            bttnPanel.add(this.viewCourses);
-            bttnPanel.add(this.viewCoursiers);
-            bttnPanel.add(this.viewCycles);
-            bttnPanel.add(this.viewDocs);
-            bttnPanel.add(this.stats);
-            bttnPanel.add(this.map);
+        bttnPanel.add(this.viewCourses);
+        bttnPanel.add(this.viewCoursiers);
+        bttnPanel.add(this.viewCycles);
+        bttnPanel.add(this.viewDocs);
+        bttnPanel.add(this.stats);
+        bttnPanel.add(this.map);
         //}
 
         //if (user.getIdRole() == 3) {
@@ -168,28 +160,28 @@ public class AdminMainView extends View {
             });
 
              */
-            this.accidentSheet.addActionListener(e -> {
-                // Création de la vue des paramètres
-                FicheAccidentView accidentSheet = new FicheAccidentView();
+        this.accidentSheet.addActionListener(e -> {
+            // Création de la vue des paramètres
+            FicheAccidentView accidentSheet = new FicheAccidentView();
 
-                // Affichage de la vue des paramètres
-                RootController.open(accidentSheet);
-            });
+            // Affichage de la vue des paramètres
+            RootController.open(accidentSheet);
+        });
 
-            bttnPanel.add(this.menuCourses);
-            bttnPanel.add(this.dailyReport);
-            bttnPanel.add(this.accidentSheet);
+        bttnPanel.add(this.menuCourses);
+        bttnPanel.add(this.dailyReport);
+        bttnPanel.add(this.accidentSheet);
         //}
 
         JPanel leftPanel = new JPanel();
-        leftPanel.setPreferredSize(new Dimension(100,0));
+        leftPanel.setPreferredSize(new Dimension(100, 0));
         JPanel rightPanel = new JPanel();
-        rightPanel.setPreferredSize(new Dimension(100,0));
+        rightPanel.setPreferredSize(new Dimension(100, 0));
 
-        mainPanel.add(this.iconLabel,BorderLayout.NORTH);
-        mainPanel.add(leftPanel,BorderLayout.LINE_START);
-        mainPanel.add(bttnPanel,BorderLayout.CENTER);
-        mainPanel.add(rightPanel,BorderLayout.LINE_END);
+        mainPanel.add(this.iconLabel, BorderLayout.NORTH);
+        mainPanel.add(leftPanel, BorderLayout.LINE_START);
+        mainPanel.add(bttnPanel, BorderLayout.CENTER);
+        mainPanel.add(rightPanel, BorderLayout.LINE_END);
         this.add(mainPanel);
     }
 
