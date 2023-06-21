@@ -80,7 +80,7 @@ public class CycleCompletDAO extends DAO<CycleComplet> {
             cycleComplet.setMarque(resultSet.getString("marque_nom"));
             cycleComplet.setNomFournisseur(resultSet.getString("fournisseur_nom"));
             cycleComplet.setType(resultSet.getString("type_nom"));
-            cycleComplet.setDateDerniereRevision(resultSet.getObject("date_derniere_revision", LocalDateTime.class));
+            cycleComplet.setDateDerniereRevision(resultSet.getObject("date_revision", LocalDateTime.class));
             cycleComplet.setEtat(resultSet.getString("etat_nom"));
         } catch (SQLException ex) {
             // On log l'erreur
