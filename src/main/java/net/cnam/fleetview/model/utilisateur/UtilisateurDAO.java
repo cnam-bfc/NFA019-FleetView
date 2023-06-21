@@ -356,7 +356,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
      * @param iden L'identificateur à rechercher
      * @return Un objet Utilisateur correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
      */
-    public Utilisateur getByIden(int iden) {
+    public Utilisateur getByIden(String iden) {
         // Requête de sélection
         String query = "SELECT * FROM fleetview_utilisateur WHERE identifiant = ?";
 

@@ -17,21 +17,20 @@ public class ConnectionController extends Controller<ConnectionView>{
         this.utilisateurDAO = new UtilisateurDAO(BDDConnection.getInstance(connector));
     }
 
-    public void onConnection(){
+    public void onConnection(String iden, String pass){
 
-        String identi = view.getIdent();
-        String pass = view.getPass();
-
-        Utilisateur utilisateur = utilisateurDAO.getByIden(identi);
+        Utilisateur utilisateur = utilisateurDAO.getByIden(iden);
 
         String identifiant = utilisateur.getIdentifiant();
         String motDePasse = utilisateur.getMotDePasse();
 
-        if(identifiant == "null" || motDePasse == "null"){
-
+        if(identifiant == null || motDePasse == null){
+            view.afficherMessageErreur("Connection", "Connection Refused");
         }
         else{
-            view.afficherMessage("c'est ok");
+            view.afficherMessageInformation("Connection", "Connection apply");
+            // Définir l'utilisateur actuellement connecté
+            RootController.setCurrentUser(utilisateur);
         }
 
 
