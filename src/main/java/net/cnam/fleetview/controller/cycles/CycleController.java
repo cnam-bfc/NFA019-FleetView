@@ -40,7 +40,7 @@ public class CycleController extends Controller<CycleView> {
         String marque = cycle.get;
 
         // renvoie
-        view.envoie(/* mettre les données a renvoyer */);//méthode a refaire
+        view.fill(/* mettre les données a renvoyer */);//méthode a refaire
         view.editField(false);
     }
 
