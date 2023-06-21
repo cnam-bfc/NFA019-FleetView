@@ -19,8 +19,23 @@ public class CreateModifyUserView extends View<CreateModifyUserController> {
         rightPanel.setPreferredSize(new Dimension(100,0));
 
 
-        JPanel infoPanel = new JPanel(new GridLayout(2,2,40,20));
+        JPanel infoPanel = new JPanel(new GridLayout(3,2,40,20));
 
+        JPanel idUtilisateur = new JPanel(new BorderLayout());
+        idUtilisateur.setLayout(new BoxLayout(idUtilisateur, BoxLayout.PAGE_AXIS));
+        JTextField idChamp = new JTextField();
+        idChamp.setPreferredSize(new Dimension(400,20));
+        JLabel idLabel = new JLabel("ID Utilisateur");
+        idUtilisateur.add(idLabel);
+        idUtilisateur.add(idChamp);
+
+        JPanel identifiant = new JPanel(new BorderLayout());
+        identifiant.setLayout(new BoxLayout(identifiant, BoxLayout.PAGE_AXIS));
+        JTextField identifiantChamp = new JTextField();
+        identifiantChamp.setPreferredSize(new Dimension(400,20));
+        JLabel identifiantLabel = new JLabel("Identifiant");
+        identifiant.add(identifiantLabel);
+        identifiant.add(identifiantChamp);
 
         JPanel nom = new JPanel(new BorderLayout());
         nom.setLayout(new BoxLayout(nom, BoxLayout.PAGE_AXIS));
@@ -54,7 +69,8 @@ public class CreateModifyUserView extends View<CreateModifyUserController> {
         role.add(roleLabel);
         role.add(roleChamp);
 
-
+        infoPanel.add(idUtilisateur);
+        infoPanel.add(identifiant);
         infoPanel.add(nom);
         infoPanel.add(prenom);
         infoPanel.add(dateCreation);
