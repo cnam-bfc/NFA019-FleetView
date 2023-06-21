@@ -1,8 +1,8 @@
 package net.cnam.fleetview.view.course.edit;
 
 import com.github.lgooddatepicker.components.DatePicker;
-import net.cnam.fleetview.controller.courses.CourseController;
 import net.cnam.fleetview.controller.RootController;
+import net.cnam.fleetview.controller.courses.CourseController;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.components.label.IconLabel;
@@ -203,6 +203,11 @@ public class CourseView extends View<CourseController> {
                 // Date
                 if (dateField.getDate() == null) {
                     afficherMessageErreur("La date de la course est obligatoire");
+                    return;
+                }
+                // Colis
+                if (colisTableModel.getRowCount() == 0) {
+                    afficherMessageErreur("La course doit contenir au moins un colis");
                     return;
                 }
 
