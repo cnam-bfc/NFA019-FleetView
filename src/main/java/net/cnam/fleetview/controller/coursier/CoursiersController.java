@@ -1,14 +1,16 @@
 package net.cnam.fleetview.controller.coursier;
 
 import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
-import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.coursierutilisateur.CoursierUtilisateur;
 import net.cnam.fleetview.model.coursierutilisateur.CoursierUtilisateurDAO;
 import net.cnam.fleetview.view.coursier.list.CoursiersView;
 import net.cnam.fleetview.view.coursier.show.CoursierView;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class CoursiersController extends Controller<CoursiersView> {
@@ -20,8 +22,9 @@ public class CoursiersController extends Controller<CoursiersView> {
         super(view);
 
         // Initialisation des DAO
-        DefaultConnector connector = new DefaultConnector();
-        this.coursierUtilisateurDAO = new CoursierUtilisateurDAO(BDDConnection.getInstance(connector));
+        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
+        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
+        this.coursierUtilisateurDAO = new CoursierUtilisateurDAO(connection);
 
         // Chargement des courses dans la vue
         List<CoursierUtilisateur> coursierUtilisateurs = coursierUtilisateurDAO.getAllNotArchived();

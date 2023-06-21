@@ -1,14 +1,14 @@
 package net.cnam.fleetview.controller;
 
+import net.cnam.fleetview.database.DBConnectionTest;
 import net.cnam.fleetview.model.basededonnees.BaseDeDonnees;
 import net.cnam.fleetview.view.ParametrageBddView;
-import net.cnam.fleetview.database.DBConnectionTest;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Properties;
 
-public class ParametrageBddController extends Controller <ParametrageBddView> {
+public class ParametrageBddController extends Controller<ParametrageBddView> {
 
 
     public ParametrageBddController(ParametrageBddView view) {
@@ -18,6 +18,9 @@ public class ParametrageBddController extends Controller <ParametrageBddView> {
 
     public void loadDbConfig() {
         BaseDeDonnees db = getDatabase();
+        if (db == null) {
+            return;
+        }
         view.fill(db.getAdresseIP(), db.getPort(), db.getNomBase(), db.getIdentifiant(), db.getMotDePasse());
     }
 
@@ -26,9 +29,9 @@ public class ParametrageBddController extends Controller <ParametrageBddView> {
         HashMap data = view.getInformation();
 
         if (testConnectionView()) {
-            try (OutputStream output = new FileOutputStream("src/main/resources/project.properties")) {
+            try (OutputStream output = new FileOutputStream(".\\config.properties")) {
                 Properties prop = new Properties();
-                prop.setProperty("bdd_ip",(String) data.get("ip") );
+                prop.setProperty("bdd_ip", (String) data.get("ip"));
                 prop.setProperty("bdd_port", (String) data.get("port"));
                 prop.setProperty("bdd_name", (String) data.get("nom"));
                 prop.setProperty("bdd_username", (String) data.get("id"));
@@ -58,9 +61,9 @@ public class ParametrageBddController extends Controller <ParametrageBddView> {
         Properties properties = new Properties();
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new FileReader(new File("src/main/resources/project.properties")));
+            reader = new BufferedReader(new FileReader(".\\config.properties"));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            return null;
         }
         try {
             properties.load(reader);

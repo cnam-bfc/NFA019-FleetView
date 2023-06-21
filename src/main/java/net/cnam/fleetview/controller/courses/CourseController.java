@@ -1,12 +1,13 @@
 package net.cnam.fleetview.controller.courses;
 
 import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.colis.ColisChooser;
 import net.cnam.fleetview.controller.colis.ColisController;
 import net.cnam.fleetview.controller.colis.ColissController;
 import net.cnam.fleetview.database.BDDConnection;
-import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.adresse.Adresse;
 import net.cnam.fleetview.model.adresse.AdresseDAO;
 import net.cnam.fleetview.model.colis.Colis;
@@ -44,8 +45,8 @@ public class CourseController extends Controller<CourseView> implements ColisCho
         super(view);
 
         // Initialisation des DAO
-        DefaultConnector connector = new DefaultConnector();
-        Connection connection = BDDConnection.getInstance(connector);
+        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
+        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
         this.courseDAO = new CourseDAO(connection);
         this.adresseDAO = new AdresseDAO(connection);
         this.colisDAO = new ColisDAO(connection);

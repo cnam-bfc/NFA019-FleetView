@@ -1,10 +1,10 @@
 package net.cnam.fleetview.controller.utilisateur;
 
 import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
-import net.cnam.fleetview.controller.courses.CourseController;
 import net.cnam.fleetview.database.BDDConnection;
-import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.model.utilisateur.UtilisateurDAO;
 import net.cnam.fleetview.view.administrateur.CreateModifyUserView;
@@ -15,13 +15,15 @@ import java.util.List;
 
 public class UsersController extends Controller<UsersView> {
     private final UtilisateurDAO utilisateurDAO;
+
     public UsersController(UsersView view) {
         super(view);
 
-        DefaultConnector connector = new DefaultConnector();
-        Connection connection = BDDConnection.getInstance(connector);
+        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
+        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
         this.utilisateurDAO = new UtilisateurDAO(connection);
     }
+
     public void onRefreshUsers() {
         // Suppression des courses de la vue
         view.removeAllUsers();

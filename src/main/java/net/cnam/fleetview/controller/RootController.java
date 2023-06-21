@@ -1,7 +1,7 @@
 package net.cnam.fleetview.controller;
 
 import net.cnam.fleetview.database.BDDConnection;
-import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.model.utilisateur.UtilisateurDAO;
 import net.cnam.fleetview.view.View;
@@ -15,7 +15,7 @@ public class RootController extends Controller<RootPanelView> {
 
     private final LinkedList<View> views = new LinkedList<>();
 
-    private Utilisateur utilisateur = new UtilisateurDAO(BDDConnection.getInstance(new DefaultConnector())).getById(1);
+    private Utilisateur utilisateur = null;
 
     public RootController(RootPanelView view) {
         super(view);

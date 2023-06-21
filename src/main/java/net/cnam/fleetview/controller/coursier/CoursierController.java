@@ -2,8 +2,9 @@ package net.cnam.fleetview.controller.coursier;
 
 import net.cnam.fleetview.App;
 import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.database.BDDConnection;
-import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.coliscourse.ColisCourseDAO;
 import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.course.CourseDAO;
@@ -39,12 +40,12 @@ public class CoursierController extends Controller<CoursierView> {
         super(view);
 
         // Initialisation des DAO
-        DefaultConnector connector = new DefaultConnector();
-        Connection bddConnection = BDDConnection.getInstance(connector);
-        this.coursierUtilisateurDAO = new CoursierUtilisateurDAO(bddConnection);
-        this.courseDAO = new CourseDAO(bddConnection);
-        this.colisCourseDAO = new ColisCourseDAO(bddConnection);
-        this.courseAccidentDAO = new CourseAccidentDAO(bddConnection);
+        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
+        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
+        this.coursierUtilisateurDAO = new CoursierUtilisateurDAO(connection);
+        this.courseDAO = new CourseDAO(connection);
+        this.colisCourseDAO = new ColisCourseDAO(connection);
+        this.courseAccidentDAO = new CourseAccidentDAO(connection);
     }
 
     /**
@@ -107,7 +108,7 @@ public class CoursierController extends Controller<CoursierView> {
     /**
      * Méthode permettant de générer un rapport d'activité en PDF.
      * Utilisation de la librairie Apache PDFBox
-     *
+     * <p>
      * Note : la Biblio est complexe voir si on peut utiliser iText (problème, toutes les versions trouvées ont des licences ou alors des vulnérabilités)
      * Note 2 : Se serait bien de créer un objet destiner à gérer les PDF si on a le temps (Facilement placer titre/sous titre, infos, image, etc...)
      */

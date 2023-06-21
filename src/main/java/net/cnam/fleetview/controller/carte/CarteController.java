@@ -1,9 +1,10 @@
 package net.cnam.fleetview.controller.carte;
 
 import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
-import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.secteur.Secteur;
 import net.cnam.fleetview.model.secteur.SecteurDAO;
 import net.cnam.fleetview.model.secteurdelimitation.SecteurDelimitation;
@@ -29,8 +30,8 @@ public class CarteController extends Controller<CarteView> {
         super(view);
 
         // Initialisation des DAO
-        DefaultConnector connector = new DefaultConnector();
-        Connection connection = BDDConnection.getInstance(connector);
+        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
+        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
         this.secteurDAO = new SecteurDAO(connection);
         this.secteurDelimitationDAO = new SecteurDelimitationDAO(connection);
         this.secteurPointDAO = new SecteurPointDAO(connection);
