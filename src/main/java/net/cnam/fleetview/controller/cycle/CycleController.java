@@ -1,17 +1,20 @@
 package net.cnam.fleetview.controller.cycle;
 
 import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.database.BDDConnection;
-import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
 import net.cnam.fleetview.model.cycleetat.CycleEtat;
 import net.cnam.fleetview.model.cycleetat.CycleEtatDAO;
-import net.cnam.fleetview.model.cyclemarque.CycleMarque;
-import net.cnam.fleetview.model.cyclemarque.CycleMarqueDAO;
 import net.cnam.fleetview.model.cyclefournisseur.CycleFournisseur;
 import net.cnam.fleetview.model.cyclefournisseur.CycleFournisseurDAO;
+import net.cnam.fleetview.model.cyclemarque.CycleMarque;
+import net.cnam.fleetview.model.cyclemarque.CycleMarqueDAO;
 import net.cnam.fleetview.view.cycle.CycleView;
+
+import java.sql.Connection;
 
 public class CycleController extends Controller<CycleView> {
     private final CycleDAO cycleDAO;
@@ -23,22 +26,24 @@ public class CycleController extends Controller<CycleView> {
     private CycleMarque cycleMarque;
     private CycleEtat cycleEtat;
     private CycleFournisseur cycleFournisseur;
+
     public CycleController(CycleView view) {
         super(view);
 
         // Initialisation des DAO
-        DefaultConnector connector = new DefaultConnector();
-        this.cycleDAO = new CycleDAO(BDDConnection.getInstance(connector));
-        this.cycleMarqueDAO = new CycleMarqueDAO(BDDConnection.getInstance(connector));
-        this.cycleEtatDAO = new CycleEtatDAO(BDDConnection.getInstance(connector));
-        this.cycleFournisseurDAO = new CycleFournisseurDAO(BDDConnection.getInstance(connector));
+        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
+        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
+        this.cycleDAO = new CycleDAO(connection);
+        this.cycleMarqueDAO = new CycleMarqueDAO(connection);
+        this.cycleEtatDAO = new CycleEtatDAO(connection);
+        this.cycleFournisseurDAO = new CycleFournisseurDAO(connection);
     }
 
-    public void loadEmptyCycle(){
+    public void loadEmptyCycle() {
         view.editField(true);
     }
 
-    public void loadCycle(int id){
+    public void loadCycle(int id) {
         this.cycle = cycleDAO.getById(id);
         this.cycleMarque = cycleMarqueDAO.getMarqueByIdCycle(this.cycle.getIdCycle());
         this.cycleEtat = cycleEtatDAO.getFirstEtatByIdCycle(this.cycle.getIdCycle());
@@ -59,12 +64,12 @@ public class CycleController extends Controller<CycleView> {
         this.view.editField(false);
     }
 
-    public void loadViewableCycle(int id){
+    public void loadViewableCycle(int id) {
         loadCycle(id);
         view.editField(false);
     }
 
-    public void loadEditableCycle(int id){
+    public void loadEditableCycle(int id) {
 
         ///récuperer les textFields
         loadCycle(id);

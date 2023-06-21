@@ -5,7 +5,7 @@ import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.cycle.CycleChooser;
 import net.cnam.fleetview.controller.cycle.CyclesController;
 import net.cnam.fleetview.database.BDDConnection;
-import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.coliscourse.ColisCourseDAO;
 import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.course.CourseDAO;
@@ -46,15 +46,15 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         super(view);
 
         // Init du connector
-        DefaultConnector connector = new DefaultConnector();
-        Connection bddConnection = BDDConnection.getInstance(connector);
+        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
+        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
 
         // Initialisation des DAO
-        this.coursierDAO = new CoursierDAO(bddConnection);
-        this.courseDAO = new CourseDAO(bddConnection);
-        this.cycleDAO = new CycleDAO(bddConnection);
-        this.colisCourseDAO = new ColisCourseDAO(bddConnection);
-        this.coursierTravailDAO = new CoursierTravailDAO(bddConnection);
+        this.coursierDAO = new CoursierDAO(connection);
+        this.courseDAO = new CourseDAO(connection);
+        this.cycleDAO = new CycleDAO(connection);
+        this.colisCourseDAO = new ColisCourseDAO(connection);
+        this.coursierTravailDAO = new CoursierTravailDAO(connection);
 
         // On récupère le coursier en fonction de l'id utilisateur
         this.coursier = this.coursierDAO.getByIdUtilisateur(RootController.getCurrentUser().getIdUtilisateur());

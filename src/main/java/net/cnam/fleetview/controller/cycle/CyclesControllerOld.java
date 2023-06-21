@@ -1,27 +1,30 @@
 package net.cnam.fleetview.controller.cycle;
 
 import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
-import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
 import net.cnam.fleetview.view.cycle.CycleView;
 import net.cnam.fleetview.view.cycle.CyclesViewOld;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class CyclesControllerOld extends Controller<CyclesViewOld> {
 
     private final CycleDAO cycleDAO;
+
     public CyclesControllerOld(CyclesViewOld view) {
 
         super(view);
 
         // Initialisation des DAO
-        DefaultConnector connector = new DefaultConnector();
-        this.cycleDAO = new CycleDAO(BDDConnection.getInstance(connector));
-
+        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
+        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
+        this.cycleDAO = new CycleDAO(connection);
     }
 
     public void refreshCycle() {
@@ -39,7 +42,7 @@ public class CyclesControllerOld extends Controller<CyclesViewOld> {
         }
     }
 
-    public void ajoutCycle(){
+    public void ajoutCycle() {
         CycleView creationCycle = new CycleView();
         CycleController cycleController = new CycleController(creationCycle);
         creationCycle.setController(cycleController);
@@ -48,7 +51,8 @@ public class CyclesControllerOld extends Controller<CyclesViewOld> {
 
         RootController.open(creationCycle);
     }
-    public void voirCycle(int id){
+
+    public void voirCycle(int id) {
         CycleView voirCycle = new CycleView();
         CycleController cycleController = new CycleController(voirCycle);
         voirCycle.setController(cycleController);
@@ -58,7 +62,7 @@ public class CyclesControllerOld extends Controller<CyclesViewOld> {
         RootController.open(voirCycle);
     }
 
-    public void modifCycle(int id){
+    public void modifCycle(int id) {
         CycleView modificationCycle = new CycleView();
         CycleController cycleController = new CycleController(modificationCycle);
         modificationCycle.setController(cycleController);
@@ -68,14 +72,14 @@ public class CyclesControllerOld extends Controller<CyclesViewOld> {
         RootController.open(modificationCycle);
     }
 
-    public void suppCycle(int id){
+    public void suppCycle(int id) {
         Cycle cycle = cycleDAO.getById(id);
 
         String idCycle = String.valueOf(cycle.getIdCycle());
         String nomCycle = cycle.getIdentifiant();
 
         //Confirmation
-        boolean valid = view.afficherMessageConfirmation("Confirmation Suppression", "Supprimer le Cycle portant l'identifiant : "+ nomCycle+"  ?");
+        boolean valid = view.afficherMessageConfirmation("Confirmation Suppression", "Supprimer le Cycle portant l'identifiant : " + nomCycle + "  ?");
         if (valid) {
             // Suppression de la course
             cycleDAO.archive(cycle, RootController.getCurrentUser());

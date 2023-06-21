@@ -1,23 +1,14 @@
 package net.cnam.fleetview.controller.cycle;
 
 import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
-import net.cnam.fleetview.controller.courses.CourseChooser;
-import net.cnam.fleetview.controller.courses.CourseController;
 import net.cnam.fleetview.database.BDDConnection;
-import net.cnam.fleetview.database.DefaultConnector;
-import net.cnam.fleetview.model.course.Course;
-import net.cnam.fleetview.model.course.CourseDAO;
-import net.cnam.fleetview.model.coursier.Coursier;
-import net.cnam.fleetview.model.coursier.CoursierDAO;
-import net.cnam.fleetview.model.coursiertravail.CoursierTravail;
-import net.cnam.fleetview.model.coursiertravail.CoursierTravailDAO;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
 import net.cnam.fleetview.model.cyclecomplet.CycleComplet;
 import net.cnam.fleetview.model.cyclecomplet.CycleCompletDAO;
-import net.cnam.fleetview.model.utilisateur.Utilisateur;
-import net.cnam.fleetview.model.utilisateur.UtilisateurDAO;
 import net.cnam.fleetview.view.cycle.CycleView;
 import net.cnam.fleetview.view.cycle.CyclesView;
 
@@ -25,7 +16,7 @@ import java.sql.Connection;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CyclesController extends Controller<CyclesView>  {
+public class CyclesController extends Controller<CyclesView> {
     // Modèle
     // DAO
     private final CycleDAO cycleDAO;
@@ -37,8 +28,8 @@ public class CyclesController extends Controller<CyclesView>  {
         super(view);
 
         // Initialisation des DAO
-        DefaultConnector connector = new DefaultConnector();
-        Connection connection = BDDConnection.getInstance(connector);
+        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
+        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
         this.cycleDAO = new CycleDAO(connection);
         this.cycleCompletDAO = new CycleCompletDAO(connection);
     }
