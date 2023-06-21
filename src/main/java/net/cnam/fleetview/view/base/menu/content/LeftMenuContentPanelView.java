@@ -46,7 +46,7 @@ public class LeftMenuContentPanelView extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Création des éléments de l'interface
-        this.coursierStartCourse = new IconLabelButton("\uF04B", "Débuter une course");
+        this.coursierStartCourse = new IconLabelButton("\uF11E", "Débuter une course");
         this.coursierEndCourse = new IconLabelButton("\uF04D", "Terminer une course");
         this.colisButton = new IconLabelButton("\uF466", "Colis");
         this.coursesButton = new IconLabelButton("\uF0D1", "Courses");
