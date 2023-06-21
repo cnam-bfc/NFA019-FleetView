@@ -2,8 +2,12 @@ package net.cnam.fleetview.controller;
 
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.model.adresse.Adresse;
+import net.cnam.fleetview.model.adresse.AdresseDAO;
 import net.cnam.fleetview.model.colis.Colis;
 import net.cnam.fleetview.model.colis.ColisDAO;
+import net.cnam.fleetview.model.colisdestinataire.ColisDestinataire;
+import net.cnam.fleetview.model.colisdestinataire.ColisDestinataireDAO;
 import net.cnam.fleetview.view.colis.edit.ColisView;
 import net.cnam.fleetview.view.colis.list.ColissView;
 
@@ -14,6 +18,8 @@ public class ColissController extends Controller<ColissView> {
     // Modèle
     // DAO
     private final ColisDAO colisDAO;
+    private final AdresseDAO adresseDAO;
+    private final ColisDestinataireDAO colisDestinataireDAO;
 
     public ColissController(ColissView view) {
         super(view);
@@ -22,6 +28,8 @@ public class ColissController extends Controller<ColissView> {
         DefaultConnector connector = new DefaultConnector();
         Connection connection = BDDConnection.getInstance(connector);
         this.colisDAO = new ColisDAO(connection);
+        this.adresseDAO = new AdresseDAO(connection);
+        this.colisDestinataireDAO = new ColisDestinataireDAO(connection);
     }
 
     public void onRefreshColiss() {
@@ -31,12 +39,30 @@ public class ColissController extends Controller<ColissView> {
         // Chargement des colis dans la vue
         List<Colis> coliss = colisDAO.getAllNotArchived();
         for (Colis colis : coliss) {
+            // Récupération de l'adresse du colis
+            Adresse colisAdresse = adresseDAO.getById(colis.getIdAdresse());
+            // Récupération du destinataire du colis
+            ColisDestinataire colisDestinataire = colisDestinataireDAO.getById(colis.getIdColisDestinataire());
+
+            if (colisAdresse == null || colisDestinataire == null) {
+                continue;
+            }
+
             String id = String.valueOf(colis.getIdColis());
             String numero = colis.getNumero();
             String poids = String.valueOf(colis.getPoids());
 
+            String adresse;
+            if (colisAdresse.getNumeroRue() != null) {
+                adresse = colisAdresse.getNumeroRue() + " " + colisAdresse.getRue() + ", " + colisAdresse.getCodePostal() + " " + colisAdresse.getCommune();
+            } else {
+                adresse = colisAdresse.getRue() + ", " + colisAdresse.getCodePostal() + " " + colisAdresse.getCommune();
+            }
+
+            String destinataire = colisDestinataire.getNom() + " " + colisDestinataire.getPrenom();
+
             // Ajout des colis dans la vue
-            view.addColis(id, numero, poids + " kg", "Cycle", "Livreur", "status");
+            view.addColis(id, numero, poids + " kg", adresse, destinataire);
         }
     }
 
