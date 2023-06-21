@@ -142,14 +142,12 @@ public class ConnectionView extends View<ConnectionController> {
                 6, 6,        //initX, initY
                 6, 6);       //xPad, yPad
 
-        //this.add(FormPanel);
         //Bouton
         this.BoutonValidConnect = new JButton("<html>Connexion</html>");
         this.BoutonAnnulConnect = new JButton("<html>Annuler</html>");
         this.BoutonValidConnect.setPreferredSize(new Dimension(80, 50));
         this.BoutonAnnulConnect.setPreferredSize(new Dimension(80, 50));
         this.BouttonPanel.add(BoutonValidConnect, BoutonAnnulConnect);
-        //this.add(BouttonPanel,BorderLayout.SOUTH);
 
         this.MainPanel.add(TitrePanel);
         this.MainPanel.add(LogoPanel);
