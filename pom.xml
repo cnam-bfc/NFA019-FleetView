@@ -103,6 +103,17 @@
         </dependency>
     </dependencies>
 
+    <!-- Permet de générer la javadoc avec la commande mvn site -->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <build>
         <resources>
             <resource>
