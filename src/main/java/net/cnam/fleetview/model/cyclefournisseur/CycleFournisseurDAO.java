@@ -58,10 +58,13 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
             // Si la requête a réussi
             if (result != 0) {
                 // On récupère l'id auto-généré par la requête d'insertion
-                int id = statement.getGeneratedKeys().getInt(1);
-
-                // On met à jour l'objet pour lui attribuer l'id récupéré
-                obj.setId(id);
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    // On attribue l'id à l'objet
+                    obj.setIdCycleFournisseur(generatedKeys.getInt(1));
+                } else {
+                    logger.error("Échec de la création du cycle fournisseur, aucun ID auto-généré retourné.");
+                }
             }
 
             // On ajoute l'historique
@@ -351,7 +354,7 @@ public class CycleFournisseurDAO extends DAO<CycleFournisseur> implements Archiv
     protected void fillObject(CycleFournisseur cycleFournisseur, ResultSet resultSet) {
         try {
             // Remplissage de l'objet CycleFournisseur
-            cycleFournisseur.setId(resultSet.getInt("id"));
+            cycleFournisseur.setIdCycleFournisseur(resultSet.getInt("id"));
             cycleFournisseur.setNom(resultSet.getString("nom"));
             cycleFournisseur.setMail(resultSet.getString("mail"));
             cycleFournisseur.setTelephone(resultSet.getString("telephone"));

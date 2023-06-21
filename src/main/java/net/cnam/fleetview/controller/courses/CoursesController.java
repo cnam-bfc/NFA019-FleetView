@@ -1,9 +1,19 @@
-package net.cnam.fleetview.controller;
+package net.cnam.fleetview.controller.courses;
 
+import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
 import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.course.CourseDAO;
+import net.cnam.fleetview.model.coursier.Coursier;
+import net.cnam.fleetview.model.coursier.CoursierDAO;
+import net.cnam.fleetview.model.coursiertravail.CoursierTravail;
+import net.cnam.fleetview.model.coursiertravail.CoursierTravailDAO;
+import net.cnam.fleetview.model.cycle.Cycle;
+import net.cnam.fleetview.model.cycle.CycleDAO;
+import net.cnam.fleetview.model.utilisateur.Utilisateur;
+import net.cnam.fleetview.model.utilisateur.UtilisateurDAO;
 import net.cnam.fleetview.view.course.edit.CourseView;
 import net.cnam.fleetview.view.course.list.CoursesView;
 
@@ -14,6 +24,10 @@ public class CoursesController extends Controller<CoursesView> {
     // Modèle
     // DAO
     private final CourseDAO courseDAO;
+    private final CoursierTravailDAO coursierTravailDAO;
+    private final CoursierDAO coursierDAO;
+    private final UtilisateurDAO utilisateurDAO;
+    private final CycleDAO cycleDAO;
 
     public CoursesController(CoursesView view) {
         super(view);
@@ -22,19 +36,60 @@ public class CoursesController extends Controller<CoursesView> {
         DefaultConnector connector = new DefaultConnector();
         Connection connection = BDDConnection.getInstance(connector);
         this.courseDAO = new CourseDAO(connection);
+        this.coursierTravailDAO = new CoursierTravailDAO(connection);
+        this.coursierDAO = new CoursierDAO(connection);
+        this.utilisateurDAO = new UtilisateurDAO(connection);
+        this.cycleDAO = new CycleDAO(connection);
     }
 
     public void onRefreshCourses() {
+        // Suppression des courses de la vue
+        view.removeAllCourses();
+
         // Chargement des courses dans la vue
         List<Course> courses = courseDAO.getAllNotArchived();
         for (Course course : courses) {
+            // Récupération du travail du coursier
+            CoursierTravail coursierTravail = null;
+            if (course.getIdCoursierTravail() != null) {
+                coursierTravail = coursierTravailDAO.getById(course.getIdCoursierTravail());
+            }
+            // Récupération du coursier
+            Coursier coursier = null;
+            if (coursierTravail != null && coursierTravail.getIdCoursier() != null) {
+                coursier = coursierDAO.getById(coursierTravail.getIdCoursier());
+            }
+            // Récupération de l'utilisateur
+            Utilisateur utilisateur = null;
+            if (coursier != null && coursier.getIdUtilisateur() != null) {
+                utilisateur = utilisateurDAO.getById(coursier.getIdUtilisateur());
+            }
+            // Récupération du cycle
+            Cycle cycle = null;
+            if (course.getIdCycle() != null) {
+                cycle = cycleDAO.getById(course.getIdCycle());
+            }
+
             String id = String.valueOf(course.getIdCourse());
             String nom = course.getNom();
             String date = course.getDateCourse().toString();
-            String distance = String.valueOf(course.getDistance());
+            String distance;
+            if (course.getDistance() == null) {
+                distance = "N/A";
+            } else {
+                distance = String.valueOf(course.getDistance());
+            }
+            String nomCycle = "N/A";
+            if (cycle != null) {
+                nomCycle = cycle.getIdentifiant();
+            }
+            String nomCoursier = "N/A";
+            if (utilisateur != null) {
+                nomCoursier = utilisateur.getNom() + " " + utilisateur.getPrenom();
+            }
 
             // Ajout des courses dans la vue
-            view.addCourse(id, nom, date, distance + " km", "Cycle", "Livreur", "status");
+            view.addCourse(id, nom, date, distance + " km", nomCycle, nomCoursier);
         }
     }
 

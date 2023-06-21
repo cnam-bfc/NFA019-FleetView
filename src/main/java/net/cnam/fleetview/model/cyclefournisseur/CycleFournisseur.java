@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 /**
  * Classe CycleFournisseur
- *
+ * <p>
  * Cette classe permet de créer des objets CycleFournisseur.
  * table concernée : fleetview_cycle_fournisseur
  */
@@ -37,7 +37,7 @@ public class CycleFournisseur {
      *
      * @param idCycleFournisseur
      */
-    public void setId(Integer idCycleFournisseur) {
+    public void setIdCycleFournisseur(Integer idCycleFournisseur) {
         this.idCycleFournisseur = idCycleFournisseur;
     }
 
