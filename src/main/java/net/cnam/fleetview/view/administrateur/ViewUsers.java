@@ -23,9 +23,7 @@ public class ViewUsers extends View {
 
 
         // Layout
-        BorderLayout borderLayout = new BorderLayout();
-        this.setLayout(borderLayout);
-
+        JPanel mainPanel = new JPanel(new BorderLayout());
         // Bordures
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -44,19 +42,17 @@ public class ViewUsers extends View {
 
         // Barre de recherche
         // Set placeholder
-        this.barreDeRecherche.getTextField().setToolTipText("Rechercher un coursier");
+        this.barreDeRecherche.getTextField().setToolTipText("Rechercher un utilisateur");
 
         // Tableau
         DefaultTableModel model = new DefaultTableModel();
         DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
         JScrollPane tableauScrollPane = new JScrollPane(tableau);
 
-        model.addColumn("ID Coursier");
-        model.addColumn("Matricule");
+        model.addColumn("ID Utilisateur");
         model.addColumn("Nom");
         model.addColumn("Prénom");
-        model.addColumn("ID Utilisateur");
-        model.addColumn("Voir");
+        model.addColumn("Rôle");
 
         tableau.setModel(model);
 
@@ -69,9 +65,11 @@ public class ViewUsers extends View {
         tableau.setDefaultEditor(Object.class, null);
 
         // Ajout des éléments de l'interface
-        this.add(this.iconLabel, BorderLayout.NORTH);
         this.contenu.add(this.barreDeRecherche, BorderLayout.NORTH);
         this.contenu.add(tableauScrollPane, BorderLayout.CENTER);
-        this.add(this.contenu, BorderLayout.CENTER);
+        mainPanel.add(this.iconLabel, BorderLayout.NORTH);
+        mainPanel.add(this.contenu, BorderLayout.CENTER);
+
+        this.add(mainPanel);
     }
 }
