@@ -224,15 +224,21 @@ public class CourseController extends Controller<CourseView> implements ColisCho
         // Trier les colis
         courseColis.sort(new ColisCourseOrdreComparator());
 
-        // Augmentation de l'ordre des colis suivants l'actuel
+        // Récupération du colis suivant
+        ColisCourse colisCourseSuivant = null;
         for (ColisCourse colisCourse1 : courseColis) {
-            if (colisCourse1.getOrdre() > colisCourse.getOrdre()) {
-                colisCourse1.setOrdre(colisCourse1.getOrdre() + 1);
+            if (colisCourse1.getOrdre() == colisCourse.getOrdre() - 1) {
+                colisCourseSuivant = colisCourse1;
+                break;
             }
         }
+        if (colisCourseSuivant == null) {
+            return;
+        }
 
-        // Augmentation de l'ordre du colis
-        colisCourse.setOrdre(colisCourse.getOrdre() + 1);
+        // Echange des ordres
+        colisCourseSuivant.setOrdre(colisCourse.getOrdre());
+        colisCourse.setOrdre(colisCourse.getOrdre() - 1);
 
         // Mise à jour de la vue
         view.monterColis(String.valueOf(id));
@@ -254,15 +260,21 @@ public class CourseController extends Controller<CourseView> implements ColisCho
         // Trier les colis
         courseColis.sort(new ColisCourseOrdreComparator());
 
-        // Diminution de l'ordre des colis suivants l'actuel
+        // Récupération du colis précédent
+        ColisCourse colisCoursePrecedent = null;
         for (ColisCourse colisCourse1 : courseColis) {
-            if (colisCourse1.getOrdre() > colisCourse.getOrdre()) {
-                colisCourse1.setOrdre(colisCourse1.getOrdre() - 1);
+            if (colisCourse1.getOrdre() == colisCourse.getOrdre() + 1) {
+                colisCoursePrecedent = colisCourse1;
+                break;
             }
         }
+        if (colisCoursePrecedent == null) {
+            return;
+        }
 
-        // Diminution de l'ordre du colis
-        colisCourse.setOrdre(colisCourse.getOrdre() - 1);
+        // Echange des ordres
+        colisCoursePrecedent.setOrdre(colisCourse.getOrdre());
+        colisCourse.setOrdre(colisCourse.getOrdre() + 1);
 
         // Mise à jour de la vue
         view.descendreColis(String.valueOf(id));
