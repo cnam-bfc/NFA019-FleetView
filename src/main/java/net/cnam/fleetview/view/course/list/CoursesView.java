@@ -70,6 +70,7 @@ public class CoursesView extends View<CoursesController> {
         coursesTableModel.addColumn("Voir");
         coursesTableModel.addColumn("Modifier");
         coursesTableModel.addColumn("Supprimer");
+        coursesTableModel.addColumn("Choisir");
 
         coursesTable.setModel(coursesTableModel);
 
@@ -112,6 +113,11 @@ public class CoursesView extends View<CoursesController> {
                 controller.onSupprimerCourse(Integer.parseInt(coursesTableModel.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
             }
         }, 8);
+
+        // Action choisir
+        TableColumn choisirColumn = coursesTable.getColumnModel().getColumn(9);
+        choisirColumn.setMinWidth(0);
+        choisirColumn.setMaxWidth(0);
 
         coursesTable.setDefaultRenderer(Object.class, coursesTableCellRenderer);
         coursesTable.setRowHeight(30);
@@ -177,5 +183,20 @@ public class CoursesView extends View<CoursesController> {
         DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
 
         model.setRowCount(0);
+    }
+
+    public void addChooseColumn() {
+        DefaultTableModel model = (DefaultTableModel) this.coursesTable.getModel();
+
+        TableColumn choisirColumn = coursesTable.getColumnModel().getColumn(9);
+        choisirColumn.setMinWidth(60);
+        choisirColumn.setMaxWidth(60);
+        choisirColumn.setPreferredWidth(60);
+        ButtonColumn choisirButtonColumn = new ButtonColumn(coursesTable, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.onChoisirCourse(Integer.parseInt(model.getValueAt(coursesTable.getSelectedRow(), 0).toString()));
+            }
+        }, 9);
     }
 }
