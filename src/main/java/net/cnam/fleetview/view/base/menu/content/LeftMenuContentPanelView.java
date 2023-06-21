@@ -4,6 +4,7 @@ import net.cnam.fleetview.controller.FastStartupController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.carte.CarteController;
 import net.cnam.fleetview.controller.colis.ColissController;
+import net.cnam.fleetview.controller.connexion.ConnectionController;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
 import net.cnam.fleetview.controller.cycle.CyclesController;
@@ -11,6 +12,7 @@ import net.cnam.fleetview.view.CoursierRecapitulatifCourseView;
 import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.colis.list.ColissView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
+import net.cnam.fleetview.view.connexion.ConnectionView;
 import net.cnam.fleetview.view.course.list.CoursesView;
 import net.cnam.fleetview.view.coursier.list.CoursiersView;
 import net.cnam.fleetview.view.cycle.CyclesView;
@@ -20,6 +22,8 @@ import java.awt.*;
 
 public class LeftMenuContentPanelView extends JPanel {
     // Composants graphiques
+    // Bouton connexion
+    private final IconLabelButton connexionButton;
     // Bouton d'accès rapide pour le coursier
     private final IconLabelButton coursierStartCourse;
     private final IconLabelButton coursierEndCourse;
@@ -48,6 +52,7 @@ public class LeftMenuContentPanelView extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Création des éléments de l'interface
+        this.connexionButton = new IconLabelButton("\uF007", "Connexion");
         this.coursierStartCourse = new IconLabelButton("\uF11E", "Débuter une course");
         this.coursierEndCourse = new IconLabelButton("\uF04D", "Terminer une course");
         this.colisButton = new IconLabelButton("\uF466", "Colis");
@@ -58,6 +63,19 @@ public class LeftMenuContentPanelView extends JPanel {
 
 
         // Configuration des éléments de l'interface
+
+        // Bouton de connexion
+        this.connexionButton.addActionListener(e -> {
+            // Fermeture de toutes les vues
+            RootController.closeAll();
+            // Création de la vue de connexion
+            ConnectionView connectionView = new ConnectionView();
+            // Création du contrôleur de la vue
+            ConnectionController connectionController = new ConnectionController(connectionView);
+            connectionView.setController(connectionController);
+            // Création de la vue de connexion
+            RootController.open(connectionView);
+        });
 
         // Bouton de début de course
         this.coursierStartCourse.addActionListener(e -> {
@@ -155,6 +173,7 @@ public class LeftMenuContentPanelView extends JPanel {
 
 
         // Ajout des éléments de l'interface
+        this.add(this.connexionButton);
         this.add(this.coursierStartCourse);
         this.add(this.coursierEndCourse);
         this.add(this.colisButton);
@@ -162,6 +181,17 @@ public class LeftMenuContentPanelView extends JPanel {
         this.add(this.cyclesButton);
         this.add(this.coursiersButton);
         this.add(this.carteButton);
+
+        // Désactivation des boutons
+        this.coursierStartCourse.setVisible(false);
+        this.coursierEndCourse.setVisible(false);
+        this.colisButton.setVisible(false);
+        this.coursesButton.setVisible(false);
+        this.cyclesButton.setVisible(false);
+        this.coursiersButton.setVisible(false);
+        this.carteButton.setVisible(false);
+
+        refreshMenu();
     }
 
     @Override
@@ -178,13 +208,49 @@ public class LeftMenuContentPanelView extends JPanel {
     }
 
     /**
+     * Méthode permettant de rendre visible les boutons pour le gestionnaire de flotte
+     */
+    public void showGestionnaireFlotte() {
+        this.colisButton.setVisible(false);
+        this.coursesButton.setVisible(false);
+        this.cyclesButton.setVisible(false);
+        this.coursiersButton.setVisible(false);
+        this.carteButton.setVisible(false);
+
+        this.refreshMenu();
+    }
+
+    /**
+     * Méthode permettant de rendre visible les boutons pour le coursier
+     */
+    public void showCoursier() {
+        this.coursierStartCourse.setVisible(true);
+        this.coursierEndCourse.setVisible(true);
+
+        this.refreshMenu();
+    }
+
+
+    /**
+     * Méthode permettant de rendre visible ou non le bouton de connexion
+     *
+     * @param visible boolean
+     */
+    public void setVisibleConnexionButton(boolean visible) {
+        this.connexionButton.setVisible(visible);
+
+        this.refreshMenu();
+    }
+
+    /**
      * Méthode permettant de rendre visible ou non le bouton de début de course
      *
      * @param visible boolean
      */
     public void setVisibleCoursierStartCourse(boolean visible) {
         this.coursierStartCourse.setVisible(visible);
-        refreshMenu();
+
+        this.refreshMenu();
     }
 
     /**
@@ -194,12 +260,16 @@ public class LeftMenuContentPanelView extends JPanel {
      */
     public void setVisibleCoursierEndCourse(boolean visible) {
         this.coursierEndCourse.setVisible(visible);
-        refreshMenu();
+
+        this.refreshMenu();
     }
 
     private void refreshMenu() {
         this.removeAll();
 
+        if (connexionButton.isVisible()) {
+            this.add(this.connexionButton);
+        }
         if (coursierStartCourse.isVisible()) {
             this.add(this.coursierStartCourse);
         }
