@@ -1,12 +1,10 @@
 package net.cnam.fleetview.view.base.menu.foot;
 
 import net.cnam.fleetview.App;
+import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
-import net.cnam.fleetview.view.DebugView;
 import net.cnam.fleetview.view.ParametrageBddView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
-import net.cnam.fleetview.view.documents.FicheAccidentView;
-import net.cnam.fleetview.view.documents.FicheCourseView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,6 +38,9 @@ public class LeftMenuFootPanelView extends JPanel {
         this.parametresButton.addActionListener(e -> {
             // Création de la vue des paramètres
             ParametrageBddView parametrageBddView = new ParametrageBddView();
+            // Ajout du contrôleur
+            ParametrageBddController parametrageBddController = new ParametrageBddController(parametrageBddView);
+            parametrageBddView.setController(parametrageBddController);
 
             // Affichage de la vue des paramètres
             RootController.open(parametrageBddView);
