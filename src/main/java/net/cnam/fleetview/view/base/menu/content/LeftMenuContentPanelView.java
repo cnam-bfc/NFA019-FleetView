@@ -9,7 +9,7 @@ import net.cnam.fleetview.view.colis.list.ColissView;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.course.list.CoursesView;
 import net.cnam.fleetview.view.coursier.list.CoursiersView;
-import net.cnam.fleetview.view.cycle.ListeCycleView;
+import net.cnam.fleetview.view.cycle.CyclesView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,7 +72,7 @@ public class LeftMenuContentPanelView extends JPanel {
 
         // Bouton de fin de course
         this.coursierEndCourse.addActionListener(e -> {
-           // Envoie sur le rapport d'activite ?
+            // Envoie sur le rapport d'activite ?
             // Archive la course
         });
 
@@ -112,13 +112,13 @@ public class LeftMenuContentPanelView extends JPanel {
             RootController.closeAll();
 
             // Création de la vue de la liste des cycles
-            ListeCycleView listeCycleView = new ListeCycleView();
+            CyclesView cyclesView = new CyclesView();
             // Création du contrôleur de la vue
             //ListeC coursesController = new CoursesController(coursesView);
             //coursesView.setController(coursesController);
 
             // Affichage de la vue de la liste des cycles
-            RootController.open(listeCycleView);
+            RootController.open(cyclesView);
         });
 
         // Bouton de liste des coursiers

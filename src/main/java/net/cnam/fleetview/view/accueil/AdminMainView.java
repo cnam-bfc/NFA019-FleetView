@@ -10,7 +10,7 @@ import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.components.label.IconLabel;
 import net.cnam.fleetview.view.course.list.CoursesView;
 import net.cnam.fleetview.view.coursier.list.CoursiersView;
-import net.cnam.fleetview.view.cycle.ListeCycleView;
+import net.cnam.fleetview.view.cycle.CyclesView;
 import net.cnam.fleetview.view.documents.FicheAccidentView;
 
 import javax.swing.*;
@@ -101,10 +101,10 @@ public class AdminMainView extends View<AdminMainController> {
         });
         this.viewCycles.addActionListener(e -> {
             // Création de la vue des paramètres
-            ListeCycleView cycleView = new ListeCycleView();
+            CyclesView cyclesView = new CyclesView();
 
             // Affichage de la vue des paramètres
-            RootController.open(cycleView);
+            RootController.open(cyclesView);
         });
             /*
             this.viewDocs.addActionListener(e -> {
