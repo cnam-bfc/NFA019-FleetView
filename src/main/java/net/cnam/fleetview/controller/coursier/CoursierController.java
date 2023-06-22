@@ -104,16 +104,16 @@ public class CoursierController extends Controller<CoursierView> {
         view.setPaquetLivre(String.valueOf(colisCourseDAO.getNbColisLivreCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
 
         // On récupère le nombre de Poids livrés
-        view.setPoidLivre(String.valueOf(colisCourseDAO.getPoidsLivreCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
+        view.setPoidLivre(String.valueOf(colisCourseDAO.getPoidsLivreCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)) + " km");
 
         // On récupère le poids moyen
-        view.setPoidMoyen(String.valueOf(colisCourseDAO.getPoidsMoyenCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
+        view.setPoidMoyen(String.valueOf(colisCourseDAO.getPoidsMoyenCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)) + " kg");
 
         // On récupère le nombre de courses
         view.setNombreCourse(String.valueOf(courseDAO.getNbCourseCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
 
         // On récupère la distance parcourue
-        view.setDistanceParcourue(String.valueOf(courseDAO.getDistanceParcourueCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
+        view.setDistanceParcourue(String.valueOf(courseDAO.getDistanceParcourueCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)) + " km");
 
         // On récupère le nombre d'accidents
         view.setNombreAccident(String.valueOf(courseAccidentDAO.getNbAccidentCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
