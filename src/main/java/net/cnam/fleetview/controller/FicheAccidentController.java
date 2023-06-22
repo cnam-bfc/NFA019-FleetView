@@ -100,8 +100,7 @@ public class FicheAccidentController extends Controller<FicheAccidentView> {
         return liste.toArray(new String[0]);
     }
 
-    public void setChampsSelonIdCourse() {
-        String idCourse = view.getCourseInfo();
+    public void setChampsSelonIdCourse(String idCourse) {
 
         this.course = courseDAO.getById(Integer.parseInt(idCourse));
         this.travail = coursierTravailDAO.getById(course.getIdCoursierTravail());
@@ -118,7 +117,7 @@ public class FicheAccidentController extends Controller<FicheAccidentView> {
         String jour = dateAccident.format(DateTimeFormatter.ofPattern("DD/MM/YYYY"));
         String heure = dateAccident.format(DateTimeFormatter.ofPattern("HH:MM"));
 
-        view.fill(matricule, nom, idCourses, nomCycle, jour, heure, "", "", "");
+        view.fill(matricule, nom, idCourses, nomCycle, jour, heure);
     }
 
     public void createView() {

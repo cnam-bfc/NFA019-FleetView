@@ -1,6 +1,7 @@
 package net.cnam.fleetview.view.accueil;
 
 import net.cnam.fleetview.controller.AccueilController;
+import net.cnam.fleetview.controller.FicheAccidentController;
 import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.carte.CarteController;
@@ -160,6 +161,12 @@ public class AccueilView extends View<AccueilController> {
         this.accidentSheet.addActionListener(e -> {
             // Création de la vue des paramètres
             FicheAccidentView accidentSheet = new FicheAccidentView();
+
+            FicheAccidentController accidentController = new FicheAccidentController(accidentSheet);
+            accidentSheet.setController(accidentController);
+            accidentSheet.setListeCourse(accidentController.getCourselist());
+            accidentSheet.setEditableCreate(true);
+
 
             // Affichage de la vue des paramètres
             RootController.open(accidentSheet);

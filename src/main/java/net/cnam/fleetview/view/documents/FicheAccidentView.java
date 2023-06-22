@@ -1,5 +1,6 @@
 package net.cnam.fleetview.view.documents;
 
+import net.cnam.fleetview.controller.FicheAccidentController;
 import net.cnam.fleetview.view.DebugView;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.button.LabelButton;
@@ -8,8 +9,10 @@ import net.cnam.fleetview.view.components.label.IconLabel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class FicheAccidentView extends DebugView {
+public class FicheAccidentView extends View<FicheAccidentController>  {
     private final IconLabel iconLabel;
     private JTextField champMatricule;
     private JTextField champNom;
@@ -21,7 +24,7 @@ public class FicheAccidentView extends DebugView {
     private JTextField champCommune;
     private JTextField champCP;
 
-    public FicheAccidentView() {
+    public FicheAccidentView(){
         super();
         this.setLayout(new BorderLayout());
         //*********************************************
@@ -99,6 +102,18 @@ public class FicheAccidentView extends DebugView {
         //ligne 2
         champCourse = new JComboBox<>();
         champCourse.setPreferredSize(new Dimension(200, 24));
+        champCourse.addActionListener(new ActionListener() {
+            /**
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JComboBox<String> source = (JComboBox<String>) e.getSource();
+                String selectedOption = (String) source.getSelectedItem();
+                controller.setChampsSelonIdCourse(selectedOption);
+            }
+        });
+
         //ligne 3
         champCycle = new JTextField();
         champCycle.setPreferredSize(new Dimension(200, 24));
@@ -216,6 +231,16 @@ public class FicheAccidentView extends DebugView {
         this.champCP.setText(cp);
     }
 
+    public void fill(String matricule, String nom, String[] courses, String nomCycle, String jour, String heure){
+
+        this.champMatricule.setText(matricule);
+        this.champNom.setText(nom);
+        this.champCourse.setModel(new DefaultComboBoxModel<>(courses));
+        this.champCycle.setText(nomCycle);
+        this.champJour.setText(jour);
+        this.champHeure.setText(heure);
+    }
+
     public void setFieldsEditable(boolean editable) {
 
         this.champMatricule.setEnabled(editable);
@@ -245,5 +270,7 @@ public class FicheAccidentView extends DebugView {
     public String getCourseInfo(){
         return (String) this.champCourse.getSelectedItem();
     }
+
+
 
 }
