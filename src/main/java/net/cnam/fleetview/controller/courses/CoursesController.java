@@ -46,6 +46,11 @@ public class CoursesController extends Controller<CoursesView> {
         this.coursierDAO = new CoursierDAO(connection);
         this.utilisateurDAO = new UtilisateurDAO(connection);
         this.cycleDAO = new CycleDAO(connection);
+
+        Utilisateur connectedUser = RootController.getCurrentUser();
+        if (connectedUser.getIdRole() != 2) {
+            view.hideEditAndDeleteColumns();
+        }
     }
 
     public void onRefreshCourses() {
