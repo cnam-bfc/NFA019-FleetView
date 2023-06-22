@@ -97,7 +97,7 @@ public class FicheAccidentController extends Controller<FicheAccidentView> {
             liste.add(id);
         }
 
-        return liste.toArray(new String[0]);
+        return (String[]) liste.toArray();
     }
 
     public void setChampsSelonIdCourse(String idCourse) {
