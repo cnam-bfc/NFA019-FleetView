@@ -69,12 +69,12 @@ public class CarteController extends Controller<CarteView> {
         if (id == null) {
             secteur = new Secteur();
             secteur.setNom(nom);
-            secteurDAO.create(secteur, RootController.getCurrentUser());
+            secteurDAO.create(secteur, RootController.getConnectedUser());
         } else {
             view.removeSecteur(id);
             secteur = secteurDAO.getById(id);
             secteur.setNom(nom);
-            secteurDAO.update(secteur, RootController.getCurrentUser());
+            secteurDAO.update(secteur, RootController.getConnectedUser());
         }
 
         // Suppression des délimitations du secteur
@@ -82,8 +82,8 @@ public class CarteController extends Controller<CarteView> {
         for (SecteurDelimitation secteurDelimitation : secteurDelimitations) {
             // Suppression du point de la délimitation
             SecteurPoint secteurPoint = secteurPointDAO.getById(secteurDelimitation.getIdSecteurPoint());
-            secteurDelimitationDAO.delete(secteurDelimitation, RootController.getCurrentUser());
-            secteurPointDAO.delete(secteurPoint, RootController.getCurrentUser());
+            secteurDelimitationDAO.delete(secteurDelimitation, RootController.getConnectedUser());
+            secteurPointDAO.delete(secteurPoint, RootController.getConnectedUser());
         }
 
         // Création des points
@@ -92,7 +92,7 @@ public class CarteController extends Controller<CarteView> {
             SecteurPoint secteurPoint = new SecteurPoint();
             secteurPoint.setLatitude(point.getLat());
             secteurPoint.setLongitude(point.getLon());
-            secteurPointDAO.create(secteurPoint, RootController.getCurrentUser());
+            secteurPointDAO.create(secteurPoint, RootController.getConnectedUser());
             secteurPoints.add(secteurPoint);
         }
 
@@ -103,7 +103,7 @@ public class CarteController extends Controller<CarteView> {
             secteurDelimitation.setIdSecteur(secteur.getIdSecteur());
             secteurDelimitation.setIdSecteurPoint(secteurPoint.getIdSecteurPoint());
             secteurDelimitation.setOrdre(++i);
-            secteurDelimitationDAO.create(secteurDelimitation, RootController.getCurrentUser());
+            secteurDelimitationDAO.create(secteurDelimitation, RootController.getConnectedUser());
         }
 
         view.addSecteur(secteur.getIdSecteur(), secteur.getNom(), points);

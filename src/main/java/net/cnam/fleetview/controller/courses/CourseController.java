@@ -137,9 +137,9 @@ public class CourseController extends Controller<CourseView> implements ColisCho
         // Sauvegarde de la course
         boolean success;
         if (course.getIdCourse() == null) {
-            success = courseDAO.create(course, RootController.getCurrentUser());
+            success = courseDAO.create(course, RootController.getConnectedUser());
         } else {
-            success = courseDAO.update(course, RootController.getCurrentUser());
+            success = courseDAO.update(course, RootController.getConnectedUser());
         }
         if (!success) {
             return false;
@@ -156,7 +156,7 @@ public class CourseController extends Controller<CourseView> implements ColisCho
                 }
             }
             if (!found) {
-                success = colisCourseDAO.archive(ancienColisCourse, RootController.getCurrentUser());
+                success = colisCourseDAO.archive(ancienColisCourse, RootController.getConnectedUser());
                 if (!success) {
                     return false;
                 }
@@ -169,9 +169,9 @@ public class CourseController extends Controller<CourseView> implements ColisCho
 
             // Sauvegarde du colis
             if (colisCourse.getIdColisCourse() == null) {
-                success = colisCourseDAO.create(colisCourse, RootController.getCurrentUser());
+                success = colisCourseDAO.create(colisCourse, RootController.getConnectedUser());
             } else {
-                success = colisCourseDAO.update(colisCourse, RootController.getCurrentUser());
+                success = colisCourseDAO.update(colisCourse, RootController.getConnectedUser());
             }
             if (!success) {
                 return false;

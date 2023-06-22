@@ -149,7 +149,7 @@ public class ColissController extends Controller<ColissView> {
 
         if (confirm) {
             // Suppression de la course
-            colisDAO.archive(colis, RootController.getCurrentUser());
+            colisDAO.archive(colis, RootController.getConnectedUser());
 
             // Suppression de la course dans la vue
             view.removeColis(idColis);

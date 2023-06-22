@@ -9,7 +9,7 @@ public class AccueilController extends Controller<AccueilView> {
     }
 
     public void choixAffichage() {
-        Utilisateur user = RootController.getCurrentUser();
+        Utilisateur user = RootController.getConnectedUser();
 
         // Effacer les boutons
         view.clearButtons();

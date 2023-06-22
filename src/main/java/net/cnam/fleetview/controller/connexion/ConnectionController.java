@@ -40,7 +40,7 @@ public class ConnectionController extends Controller<ConnectionView> {
             view.afficherMessageErreur("Mot de passe incorrect");
         } else {
             // Définir l'utilisateur actuellement connecté
-            RootController.setCurrentUser(utilisateur);
+            RootController.setConnectedUser(utilisateur);
             // Ouvrir la vue d'accueil
             RootController.start();
         }

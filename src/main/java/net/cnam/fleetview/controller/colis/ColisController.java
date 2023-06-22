@@ -193,9 +193,9 @@ public class ColisController extends Controller<ColisView> {
         // Sauvegarde de l'adresse
         boolean success;
         if (adresse.getIdAdresse() == null) {
-            success = adresseDAO.create(adresse, RootController.getCurrentUser());
+            success = adresseDAO.create(adresse, RootController.getConnectedUser());
         } else {
-            success = adresseDAO.update(adresse, RootController.getCurrentUser());
+            success = adresseDAO.update(adresse, RootController.getConnectedUser());
         }
         if (!success) {
             return false;
@@ -214,9 +214,9 @@ public class ColisController extends Controller<ColisView> {
 
         // Sauvegarde du destinataire
         if (colisDestinataire.getIdColisDestinataire() == null) {
-            success = colisDestinataireDAO.create(colisDestinataire, RootController.getCurrentUser());
+            success = colisDestinataireDAO.create(colisDestinataire, RootController.getConnectedUser());
         } else {
-            success = colisDestinataireDAO.update(colisDestinataire, RootController.getCurrentUser());
+            success = colisDestinataireDAO.update(colisDestinataire, RootController.getConnectedUser());
         }
         if (!success) {
             return false;
@@ -226,9 +226,9 @@ public class ColisController extends Controller<ColisView> {
 
         // Sauvegarde du colis
         if (colis.getIdColis() == null) {
-            success = colisDAO.create(colis, RootController.getCurrentUser());
+            success = colisDAO.create(colis, RootController.getConnectedUser());
         } else {
-            success = colisDAO.update(colis, RootController.getCurrentUser());
+            success = colisDAO.update(colis, RootController.getConnectedUser());
         }
 
         return success;

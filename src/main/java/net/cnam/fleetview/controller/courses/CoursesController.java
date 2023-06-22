@@ -47,7 +47,7 @@ public class CoursesController extends Controller<CoursesView> {
         this.utilisateurDAO = new UtilisateurDAO(connection);
         this.cycleDAO = new CycleDAO(connection);
 
-        Utilisateur connectedUser = RootController.getCurrentUser();
+        Utilisateur connectedUser = RootController.getConnectedUser();
         if (connectedUser.getIdRole() != 2) {
             view.hideEditAndDeleteColumns();
         }
@@ -180,7 +180,7 @@ public class CoursesController extends Controller<CoursesView> {
 
         if (confirm) {
             // Suppression de la course
-            courseDAO.archive(course, RootController.getCurrentUser());
+            courseDAO.archive(course, RootController.getConnectedUser());
 
             // Suppression de la course dans la vue
             view.removeCourse(idCourse);

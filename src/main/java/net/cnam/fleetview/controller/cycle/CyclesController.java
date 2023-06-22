@@ -153,7 +153,7 @@ public class CyclesController extends Controller<CyclesView> {
 
         if (confirm) {
             // Suppression de la cycle
-            cycleDAO.archive(cycle, RootController.getCurrentUser());
+            cycleDAO.archive(cycle, RootController.getConnectedUser());
 
             // Suppression de la cycle dans la vue
             view.removeCycle(idCycle);

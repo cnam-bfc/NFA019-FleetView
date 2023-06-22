@@ -59,7 +59,7 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         this.coursierTravailDAO = new CoursierTravailDAO(connection);
 
         // On récupère le coursier en fonction de l'id utilisateur
-        this.coursier = this.coursierDAO.getByIdUtilisateur(RootController.getCurrentUser().getIdUtilisateur());
+        this.coursier = this.coursierDAO.getByIdUtilisateur(RootController.getConnectedUser().getIdUtilisateur());
         if (coursier == null) {
             // Lever une exception interdit
             throw new RuntimeException("Le coursier n'existe pas");
@@ -105,7 +105,7 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         CoursierTravail coursierTravail = new CoursierTravail();
         coursierTravail.setIdCoursier(this.coursier.getIdCoursier());
         coursierTravail.setDateSaisie(LocalDateTime.now());
-        boolean coursierTravailCreated = coursierTravailDAO.create(coursierTravail, RootController.getCurrentUser());
+        boolean coursierTravailCreated = coursierTravailDAO.create(coursierTravail, RootController.getConnectedUser());
 
         if (!coursierTravailCreated) {
             throw new RuntimeException("Impossible de créer le coursier travail");
@@ -115,7 +115,7 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         this.course.setDateDebutCourse(LocalDateTime.now());
         this.course.setIdCycle(this.cycle.getIdCycle());
         this.course.setIdCoursierTravail(coursierTravail.getIdCoursierTravail());
-        boolean courseUpdated = courseDAO.update(this.course, RootController.getCurrentUser());
+        boolean courseUpdated = courseDAO.update(this.course, RootController.getConnectedUser());
 
         if (!courseUpdated) {
             throw new RuntimeException("Impossible de mettre à jour la course");

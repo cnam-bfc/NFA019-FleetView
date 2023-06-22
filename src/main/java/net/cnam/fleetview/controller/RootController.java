@@ -219,11 +219,11 @@ public class RootController extends Controller<RootPanelView> {
         INSTANCE.closeAllViews();
     }
 
-    public static Utilisateur getCurrentUser() {
+    public static Utilisateur getConnectedUser() {
         return INSTANCE.connectedUser;
     }
 
-    public static void setCurrentUser(Utilisateur utilisateur) {
+    public static void setConnectedUser(Utilisateur utilisateur) {
         INSTANCE.connectedUser = utilisateur;
     }
 
