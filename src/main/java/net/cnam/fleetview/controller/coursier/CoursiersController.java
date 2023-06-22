@@ -13,11 +13,20 @@ import net.cnam.fleetview.view.coursier.visualisation.CoursierView;
 import java.sql.Connection;
 import java.util.List;
 
+/**
+ * Contrôleur de la vue CoursiersView.
+ * Cette vue permet de visualiser la liste des coursiers.
+ */
 public class CoursiersController extends Controller<CoursiersView> {
     // Modèle
     // DAO
     private final CoursierUtilisateurDAO coursierUtilisateurDAO;
 
+    /**
+     * Constructeur
+     *
+     * @param view
+     */
     public CoursiersController(CoursiersView view) {
         super(view);
 
@@ -42,6 +51,9 @@ public class CoursiersController extends Controller<CoursiersView> {
         }
     }
 
+    /**
+     * Méthode appelée pour accéder à la vue d'un coursier.
+     */
     public void onShowCoursier(String id) {
         // Création de la vue
         CoursierView coursierView = new CoursierView();

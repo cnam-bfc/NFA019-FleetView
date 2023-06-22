@@ -14,6 +14,9 @@ import java.awt.*;
 import java.io.File;
 import java.time.LocalDate;
 
+/**
+ * Vue de la page permettant de visualiser les rapports d'activité d'un coursier
+ */
 public class CoursierView extends View<CoursierController> {
     // ÉLÉMENTS DE L'INTERFACE - Panel de contenu et les éléments
     // Ligne 1 titre
@@ -55,6 +58,9 @@ public class CoursierView extends View<CoursierController> {
     private final IconLabelButton exportButton;
 
 
+    /**
+     * Constructeur de la vue
+     */
     public CoursierView() {
         super();
 
