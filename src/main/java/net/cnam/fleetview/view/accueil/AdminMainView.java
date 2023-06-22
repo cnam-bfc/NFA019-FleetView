@@ -2,7 +2,6 @@ package net.cnam.fleetview.view.accueil;
 
 import net.cnam.fleetview.controller.AdminMainController;
 import net.cnam.fleetview.controller.RootController;
-import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.view.ParametrageBddView;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.administrateur.CreateModifyUsers;
@@ -18,8 +17,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AdminMainView extends View<AdminMainController> {
+    private final JPanel buttonsPanel = new JPanel();
 
-    //private final JFrame test = new JFrame();
     private final JButton viewUsers = new JButton("<html>Visualisation de tous les utilisateurs</html>");
     private final JButton modifyUsers = new JButton("<html>Modification des utilisateurs</html>");
     private final JButton dbConnection = new JButton("<html>Connexion à la base de données</html>");
@@ -40,13 +39,13 @@ public class AdminMainView extends View<AdminMainController> {
     private final IconLabel iconLabel;
 
     public AdminMainView() {
-        Utilisateur user = RootController.getCurrentUser();
 
 
         this.iconLabel = new IconLabel("\uF013", "Accueil");
         JPanel mainPanel = new JPanel(new BorderLayout());
 
-        JPanel bttnPanel = new JPanel(new GridLayout(2, 5, 50, 50));
+        GridLayout buttonsPanelLayout = new GridLayout(2, 5, 50, 50);
+        this.buttonsPanel.setLayout(buttonsPanelLayout);
 
         this.dbConnection.setPreferredSize(new Dimension(120, 120));
         this.modifyUsers.setPreferredSize(new Dimension(120, 120));
@@ -61,37 +60,30 @@ public class AdminMainView extends View<AdminMainController> {
         this.dailyReport.setPreferredSize(new Dimension(100, 100));
         this.accidentSheet.setPreferredSize(new Dimension(100, 100));
 
-        if (user.getIdRole() == 1) {
-            this.dbConnection.addActionListener(e -> {
-                // Création de la vue des paramètres
-                ParametrageBddView bdd = new ParametrageBddView();
+        this.dbConnection.addActionListener(e -> {
+            // Création de la vue des paramètres
+            ParametrageBddView bdd = new ParametrageBddView();
 
-                // Affichage de la vue des paramètres
-                RootController.open(bdd);
-            });
+            // Affichage de la vue des paramètres
+            RootController.open(bdd);
+        });
 
-            this.modifyUsers.addActionListener(e -> {
-                // Création de la vue des paramètres
-                CreateModifyUsers createModifyUsers = new CreateModifyUsers();
+        this.modifyUsers.addActionListener(e -> {
+            // Création de la vue des paramètres
+            CreateModifyUsers createModifyUsers = new CreateModifyUsers();
 
-                // Affichage de la vue des paramètres
-                RootController.open(createModifyUsers);
-            });
+            // Affichage de la vue des paramètres
+            RootController.open(createModifyUsers);
+        });
 
-            this.viewUsers.addActionListener(e -> {
-                // Création de la vue des paramètres
-                ViewUsers viewUsers = new ViewUsers();
+        this.viewUsers.addActionListener(e -> {
+            // Création de la vue des paramètres
+            ViewUsers viewUsers = new ViewUsers();
 
-                // Affichage de la vue des paramètres
-                RootController.open(viewUsers);
-            });
+            // Affichage de la vue des paramètres
+            RootController.open(viewUsers);
+        });
 
-            bttnPanel.add(this.dbConnection);
-            bttnPanel.add(this.modifyUsers);
-            bttnPanel.add(this.viewUsers);
-        }
-
-        //if (user.getIdRole() == 2) {
 
         this.viewCourses.addActionListener(e -> {
             // Création de la vue des paramètres
@@ -131,15 +123,8 @@ public class AdminMainView extends View<AdminMainController> {
             RootController.open(map);
         });
 
-        bttnPanel.add(this.viewCourses);
-        bttnPanel.add(this.viewCoursiers);
-        bttnPanel.add(this.viewCycles);
-        bttnPanel.add(this.viewDocs);
-        bttnPanel.add(this.stats);
-        bttnPanel.add(this.map);
-        //}
 
-        //if (user.getIdRole() == 3) {
+
         /*
             this.menuCourses.addActionListener(e -> {
                 // Création de la vue des paramètres
@@ -168,11 +153,6 @@ public class AdminMainView extends View<AdminMainController> {
             RootController.open(accidentSheet);
         });
 
-        bttnPanel.add(this.menuCourses);
-        bttnPanel.add(this.dailyReport);
-        bttnPanel.add(this.accidentSheet);
-        //}
-
         JPanel leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(100, 0));
         JPanel rightPanel = new JPanel();
@@ -180,10 +160,40 @@ public class AdminMainView extends View<AdminMainController> {
 
         mainPanel.add(this.iconLabel, BorderLayout.NORTH);
         mainPanel.add(leftPanel, BorderLayout.LINE_START);
-        mainPanel.add(bttnPanel, BorderLayout.CENTER);
+        mainPanel.add(this.buttonsPanel, BorderLayout.CENTER);
         mainPanel.add(rightPanel, BorderLayout.LINE_END);
         this.add(mainPanel);
     }
 
+    @Override
+    public void onDisplayed() {
+        super.onDisplayed();
 
+        this.controller.choixAffichage();
+    }
+
+    public void afficherAdmin() {
+        this.buttonsPanel.add(this.dbConnection);
+        this.buttonsPanel.add(this.modifyUsers);
+        this.buttonsPanel.add(this.viewUsers);
+    }
+
+    public void afficherGestionnaireFlotte() {
+        this.buttonsPanel.add(this.viewCourses);
+        this.buttonsPanel.add(this.viewCoursiers);
+        this.buttonsPanel.add(this.viewCycles);
+        this.buttonsPanel.add(this.viewDocs);
+        this.buttonsPanel.add(this.stats);
+        this.buttonsPanel.add(this.map);
+    }
+
+    public void afficherCoursier() {
+        this.buttonsPanel.add(this.menuCourses);
+        this.buttonsPanel.add(this.dailyReport);
+        this.buttonsPanel.add(this.accidentSheet);
+    }
+
+    public void clearButtons() {
+        this.buttonsPanel.removeAll();
+    }
 }
