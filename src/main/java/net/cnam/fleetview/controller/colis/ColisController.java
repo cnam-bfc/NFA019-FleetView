@@ -15,17 +15,30 @@ import net.cnam.fleetview.model.nominatim.NominatimAddress;
 import net.cnam.fleetview.model.nominatim.NominatimAddressDAO;
 import net.cnam.fleetview.model.secteur.Secteur;
 import net.cnam.fleetview.model.secteur.SecteurDAO;
+import net.cnam.fleetview.model.secteurdelimitation.SecteurDelimitation;
+import net.cnam.fleetview.model.secteurdelimitation.SecteurDelimitationDAO;
+import net.cnam.fleetview.model.secteurdelimitation.SecteurDelimitationOrdreComparator;
+import net.cnam.fleetview.model.secteurpoint.SecteurPoint;
+import net.cnam.fleetview.model.secteurpoint.SecteurPointDAO;
 import net.cnam.fleetview.utils.Debouncer;
 import net.cnam.fleetview.view.colis.edit.ColisView;
+import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
 
+import java.awt.*;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class ColisController extends Controller<ColisView> {
     // DAO
     private final ColisDAO colisDAO;
     private final AdresseDAO adresseDAO;
     private final SecteurDAO secteurDAO;
+    private final SecteurDelimitationDAO secteurDelimitationDAO;
+    private final SecteurPointDAO secteurPointDAO;
     private final ColisDestinataireDAO colisDestinataireDAO;
     private final NominatimAddressDAO nominatimAddressDAO;
 
@@ -53,6 +66,8 @@ public class ColisController extends Controller<ColisView> {
         this.colisDAO = new ColisDAO(connection);
         this.adresseDAO = new AdresseDAO(connection);
         this.secteurDAO = new SecteurDAO(connection);
+        this.secteurDelimitationDAO = new SecteurDelimitationDAO(connection);
+        this.secteurPointDAO = new SecteurPointDAO(connection);
         this.colisDestinataireDAO = new ColisDestinataireDAO(connection);
         this.nominatimAddressDAO = new NominatimAddressDAO();
 
@@ -270,5 +285,59 @@ public class ColisController extends Controller<ColisView> {
 
         // Charger l'adresse dans la vue
         view.fillAdresse(nominatimAddress.getNominatimId().getOsmType(), nominatimAddress.getNominatimId().getOsmId(), nominatimAddress.getPays(), nominatimAddress.getCodePostal(), nominatimAddress.getCommune(), nominatimAddress.getRue(), nominatimAddress.getNumeroDeRue(), null);
+
+        // Récupération des secteurs
+        List<Secteur> secteurs = secteurDAO.getAll();
+
+        Map<Secteur, Polygon> secteurDelimitationMap = new HashMap<>();
+        // Récupération des delimitations
+        for (Secteur secteur : secteurs) {
+            Map<SecteurDelimitation, SecteurPoint> secteurDelimitations = new HashMap<>();
+            for (SecteurDelimitation secteurDelimitation : secteurDelimitationDAO.getAllByIdSecteur(secteur.getIdSecteur())) {
+                // Récupération du point
+                SecteurPoint secteurPoint = secteurPointDAO.getById(secteurDelimitation.getIdSecteurPoint());
+                secteurDelimitations.put(secteurDelimitation, secteurPoint);
+            }
+            // Trier la hashmap par clé sur l'ordre
+            List<SecteurDelimitation> secteurDelimitationsList = new LinkedList<>(secteurDelimitations.keySet());
+            secteurDelimitationsList.sort(new SecteurDelimitationOrdreComparator());
+
+            // Ajouter les points à la liste
+            List<ICoordinate> coordinates = new LinkedList<>();
+            for (SecteurDelimitation secteurDelimitation : secteurDelimitationsList) {
+                // Récupération du point
+                SecteurPoint secteurPoint = secteurDelimitations.get(secteurDelimitation);
+                coordinates.add(new Coordinate(secteurPoint.getLatitude(), secteurPoint.getLongitude()));
+            }
+
+            // Création du polygone
+            Polygon polygon = new Polygon();
+            for (ICoordinate coordinate : coordinates) {
+                Point point1 = view.getPointFromLatLng((Coordinate) coordinate);
+                if (point1 == null) {
+                    continue;
+                }
+                polygon.addPoint(point1.x, point1.y);
+            }
+            secteurDelimitationMap.put(secteur, polygon);
+        }
+
+        // Convertir les coordonnées de l'adresse
+        Point point = view.getPointFromLatLng(new Coordinate(nominatimAddress.getLat(), nominatimAddress.getLon()));
+        if (point != null) {
+            // Vérifier si l'adresse est dans un secteur
+            Secteur secteur = null;
+            for (Map.Entry<Secteur, Polygon> entry : secteurDelimitationMap.entrySet()) {
+                if (entry.getValue().contains(point)) {
+                    secteur = entry.getKey();
+                    break;
+                }
+            }
+
+            // Si un secteur est trouvé, on le sélectionne
+            if (secteur != null) {
+                view.fillSecteur(secteur.getIdSecteur());
+            }
+        }
     }
 }

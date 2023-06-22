@@ -1,11 +1,13 @@
 package net.cnam.fleetview.view.colis.edit;
 
-import net.cnam.fleetview.controller.colis.ColisController;
 import net.cnam.fleetview.controller.RootController;
+import net.cnam.fleetview.controller.colis.ColisController;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.components.label.IconLabel;
 import net.cnam.fleetview.view.utils.SpringUtilities;
+import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.JMapViewer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -100,6 +102,8 @@ public class ColisView extends View<ColisController> {
     // Bouton de sauvegarde
     private final IconLabelButton saveButton;
 
+    // Carte permettant de faire des calculs de conversion d'adresse (latitude, longitude) => (x, y)
+    private JMapViewer carte;
     private String adresseOSMType;
     private long adresseOSMId;
 
@@ -154,6 +158,7 @@ public class ColisView extends View<ColisController> {
         this.prenomLabel = new JLabel("Prénom :", JLabel.TRAILING);
         this.prenomField = new JTextField();
         this.saveButton = new IconLabelButton("\uF0C7", "Sauvegarder");
+        this.carte = new JMapViewer();
 
 
         // Configuration des éléments de l'interface
@@ -363,6 +368,10 @@ public class ColisView extends View<ColisController> {
         });
         saveButtonPanel.add(this.saveButton);
 
+        // Centrer la carte sur Chalon-sur-Saône pour calculer les coordonnées
+        this.carte.setDisplayPosition(new Coordinate(46.783, 4.8519), 13);
+
+
         // Ajout des éléments de l'interface
         this.add(this.titre, BorderLayout.NORTH);
         this.champsColis.add(this.idLabel);
@@ -551,5 +560,16 @@ public class ColisView extends View<ColisController> {
     public void fillDestinataire(String nom, String prenom) {
         this.nomField.setText(nom);
         this.prenomField.setText(prenom);
+    }
+
+    /**
+     * Méthode permettant de récupérer les coordonnées x, y d'un point latitude, longitude sur la carte
+     *
+     * @param coordinate Coordonnées latitude, longitude
+     * @return Coordonnées x, y
+     */
+    public Point getPointFromLatLng(Coordinate coordinate) {
+        // Centrer la carte sur le point
+        return this.carte.getMapPosition(coordinate);
     }
 }
