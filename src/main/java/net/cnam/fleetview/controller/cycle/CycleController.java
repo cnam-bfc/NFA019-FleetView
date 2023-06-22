@@ -1,8 +1,10 @@
 package net.cnam.fleetview.controller.cycle;
 
 import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
+import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
 import net.cnam.fleetview.model.cycleetat.CycleEtat;
@@ -68,8 +70,29 @@ public class CycleController extends Controller<CycleView> {
 
         ///récuperer les textFields
         loadCycle(id);
-
         // renvoie
         view.editField(true);
+    }
+
+    public boolean saveCycle(String model){
+        // Si on est en mode ajout d'une cycle
+        if (cycle == null) {
+            this.cycle = new Cycle();
+        }
+
+        // Sauvegarde des données dans le cycle
+        cycle.set(model);
+        cycle.setDateCourse(date);
+
+        // Sauvegarde de la course
+        boolean success;
+        if (cycle.getIdCycle() == null) {
+            success = cycleDAO.create(cycle, RootController.getCurrentUser());
+        } else {
+            success = cycleDAO.update(cycle, RootController.getCurrentUser());
+        }
+        if (!success) {
+            return false;
+        }
     }
 }
