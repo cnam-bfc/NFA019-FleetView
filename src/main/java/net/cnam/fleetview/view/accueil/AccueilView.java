@@ -8,7 +8,7 @@ import net.cnam.fleetview.controller.coursier.CoursiersController;
 import net.cnam.fleetview.controller.utilisateur.UsersController;
 import net.cnam.fleetview.view.ParametrageBddView;
 import net.cnam.fleetview.view.View;
-import net.cnam.fleetview.view.administrateur.CreateModifyUsers;
+import net.cnam.fleetview.view.administrateur.CreateModifyUserView;
 import net.cnam.fleetview.view.administrateur.UsersView;
 import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.components.label.IconLabel;
@@ -75,10 +75,10 @@ public class AccueilView extends View<AccueilController> {
 
         this.modifyUsers.addActionListener(e -> {
             // Création de la vue des paramètres
-            CreateModifyUsers createModifyUsers = new CreateModifyUsers();
+            CreateModifyUserView createModifyUserView = new CreateModifyUserView();
 
             // Affichage de la vue des paramètres
-            RootController.open(createModifyUsers);
+            RootController.open(createModifyUserView);
         });
 
         this.viewUsers.addActionListener(e -> {

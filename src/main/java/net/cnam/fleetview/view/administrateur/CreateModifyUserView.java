@@ -1,12 +1,13 @@
 package net.cnam.fleetview.view.administrateur;
+import net.cnam.fleetview.controller.utilisateur.CreateModifyUserController;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.components.label.IconLabel;
 import javax.swing.*;
 import java.awt.*;
 
-public class CreateModifyUsers extends View {
+public class CreateModifyUserView extends View<CreateModifyUserController> {
     private final IconLabel iconLabel;
-    public CreateModifyUsers(){
+    public CreateModifyUserView(){
 
 
         this.iconLabel = new IconLabel("\uF013", "Création / Modification d'un Utilisateur");

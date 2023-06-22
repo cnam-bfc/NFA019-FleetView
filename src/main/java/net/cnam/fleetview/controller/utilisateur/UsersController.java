@@ -1,20 +1,16 @@
 package net.cnam.fleetview.controller.utilisateur;
 
 import net.cnam.fleetview.controller.Controller;
+import net.cnam.fleetview.controller.RootController;
+import net.cnam.fleetview.controller.courses.CourseController;
 import net.cnam.fleetview.database.BDDConnection;
 import net.cnam.fleetview.database.DefaultConnector;
-import net.cnam.fleetview.model.course.Course;
-import net.cnam.fleetview.model.coursier.Coursier;
-import net.cnam.fleetview.model.coursiertravail.CoursierTravail;
-import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.model.utilisateur.UtilisateurDAO;
-import net.cnam.fleetview.view.View;
-import net.cnam.fleetview.view.accueil.AccueilView;
+import net.cnam.fleetview.view.administrateur.CreateModifyUserView;
 import net.cnam.fleetview.view.administrateur.UsersView;
 
 import java.sql.Connection;
-import java.util.LinkedList;
 import java.util.List;
 
 public class UsersController extends Controller<UsersView> {
@@ -34,13 +30,28 @@ public class UsersController extends Controller<UsersView> {
         List<Utilisateur> utilisateurs = utilisateurDAO.getAll();
         for (Utilisateur utilisateur : utilisateurs) {
 
-            String id = utilisateur.getIdentifiant();
+            int id = utilisateur.getIdUtilisateur();
+            String identifiant = utilisateur.getIdentifiant();
             String nom = utilisateur.getNom();
             String prenom = utilisateur.getPrenom();
             int role = utilisateur.getIdRole();
 
             // Ajout des courses dans la vue
-            view.addUser(id, nom, prenom, role);
+            view.addUser(id, identifiant, nom, prenom, role);
         }
+    }
+
+    public void onEditerUtilisateur(int id) {
+        // Création de la vue
+        CreateModifyUserView createModifyUserView = new CreateModifyUserView();
+        // Créer le contrôleur
+        CreateModifyUserController createModifyUserController = new CreateModifyUserController(createModifyUserView);
+        createModifyUserView.setController(createModifyUserController);
+
+        // On charge la course avec l'id voulu
+        //courseController.loadEditableCourse(id);
+
+        // Ouverture de la vue du cycle
+        RootController.open(createModifyUserView);
     }
 }
