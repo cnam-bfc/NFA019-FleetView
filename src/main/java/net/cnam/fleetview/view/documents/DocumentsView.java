@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DocumentsView extends View<DocumentsController>{
     // ÉLÉMENTS DE L'INTERFACE
@@ -31,10 +32,10 @@ public class DocumentsView extends View<DocumentsController>{
 
     //filtre déroulant coursier
 
-    private final JComboBox filtreCoursier;
+    private JComboBox filtreCoursier;
 
     //filtre déroulant cycle
-    private final JComboBox filtreCycle;
+    private JComboBox filtreCycle;
 
     //porte filtre
     private JPanel filterHolder;
@@ -60,8 +61,6 @@ public class DocumentsView extends View<DocumentsController>{
         this.filterHolder = new JPanel(new FlowLayout(FlowLayout.LEFT));
         this.filtreDocument = initDocType();
         this.filtreDate = initDateFilter();
-        this.filtreCoursier = initCoursierFilter();
-        this.filtreCycle = initCycleFilter();
         this.DocumentsTable = new JTable();
         this.ajouterFicheAccident = new IconLabelButton("\uF067", "Ajouter une fiche accident");
         this.ajouterRapport = new IconLabelButton("\uF067", "Ajouter un rapport quotidient");
@@ -132,33 +131,28 @@ public class DocumentsView extends View<DocumentsController>{
         this.add(this.contenu, BorderLayout.CENTER);
     }
 
-    private JComboBox initCycleFilter() {
-        //get liste coursier sous un tableau de nom
-        String[] listeCycles = controller.listCycles();
-
-        //retourner le filtre avec la liste
-        return new JComboBox(listeCycles);
-
-    }
 
     private JFormattedTextField initDateFilter() {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
-        return new JFormattedTextField(dateFormat);
+        JFormattedTextField filtreDate =  new JFormattedTextField(dateFormat);
+        filtreDate.setValue(new Date(2011,4, 30));
+        filtreDate.setMinimumSize(new Dimension(50,15));
+        return filtreDate;
     }
 
-    private JComboBox initCoursierFilter() {
-        //get liste coursier sous un tableau de nom
-        String[] listCoursiers;
-        listCoursiers = controller.listCoursiers();
-
-        //retourner le filtre avec la liste
-        JComboBox coursier = new JComboBox(listCoursiers);
-        return coursier;
-
-    }
 
     private JComboBox initDocType() {
         String[] docTypeFilterContent = {"type", "fiche accident", "rapport activité"};
         return new JComboBox<>(docTypeFilterContent);
+    }
+
+    public void setCycleFilter(JComboBox champ){
+        this.filtreCycle = champ;
+        this.filterHolder.add(this.filtreCycle);
+    }
+
+    public void setCoursierFilter(JComboBox champ){
+        this.filtreCoursier = champ;
+        this.filterHolder.add(this.filtreCoursier);
     }
 }

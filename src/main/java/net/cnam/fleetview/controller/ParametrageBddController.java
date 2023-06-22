@@ -87,6 +87,11 @@ public class ParametrageBddController extends Controller <ParametrageBddView> {
         BaseDeDonnees db = getViewData();
         return DBConnectionTest.getTest(db);
     }
+
+    public boolean testConnectionServeur() {
+        BaseDeDonnees db = getDatabase();
+        return DBConnectionTest.getTest(db);
+    }
 }
 
 

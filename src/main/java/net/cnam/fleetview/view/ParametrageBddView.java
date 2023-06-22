@@ -22,7 +22,7 @@ A faire :
 public class ParametrageBddView extends View <ParametrageBddController> {
 
     private final IconLabel iconLabel;
-     JTextField champIP;
+    private JTextField champIP;
     private JTextField champPort;
     private JTextField champNomBD;
     private JTextField champNomUtilisateur;
