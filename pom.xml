@@ -6,7 +6,7 @@
 
     <groupId>net.cnam.fleetview</groupId>
     <artifactId>fleetview</artifactId>
-    <version>1.0.0.0-SNAPSHOT</version>
+    <version>1.0.0.0</version>
 
     <name>FleetView</name>
     <url>https://fleetview.cnam.farmvivi.fr</url>
