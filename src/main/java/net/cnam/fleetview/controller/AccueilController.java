@@ -1,10 +1,10 @@
 package net.cnam.fleetview.controller;
 
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
-import net.cnam.fleetview.view.accueil.AdminMainView;
+import net.cnam.fleetview.view.accueil.AccueilView;
 
-public class AdminMainController extends Controller<AdminMainView> {
-    public AdminMainController(AdminMainView view) {
+public class AccueilController extends Controller<AccueilView> {
+    public AccueilController(AccueilView view) {
         super(view);
     }
 

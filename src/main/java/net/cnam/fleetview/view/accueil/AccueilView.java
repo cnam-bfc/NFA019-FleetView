@@ -1,14 +1,15 @@
 package net.cnam.fleetview.view.accueil;
 
-import net.cnam.fleetview.controller.AdminMainController;
+import net.cnam.fleetview.controller.AccueilController;
 import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
+import net.cnam.fleetview.controller.utilisateur.UsersController;
 import net.cnam.fleetview.view.ParametrageBddView;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.administrateur.CreateModifyUsers;
-import net.cnam.fleetview.view.administrateur.ViewUsers;
+import net.cnam.fleetview.view.administrateur.UsersView;
 import net.cnam.fleetview.view.carte.CarteView;
 import net.cnam.fleetview.view.components.label.IconLabel;
 import net.cnam.fleetview.view.course.list.CoursesView;
@@ -19,7 +20,7 @@ import net.cnam.fleetview.view.documents.FicheAccidentView;
 import javax.swing.*;
 import java.awt.*;
 
-public class AdminMainView extends View<AdminMainController> {
+public class AccueilView extends View<AccueilController> {
     private final JPanel buttonsPanel = new JPanel();
 
     private final JButton viewUsers = new JButton("<html>Visualisation de tous les utilisateurs</html>");
@@ -41,7 +42,7 @@ public class AdminMainView extends View<AdminMainController> {
 
     private final IconLabel iconLabel;
 
-    public AdminMainView() {
+    public AccueilView() {
 
 
         this.iconLabel = new IconLabel("\uF013", "Accueil");
@@ -82,10 +83,11 @@ public class AdminMainView extends View<AdminMainController> {
 
         this.viewUsers.addActionListener(e -> {
             // Création de la vue des paramètres
-            ViewUsers viewUsers = new ViewUsers();
-
+            UsersView usersView = new UsersView();
+            UsersController usersController = new UsersController(usersView);
+            usersView.setController(usersController);
             // Affichage de la vue des paramètres
-            RootController.open(viewUsers);
+            RootController.open(usersView);
         });
 
 
