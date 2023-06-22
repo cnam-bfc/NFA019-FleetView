@@ -103,7 +103,14 @@ public class CarteView extends View<CarteController> {
             // Récupération des coordonnées du secteur
             List<ICoordinate> coordonnees = new LinkedList<>(carteListener.getPoints());
             // Création du secteur
-            CarteSecteur secteur = addSecteur(null, "Nouveau secteur", coordonnees);
+            CarteSecteur secteur;
+            if (this.secteurSelectionne == null) {
+                secteur = addSecteur(null, "Nouveau secteur", coordonnees);
+            } else {
+                CarteSecteur ancienSecteur = this.secteurSelectionne;
+                unselectSecteur(true);
+                secteur = addSecteur(ancienSecteur.getIdSecteur(), ancienSecteur.getNom(), coordonnees);
+            }
             selectSecteur(secteur);
             carteListener.setMode(CarteMode.SELECTION);
             dessinerButton.setVisible(true);
@@ -123,13 +130,20 @@ public class CarteView extends View<CarteController> {
         menuTitrePanel.add(this.closeMenu, BorderLayout.EAST);
 
         // Fermer le menu
-        closeMenu.addActionListener(e -> unselectSecteur());
+        closeMenu.addActionListener(e -> {
+            unselectSecteur();
+
+            controller.onRefreshSecteurs();
+        });
 
         // Enregistrer le secteur
         this.enregistrerSecteur.addActionListener(e -> {
             if (this.secteurSelectionne != null) {
                 controller.enregistrerSecteur(this.secteurSelectionne.getIdSecteur(), this.nomSecteur.getText(), this.secteurSelectionne.getPoints());
+
                 unselectSecteur();
+
+                controller.onRefreshSecteurs();
             }
         });
 
@@ -265,9 +279,18 @@ public class CarteView extends View<CarteController> {
      * Méthode permettant de désélectionner un secteur
      */
     public void unselectSecteur() {
+        unselectSecteur(false);
+    }
+
+    /**
+     * Méthode permettant de désélectionner un secteur
+     *
+     * @param remove Forcer la suppression du secteur de la carte
+     */
+    public void unselectSecteur(boolean remove) {
         this.secteurSelectionne.getPolygon().setColor(this.ancienneCouleurSecteurSelectionne);
         this.secteurSelectionne.getPolygon().setBackColor(new Color(this.ancienneCouleurSecteurSelectionne.getRed(), this.ancienneCouleurSecteurSelectionne.getGreen(), this.ancienneCouleurSecteurSelectionne.getBlue(), 100));
-        if (this.secteurSelectionne.getIdSecteur() == null) {
+        if (this.secteurSelectionne.getIdSecteur() == null || remove) {
             this.secteurs.remove(this.secteurSelectionne);
             this.carte.removeMapPolygon(this.secteurSelectionne.getPolygon());
         }
@@ -275,8 +298,6 @@ public class CarteView extends View<CarteController> {
         this.idSecteur.setText("");
         this.nomSecteur.setText("");
         this.menuPanel.setVisible(false);
-
-        controller.onRefreshSecteurs();
     }
 
     /**
