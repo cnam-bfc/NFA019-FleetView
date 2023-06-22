@@ -29,7 +29,7 @@ public class ParametrageBddController extends Controller<ParametrageBddView> {
         HashMap data = view.getInformation();
 
         if (testConnectionView()) {
-            try (OutputStream output = new FileOutputStream("src\\main\\resources\\config.properties")) {
+            try (OutputStream output = new FileOutputStream(".\\config.properties")) {
                 Properties prop = new Properties();
                 prop.setProperty("bdd_ip", (String) data.get("ip"));
                 prop.setProperty("bdd_port", (String) data.get("port"));
@@ -65,7 +65,7 @@ public class ParametrageBddController extends Controller<ParametrageBddView> {
         Properties properties = new Properties();
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new FileReader("src\\main\\resources\\config.properties"));
+            reader = new BufferedReader(new FileReader(".\\config.properties"));
         } catch (FileNotFoundException e) {
             return null;
         }
