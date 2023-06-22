@@ -8,7 +8,7 @@ import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.coursierutilisateur.CoursierUtilisateur;
 import net.cnam.fleetview.model.coursierutilisateur.CoursierUtilisateurDAO;
 import net.cnam.fleetview.view.coursier.list.CoursiersView;
-import net.cnam.fleetview.view.coursier.show.CoursierView;
+import net.cnam.fleetview.view.coursier.visualisation.CoursierView;
 
 import java.sql.Connection;
 import java.util.List;

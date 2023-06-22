@@ -11,7 +11,7 @@ import net.cnam.fleetview.model.course.CourseDAO;
 import net.cnam.fleetview.model.courseaccident.CourseAccidentDAO;
 import net.cnam.fleetview.model.coursierutilisateur.CoursierUtilisateur;
 import net.cnam.fleetview.model.coursierutilisateur.CoursierUtilisateurDAO;
-import net.cnam.fleetview.view.coursier.show.CoursierView;
+import net.cnam.fleetview.view.coursier.visualisation.CoursierView;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;

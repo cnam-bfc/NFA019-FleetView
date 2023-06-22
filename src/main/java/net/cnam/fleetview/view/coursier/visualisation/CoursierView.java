@@ -1,4 +1,4 @@
-package net.cnam.fleetview.view.coursier.show;
+package net.cnam.fleetview.view.coursier.visualisation;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import net.cnam.fleetview.controller.coursier.CoursierController;

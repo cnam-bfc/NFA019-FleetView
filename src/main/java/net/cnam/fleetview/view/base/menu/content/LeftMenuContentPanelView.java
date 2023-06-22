@@ -20,6 +20,9 @@ import net.cnam.fleetview.view.cycle.CyclesView;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe représentant dans le panneau de gauche les boutons d'accès rapide en dessous du logo.
+ */
 public class LeftMenuContentPanelView extends JPanel {
     // Composants graphiques
     // Bouton d'accès rapide pour le coursier
@@ -37,6 +40,9 @@ public class LeftMenuContentPanelView extends JPanel {
     // Carte
     private final IconLabelButton carteButton;
 
+    /**
+     * Constructeur de la vue
+     */
     public LeftMenuContentPanelView() {
         super();
 
@@ -170,6 +176,9 @@ public class LeftMenuContentPanelView extends JPanel {
         refreshMenu();
     }
 
+    /**
+     * Méthode redéfinie permettant d'ajouter un petit style à un composant
+     */
     @Override
     public Component add(Component comp) {
         // Ajout d'une bordure entre chaque composant
