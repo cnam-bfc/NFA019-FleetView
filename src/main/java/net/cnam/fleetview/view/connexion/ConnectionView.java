@@ -13,70 +13,7 @@ import java.awt.image.BufferedImage;
 
 public class ConnectionView extends View<ConnectionController> {
 
-    /*
-        public ConnectionView(){
-            ///Création des Panel
-            // Création du Panel
-            this.mainPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            this.panel1 = new JPanel();
-            this.PanelBouton = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-            // Création des éléments de l'interface
-            this.BoutonConnect = new JButton("<html>Connection</html>");
-            this.titre = new IconLabel("\uf007", "Connection");
-            this.titre.setForeground(Color.BLACK);
-            this.titre.setFont(new Font("Arial", Font.BOLD, 30));
-            this.titre.setBorder(BorderFactory.createEmptyBorder(50, 50, 100, 1100));
-            this.add(titre, BorderLayout.NORTH);
-
-            this.panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-            this.panel1.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-            this.labelID = new JLabel("Identifiant");
-            this.textFieldID = new JTextField(10);
-            this.textFieldID.setMaximumSize(new Dimension(Short.MAX_VALUE, textFieldID.getPreferredSize().height));
-
-            this.panel1.add(labelID);
-            this.panel1.add(textFieldID);
-            this.panel1.add(Box.createRigidArea(new Dimension(200, 50)));
-
-            this.labelPass = new JLabel("Password");
-            this.textFieldPass = new JTextField(10);
-            this.textFieldPass.setMaximumSize(new Dimension(Short.MAX_VALUE, textFieldPass.getPreferredSize().height));
-
-            panel1.add(labelPass);
-            panel1.add(textFieldPass);
-            panel1.add(Box.createRigidArea(new Dimension(200, 50)));
-
-            mainPanel.add(panel1, BorderLayout.CENTER);
-
-            this.BoutonConnect.setPreferredSize(new Dimension(80, 50));
-
-            String identi = this.getIdent();
-            String pass = this.getPass();
-
-            this.BoutonConnect.addActionListener(new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.onConnection(identi, pass);
-                }
-            });
-
-            PanelBouton.add(BoutonConnect);
-
-            PanelBouton.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
-            mainPanel.add(PanelBouton, BorderLayout.SOUTH);
-            this.add(mainPanel, BorderLayout.CENTER);
-
-        }
-
-        public String getIdent(){
-            return this.textFieldID.getText();
-        }
-
-        public  String getPass(){
-            return this.textFieldPass.getText();
-        }*/
     ///Attibuts
     //Panel
     private final JPanel MainPanel;
