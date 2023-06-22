@@ -267,6 +267,7 @@ public class CarteView extends View<CarteController> {
         this.ancienneCouleurSecteurSelectionne = secteur.getPolygon().getColor();
         secteur.getPolygon().setColor(new Color(252, 73, 73));
         secteur.getPolygon().setBackColor(new Color(252, 73, 73, 100));
+        this.carte.repaint();
         this.secteurSelectionne = secteur;
         if (secteur.getIdSecteur() != null) {
             this.idSecteur.setText(secteur.getIdSecteur().toString());
