@@ -12,6 +12,9 @@ public class NominatimAddressDAOTest {
         nominatimAddressDAO = new NominatimAddressDAO();
     }
 
+    /**
+     * Vérifier que le format de l'adresse retournée par l'API n'a pas changé par rapport à l'interprétation de l'application
+     */
     @Test
     public void verifFormatReturnedByAPI() {
         String osmType = "N";
