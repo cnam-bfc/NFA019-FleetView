@@ -4,6 +4,8 @@ import net.cnam.fleetview.App;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.DebugView;
 import net.cnam.fleetview.view.ParametrageBddView;
+import net.cnam.fleetview.view.accueil.AdminMainView;
+import net.cnam.fleetview.view.administrateur.ViewUsers;
 import net.cnam.fleetview.view.components.button.IconLabelButton;
 import net.cnam.fleetview.view.documents.FicheAccidentView;
 import net.cnam.fleetview.view.documents.FicheCourseView;
@@ -57,10 +59,10 @@ public class LeftMenuFootPanelView extends JPanel {
         // Bouton de debug 1
         this.debug1Button.addActionListener(e -> {
             // Création de la vue des paramètres
-            DebugView debugView = new FicheAccidentView();
+            AdminMainView accueil = new AdminMainView();
 
             // Affichage de la vue des paramètres
-            RootController.open(debugView);
+            RootController.open(accueil);
         });
 
         // Bouton de debug 2
@@ -75,7 +77,7 @@ public class LeftMenuFootPanelView extends JPanel {
         // Bouton de debug 3
         this.debug3Button.addActionListener(e -> {
             // Création de la vue des paramètres
-            DebugView debugView = new DebugView();
+            ViewUsers debugView = new ViewUsers();
 
             // Affichage de la vue des paramètres
             RootController.open(debugView);
