@@ -5,6 +5,7 @@ import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.cycle.CycleChooser;
 import net.cnam.fleetview.controller.cycle.CyclesController;
 import net.cnam.fleetview.database.BDDConnection;
+import net.cnam.fleetview.database.Connector;
 import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.coliscourse.ColisCourseDAO;
 import net.cnam.fleetview.model.course.Course;
@@ -46,8 +47,9 @@ public class FastStartupController extends Controller<CoursierRecapitulatifCours
         super(view);
 
         // Init du connector
-        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
-        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
+        CustomConnectorGenerator generator = new CustomConnectorGenerator();
+        Connector connector = generator.getConnector();
+        Connection connection = BDDConnection.getInstance(connector);
 
         // Initialisation des DAO
         this.coursierDAO = new CoursierDAO(connection);

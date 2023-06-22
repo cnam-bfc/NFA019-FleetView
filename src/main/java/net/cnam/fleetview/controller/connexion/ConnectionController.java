@@ -3,9 +3,9 @@ package net.cnam.fleetview.controller.connexion;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import net.cnam.fleetview.controller.Controller;
-import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
+import net.cnam.fleetview.database.Connector;
 import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.model.utilisateur.UtilisateurDAO;
@@ -20,8 +20,10 @@ public class ConnectionController extends Controller<ConnectionView> {
     public ConnectionController(ConnectionView view) {
         super(view);
         // Initialisation des DAO
-        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
-        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
+        CustomConnectorGenerator generator = new CustomConnectorGenerator();
+        Connector connector = generator.getConnector();
+        Connection connection = BDDConnection.getInstance(connector);
+
         this.utilisateurDAO = new UtilisateurDAO(connection);
     }
 

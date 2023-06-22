@@ -1,9 +1,9 @@
 package net.cnam.fleetview.controller.utilisateur;
 
 import net.cnam.fleetview.controller.Controller;
-import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
+import net.cnam.fleetview.database.Connector;
 import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.model.utilisateur.UtilisateurDAO;
@@ -19,8 +19,10 @@ public class UsersController extends Controller<UsersView> {
     public UsersController(UsersView view) {
         super(view);
 
-        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
-        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
+        CustomConnectorGenerator generator = new CustomConnectorGenerator();
+        Connector connector = generator.getConnector();
+        Connection connection = BDDConnection.getInstance(connector);
+
         this.utilisateurDAO = new UtilisateurDAO(connection);
     }
 
