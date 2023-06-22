@@ -22,8 +22,6 @@ import java.awt.*;
 
 public class LeftMenuContentPanelView extends JPanel {
     // Composants graphiques
-    // Bouton connexion
-    private final IconLabelButton connexionButton;
     // Bouton d'accès rapide pour le coursier
     private final IconLabelButton coursierStartCourse;
     private final IconLabelButton coursierEndCourse;
@@ -52,7 +50,6 @@ public class LeftMenuContentPanelView extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Création des éléments de l'interface
-        this.connexionButton = new IconLabelButton("\uF007", "Connexion");
         this.coursierStartCourse = new IconLabelButton("\uF11E", "Débuter une course");
         this.coursierEndCourse = new IconLabelButton("\uF04D", "Terminer une course");
         this.colisButton = new IconLabelButton("\uF466", "Colis");
@@ -63,19 +60,6 @@ public class LeftMenuContentPanelView extends JPanel {
 
 
         // Configuration des éléments de l'interface
-
-        // Bouton de connexion
-        this.connexionButton.addActionListener(e -> {
-            // Fermeture de toutes les vues
-            RootController.closeAll();
-            // Création de la vue de connexion
-            ConnectionView connectionView = new ConnectionView();
-            // Création du contrôleur de la vue
-            ConnectionController connectionController = new ConnectionController(connectionView);
-            connectionView.setController(connectionController);
-            // Création de la vue de connexion
-            RootController.open(connectionView);
-        });
 
         // Bouton de début de course
         this.coursierStartCourse.addActionListener(e -> {
@@ -210,11 +194,11 @@ public class LeftMenuContentPanelView extends JPanel {
      * Méthode permettant de rendre visible les boutons pour le gestionnaire de flotte
      */
     public void showGestionnaireFlotte() {
-        this.colisButton.setVisible(false);
-        this.coursesButton.setVisible(false);
-        this.cyclesButton.setVisible(false);
-        this.coursiersButton.setVisible(false);
-        this.carteButton.setVisible(false);
+        this.colisButton.setVisible(true);
+        this.coursesButton.setVisible(true);
+        this.cyclesButton.setVisible(true);
+        this.coursiersButton.setVisible(true);
+        this.carteButton.setVisible(true);
 
         this.refreshMenu();
     }
@@ -225,18 +209,6 @@ public class LeftMenuContentPanelView extends JPanel {
     public void showCoursier() {
         this.coursierStartCourse.setVisible(true);
         this.coursierEndCourse.setVisible(true);
-
-        this.refreshMenu();
-    }
-
-
-    /**
-     * Méthode permettant de rendre visible ou non le bouton de connexion
-     *
-     * @param visible boolean
-     */
-    public void setVisibleConnexionButton(boolean visible) {
-        this.connexionButton.setVisible(visible);
 
         this.refreshMenu();
     }
@@ -266,9 +238,6 @@ public class LeftMenuContentPanelView extends JPanel {
     private void refreshMenu() {
         this.removeAll();
 
-        if (connexionButton.isVisible()) {
-            this.add(this.connexionButton);
-        }
         if (coursierStartCourse.isVisible()) {
             this.add(this.coursierStartCourse);
         }

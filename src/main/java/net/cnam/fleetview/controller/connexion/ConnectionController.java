@@ -1,6 +1,7 @@
 package net.cnam.fleetview.controller.connexion;
 
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import net.cnam.fleetview.controller.Controller;
 import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
@@ -25,20 +26,21 @@ public class ConnectionController extends Controller<ConnectionView> {
     }
 
     public void onConnection(String iden, String pass) {
-
-        Utilisateur utilisateur = utilisateurDAO.getByIden(Integer.parseInt(iden));
-
-        String identifiant = utilisateur.getIdentifiant();
-        String motDePasse = utilisateur.getMotDePasse();
-
-        if (identifiant == null || motDePasse == null) {
-            view.afficherMessageErreur("Connection", "Connection Refused");
-        } else {
-            view.afficherMessageInformation("Connection", "Connection apply");
-            // Définir l'utilisateur actuellement connecté
-            RootController.setCurrentUser(utilisateur);
+        Utilisateur utilisateur = utilisateurDAO.getByIdentifiant(iden);
+        if (utilisateur == null) {
+            view.afficherMessageErreur("L'utilisateur n'existe pas");
         }
 
-
+        String identifiant = utilisateur.getIdentifiant();
+        // Algorithme de hashage du mot de passe
+        BCrypt.Result result = BCrypt.verifyer().verify(pass.toCharArray(), utilisateur.getMotDePasse());
+        if (result.verified == false) {
+            view.afficherMessageErreur("Mot de passe incorrect");
+        } else {
+            // Définir l'utilisateur actuellement connecté
+            RootController.setCurrentUser(utilisateur);
+            // Ouvrir la vue d'accueil
+            RootController.start();
+        }
     }
 }

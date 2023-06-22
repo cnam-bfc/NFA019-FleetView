@@ -37,6 +37,10 @@ public class ParametrageBddController extends Controller<ParametrageBddView> {
                 prop.setProperty("bdd_username", (String) data.get("id"));
                 prop.setProperty("bdd_password", (String) data.get("mdp"));
                 prop.store(output, null);
+
+                if (!RootController.isInitialized()) {
+                    RootController.start();
+                }
             } catch (IOException io) {
                 io.printStackTrace();
                 return false;

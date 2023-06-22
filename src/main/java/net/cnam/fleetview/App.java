@@ -1,5 +1,6 @@
 package net.cnam.fleetview;
 
+import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.view.base.RootFrameView;
 
 import javax.imageio.ImageIO;
@@ -87,6 +88,8 @@ public class App {
                 }
 
                 new RootFrameView().setVisible(true);
+
+                RootController.start();
             }
         });
     }

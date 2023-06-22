@@ -354,12 +354,12 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
     }
 
     /**
-     * Méthode de récupération d'un enregistrement d'une Utilisateur par son username.
+     * Méthode de récupération d'un enregistrement d'un Utilisateur par son username.
      *
      * @param iden L'identificateur à rechercher
      * @return Un objet Utilisateur correspondant à l'enregistrement trouvé dans la base, null si aucun enregistrement n'a été trouvé
      */
-    public Utilisateur getByIden(int iden) {
+    public Utilisateur getByIdentifiant(String iden) {
         // Requête de sélection
         String query = "SELECT * FROM fleetview_utilisateur WHERE identifiant = ?";
 
@@ -372,7 +372,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> implements Archivable<Utili
             // On prépare la requête de sélection
             statement = this.connection.prepareStatement(query);
             // On attribue les valeurs aux paramètres
-            statement.setInt(1, iden);
+            statement.setString(1, iden);
 
             // On exécute la requête et on récupère le résultat
             resultSet = statement.executeQuery();
