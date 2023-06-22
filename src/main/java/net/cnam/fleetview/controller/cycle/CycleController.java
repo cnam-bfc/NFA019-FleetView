@@ -61,12 +61,12 @@ public class CycleController extends Controller<CycleView> {
 
         // renvoie
         this.view.fill(idCycle, nom, numSerie, chargeMax, dateAchat, miseEnService, marque, fournisseur);
-        this.view.editField(false);
+        this.view.setFieldsEditable(false);
     }
 
     public void loadViewableCycle(int id) {
         loadCycle(id);
-        view.editField(false);
+        view.setFieldsEditable(false);
     }
 
     public void loadEditableCycle(int id) {
@@ -75,6 +75,6 @@ public class CycleController extends Controller<CycleView> {
         loadCycle(id);
 
         // renvoie
-        view.editField(true);
+        view.setFieldsEditable(true);
     }
 }
