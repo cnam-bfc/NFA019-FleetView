@@ -83,6 +83,9 @@ public class CarteListener implements MouseListener, MouseMotionListener {
                     Polygon polygon = new Polygon();
                     for (ICoordinate coordinate : secteur.getPoints()) {
                         Point point1 = this.carte.getMapPosition((Coordinate) coordinate);
+                        if (point1 == null) {
+                            continue;
+                        }
                         polygon.addPoint(point1.x, point1.y);
                     }
                     polygons.put(secteur, polygon);

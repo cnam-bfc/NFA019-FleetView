@@ -278,4 +278,14 @@ public class CarteView extends View<CarteController> {
 
         controller.onRefreshSecteurs();
     }
+
+    /**
+     * Méthode permettant de récupérer les coordonnées x, y d'un point latitude, longitude sur la carte
+     *
+     * @param coordinate Coordonnées latitude, longitude
+     * @return Coordonnées x, y
+     */
+    public Point getPointFromLatLng(Coordinate coordinate) {
+        return this.carte.getMapPosition(coordinate);
+    }
 }
