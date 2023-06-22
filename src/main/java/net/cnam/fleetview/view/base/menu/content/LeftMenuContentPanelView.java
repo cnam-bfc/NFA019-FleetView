@@ -173,14 +173,6 @@ public class LeftMenuContentPanelView extends JPanel {
 
 
         // Ajout des éléments de l'interface
-        this.add(this.connexionButton);
-        this.add(this.coursierStartCourse);
-        this.add(this.coursierEndCourse);
-        this.add(this.colisButton);
-        this.add(this.coursesButton);
-        this.add(this.cyclesButton);
-        this.add(this.coursiersButton);
-        this.add(this.carteButton);
 
         // Désactivation des boutons
         this.coursierStartCourse.setVisible(false);
@@ -205,6 +197,13 @@ public class LeftMenuContentPanelView extends JPanel {
         comp.setMaximumSize(new Dimension(Integer.MAX_VALUE, comp.getMaximumSize().height));
 
         return super.add(comp);
+    }
+
+    /**
+     * Méthode permettant de rendre visible les boutons pour l'administrateur
+     */
+    public void showAdmin() {
+        this.refreshMenu();
     }
 
     /**
