@@ -7,6 +7,8 @@ import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.controller.carte.CarteController;
 import net.cnam.fleetview.controller.courses.CoursesController;
 import net.cnam.fleetview.controller.coursier.CoursiersController;
+import net.cnam.fleetview.controller.cycle.CyclesController;
+import net.cnam.fleetview.controller.utilisateur.CreateModifyUserController;
 import net.cnam.fleetview.controller.utilisateur.UsersController;
 import net.cnam.fleetview.view.ParametrageBddView;
 import net.cnam.fleetview.view.View;
@@ -78,6 +80,8 @@ public class AccueilView extends View<AccueilController> {
         this.modifyUsers.addActionListener(e -> {
             // Création de la vue des paramètres
             CreateModifyUserView createModifyUserView = new CreateModifyUserView();
+            CreateModifyUserController createModifyUserController = new CreateModifyUserController(createModifyUserView);
+            createModifyUserView.setController(createModifyUserController);
 
             // Affichage de la vue des paramètres
             RootController.open(createModifyUserView);
@@ -112,6 +116,8 @@ public class AccueilView extends View<AccueilController> {
         this.viewCycles.addActionListener(e -> {
             // Création de la vue des paramètres
             CyclesView cyclesView = new CyclesView();
+            CyclesController cyclesController = new CyclesController(cyclesView);
+            cyclesView.setController(cyclesController);
 
             // Affichage de la vue des paramètres
             RootController.open(cyclesView);
