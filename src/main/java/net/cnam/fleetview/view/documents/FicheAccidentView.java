@@ -11,6 +11,15 @@ import java.awt.*;
 
 public class FicheAccidentView extends DebugView {
     private final IconLabel iconLabel;
+    private JTextField champMatricule;
+    private JTextField champNom;
+    private JComboBox<String> champCourse;
+    private JTextField champCycle;
+    private JTextField champJour;
+    private JTextField champHeure;
+    private JTextField champRue;
+    private JTextField champCommune;
+    private JTextField champCP;
 
     public FicheAccidentView() {
         super();
@@ -82,31 +91,31 @@ public class FicheAccidentView extends DebugView {
 
 
         //champ texte
-        JTextField champMatricule = new JTextField();
+        champMatricule = new JTextField();
         champMatricule.setPreferredSize(new Dimension(200, 24));
 
-        JTextField champNom = new JTextField();
+        champNom = new JTextField();
         champNom.setPreferredSize(new Dimension(200, 24));
         //ligne 2
-        JTextField champCourse = new JTextField();
+        champCourse = new JComboBox<>();
         champCourse.setPreferredSize(new Dimension(200, 24));
         //ligne 3
-        JTextField champCycle = new JTextField();
+        champCycle = new JTextField();
         champCycle.setPreferredSize(new Dimension(200, 24));
 
-        JTextField champJour = new JTextField();
+        champJour = new JTextField();
         champJour.setPreferredSize(new Dimension(200, 24));
 
-        JTextField champHeure = new JTextField();
+        champHeure = new JTextField();
         champHeure.setPreferredSize(new Dimension(200, 24));
 
-        JTextField champRue = new JTextField();
+        champRue = new JTextField();
         champRue.setPreferredSize(new Dimension(600, 24));
 
-        JTextField champCommune = new JTextField();
+        champCommune = new JTextField();
         champCommune.setPreferredSize(new Dimension(600, 24));
 
-        JTextField champCP = new JTextField();
+        champCP = new JTextField();
         champCP.setPreferredSize(new Dimension(600, 24));
 
         //--- BasDePage ---
@@ -192,7 +201,49 @@ public class FicheAccidentView extends DebugView {
 
 
         this.add(jpPrincipale);
-
-
     }
+
+    public void fill(String matricule, String nom, String[] courses, String nomCycle, String jour, String heure, String rue, String commune, String cp){
+
+        this.champMatricule.setText(matricule);
+        this.champNom.setText(nom);
+        this.champCourse.setModel(new DefaultComboBoxModel<>(courses));
+        this.champCycle.setText(nomCycle);
+        this.champJour.setText(jour);
+        this.champHeure.setText(heure);
+        this.champRue.setText(rue);
+        this.champCommune.setText(commune);
+        this.champCP.setText(cp);
+    }
+
+    public void setFieldsEditable(boolean editable) {
+
+        this.champMatricule.setEnabled(editable);
+        this.champNom.setEnabled(editable);
+        this.champCourse.setEnabled(editable);
+        this.champCycle.setEnabled(editable);
+        this.champJour.setEnabled(editable);
+        this.champHeure.setEnabled(editable);
+        this.champRue.setEnabled(editable);
+        this.champCommune.setEnabled(editable);
+        this.champCP.setEnabled(editable);
+    }
+
+    public void setListeCourse(String[] courses){
+        this.champCourse.setModel(new DefaultComboBoxModel<>(courses));
+    }
+
+    public void setEditableCreate(boolean editable) {
+
+        this.champMatricule.setEnabled(editable);
+        this.champNom.setEnabled(editable);
+        this.champCycle.setEnabled(editable);
+        this.champJour.setEnabled(editable);
+        this.champHeure.setEnabled(editable);
+    }
+
+    public String getCourseInfo(){
+        return (String) this.champCourse.getSelectedItem();
+    }
+
 }
