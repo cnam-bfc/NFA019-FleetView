@@ -1,9 +1,9 @@
 package net.cnam.fleetview.controller.courses;
 
 import net.cnam.fleetview.controller.Controller;
-import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
 import net.cnam.fleetview.database.BDDConnection;
+import net.cnam.fleetview.database.Connector;
 import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.course.Course;
 import net.cnam.fleetview.model.course.CourseDAO;
@@ -37,8 +37,10 @@ public class CoursesController extends Controller<CoursesView> {
         super(view);
 
         // Initialisation des DAO
-        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
-        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
+        CustomConnectorGenerator generator = new CustomConnectorGenerator();
+        Connector connector = generator.getConnector();
+        Connection connection = BDDConnection.getInstance(connector);
+
         this.courseDAO = new CourseDAO(connection);
         this.coursierTravailDAO = new CoursierTravailDAO(connection);
         this.coursierDAO = new CoursierDAO(connection);

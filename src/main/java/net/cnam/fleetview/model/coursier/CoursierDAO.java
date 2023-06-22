@@ -289,6 +289,45 @@ public class CoursierDAO extends DAO<Coursier> {
         return result;
     }
 
+
+    public Coursier getByMatricule(String matricule) {
+        // Requête de sélection
+        String query = "SELECT * FROM fleetview_coursier WHERE matricule = ?";
+
+        // Résultat de la requête
+        Coursier result = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // On prépare la requête de sélection
+            statement = this.connection.prepareStatement(query);
+            // On attribue les valeurs aux paramètres
+            statement.setObject(1, matricule);
+
+            // On exécute la requête et on récupère le résultat
+            resultSet = statement.executeQuery();
+
+            // On vérifie que le résultat n'est pas vide
+            if (resultSet.next()) {
+                // Création d'un objet CycleFournisseur
+                result = new Coursier();
+
+                // On remplit l'objet avec les informations issues de la requête
+                this.fillObject(result, resultSet);
+            }
+        } catch (SQLException ex) {
+            // On log l'erreur
+            logger.error("Impossible de récupérer un Coursier", ex);
+        } finally {
+            // On ferme les ressources ouvertes par la requête
+            this.closeResource(resultSet);
+            this.closeResource(statement);
+        }
+
+        return result;
+    }
+
     /**
      * Méthode de récupération d'un Coursier en fonction de l'id_utilisateur
      *

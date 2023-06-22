@@ -38,6 +38,7 @@ public class CourseAccident {
      * Constructeur par défaut
      */
     public CourseAccident() {
+
     }
 
     // GETTERS & SETTERS

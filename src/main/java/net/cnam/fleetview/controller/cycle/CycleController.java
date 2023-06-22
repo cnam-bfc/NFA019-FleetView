@@ -1,8 +1,8 @@
 package net.cnam.fleetview.controller.cycle;
 
 import net.cnam.fleetview.controller.Controller;
-import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.database.BDDConnection;
+import net.cnam.fleetview.database.Connector;
 import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
@@ -31,8 +31,10 @@ public class CycleController extends Controller<CycleView> {
         super(view);
 
         // Initialisation des DAO
-        CustomConnectorGenerator dbGenerator = new CustomConnectorGenerator(ParametrageBddController.getDatabase());
-        Connection connection = BDDConnection.getInstance(dbGenerator.getConnector());
+        CustomConnectorGenerator generator = new CustomConnectorGenerator();
+        Connector connector = generator.getConnector();
+        Connection connection = BDDConnection.getInstance(connector);
+
         this.cycleDAO = new CycleDAO(connection);
         this.cycleMarqueDAO = new CycleMarqueDAO(connection);
         this.cycleEtatDAO = new CycleEtatDAO(connection);
