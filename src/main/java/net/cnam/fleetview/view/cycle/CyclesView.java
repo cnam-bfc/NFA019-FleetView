@@ -163,12 +163,27 @@ public class CyclesView extends View<CyclesController> {
         this.controller.onRefreshCycles();
     }
 
+    /**
+     * Ajoute un cycle dans le tableau
+     *
+     * @param id          Identifiant du cycle
+     * @param identifiant Identifiant du cycle
+     * @param chargeMax   Charge maximal du cycle
+     * @param dateAchat   Date d'achat du cycle
+     * @param revision    Révision du cycle
+     * @param etat        Etat du cycle
+     */
     public void addCycle(String id, String identifiant, String chargeMax, String dateAchat, String revision, String etat) {
         DefaultTableModel model = (DefaultTableModel) this.cyclesTable.getModel();
 
         model.addRow(new Object[]{id, identifiant, chargeMax, dateAchat, revision, etat, "\uF06E", "\uF044", "\uF1F8", "\uF00C"});
     }
 
+    /**
+     * Supprime un cycle du tableau
+     *
+     * @param id Identifiant du cycle
+     */
     public void removeCycle(String id) {
         DefaultTableModel model = (DefaultTableModel) this.cyclesTable.getModel();
 
@@ -179,12 +194,18 @@ public class CyclesView extends View<CyclesController> {
         }
     }
 
+    /**
+     * Supprime tous les cycles du tableau
+     */
     public void removeAllCycles() {
         DefaultTableModel model = (DefaultTableModel) this.cyclesTable.getModel();
 
         model.setRowCount(0);
     }
 
+    /**
+     * Ajoute une colonne "Choisir" au tableau
+     */
     public void addChooseColumn() {
         DefaultTableModel model = (DefaultTableModel) this.cyclesTable.getModel();
 
@@ -198,5 +219,16 @@ public class CyclesView extends View<CyclesController> {
                 controller.onChoisirCycle(Integer.parseInt(model.getValueAt(cyclesTable.getSelectedRow(), 0).toString()));
             }
         }, 9);
+    }
+
+    /**
+     * Cache les colonnes de modification et de suppression
+     */
+    public void hideEditAndDeleteColumns() {
+        ButtonColumn modifierButtonColumn = (ButtonColumn) this.cyclesTable.getColumnModel().getColumn(7).getCellEditor();
+        modifierButtonColumn.setButtonEnabled(false);
+
+        ButtonColumn supprimerButtonColumn = (ButtonColumn) this.cyclesTable.getColumnModel().getColumn(8).getCellEditor();
+        supprimerButtonColumn.setButtonEnabled(false);
     }
 }

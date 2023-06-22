@@ -9,6 +9,7 @@ import net.cnam.fleetview.model.cycle.Cycle;
 import net.cnam.fleetview.model.cycle.CycleDAO;
 import net.cnam.fleetview.model.cyclecomplet.CycleComplet;
 import net.cnam.fleetview.model.cyclecomplet.CycleCompletDAO;
+import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.view.cycle.CycleView;
 import net.cnam.fleetview.view.cycle.CyclesView;
 
@@ -34,6 +35,11 @@ public class CyclesController extends Controller<CyclesView> {
 
         this.cycleDAO = new CycleDAO(connection);
         this.cycleCompletDAO = new CycleCompletDAO(connection);
+
+        Utilisateur connectedUser = RootController.getConnectedUser();
+        if (connectedUser.getIdRole() != 2) {
+            view.hideEditAndDeleteColumns();
+        }
     }
 
     public void onRefreshCycles() {
