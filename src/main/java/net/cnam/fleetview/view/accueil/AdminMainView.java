@@ -1,7 +1,10 @@
 package net.cnam.fleetview.view.accueil;
 
 import net.cnam.fleetview.controller.AdminMainController;
+import net.cnam.fleetview.controller.ParametrageBddController;
 import net.cnam.fleetview.controller.RootController;
+import net.cnam.fleetview.controller.courses.CoursesController;
+import net.cnam.fleetview.controller.coursier.CoursiersController;
 import net.cnam.fleetview.view.ParametrageBddView;
 import net.cnam.fleetview.view.View;
 import net.cnam.fleetview.view.administrateur.CreateModifyUsers;
@@ -63,7 +66,8 @@ public class AdminMainView extends View<AdminMainController> {
         this.dbConnection.addActionListener(e -> {
             // Création de la vue des paramètres
             ParametrageBddView bdd = new ParametrageBddView();
-
+            ParametrageBddController parametrageBddController = new ParametrageBddController(bdd);
+            bdd.setController(parametrageBddController);
             // Affichage de la vue des paramètres
             RootController.open(bdd);
         });
@@ -88,14 +92,16 @@ public class AdminMainView extends View<AdminMainController> {
         this.viewCourses.addActionListener(e -> {
             // Création de la vue des paramètres
             CoursesView coursesView = new CoursesView();
-
+            CoursesController coursesController = new CoursesController(coursesView);
+            coursesView.setController(coursesController);
             // Affichage de la vue des paramètres
             RootController.open(coursesView);
         });
         this.viewCoursiers.addActionListener(e -> {
             // Création de la vue des paramètres
             CoursiersView coursiersView = new CoursiersView();
-
+            CoursiersController coursiersController = new CoursiersController(coursiersView);
+            coursiersView.setController(coursiersController);
             // Affichage de la vue des paramètres
             RootController.open(coursiersView);
         });
