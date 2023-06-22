@@ -13,6 +13,9 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Vue de la liste des coursiers
+ */
 public class CoursiersView extends View<CoursiersController> {
     // ÉLÉMENTS DE L'INTERFACE
     // Titre
@@ -24,6 +27,9 @@ public class CoursiersView extends View<CoursiersController> {
     // Tableau
     private final JTable tableau;
 
+    /**
+     * Constructeur de la vue
+     */
     public CoursiersView() {
         super();
 
@@ -101,11 +107,11 @@ public class CoursiersView extends View<CoursiersController> {
     /**
      * Méthode permettant de remplir le tableau des coursiers
      *
-     * @param id
-     * @param matricule
-     * @param nom
-     * @param prenom
-     * @param idUtilisateur
+     * @param id Coursier
+     * @param matricule Coursier
+     * @param nom Coursier
+     * @param prenom Coursier
+     * @param idUtilisateur Coursier
      */
     public void fillCoursierTable(String id, String matricule, String nom, String prenom, String idUtilisateur) {
         DefaultTableModel model = (DefaultTableModel) this.tableau.getModel();

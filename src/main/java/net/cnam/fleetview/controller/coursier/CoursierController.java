@@ -26,6 +26,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.time.LocalDate;
 
+/**
+ * Controller permettant de gérer les actions de la vue CoursierView.
+ * CoursierView est la vue permettant de visualiser le rapport d'activité d'un coursier.
+ */
 public class CoursierController extends Controller<CoursierView> {
     // variables
     private CoursierUtilisateur coursier;
@@ -36,6 +40,11 @@ public class CoursierController extends Controller<CoursierView> {
     private final ColisCourseDAO colisCourseDAO;
     private final CourseAccidentDAO courseAccidentDAO;
 
+    /**
+     * Constructeur du controller
+     *
+     * @param view la vue associée
+     */
     public CoursierController(CoursierView view) {
         super(view);
 
@@ -63,7 +72,7 @@ public class CoursierController extends Controller<CoursierView> {
         view.setMatricule(this.coursier.getMatricule());
 
         // On récupère les éléments de la catégorie "COURSE" et on remplie
-        // Si possible mettre des boutons cliquable pour re diriger vers les pages
+        // Si possible mettre des boutons cliquables pour re diriger vers les pages
         Course courseEnCours = courseDAO.getCourseEnCours(this.coursier.getIdCoursier());
         if (courseEnCours != null) {
             view.setCourseEnCours("OUI");
@@ -81,34 +90,37 @@ public class CoursierController extends Controller<CoursierView> {
         this.actualiserInformations();
     }
 
+    /**
+     * Méthode permettant d'actualiser les informations du rapport d'activité d'un coursier sur sa vue.
+     */
     public void actualiserInformations() {
         // On récupère l'Id du cousier à partir de la vue
         String dateDebut = view.getDateDebut();
         String dateFin = view.getDateFin();
 
         // On récupère le nombre de paquets livrés
-        view.setPaquetLivre("" + colisCourseDAO.getNbColisLivreCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin));
+        view.setPaquetLivre(String.valueOf(colisCourseDAO.getNbColisLivreCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
 
         // On récupère le nombre de Poids livrés
-        view.setPoidLivre("" + colisCourseDAO.getPoidsLivreCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin));
+        view.setPoidLivre(String.valueOf(colisCourseDAO.getPoidsLivreCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
 
-        // On récupère le poids moyens
-        view.setPoidMoyen("" + colisCourseDAO.getPoidsMoyenCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin));
+        // On récupère le poids moyen
+        view.setPoidMoyen(String.valueOf(colisCourseDAO.getPoidsMoyenCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
 
-        // On récupère le nombre de course
-        view.setNombreCourse("" + courseDAO.getNbCourseCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin));
+        // On récupère le nombre de courses
+        view.setNombreCourse(String.valueOf(courseDAO.getNbCourseCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
 
         // On récupère la distance parcourue
-        view.setDistanceParcourue("" + courseDAO.getDistanceParcourueCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin));
+        view.setDistanceParcourue(String.valueOf(courseDAO.getDistanceParcourueCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
 
         // On récupère le nombre d'accidents
-        view.setNombreAccident("" + courseAccidentDAO.getNbAccidentCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin));
+        view.setNombreAccident(String.valueOf(courseAccidentDAO.getNbAccidentCoursier(this.coursier.getIdCoursier(), dateDebut, dateFin)));
     }
 
     /**
      * Méthode permettant de générer un rapport d'activité en PDF.
      * Utilisation de la librairie Apache PDFBox
-     * <p>
+     *
      * Note : la Biblio est complexe voir si on peut utiliser iText (problème, toutes les versions trouvées ont des licences ou alors des vulnérabilités)
      * Note 2 : Se serait bien de créer un objet destiner à gérer les PDF si on a le temps (Facilement placer titre/sous titre, infos, image, etc...)
      */
