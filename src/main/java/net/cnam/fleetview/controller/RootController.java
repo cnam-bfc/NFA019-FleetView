@@ -1,6 +1,9 @@
 package net.cnam.fleetview.controller;
 
 import net.cnam.fleetview.controller.connexion.ConnectionController;
+import net.cnam.fleetview.database.BDDConnection;
+import net.cnam.fleetview.database.Connector;
+import net.cnam.fleetview.database.CustomConnectorGenerator;
 import net.cnam.fleetview.model.basededonnees.BaseDeDonnees;
 import net.cnam.fleetview.model.utilisateur.Utilisateur;
 import net.cnam.fleetview.view.ParametrageBddView;
@@ -142,6 +145,11 @@ public class RootController extends Controller<RootPanelView> {
             getRootPanelView().getMainPanel().setContentPanelView(parametrageBddView);
             return;
         }
+
+        // Reconnection à la base de données
+        CustomConnectorGenerator generator = new CustomConnectorGenerator();
+        Connector connector = generator.getConnector();
+        BDDConnection.killInstance(connector);
 
         if (INSTANCE.connectedUser == null) {
             // On affiche la vue de connexion
