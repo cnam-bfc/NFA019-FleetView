@@ -160,6 +160,7 @@ public class RootController extends Controller<RootPanelView> {
             connectionView.setController(connectionController);
             // Création de la vue de connexion
             getRootPanelView().getMainPanel().setContentPanelView(connectionView);
+            connectionView.onDisplayed();
             return;
         }
 
@@ -183,6 +184,7 @@ public class RootController extends Controller<RootPanelView> {
         AccueilController accueilController = new AccueilController(accueilView);
         accueilView.setController(accueilController);
         getRootPanelView().getMainPanel().setContentPanelView(accueilView);
+        accueilView.onDisplayed();
     }
 
     /**
